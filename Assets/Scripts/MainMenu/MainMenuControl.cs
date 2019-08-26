@@ -20,7 +20,7 @@ public class MainMenuControl : MonoBehaviour
 
     public void ContinuePressed()
     {
-
+        loadLevel();
     }
     
       
@@ -28,9 +28,6 @@ public class MainMenuControl : MonoBehaviour
     {
         GameControllerScr.loadGame = false;
         SceneManager.LoadScene("Game");
-       
-       
-
     }
 
     public void loadLevel()
@@ -44,10 +41,6 @@ public class MainMenuControl : MonoBehaviour
     
     public void ButtonBack()
     {
-        genField.TransformUnity transformUnity = new genField.TransformUnity();
-        GameControllerScr gameController = GameObject.Find("Main Camera").GetComponent(typeof(GameControllerScr)) as GameControllerScr;
-        Debug.Log(gameController.field);
-        transformUnity.fromUnityToFile(gameController.field);
         SceneManager.LoadScene("Menu");
     }
 
