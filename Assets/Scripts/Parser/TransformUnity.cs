@@ -4,11 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace genField
 {
     public class TransformUnity
     {
+
+
 
         public TransformUnity() { }
         //функция заполняющая массив из файлов
@@ -16,9 +19,9 @@ namespace genField
         {
             MapGenerator mapGenerator = new MapGenerator();
 
-            var mapStates = mapGenerator.mapFromFile("States.txt");
-            var mapRandomNums = mapGenerator.mapFromFile("RandomNums.txt");
-            var mapIDs = mapGenerator.mapFromFile("IDs.txt");
+            var mapStates = mapGenerator.mapFromFile(Application.temporaryCachePath + "States.txt");
+            var mapRandomNums = mapGenerator.mapFromFile(Application.temporaryCachePath + "RandomNums.txt");
+            var mapIDs = mapGenerator.mapFromFile(Application.temporaryCachePath + "IDs.txt");
 
             int width = mapStates.width;
             int height = mapStates.height;
@@ -46,7 +49,7 @@ namespace genField
         public void fromUnityToFile(Field field)
         {
             
-            using (StreamWriter sw = new StreamWriter("States.txt"))
+            using (StreamWriter sw = new StreamWriter(Application.temporaryCachePath + "States.txt"))
             {
                 for (int i = 0; i < field.heightField; i++)
                 {
@@ -62,7 +65,7 @@ namespace genField
                 }
             }
 
-            using (StreamWriter sw = new StreamWriter("RandomNums.txt"))
+            using (StreamWriter sw = new StreamWriter(Application.temporaryCachePath + "RandomNums.txt"))
             {
                 for (int i = 0; i < field.heightField; i++)
                 {
@@ -77,7 +80,7 @@ namespace genField
                 }
             }
 
-            using (StreamWriter sw = new StreamWriter("IDs.txt"))
+            using (StreamWriter sw = new StreamWriter(Application.temporaryCachePath + "IDs.txt"))
             {
                 for (int i = 0; i < field.heightField; i++)
                 {

@@ -35,6 +35,7 @@ public class MainMenuControl : MonoBehaviour
 
         //GameControllerScr gameController = GameObject.Find("Main Camera").GetComponent(typeof(GameControllerScr)) as GameControllerScr;
         //gameController.loadGame = true;
+        //gameController.loadMap();
         GameControllerScr.loadGame = true;
         SceneManager.LoadScene("Game");
     }
