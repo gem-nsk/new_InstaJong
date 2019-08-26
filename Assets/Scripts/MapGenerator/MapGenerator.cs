@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace genField
 {
@@ -11,22 +12,24 @@ namespace genField
 
         public MapGenerator() { }
 
-        public int mapFromString(String[,] map, int width, int height)
+        public Field mapFromString(String[,] map, int width, int height)
         {
-            field = new Field(width, height);
+            
 
             for(int i = 0; i < height; i++)
                 for(int j = 0; j < width; j++)
                     if(map[i,j] == "1")
                         countElem++;
 
-            
+            //Console.WriteLine(countElem);
 
-            if(countElem % 4 == 0) { countTypes = countElem / 4; countImagesInType = 4; }
+            if (countElem % 4 == 0) { countTypes = countElem / 4; countImagesInType = 4; }
             else if(countElem % 2 == 0) { countTypes = countElem / 2; countImagesInType = 2; }
-            else { return -1; }
+            //else { return -1; }
 
-            field.initField(countTypes,countImagesInType, false);
+
+            field = new Field(width, height, countTypes, countImagesInType);
+            field.initField(false);
 
             for (int i = 0; i < height; i++)
                 for (int j = 0; j < width; j++)
@@ -35,13 +38,28 @@ namespace genField
 
             field.generateField();
             
-            return 0;
+
+            return field;
         }
 
-        public int mapFromFile()
+        public (String[,] map, int width, int height) mapFromFile(String filename)
         {
 
-            return 0;
+            int width = 0;
+            int height = 0;
+            string[] lines = File.ReadAllLines(filename);
+            String[,] map = new String[lines.Length, lines[0].Split(' ').Length];
+            for (int i = 0; i < lines.Length; i++)
+            {
+                
+                string[] temp = lines[i].Split(' ');
+                for (int j = 0; j < temp.Length; j++)
+                    map[i, j] = temp[j];
+                height = lines.Length;
+                width = temp.Length;
+            }
+            //mapFromString(map, width, height);
+            return (map,width,height);
         }
     }
 }
