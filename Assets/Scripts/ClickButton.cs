@@ -38,10 +38,11 @@ public class ClickButton : MonoBehaviour
         if(Buttons.Count == 2)
         {
             DeleteIcons(Buttons);
+            
         }
     }
 
-    public void DeleteIcons(List<System.Tuple<int, int>> tuples)
+    public int DeleteIcons(List<System.Tuple<int, int>> tuples)
     {
         int idFirstClick = tuples[0].Item1;
         int rNFirstClick = tuples[0].Item2;
@@ -73,10 +74,18 @@ public class ClickButton : MonoBehaviour
 
                 panel.color = Color.white * 0.0F;
                 Debug.Log("Delete " + idFirstClick + " and " + idSecondClick);
+                if(idFirstClick == gameController.pathParser.path.idFirst
+                    && idSecondClick == gameController.pathParser.path.idSecond)
+                {
+                    gameController.pathParser.PathFound = true;
+                }
             }
         }
         Buttons.Clear();
         first = null;
         second = null;
+
+        return 0;
     }
+    
 }

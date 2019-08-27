@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using genField;
 
 public class GameControllerScr : MonoBehaviour
 {
@@ -10,9 +11,10 @@ public class GameControllerScr : MonoBehaviour
 
     public List<CellScr> AllCells = new List<CellScr>();
 
-    public genField.Field field;
-    public genField.PathParser pathParser;
-    public genField.TransformUnity transformUnity;
+    public Field field;
+    public PathParser pathParser;
+    public TransformUnity transformUnity;
+    public MapGenerator mapGenerator;
 
     public GameObject cellButton;
     public Transform cellGroup;
@@ -20,10 +22,12 @@ public class GameControllerScr : MonoBehaviour
     public static bool loadGame { get; set; }
     public static bool refresh { get; set; }
 
+    
+
 
     void Start()
     {
-        transformUnity = new genField.TransformUnity();
+        transformUnity = new TransformUnity();
         if(loadGame == false)
         {
             CreateButtonCells();
@@ -39,7 +43,14 @@ public class GameControllerScr : MonoBehaviour
         {
             placeCells();
             refresh = false;
-            Debug.Log("Enter");
+        }
+        if(pathParser.PathFound == true)
+        {
+            
+            pathParser.parse(field);
+            Debug.Log(pathParser.path);
+            Debug.Log("Есть путь? " + pathParser.PathExists);
+            Debug.Log("Пользователь нашел этот путь? " + pathParser.PathFound);
         }
     }
 
@@ -51,16 +62,26 @@ public class GameControllerScr : MonoBehaviour
 
     public void CreateButtonCells()
     {
-        field = new genField.Field(20, 13, 36, 4);
-        field.initField(true);
-        field.generateField();
+        mapGenerator = new MapGenerator();
+        var path = Application.dataPath + "/Resources/";
+        Debug.Log(path);
+        var map = mapGenerator.mapFromFile(path + "map.txt");
+        field = mapGenerator.mapFromString(map.map,map.width,map.height);
+
+        //field = new Field(20, 13, 36, 4);
+        //field.initField(true);
+        //field.generateField();
         placeCells();
-        Debug.Log("Enter CreateButtonCells");
+        pathParser = new PathParser();
+        pathParser.parse(field);
+        Debug.Log(pathParser.path);
+        Debug.Log("Есть путь? "+pathParser.PathExists);
+        Debug.Log("Пользователь нашел этот путь? "+pathParser.PathFound);
     }
 
     public void loadMap()
     {
-        genField.TransformUnity transform = new genField.TransformUnity();
+        TransformUnity transform = new TransformUnity();
         field  = transform.fromFileToUnity();
         placeCells();
     }

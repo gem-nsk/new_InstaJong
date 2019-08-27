@@ -3,7 +3,7 @@ using System.IO;
 
 namespace genField
 {
-    class MapGenerator
+    public class MapGenerator
     {
         private int countElem = 0;
         private int countImagesInType = 0;
