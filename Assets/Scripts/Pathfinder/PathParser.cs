@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace genField
 {
@@ -27,7 +28,7 @@ namespace genField
              *  - волновой метод поиска пути
              */
             move = new Move();
-            
+
         }
 
         //функция поиска возможного хода
@@ -36,6 +37,7 @@ namespace genField
             this.field = field;
             PathFound = false;
             PathExists = false;
+
             //проверка флагов, чтобы не искали заново
             //if (PathFound == false) return 0;
             if (PathExists == true) return 0;
@@ -54,7 +56,7 @@ namespace genField
             {
                 //берем id и randomNum 
                 
-                int id = field.array[coordsCell.x, coordsCell.y].getId();
+                //int id = field.array[coordsCell.x, coordsCell.y].getId();
                 int randomNum = field.array[coordsCell.x, coordsCell.y].getRandomNum();
 
                 //ищем все ячейки с одинаковым типом и записываем в список
@@ -77,42 +79,40 @@ namespace genField
                         (int x, int y) coordsStart = field.findCoordsById(foundIdCells[i]);
                         (int x, int y) coordsFinish = field.findCoordsById(foundIdCells[i+1]);
 
-                        if(field.array[coordsStart.x, coordsStart.y].getRandomNum() != 0 &&
-                            field.array[coordsFinish.x, coordsFinish.y].getRandomNum() != 0)
+                        //запускаем алгоритм поиска пути
+                        if(field.array[coordsStart.x, coordsStart.y].getRandomNum()!=0 &&
+                           field.array[coordsFinish.x, coordsFinish.y].getRandomNum()!= 0)
                         {
                             PathExists = move.FindWave(
-                            coordsStart.y, coordsStart.x,
-                            coordsFinish.y, coordsFinish.x,
-                            field.array);
+                                coordsStart.y, coordsStart.x,
+                                coordsFinish.y, coordsFinish.x,
+                                field.array);
+                                
                         }
-                        //запускаем алгоритм поиска пути
-                        
 
                         //если нашли путь выходим из внутреннего цикла
                         if (PathExists == true)
                         {
-                            
                             findFlag = true;
                             path = (foundIdCells[i], foundIdCells[i + 1]);
-                            coordsCell = (2, 2);
-
+                            //coordsCell = (2, 2);
                             break;
+                            
                         }
 
                     }
                     //если ячейка не может соединиться ни с какой другой того же типа
                     //, то берем следующую
-                    if (coordsCell.y >= field.widthField)
-                    {
-                        coordsCell.y = 2;
-                        coordsCell.x++;
-                    }
-                        
-                    else if (coordsCell.x >= field.heightField)
-                        coordsCell.x = 2;
+                    if (coordsCell.y < field.widthField-2)
+                       coordsCell.y++;
                     else
                     {
-                        if (coordsCell.y < field.widthField - 1) coordsCell.y++;
+                        if(coordsCell.x < field.heightField - 2)
+                        {
+                            coordsCell.x++;
+                            coordsCell.y = 2;
+                            Debug.Log(coordsCell);
+                        }
                         
                     }
                 }

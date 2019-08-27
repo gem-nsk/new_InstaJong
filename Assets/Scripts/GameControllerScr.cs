@@ -22,7 +22,7 @@ public class GameControllerScr : MonoBehaviour
     public static bool loadGame { get; set; }
     public static bool refresh { get; set; }
 
-    
+    public bool searchPath = true;
 
 
     void Start()
@@ -44,14 +44,11 @@ public class GameControllerScr : MonoBehaviour
             placeCells();
             refresh = false;
         }
-        if(pathParser.PathFound == true)
+        if (searchPath == true)
         {
-            
-            pathParser.parse(field);
-            Debug.Log(pathParser.path);
-            Debug.Log("Есть путь? " + pathParser.PathExists);
-            Debug.Log("Пользователь нашел этот путь? " + pathParser.PathFound);
+            SearchPath();
         }
+
     }
 
     private void OnDestroy()
@@ -71,12 +68,24 @@ public class GameControllerScr : MonoBehaviour
         //field = new Field(20, 13, 36, 4);
         //field.initField(true);
         //field.generateField();
+        SearchPath();
         placeCells();
+        
+    }
+
+    public void SearchPath()
+    {
         pathParser = new PathParser();
-        pathParser.parse(field);
-        Debug.Log(pathParser.path);
-        Debug.Log("Есть путь? "+pathParser.PathExists);
-        Debug.Log("Пользователь нашел этот путь? "+pathParser.PathFound);
+        if (searchPath == true)
+        {
+            pathParser.parse(field);
+            if (pathParser.PathExists == true)
+            {
+                searchPath = false;
+                pathParser.PathFound = false;
+                Debug.Log(pathParser.path);
+            }
+        }
     }
 
     public void loadMap()

@@ -77,7 +77,7 @@ public class ClickButton : MonoBehaviour
                 if(idFirstClick == gameController.pathParser.path.idFirst
                     && idSecondClick == gameController.pathParser.path.idSecond)
                 {
-                    gameController.pathParser.PathFound = true;
+                    gameController.searchPath = true;
                 }
             }
         }
