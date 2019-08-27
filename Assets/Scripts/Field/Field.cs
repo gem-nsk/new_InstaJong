@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace genField
 {
@@ -12,6 +13,8 @@ namespace genField
         public Cell[,] array;
 
         private int countElements = 0;
+
+        public Field() { }
 
         public Field(int width, int height)
         {
@@ -91,6 +94,57 @@ namespace genField
             }
             return 0;
         }
+
+        public int generateField(List<Tuple<int, int>> aviableCells)
+        {
+            Random random = new Random();
+            int rInt;
+            int maxRange = countElements;
+            //цикл по доступным ячейкам
+            for (int i = 0; i < aviableCells.Count;)
+            {
+                //берем случайный ID ячейки на поле
+                rInt = random.Next(0, maxRange);
+                //находим координаты ячейки в массиве по ID
+                var coords = findCoordsById(rInt);
+                //если у найденной ячейки state = 1, то помещаем туда новый RandomNum
+                if (coords.i != 0 && coords.j != 0 &&
+                        array[coords.i, coords.j].getState() == 1 &&
+                        array[coords.i, coords.j].getRandomNum() == 0)
+                {
+                    var aviableCellRNum = aviableCells[i].Item2;
+                    array[coords.i, coords.j].setRandomNum(aviableCellRNum);
+                    i++;
+                }
+            }
+            return 0;
+        }
+
+        public Field refreshField(Field field)
+        {
+            var map = field.array;
+            //инициализация списка для добавления доступных для перемешивания ячеек
+            List<Tuple<int, int>> aviableCells = new List<Tuple<int, int>>();
+            //цикл по карте в поисках доступных ячеек
+            for (int i = 0; i < field.heightField; i++)
+            {
+                for (int j = 0; j < field.widthField; j++)
+                {
+                    //если нашли ячейку со статусом 1 - добавляем в список
+                    if (map[i, j].getState() == 1)
+                    {
+                        var aviableCell = Tuple.Create(map[i, j].getId(), map[i, j].getRandomNum());
+                        aviableCells.Add(aviableCell);
+                        map[i, j].setRandomNum(0);
+                    }
+                }
+            }
+            //после того как нашли доступные ячейки
+            //перемешиваем их между собой, сохраняя их количество
+            generateField(aviableCells);
+            return field;
+        }
+
         //функция поиска позиции ячейки массива по id
         public (int i, int j) findCoordsById(int id)
         {
