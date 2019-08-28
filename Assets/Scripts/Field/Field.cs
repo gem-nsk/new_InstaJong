@@ -160,8 +160,35 @@ namespace genField
 
             return (0, 0);
         }
+
+        public int[,] toIntArray(int num)
+        {
+            int[,] intArray = new int[heightField, widthField];
+            switch (num)
+            {
+                case 0:
+                    {
+                        for (int i = 0; i < heightField; i++)
+                        {
+                            for (int j = 0; j < widthField; j++)
+                            {
+                                if (array[i, j].getState() == 2 || array[i, j].getState() == 1)
+                                    intArray[i, j] = -4;
+                                if (array[i, j].getState() == 0)
+                                    intArray[i, j] = -1;
+                            }
+                        }
+                        break;
+                    }
+                default: break;
+            };
+
+            return intArray;
+
+        }
+
         // функция вывода поля на экран
-        
+
         public void printField()
         {
             Console.Write("\n");

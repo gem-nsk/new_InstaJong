@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using Finder;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -60,7 +62,9 @@ public class ClickButton : MonoBehaviour
             var firstCoords = gameController.field.findCoordsById(idFirstClick);
             var secondCoords = gameController.field.findCoordsById(idSecondClick);
 
-            bool find = move.FindWave(firstCoords.j,firstCoords.i, secondCoords.j, secondCoords.i, gameController.field.array);
+            //bool find = move.FindWave(firstCoords.j,firstCoords.i, secondCoords.j, secondCoords.i, gameController.field.array);
+            int[,] intArray = gameController.field.toIntArray(0);
+            bool find = findPath(intArray, firstCoords, secondCoords);
             if(find == true)
             {
                 first.SetState(0);
@@ -74,7 +78,7 @@ public class ClickButton : MonoBehaviour
 
                 panel.color = Color.white * 0.0F;
                 Debug.Log("Delete " + idFirstClick + " and " + idSecondClick);
-                if(idFirstClick == gameController.pathParser.path.idFirst
+                if (idFirstClick == gameController.pathParser.path.idFirst
                     && idSecondClick == gameController.pathParser.path.idSecond)
                 {
                     gameController.searchPath = true;
@@ -86,6 +90,35 @@ public class ClickButton : MonoBehaviour
         second = null;
 
         return 0;
+    }
+
+    private bool findPath(int [,] intArray, (int i, int j) firstClick, (int i, int j) secondClick)
+    {
+        intArray[firstClick.i, firstClick.j] = (int)Figures.StartPosition;
+        intArray[secondClick.i, secondClick.j] = (int)Figures.Destination;
+        //Print(my);
+
+        var li = new LeeAlgorithm(intArray);
+        //Console.WriteLine(li.PathFound);
+        if (li.PathFound)
+        {
+            foreach (var item in li.Path)
+            {
+                if (item == li.Path.Last())
+                    intArray[item.Item1, item.Item2] = (int)Figures.StartPosition;
+                else if (item == li.Path.First())
+                    intArray[item.Item1, item.Item2] = (int)Figures.Destination;
+                else
+                    intArray[item.Item1, item.Item2] = (int)Figures.Path;
+            }
+            //Print(li.ArrayGraph);
+            //Console.WriteLine("Длина " + li.LengthPath);
+            Debug.Log("Путь найден");
+            return true;
+        }
+        else
+            Debug.Log("Путь не найден");
+        return false;
     }
     
 }

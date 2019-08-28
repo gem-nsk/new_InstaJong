@@ -82,7 +82,6 @@ public class GameControllerScr : MonoBehaviour
             if (pathParser.PathExists == true)
             {
                 searchPath = false;
-                pathParser.PathFound = false;
                 Debug.Log(pathParser.path);
             }
         }

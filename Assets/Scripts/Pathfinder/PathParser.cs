@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using Finder;
 
 namespace genField
 {
@@ -27,20 +28,22 @@ namespace genField
              *  - генерация карты
              *  - волновой метод поиска пути
              */
-            move = new Move();
+            //move = new Move();
 
         }
 
         //функция поиска возможного хода
         public int parse(Field field)
         {
+            //проверка флагов, чтобы не искали заново
+            //if (PathFound == false) return 0;
+            //if (PathExists == true) return 0;
+
             this.field = field;
             PathFound = false;
             PathExists = false;
 
-            //проверка флагов, чтобы не искали заново
-            //if (PathFound == false) return 0;
-            if (PathExists == true) return 0;
+            
 
             //флаг для обозначения нашли возможный ход или нет
             bool findFlag = false;
@@ -83,10 +86,12 @@ namespace genField
                         if(field.array[coordsStart.x, coordsStart.y].getRandomNum()!=0 &&
                            field.array[coordsFinish.x, coordsFinish.y].getRandomNum()!= 0)
                         {
-                            PathExists = move.FindWave(
-                                coordsStart.y, coordsStart.x,
-                                coordsFinish.y, coordsFinish.x,
-                                field.array);
+                            //PathExists = move.FindWave(
+                            //    coordsStart.y, coordsStart.x,
+                            //    coordsFinish.y, coordsFinish.x,
+                            //    field.array);
+                            int[,] intArray = field.toIntArray(0);
+                            PathExists = searchPathLee(intArray, coordsStart,coordsFinish);
                                 
                         }
 
@@ -96,27 +101,25 @@ namespace genField
                             findFlag = true;
                             path = (foundIdCells[i], foundIdCells[i + 1]);
                             //coordsCell = (2, 2);
-                            break;
+                            PathFound = false;
+                            return 0;
                             
                         }
 
                     }
                     //если ячейка не может соединиться ни с какой другой того же типа
                     //, то берем следующую
-                    if (coordsCell.y < field.widthField-2)
+                    if (coordsCell.y < field.widthField-1)
                        coordsCell.y++;
                     else
                     {
-                        if(coordsCell.x < field.heightField - 2)
+                        if(coordsCell.x < field.heightField - 1)
                         {
                             coordsCell.x++;
                             coordsCell.y = 2;
-                            Debug.Log(coordsCell);
                         }
-                        
                     }
                 }
-
             }
             return 0;
         }
@@ -173,5 +176,36 @@ namespace genField
             //возвращаем собранный список из однотипных элементов
             return OneTypeCollection;
         }
+
+        private bool searchPathLee(int[,] intArray, (int i, int j) firstClick, (int i, int j) secondClick)
+        {
+            intArray[firstClick.i, firstClick.j] = (int)Figures.StartPosition;
+            intArray[secondClick.i, secondClick.j] = (int)Figures.Destination;
+            //Print(my);
+
+            var li = new LeeAlgorithm(intArray);
+            //Console.WriteLine(li.PathFound);
+            if (li.PathFound)
+            {
+                foreach (var item in li.Path)
+                {
+                    if (item == li.Path.Last())
+                        intArray[item.Item1, item.Item2] = (int)Figures.StartPosition;
+                    else if (item == li.Path.First())
+                        intArray[item.Item1, item.Item2] = (int)Figures.Destination;
+                    else
+                        intArray[item.Item1, item.Item2] = (int)Figures.Path;
+                }
+                //Print(li.ArrayGraph);
+                //Console.WriteLine("Длина " + li.LengthPath);
+                Debug.Log("Путь найден");
+                return true;
+            }
+            else
+                Debug.Log("Путь не найден");
+            return false;
+        }
     }
+
+    
 }
