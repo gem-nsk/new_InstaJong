@@ -52,7 +52,7 @@ namespace AStarPathfinder
                 }
                 else ClearField(points);
                 countIter++;
-                if (countIter == 50) return null;
+                if (countIter == 25) return null;
                 
 
             }

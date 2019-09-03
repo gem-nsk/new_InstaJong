@@ -20,6 +20,10 @@ public class ClickButton : MonoBehaviour
     public static CellScr first;
     public static CellScr second;
 
+    private UnityEngine.Color normCol;
+
+    private (CellScr first, CellScr second) objects;
+
     void Start()
     {
         Buttons = new List<System.Tuple<int, int>>();
@@ -34,16 +38,24 @@ public class ClickButton : MonoBehaviour
     public void OnClick()
     {
         var Click = gameObject.GetComponent(typeof(CellScr)) as CellScr;
-        if (first == null) first = Click;
-        else second = Click;
-        var clickedButtons = System.Tuple.Create(Click.id, Click.randomNum);
-        Buttons.Add(clickedButtons);
-        Debug.Log(Buttons.Count);
-        if(Buttons.Count == 2)
+        //normCol = panel.color;
+        //panel.color = UnityEngine.Color.yellow;
+        if(Click.randomNum != 0)
+        {
+            if (first == null) first = Click;
+            else second = Click;
+            var clickedButtons = System.Tuple.Create(Click.id, Click.randomNum);
+            Buttons.Add(clickedButtons);
+            Debug.Log(Buttons.Count);
+            objects.first = first;
+            objects.second = second;
+
+        }
+        if (Buttons.Count == 2)
         {
             DeleteIcons(Buttons);
-            
         }
+
     }
 
     public int DeleteIcons(List<System.Tuple<int, int>> tuples)
@@ -57,31 +69,30 @@ public class ClickButton : MonoBehaviour
         
         GameControllerScr gameController = GameObject.Find("Main Camera").GetComponent(typeof(GameControllerScr)) as GameControllerScr;
 
-        if(rNFirstClick == rNSecondClick && idFirstClick != idSecondClick)
+        if (rNFirstClick == rNSecondClick && idFirstClick != idSecondClick)
         {
 
             var firstCoords = gameController.field.findCoordsById(idFirstClick);
             var secondCoords = gameController.field.findCoordsById(idSecondClick);
 
-            //bool flg = false;
-
-            //if(find == false)
-            //{
-            //    intArray = gameController.field.toIntArray(0);
-            //    find = findPath(intArray, secondCoords, firstCoords);
-            //    if (find == false) flg = false;
-            //    else
-            //    {
-            //        flg = true;
-            //    }
-            //}
-            //else
-            //{
-            //    flg = true;
-            //}
-
+            bool flg;
             bool find = findPath(gameController.field, firstCoords, secondCoords);
-            if (find == true)
+            if (find == false)
+            {
+                find = findPath(gameController.field, secondCoords, firstCoords);
+                if (find == false) flg = false;
+                else
+                {
+                    flg = true;
+                }
+            }
+            else
+            {
+                flg = true;
+            }
+
+
+            if (flg == true)
             {
                 first.SetState(0);
                 second.SetState(0);
@@ -92,15 +103,24 @@ public class ClickButton : MonoBehaviour
                 gameController.field.array[secondCoords.i, secondCoords.j].setState(0);
                 gameController.field.array[secondCoords.i, secondCoords.j].setRandomNum(0);
 
+                objects.first.randomNum = 0;
+                objects.second.randomNum = 0;
+
                 panel.color = UnityEngine.Color.white * 0.0F;
                 Debug.Log("Delete " + idFirstClick + " and " + idSecondClick);
                 if (idFirstClick == gameController.pathParser.path.idFirst
-                    || idSecondClick == gameController.pathParser.path.idSecond)
+                    || idSecondClick == gameController.pathParser.path.idSecond
+                    || idFirstClick == gameController.pathParser.path.idSecond
+                    || idSecondClick == gameController.pathParser.path.idFirst)
                 {
-                    gameController.searchPath = true;
+                    gameController.SearchPath();
+                    //Debug.Log("find path");
                 }
-            }
-        }
+
+            } 
+        } //else panel.color = normCol;
+
+
         Buttons.Clear();
         first = null;
         second = null;
@@ -117,10 +137,9 @@ public class ClickButton : MonoBehaviour
         SettingsField settings = new SettingsField(field, field.widthField, field.heightField);
         var path = settings.LittlePathfinder(start, finish);
 
-        if (path == null) { Debug.Log("Нет пути"); return false; }
+        if (path == null) {return false; }
         else
         {
-            Debug.Log("Есть путь");
             return true;
         }
     }

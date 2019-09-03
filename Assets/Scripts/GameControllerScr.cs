@@ -28,7 +28,8 @@ public class GameControllerScr : MonoBehaviour
     void Start()
     {
         transformUnity = new TransformUnity();
-        if(loadGame == false)
+        pathParser = new PathParser();
+        if (loadGame == false)
         {
             CreateButtonCells();
         }
@@ -39,16 +40,11 @@ public class GameControllerScr : MonoBehaviour
 
     private void Update()
     {
-        if(refresh == true)
+        if (refresh == true)
         {
             placeCells();
             refresh = false;
         }
-        if (searchPath == true)
-        {
-            SearchPath();
-        }
-
     }
 
     private void OnDestroy()
@@ -75,16 +71,18 @@ public class GameControllerScr : MonoBehaviour
 
     public void SearchPath()
     {
-        pathParser = new PathParser();
-        if (searchPath == true)
+        Debug.Log("Ищу путь...");
+        if(pathParser.parse(field) < 0) Debug.Log("Нет его");
+        else
         {
-            pathParser.parse(field);
             if (pathParser.PathExists == true)
             {
                 searchPath = false;
                 Debug.Log(pathParser.path);
             }
         }
+
+        
     }
 
     public void loadMap()
@@ -116,14 +114,9 @@ public class GameControllerScr : MonoBehaviour
         foreach (Transform child in cellGroup)
         {
             GameObject.Destroy(child.gameObject);
+            
         }
     }
 
-    public void Refresh()
-    {
-        //field.refreshField(field);
-        Debug.Log(field.array);
-        placeCells();
-    }
 
 }

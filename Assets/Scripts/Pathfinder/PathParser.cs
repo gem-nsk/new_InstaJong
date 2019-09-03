@@ -83,16 +83,11 @@ namespace genField
                         //берем координаты первой и второй ячейки
                         (int x, int y) coordsStart = field.findCoordsById(foundIdCells[i]);
                         (int x, int y) coordsFinish = field.findCoordsById(foundIdCells[i + 1]);
-
+                        Debug.Log(coordsStart + "and"  + coordsFinish);
                         //запускаем алгоритм поиска пути
                         if (field.array[coordsStart.x, coordsStart.y].getRandomNum() != 0 &&
                            field.array[coordsFinish.x, coordsFinish.y].getRandomNum() != 0)
                         {
-                            //PathExists = move.FindWave(
-                            //    coordsStart.y, coordsStart.x,
-                            //    coordsFinish.y, coordsFinish.x,
-                            //    field.array);
-                            int[,] intArray = field.toIntArray(0);
                             PathExists = searchPathAStar(coordsStart, coordsFinish);
 
                         }
@@ -102,25 +97,31 @@ namespace genField
                         {
                             findFlag = true;
                             path = (foundIdCells[i], foundIdCells[i + 1]);
-                            //coordsCell = (2, 2);
+                            coordsCell.x = 2;
+                            coordsCell.y = 2;
                             PathFound = false;
                             return 0;
 
                         }
 
                     }
+                    /***********************************ПРОБЛЕМА ЗДЕСЬ*************************************/
                     //если ячейка не может соединиться ни с какой другой того же типа
                     //, то берем следующую
                     if (coordsCell.y < field.widthField - 1)
                         coordsCell.y++;
-                    else
+                    else if(coordsCell.x < field.heightField - 1)
                     {
-                        if (coordsCell.x < field.heightField - 1)
-                        {
-                            coordsCell.x++;
-                            coordsCell.y = 2;
-                        }
+                        coordsCell.x++;
+                        coordsCell.y = 2;
                     }
+                    else if(coordsCell.x >= field.heightField - 1 && coordsCell.y >= field.widthField - 1)
+                    {
+                        coordsCell.x = 2;
+                        coordsCell.y = 2;
+                        //return -1;
+                    }
+                    /*************************************(03.09.2019)*************************************/
                 }
             }
             return 0;
@@ -187,15 +188,9 @@ namespace genField
             SettingsField settings = new SettingsField(field, field.widthField, field.heightField);
             var path = settings.LittlePathfinder(start, finish);
 
-            if (path == null) { Debug.Log("Нет пути"); return false; }
+            if (path == null) {return false; }
             else
             {
-                Debug.Log("Есть путь");
-                //settings.PrintField(1);
-                //for (int i = 0; i < path.Count(); i++)
-                //{
-                //    Debug.Log(path[i]);
-                //}
                 return true;
             }
         }
