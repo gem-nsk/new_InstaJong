@@ -5,6 +5,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using AStarPathfinder;
+using genField;
+using System.Drawing;
 
 public class ClickButton : MonoBehaviour
 
@@ -52,7 +55,7 @@ public class ClickButton : MonoBehaviour
         int idSecondClick = tuples[1].Item1;
         int rNSecondClick = tuples[1].Item2;
 
-        genField.Move move = new genField.Move();
+        //genField.Move move = new genField.Move();
         
         GameControllerScr gameController = GameObject.Find("Main Camera").GetComponent(typeof(GameControllerScr)) as GameControllerScr;
 
@@ -61,11 +64,27 @@ public class ClickButton : MonoBehaviour
 
             var firstCoords = gameController.field.findCoordsById(idFirstClick);
             var secondCoords = gameController.field.findCoordsById(idSecondClick);
-
-            //bool find = move.FindWave(firstCoords.j,firstCoords.i, secondCoords.j, secondCoords.i, gameController.field.array);
             int[,] intArray = gameController.field.toIntArray(0);
-            bool find = findPath(intArray, firstCoords, secondCoords);
-            if(find == true)
+            //bool find = move.FindWave(firstCoords.j,firstCoords.i, secondCoords.j, secondCoords.i, gameController.field.array);
+
+            //bool flg = false;
+
+            //if(find == false)
+            //{
+            //    intArray = gameController.field.toIntArray(0);
+            //    find = findPath(intArray, secondCoords, firstCoords);
+            //    if (find == false) flg = false;
+            //    else
+            //    {
+            //        flg = true;
+            //    }
+            //}
+            //else
+            //{
+            //    flg = true;
+            //}
+            bool find = findPath(gameController.field, firstCoords, secondCoords);
+            if (find == true)
             {
                 first.SetState(0);
                 second.SetState(0);
@@ -76,13 +95,13 @@ public class ClickButton : MonoBehaviour
                 gameController.field.array[secondCoords.i, secondCoords.j].setState(0);
                 gameController.field.array[secondCoords.i, secondCoords.j].setRandomNum(0);
 
-                panel.color = Color.white * 0.0F;
+                panel.color = UnityEngine.Color.white * 0.0F;
                 Debug.Log("Delete " + idFirstClick + " and " + idSecondClick);
-                if (idFirstClick == gameController.pathParser.path.idFirst
-                    && idSecondClick == gameController.pathParser.path.idSecond)
-                {
-                    gameController.searchPath = true;
-                }
+                //if (idFirstClick == gameController.pathParser.path.idFirst
+                //    && idSecondClick == gameController.pathParser.path.idSecond)
+                //{
+                //    gameController.searchPath = true;
+                //}
             }
         }
         Buttons.Clear();
@@ -92,33 +111,32 @@ public class ClickButton : MonoBehaviour
         return 0;
     }
 
-    private bool findPath(int [,] intArray, (int i, int j) firstClick, (int i, int j) secondClick)
+    private bool findPath(Field field, (int i, int j) firstClick, (int i, int j) secondClick)
     {
-        intArray[firstClick.i, firstClick.j] = (int)Figures.StartPosition;
-        intArray[secondClick.i, secondClick.j] = (int)Figures.Destination;
+        //intArray[firstClick.i, firstClick.j] = (int)Figures.StartPosition;
+        //intArray[secondClick.i, secondClick.j] = (int)Figures.Destination;
         //Print(my);
 
-        var li = new LeeAlgorithm(intArray);
+        //var li = new LeeAlgorithm(intArray);
         //Console.WriteLine(li.PathFound);
-        if (li.PathFound)
+
+        Point start = new Point(firstClick.i, firstClick.j);
+        Point finish = new Point(secondClick.i, secondClick.j);
+
+        SettingsField settings = new SettingsField(field, field.widthField, field.heightField);
+        var path = settings.LittlePathfinder(start, finish);
+
+        if (path == null) { Debug.Log("Нет пути"); return false; }
+        else
         {
-            foreach (var item in li.Path)
+            Debug.Log("Есть путь");
+            //settings.PrintField(1);
+            for (int i = 0; i < path.Count(); i++)
             {
-                if (item == li.Path.Last())
-                    intArray[item.Item1, item.Item2] = (int)Figures.StartPosition;
-                else if (item == li.Path.First())
-                    intArray[item.Item1, item.Item2] = (int)Figures.Destination;
-                else
-                    intArray[item.Item1, item.Item2] = (int)Figures.Path;
+                Debug.Log(path[i]);
             }
-            //Print(li.ArrayGraph);
-            //Console.WriteLine("Длина " + li.LengthPath);
-            Debug.Log("Путь найден");
             return true;
         }
-        else
-            Debug.Log("Путь не найден");
-        return false;
     }
     
 }
