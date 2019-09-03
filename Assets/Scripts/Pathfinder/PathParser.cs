@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-using Finder;
+using genField;
+using AStarPathfinder;
+using System.Drawing;
 
 namespace genField
 {
@@ -12,7 +14,7 @@ namespace genField
     {
         private Move move;
         private Field field;
-        
+
         // флаг, кторый обозначает найден ли пользователем сохраненный путь
         public bool PathFound { get; set; }
         // флаг, который обозначает существует еще ход на карте или нет
@@ -43,7 +45,7 @@ namespace genField
             PathFound = false;
             PathExists = false;
 
-            
+
 
             //флаг для обозначения нашли возможный ход или нет
             bool findFlag = false;
@@ -52,47 +54,47 @@ namespace genField
              * Начальные координаты (2,2) потому что (0,0) это рамка,
              * а (1,1) это начальное незаполненное поле для поиска пути.
              */
-            (int x, int y) coordsCell = (2,2);
+            (int x, int y) coordsCell = (2, 2);
 
             //ищем, пока не будет найден возможный ход
-            while(findFlag == false)
+            while (findFlag == false)
             {
                 //берем id и randomNum 
-                
+
                 //int id = field.array[coordsCell.x, coordsCell.y].getId();
                 int randomNum = field.array[coordsCell.x, coordsCell.y].getRandomNum();
 
                 //ищем все ячейки с одинаковым типом и записываем в список
                 List<int> foundIdCells = searchSimilarCells(randomNum);
-                    
+
                 /*
                  * Процесс поиска происходит следующим образом
                  * перебором среди списка однотипных ячеек ищем пути
                  * если путь есть, то сохраняем этот путь и завершаем поиск
                  * если нет, то берем следующий тип и проводим те же операции
                  */
-                if(PathExists == false)
+                if (PathExists == false)
                 {
-                    for (int i = 0; i < foundIdCells.Count-1; i++)
+                    for (int i = 0; i < foundIdCells.Count - 1; i++)
                     {
                         //проверяем, не заблокированы ли ячейки, если хоть одна заблокирована,
                         // смысла проводить вычисления нет
-                        if (isBlocked(foundIdCells[i]) || isBlocked(foundIdCells[i+1])) continue;
+                        if (isBlocked(foundIdCells[i]) || isBlocked(foundIdCells[i + 1])) continue;
                         //берем координаты первой и второй ячейки
                         (int x, int y) coordsStart = field.findCoordsById(foundIdCells[i]);
-                        (int x, int y) coordsFinish = field.findCoordsById(foundIdCells[i+1]);
+                        (int x, int y) coordsFinish = field.findCoordsById(foundIdCells[i + 1]);
 
                         //запускаем алгоритм поиска пути
-                        if(field.array[coordsStart.x, coordsStart.y].getRandomNum()!=0 &&
-                           field.array[coordsFinish.x, coordsFinish.y].getRandomNum()!= 0)
+                        if (field.array[coordsStart.x, coordsStart.y].getRandomNum() != 0 &&
+                           field.array[coordsFinish.x, coordsFinish.y].getRandomNum() != 0)
                         {
                             //PathExists = move.FindWave(
                             //    coordsStart.y, coordsStart.x,
                             //    coordsFinish.y, coordsFinish.x,
                             //    field.array);
                             int[,] intArray = field.toIntArray(0);
-                            PathExists = searchPathLee(intArray, coordsStart,coordsFinish);
-                                
+                            PathExists = searchPathAStar(coordsStart, coordsFinish);
+
                         }
 
                         //если нашли путь выходим из внутреннего цикла
@@ -103,17 +105,17 @@ namespace genField
                             //coordsCell = (2, 2);
                             PathFound = false;
                             return 0;
-                            
+
                         }
 
                     }
                     //если ячейка не может соединиться ни с какой другой того же типа
                     //, то берем следующую
-                    if (coordsCell.y < field.widthField-1)
-                       coordsCell.y++;
+                    if (coordsCell.y < field.widthField - 1)
+                        coordsCell.y++;
                     else
                     {
-                        if(coordsCell.x < field.heightField - 1)
+                        if (coordsCell.x < field.heightField - 1)
                         {
                             coordsCell.x++;
                             coordsCell.y = 2;
@@ -155,7 +157,7 @@ namespace genField
          * Фукнция ищет id всех ячеек одного типа.
          * В качестве параметра принимает номер типа (randomNum).
          * Возвращаемое значение: список найденных однотипных ячеек.
-        */  
+        */
         private List<int> searchSimilarCells(int type)
         {
             // Переменная хранит в себе список id найденных однотипных ячеек
@@ -164,8 +166,8 @@ namespace genField
              * Начальные координаты цикла (2,2) потому что(0,0) это рамка,
              * а(1, 1) это начальное незаполненное поле для поиска пути.
              */
-            for (int i = 2; i < field.heightField-2; i++)
-                for(int j = 2; j < field.widthField-2; j++)
+            for (int i = 2; i < field.heightField - 2; i++)
+                for (int j = 2; j < field.widthField - 2; j++)
                 {
                     // если мы нашли на карте (в array) ячейку с тем же типом,
                     // что и передали, то записываем в список
@@ -177,35 +179,26 @@ namespace genField
             return OneTypeCollection;
         }
 
-        private bool searchPathLee(int[,] intArray, (int i, int j) firstClick, (int i, int j) secondClick)
+        private bool searchPathAStar((int i, int j) firstClick, (int i, int j) secondClick)
         {
-            intArray[firstClick.i, firstClick.j] = (int)Figures.StartPosition;
-            intArray[secondClick.i, secondClick.j] = (int)Figures.Destination;
-            //Print(my);
+            Point start = new Point(firstClick.i, firstClick.j);
+            Point finish = new Point(secondClick.i, secondClick.j);
 
-            var li = new LeeAlgorithm(intArray);
-            //Console.WriteLine(li.PathFound);
-            if (li.PathFound)
+            SettingsField settings = new SettingsField(field, field.widthField, field.heightField);
+            var path = settings.LittlePathfinder(start, finish);
+
+            if (path == null) { Debug.Log("Нет пути"); return false; }
+            else
             {
-                foreach (var item in li.Path)
-                {
-                    if (item == li.Path.Last())
-                        intArray[item.Item1, item.Item2] = (int)Figures.StartPosition;
-                    else if (item == li.Path.First())
-                        intArray[item.Item1, item.Item2] = (int)Figures.Destination;
-                    else
-                        intArray[item.Item1, item.Item2] = (int)Figures.Path;
-                }
-                //Print(li.ArrayGraph);
-                //Console.WriteLine("Длина " + li.LengthPath);
-                Debug.Log("Путь найден");
+                Debug.Log("Есть путь");
+                //settings.PrintField(1);
+                //for (int i = 0; i < path.Count(); i++)
+                //{
+                //    Debug.Log(path[i]);
+                //}
                 return true;
             }
-            else
-                Debug.Log("Путь не найден");
-            return false;
         }
-    }
 
-    
+    }
 }

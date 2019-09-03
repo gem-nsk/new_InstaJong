@@ -1,5 +1,4 @@
-﻿using Finder;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -55,7 +54,6 @@ public class ClickButton : MonoBehaviour
         int idSecondClick = tuples[1].Item1;
         int rNSecondClick = tuples[1].Item2;
 
-        //genField.Move move = new genField.Move();
         
         GameControllerScr gameController = GameObject.Find("Main Camera").GetComponent(typeof(GameControllerScr)) as GameControllerScr;
 
@@ -64,8 +62,6 @@ public class ClickButton : MonoBehaviour
 
             var firstCoords = gameController.field.findCoordsById(idFirstClick);
             var secondCoords = gameController.field.findCoordsById(idSecondClick);
-            int[,] intArray = gameController.field.toIntArray(0);
-            //bool find = move.FindWave(firstCoords.j,firstCoords.i, secondCoords.j, secondCoords.i, gameController.field.array);
 
             //bool flg = false;
 
@@ -83,6 +79,7 @@ public class ClickButton : MonoBehaviour
             //{
             //    flg = true;
             //}
+
             bool find = findPath(gameController.field, firstCoords, secondCoords);
             if (find == true)
             {
@@ -97,11 +94,11 @@ public class ClickButton : MonoBehaviour
 
                 panel.color = UnityEngine.Color.white * 0.0F;
                 Debug.Log("Delete " + idFirstClick + " and " + idSecondClick);
-                //if (idFirstClick == gameController.pathParser.path.idFirst
-                //    && idSecondClick == gameController.pathParser.path.idSecond)
-                //{
-                //    gameController.searchPath = true;
-                //}
+                if (idFirstClick == gameController.pathParser.path.idFirst
+                    || idSecondClick == gameController.pathParser.path.idSecond)
+                {
+                    gameController.searchPath = true;
+                }
             }
         }
         Buttons.Clear();
@@ -113,12 +110,6 @@ public class ClickButton : MonoBehaviour
 
     private bool findPath(Field field, (int i, int j) firstClick, (int i, int j) secondClick)
     {
-        //intArray[firstClick.i, firstClick.j] = (int)Figures.StartPosition;
-        //intArray[secondClick.i, secondClick.j] = (int)Figures.Destination;
-        //Print(my);
-
-        //var li = new LeeAlgorithm(intArray);
-        //Console.WriteLine(li.PathFound);
 
         Point start = new Point(firstClick.i, firstClick.j);
         Point finish = new Point(secondClick.i, secondClick.j);
@@ -130,11 +121,6 @@ public class ClickButton : MonoBehaviour
         else
         {
             Debug.Log("Есть путь");
-            //settings.PrintField(1);
-            for (int i = 0; i < path.Count(); i++)
-            {
-                Debug.Log(path[i]);
-            }
             return true;
         }
     }

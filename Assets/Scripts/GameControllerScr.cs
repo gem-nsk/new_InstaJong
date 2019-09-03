@@ -44,10 +44,10 @@ public class GameControllerScr : MonoBehaviour
             placeCells();
             refresh = false;
         }
-        //if (searchPath == true)
-        //{
-        //    SearchPath();
-        //}
+        if (searchPath == true)
+        {
+            SearchPath();
+        }
 
     }
 
@@ -68,7 +68,7 @@ public class GameControllerScr : MonoBehaviour
         //field = new Field(20, 13, 36, 4);
         //field.initField(true);
         //field.generateField();
-        //SearchPath();
+        SearchPath();
         placeCells();
         
     }
