@@ -8,6 +8,9 @@ using genField;
 public class GameControllerScr : MonoBehaviour
 {
     public int cellCount;
+    //private LineRenderer lr;
+
+    //public Material mat;
 
     public List<CellScr> AllCells = new List<CellScr>();
 
@@ -24,6 +27,7 @@ public class GameControllerScr : MonoBehaviour
 
     public bool searchPath = true;
 
+    
 
     void Start()
     {
@@ -52,7 +56,6 @@ public class GameControllerScr : MonoBehaviour
         transformUnity.fromUnityToFile(field);
     }
 
-
     public void CreateButtonCells()
     {
         mapGenerator = new MapGenerator();
@@ -71,6 +74,7 @@ public class GameControllerScr : MonoBehaviour
 
     public void SearchPath()
     {
+        List<Transform> forLine = new List<Transform>();
         Debug.Log("Ищу путь...");
         if (pathParser.parse(field) < 0) Refresh();
         else
@@ -87,6 +91,7 @@ public class GameControllerScr : MonoBehaviour
                     {
                         var ChildButton = child.gameObject.GetComponent<Image>();
                         ChildButton.color = UnityEngine.Color.yellow;
+                        forLine.Add(child);
                     }
                 }
 
@@ -94,8 +99,13 @@ public class GameControllerScr : MonoBehaviour
                 Debug.Log(pathParser.path);
             }
         }
-        
-
+        Debug.Log(forLine.Count);
+        if (forLine.Count == 2)
+        {
+            CreateLine(forLine[0], forLine[1]);
+            CreateLine(forLine[1], forLine[0]);
+            forLine.Clear();
+        }
     }
 
     public void loadMap()
@@ -139,5 +149,22 @@ public class GameControllerScr : MonoBehaviour
         SearchPath();
     }
 
+
+    private void CreateLine(Transform p1, Transform p2)
+    {
+        var lr = p1.gameObject.GetComponent<LineRenderer>();
+        lr.material = new Material(Shader.Find("Sprites/Default"));
+        lr.material.color = Color.red;
+        lr.sortingOrder = 4;
+        lr.sortingLayerName = "UI";
+        lr.useWorldSpace = false;
+        lr.SetWidth(0.5f, 0.5f);
+        // Set some positions
+        Vector3[] positions = new Vector3[2];
+        positions[0] = p1.position;
+        positions[1] = p2.position;
+        //lr.positionCount = positions.Length;
+        lr.SetPositions(positions);
+    }
 
 }
