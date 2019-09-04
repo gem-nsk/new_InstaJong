@@ -72,17 +72,30 @@ public class GameControllerScr : MonoBehaviour
     public void SearchPath()
     {
         Debug.Log("Ищу путь...");
-        if(pathParser.parse(field) < 0) Debug.Log("Нет его");
+        if (pathParser.parse(field) < 0) Refresh();
         else
         {
             if (pathParser.PathExists == true)
             {
+
+                string IDFirst = "cellButton" + pathParser.path.idFirst;
+                string IDSecond = "cellButton" + pathParser.path.idSecond;
+                foreach (Transform child in cellGroup)
+                {
+
+                    if (child.name == IDFirst || child.name == IDSecond)
+                    {
+                        var ChildButton = child.gameObject.GetComponent<Image>();
+                        ChildButton.color = UnityEngine.Color.yellow;
+                    }
+                }
+
                 searchPath = false;
                 Debug.Log(pathParser.path);
             }
         }
-
         
+
     }
 
     public void loadMap()
@@ -100,6 +113,7 @@ public class GameControllerScr : MonoBehaviour
             var coords = field.findCoordsById(i + 1);
             GameObject tmpCell = Instantiate(cellButton);
             tmpCell.transform.SetParent(cellGroup, false);
+            tmpCell.name = "cellButton" + (i+1);
             tmpCell.GetComponent<CellScr>().id = field.array[coords.i, coords.j].getId();
             tmpCell.GetComponent<CellScr>().randomNum = field.array[coords.i, coords.j].getRandomNum();
             tmpCell.GetComponent<CellScr>().SetState(field.array[coords.i, coords.j].getState());
@@ -116,6 +130,13 @@ public class GameControllerScr : MonoBehaviour
             GameObject.Destroy(child.gameObject);
             
         }
+    }
+
+    public void Refresh()
+    {
+        field = field.refreshField(field);
+        refresh = true;
+        SearchPath();
     }
 
 

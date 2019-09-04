@@ -47,7 +47,7 @@ namespace AStarPathfinder
                 if (GetCountTurnes(points) <= 2)
                 {
                     for (int i = 0; i < points.Count() - 1; i++)
-                        fieldForFinder[points[i + 1].X, points[i + 1].Y].value = -1;
+                        fieldForFinder[points[i].X, points[i].Y].value = -1;
                     correctPathIsFound = true;
                 }
                 else ClearField(points);

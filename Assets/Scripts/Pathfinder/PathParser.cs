@@ -12,7 +12,6 @@ namespace genField
 {
     public class PathParser
     {
-        private Move move;
         private Field field;
 
         // флаг, кторый обозначает найден ли пользователем сохраненный путь
@@ -30,22 +29,15 @@ namespace genField
              *  - генерация карты
              *  - волновой метод поиска пути
              */
-            //move = new Move();
 
         }
 
         //функция поиска возможного хода
         public int parse(Field field)
         {
-            //проверка флагов, чтобы не искали заново
-            //if (PathFound == false) return 0;
-            //if (PathExists == true) return 0;
-
             this.field = field;
             PathFound = false;
             PathExists = false;
-
-
 
             //флаг для обозначения нашли возможный ход или нет
             bool findFlag = false;
@@ -56,40 +48,39 @@ namespace genField
              */
             (int x, int y) coordsCell = (2, 2);
 
-            //ищем, пока не будет найден возможный ход
-            while (findFlag == false)
+            if(PathExists == false)
             {
-                //берем id и randomNum 
-
-                //int id = field.array[coordsCell.x, coordsCell.y].getId();
-                int randomNum = field.array[coordsCell.x, coordsCell.y].getRandomNum();
-
-                //ищем все ячейки с одинаковым типом и записываем в список
-                List<int> foundIdCells = searchSimilarCells(randomNum);
-
-                /*
-                 * Процесс поиска происходит следующим образом
-                 * перебором среди списка однотипных ячеек ищем пути
-                 * если путь есть, то сохраняем этот путь и завершаем поиск
-                 * если нет, то берем следующий тип и проводим те же операции
-                 */
-                if (PathExists == false)
+                //ищем, пока не будет найден возможный ход
+                while (findFlag == false)
                 {
+                    //берем id и randomNum 
+
+                    //int id = field.array[coordsCell.x, coordsCell.y].getId();
+                    int randomNum = field.array[coordsCell.x, coordsCell.y].getRandomNum();
+
+                    //ищем все ячейки с одинаковым типом и записываем в список
+                    List<int> foundIdCells = searchSimilarCells(randomNum);
+
+                    /*
+                     * Процесс поиска происходит следующим образом
+                     * перебором среди списка однотипных ячеек ищем пути
+                     * если путь есть, то сохраняем этот путь и завершаем поиск
+                     * если нет, то берем следующий тип и проводим те же операции
+                     */
                     for (int i = 0; i < foundIdCells.Count - 1; i++)
                     {
                         //проверяем, не заблокированы ли ячейки, если хоть одна заблокирована,
                         // смысла проводить вычисления нет
-                        if (isBlocked(foundIdCells[i]) || isBlocked(foundIdCells[i + 1])) continue;
+                        //if (isBlocked(foundIdCells[i + 1])) continue;
                         //берем координаты первой и второй ячейки
                         (int x, int y) coordsStart = field.findCoordsById(foundIdCells[i]);
                         (int x, int y) coordsFinish = field.findCoordsById(foundIdCells[i + 1]);
-                        Debug.Log(coordsStart + "and"  + coordsFinish);
+                        Debug.Log(coordsStart + "and" + coordsFinish);
                         //запускаем алгоритм поиска пути
                         if (field.array[coordsStart.x, coordsStart.y].getRandomNum() != 0 &&
                            field.array[coordsFinish.x, coordsFinish.y].getRandomNum() != 0)
                         {
                             PathExists = searchPathAStar(coordsStart, coordsFinish);
-
                         }
 
                         //если нашли путь выходим из внутреннего цикла
@@ -97,33 +88,38 @@ namespace genField
                         {
                             findFlag = true;
                             path = (foundIdCells[i], foundIdCells[i + 1]);
-                            coordsCell.x = 2;
-                            coordsCell.y = 2;
                             PathFound = false;
                             return 0;
-
                         }
 
                     }
                     /***********************************ПРОБЛЕМА ЗДЕСЬ*************************************/
                     //если ячейка не может соединиться ни с какой другой того же типа
                     //, то берем следующую
+                    if (coordsCell.y >= field.widthField - 1 && coordsCell.x >= field.heightField - 1) return -1;
                     if (coordsCell.y < field.widthField - 1)
                         coordsCell.y++;
-                    else if(coordsCell.x < field.heightField - 1)
+                    else
                     {
-                        coordsCell.x++;
-                        coordsCell.y = 2;
+                        if(coordsCell.x < field.heightField - 1)
+                        {
+                            coordsCell.x++;
+                            coordsCell.y = 2;
+                        }
+                        else
+                        {
+                            coordsCell.x = 2;
+                        }
+                        
+                        
                     }
-                    else if(coordsCell.x >= field.heightField - 1 && coordsCell.y >= field.widthField - 1)
-                    {
-                        coordsCell.x = 2;
-                        coordsCell.y = 2;
-                        //return -1;
-                    }
+                    
                     /*************************************(03.09.2019)*************************************/
+
+
                 }
             }
+            
             return 0;
         }
 
@@ -188,11 +184,8 @@ namespace genField
             SettingsField settings = new SettingsField(field, field.widthField, field.heightField);
             var path = settings.LittlePathfinder(start, finish);
 
-            if (path == null) {return false; }
-            else
-            {
-                return true;
-            }
+            if (path == null) return false;
+            else return true;
         }
 
     }
