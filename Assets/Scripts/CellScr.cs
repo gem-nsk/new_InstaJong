@@ -61,18 +61,18 @@ public class CellScr : MonoBehaviour
         }
 
 
-        public int GetRandom(int curentNum)
-        {
+        //public int GetRandom(int curentNum)
+        //{
 
-            for (int j = curentNum; j < mas.Length; j++)
-            {
-                randomNum = mas[j];
+        //    for (int j = curentNum; j < mas.Length; j++)
+        //    {
+        //        randomNum = mas[j];
 
-                return randomNum;
-            }
+        //        return randomNum;
+        //    }
 
-            return randomNum;
-        }
+        //    return randomNum;
+        //}
 
     //private void OnPostRender()
     //{

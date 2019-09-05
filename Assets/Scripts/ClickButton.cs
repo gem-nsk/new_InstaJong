@@ -14,6 +14,8 @@ public class ClickButton : MonoBehaviour
     int firstClick;
     int secondClick;
 
+    private List<Point> path;
+
     public Image panel;
 
     public static List<System.Tuple<int, int>> Buttons;
@@ -28,6 +30,7 @@ public class ClickButton : MonoBehaviour
     {
         Buttons = new List<System.Tuple<int, int>>();
         panel = GetComponent<Image>();
+        //StartCoroutine(Example());
     }  
 
     void Update()
@@ -46,7 +49,7 @@ public class ClickButton : MonoBehaviour
             else second = Click;
             var clickedButtons = System.Tuple.Create(Click.id, Click.randomNum);
             Buttons.Add(clickedButtons);
-            Debug.Log(Buttons.Count);
+            //Debug.Log(Buttons.Count);
             objects.first = first;
             objects.second = second;
 
@@ -94,6 +97,8 @@ public class ClickButton : MonoBehaviour
 
             if (flg == true)
             {
+                gameController.CreateLine(path);
+                
                 first.SetState(0);
                 second.SetState(0);
 
@@ -106,6 +111,8 @@ public class ClickButton : MonoBehaviour
                 objects.first.randomNum = 0;
                 objects.second.randomNum = 0;
 
+                
+
                 panel.color = UnityEngine.Color.white * 0.0F;
                 Debug.Log("Delete " + idFirstClick + " and " + idSecondClick);
                 if (idFirstClick == gameController.pathParser.path.idFirst
@@ -117,10 +124,12 @@ public class ClickButton : MonoBehaviour
                     //Debug.Log("find path");
                 }
 
+                //gameController.ResetLine(gameController.LR);
+
             } 
         } //else panel.color = normCol;
 
-
+        
         Buttons.Clear();
         first = null;
         second = null;
@@ -135,7 +144,7 @@ public class ClickButton : MonoBehaviour
         Point finish = new Point(secondClick.i, secondClick.j);
 
         SettingsField settings = new SettingsField(field, field.widthField, field.heightField);
-        var path = settings.LittlePathfinder(start, finish);
+        path = settings.LittlePathfinder(start, finish);
 
         if (path == null) {return false; }
         else
@@ -144,9 +153,5 @@ public class ClickButton : MonoBehaviour
         }
     }
 
-    private void createLine()
-    {
 
-    }
-    
 }

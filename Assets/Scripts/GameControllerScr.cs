@@ -16,6 +16,8 @@ public class GameControllerScr : MonoBehaviour
     public List<CellScr> AllCells = new List<CellScr>();
 
     private Camera mainCamera;
+    private GameObject[] Line;
+    public LineRenderer LR;
 
     public Field field;
     public PathParser pathParser;
@@ -33,9 +35,12 @@ public class GameControllerScr : MonoBehaviour
 
     void Start()
     {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
         transformUnity = new TransformUnity();
         pathParser = new PathParser();
         mainCamera = Camera.main;
+        LR = new LineRenderer();
+        Line = GameObject.FindGameObjectsWithTag("Line");
         if (loadGame == false)
         {
             CreateButtonCells();
@@ -43,6 +48,8 @@ public class GameControllerScr : MonoBehaviour
         else {
             loadMap();
         }
+        
+        Camera.main.transparencySortMode = TransparencySortMode.Orthographic;
     }
 
     private void Update()
@@ -94,23 +101,21 @@ public class GameControllerScr : MonoBehaviour
                     if (child.name == IDFirst || child.name == IDSecond)
                     {
                         var ChildButton = child.gameObject.GetComponent<Image>();
-                        ChildButton.color = UnityEngine.Color.yellow;
+                        //ChildButton.color = UnityEngine.Color.yellow;
                     }
                     
                 }
 
                 searchPath = false;
                 Debug.Log(pathParser.path);
-                forLine =  fromPointsToTransform(pathParser.points);
-                Debug.Log(forLine.Count);
-                CreateLine(forLine);
+                //CreateLine(pathParser.points);
             }
         }
         
         
     }
 
-    public List<Transform> fromPointsToTransform(List<Point> points)
+    private List<Transform> fromPointsToTransform(List<Point> points)
     {
         List<Transform> pathLine = new List<Transform>();
 
@@ -171,16 +176,18 @@ public class GameControllerScr : MonoBehaviour
     }
 
 
-    private void CreateLine(List<Transform> path)
+    public void CreateLine(List<Point> points)
     {
-        LineRenderer LR = new LineRenderer();
-        LR = mainCamera.gameObject.GetComponent<LineRenderer>();
-        LR.material = new Material(Shader.Find("Sprites/Default"));
+        List<Transform> path = fromPointsToTransform(points);
+        WaitForTime wait = Line[0].gameObject.GetComponent<WaitForTime>();
+        LR = Line[0].gameObject.GetComponent<LineRenderer>();
+        wait.Test();
         LR.material.color = UnityEngine.Color.red;
         LR.sortingOrder = 4;
-        LR.sortingLayerName = "UI";
+        LR.sortingLayerName = "Cell";
         LR.useWorldSpace = true;
-        LR.SetWidth(0.1f, 0.1f);
+        LR.startWidth = 0.1f;
+        LR.endWidth = 0.1f;
 
         if (path.Count != 0)
         {
@@ -189,22 +196,34 @@ public class GameControllerScr : MonoBehaviour
             LR.positionCount = path.Count;
             for (int i = 0; i < path.Count; i++)
             {
+                var pointPath = new Vector3(path[i].position.x, path[i].position.y, 100);
+                positions[i] = pointPath;
                 
-                positions[i] = path[i].position;
-                
-                Debug.Log(path[i].position);
+                //Debug.Log(path[i].position);
             }
             LR.SetPositions(positions);
             //ResetLine(LR);
-
+            //waiter();
         }
         
-
     }
 
     public void ResetLine(LineRenderer lr)
     {
+        Debug.Log("clear");
+        //yield return new WaitForSeconds(5);
         lr.positionCount = 0;
     }
+
+    //public IEnumerator waiter()
+    //{
+    //    CreateLine(points);
+    //    Wait for 4 seconds
+    //    Debug.Log("wait");
+    //    yield return new WaitForSeconds(5);
+
+    //}
+
+    
 
 }
