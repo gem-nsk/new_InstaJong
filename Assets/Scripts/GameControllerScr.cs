@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using genField;
+using System.Drawing;
 
 public class GameControllerScr : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class GameControllerScr : MonoBehaviour
     //public Material mat;
 
     public List<CellScr> AllCells = new List<CellScr>();
+
+    private Camera mainCamera;
 
     public Field field;
     public PathParser pathParser;
@@ -27,12 +30,12 @@ public class GameControllerScr : MonoBehaviour
 
     public bool searchPath = true;
 
-    
 
     void Start()
     {
         transformUnity = new TransformUnity();
         pathParser = new PathParser();
+        mainCamera = Camera.main;
         if (loadGame == false)
         {
             CreateButtonCells();
@@ -58,15 +61,14 @@ public class GameControllerScr : MonoBehaviour
 
     public void CreateButtonCells()
     {
-        mapGenerator = new MapGenerator();
-        var path = Application.dataPath + "/Resources/";
-        Debug.Log(path);
-        var map = mapGenerator.mapFromFile(path + "map.txt");
-        field = mapGenerator.mapFromString(map.map,map.width,map.height);
+        //mapGenerator = new MapGenerator();
+        //var path = Application.dataPath + "/Resources/";
+        //var map = mapGenerator.mapFromFile(path + "map.txt");
+        //field = mapGenerator.mapFromString(map.map,map.width,map.height);
 
-        //field = new Field(20, 13, 36, 4);
-        //field.initField(true);
-        //field.generateField();
+        field = new Field(20, 13, 36, 4);
+        field.initField(true);
+        field.generateField();
         SearchPath();
         placeCells();
         
@@ -75,12 +77,14 @@ public class GameControllerScr : MonoBehaviour
     public void SearchPath()
     {
         List<Transform> forLine = new List<Transform>();
+        
         Debug.Log("Ищу путь...");
         if (pathParser.parse(field) < 0) Refresh();
         else
         {
             if (pathParser.PathExists == true)
             {
+                
 
                 string IDFirst = "cellButton" + pathParser.path.idFirst;
                 string IDSecond = "cellButton" + pathParser.path.idSecond;
@@ -91,21 +95,39 @@ public class GameControllerScr : MonoBehaviour
                     {
                         var ChildButton = child.gameObject.GetComponent<Image>();
                         ChildButton.color = UnityEngine.Color.yellow;
-                        forLine.Add(child);
                     }
+                    
                 }
 
                 searchPath = false;
                 Debug.Log(pathParser.path);
+                forLine =  fromPointsToTransform(pathParser.points);
+                Debug.Log(forLine.Count);
+                CreateLine(forLine);
             }
         }
-        Debug.Log(forLine.Count);
-        if (forLine.Count == 2)
+        
+        
+    }
+
+    public List<Transform> fromPointsToTransform(List<Point> points)
+    {
+        List<Transform> pathLine = new List<Transform>();
+
+        for(int i = 0; i < points.Count; i++)
         {
-            CreateLine(forLine[0], forLine[1]);
-            CreateLine(forLine[1], forLine[0]);
-            forLine.Clear();
+            foreach (Transform child in cellGroup)
+            {
+                string ID = "cellButton" + field.findIdByCoords(points[i].X, points[i].Y);
+                if (child.name == ID)
+                {
+                    pathLine.Add(child);
+                }
+
+            }
         }
+
+        return pathLine;
     }
 
     public void loadMap()
@@ -138,7 +160,6 @@ public class GameControllerScr : MonoBehaviour
         foreach (Transform child in cellGroup)
         {
             GameObject.Destroy(child.gameObject);
-            
         }
     }
 
@@ -150,21 +171,40 @@ public class GameControllerScr : MonoBehaviour
     }
 
 
-    private void CreateLine(Transform p1, Transform p2)
+    private void CreateLine(List<Transform> path)
     {
-        var lr = p1.gameObject.GetComponent<LineRenderer>();
-        lr.material = new Material(Shader.Find("Sprites/Default"));
-        lr.material.color = Color.red;
-        lr.sortingOrder = 4;
-        lr.sortingLayerName = "UI";
-        lr.useWorldSpace = false;
-        lr.SetWidth(0.5f, 0.5f);
-        // Set some positions
-        Vector3[] positions = new Vector3[2];
-        positions[0] = p1.position;
-        positions[1] = p2.position;
-        //lr.positionCount = positions.Length;
-        lr.SetPositions(positions);
+        LineRenderer LR = new LineRenderer();
+        LR = mainCamera.gameObject.GetComponent<LineRenderer>();
+        LR.material = new Material(Shader.Find("Sprites/Default"));
+        LR.material.color = UnityEngine.Color.red;
+        LR.sortingOrder = 4;
+        LR.sortingLayerName = "UI";
+        LR.useWorldSpace = true;
+        LR.SetWidth(0.1f, 0.1f);
+
+        if (path.Count != 0)
+        {
+            // Set some positions
+            Vector3[] positions = new Vector3[path.Count];
+            LR.positionCount = path.Count;
+            for (int i = 0; i < path.Count; i++)
+            {
+                
+                positions[i] = path[i].position;
+                
+                Debug.Log(path[i].position);
+            }
+            LR.SetPositions(positions);
+            //ResetLine(LR);
+
+        }
+        
+
+    }
+
+    public void ResetLine(LineRenderer lr)
+    {
+        lr.positionCount = 0;
     }
 
 }

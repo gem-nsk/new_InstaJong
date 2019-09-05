@@ -13,6 +13,7 @@ namespace genField
     public class PathParser
     {
         private Field field;
+        public List<Point> points;
 
         // флаг, кторый обозначает найден ли пользователем сохраненный путь
         public bool PathFound { get; set; }
@@ -75,7 +76,7 @@ namespace genField
                         //берем координаты первой и второй ячейки
                         (int x, int y) coordsStart = field.findCoordsById(foundIdCells[i]);
                         (int x, int y) coordsFinish = field.findCoordsById(foundIdCells[i + 1]);
-                        Debug.Log(coordsStart + "and" + coordsFinish);
+                        //Debug.Log(coordsStart + "and" + coordsFinish);
                         //запускаем алгоритм поиска пути
                         if (field.array[coordsStart.x, coordsStart.y].getRandomNum() != 0 &&
                            field.array[coordsFinish.x, coordsFinish.y].getRandomNum() != 0)
@@ -182,9 +183,9 @@ namespace genField
             Point finish = new Point(secondClick.i, secondClick.j);
 
             SettingsField settings = new SettingsField(field, field.widthField, field.heightField);
-            var path = settings.LittlePathfinder(start, finish);
+            points = settings.LittlePathfinder(start, finish);
 
-            if (path == null) return false;
+            if (points == null) return false;
             else return true;
         }
 

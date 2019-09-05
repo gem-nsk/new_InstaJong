@@ -161,6 +161,12 @@ namespace genField
             return (0, 0);
         }
 
+        //функция поиска позиции ячейки массива по координатам
+        public int findIdByCoords(int i, int j)
+        {
+            return array[i, j].getId();
+        }
+
         public int[,] toIntArray(int num)
         {
             int[,] intArray = new int[heightField, widthField];
