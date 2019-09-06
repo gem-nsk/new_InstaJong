@@ -102,7 +102,7 @@ public class GameControllerScr : MonoBehaviour
                 searchPath = false;
                 Debug.Log(pathParser.path);
                 forLine =  fromPointsToTransform(pathParser.points);
-                Debug.Log(forLine.Count);
+                //Debug.Log(forLine.Count);
                 CreateLine(forLine);
             }
         }
@@ -192,7 +192,7 @@ public class GameControllerScr : MonoBehaviour
                 
                 positions[i] = path[i].position;
                 
-                Debug.Log(path[i].position);
+                //Debug.Log(path[i].position);
             }
             LR.SetPositions(positions);
             //ResetLine(LR);

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using genField;
+using UnityEngine.UI;
+using UnityEngine;
 
 namespace AStarPathfinder
 {
@@ -96,11 +98,13 @@ namespace AStarPathfinder
 
         private int GetCountTurnes(List<Point> points)
         {
+            fieldForFinder[points[0].X, points[0].Y].state = fieldForFinder[points[1].X, points[1].Y].state;
             int countTurnes = 0;
-            for(int i = 1; i < points.Count()-1; i++)
+            for(int i = 0; i < points.Count()-1; i++)
                 if (fieldForFinder[points[i].X, points[i].Y].state != fieldForFinder[points[i + 1].X, points[i + 1].Y].state)
                     countTurnes++;
             //Console.WriteLine(countTurnes);
+            //Debug.Log(countTurnes);
             return countTurnes;
         } 
 

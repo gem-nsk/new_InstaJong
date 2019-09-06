@@ -46,7 +46,7 @@ public class ClickButton : MonoBehaviour
             else second = Click;
             var clickedButtons = System.Tuple.Create(Click.id, Click.randomNum);
             Buttons.Add(clickedButtons);
-            Debug.Log(Buttons.Count);
+            //Debug.Log(Buttons.Count);
             objects.first = first;
             objects.second = second;
 
@@ -107,7 +107,7 @@ public class ClickButton : MonoBehaviour
                 objects.second.randomNum = 0;
 
                 panel.color = UnityEngine.Color.white * 0.0F;
-                Debug.Log("Delete " + idFirstClick + " and " + idSecondClick);
+                //Debug.Log("Delete " + idFirstClick + " and " + idSecondClick);
                 if (idFirstClick == gameController.pathParser.path.idFirst
                     || idSecondClick == gameController.pathParser.path.idSecond
                     || idFirstClick == gameController.pathParser.path.idSecond
