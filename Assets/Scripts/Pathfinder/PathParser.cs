@@ -72,7 +72,7 @@ namespace genField
                     {
                         //проверяем, не заблокированы ли ячейки, если хоть одна заблокирована,
                         // смысла проводить вычисления нет
-                        //if (isBlocked(foundIdCells[i + 1])) continue;
+                        if (isBlocked(foundIdCells[i + 1]) || isBlocked(foundIdCells[i])) continue;
                         //берем координаты первой и второй ячейки
                         (int x, int y) coordsStart = field.findCoordsById(foundIdCells[i]);
                         (int x, int y) coordsFinish = field.findCoordsById(foundIdCells[i + 1]);

@@ -5,27 +5,33 @@ using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour
 {
-    [Header("Индикатор")]
-    public Slider mySlider;
+    [Header("Timer")]
+    public Slider timerSlider;
 
-    [Header("Осталось времени")]
-    public float timeLeft;
-    public float gameTime;
+    public float TotalTime = 600;
+    private float _time;
 
-
-    void Update()
+    private void Start()
     {
-        timeLeft = mySlider.maxValue;
-        gameTime += (1 * Time.deltaTime)/2;
-        if (gameTime >=1)
+        StartTime();
+    }
+    public void StartTime()
+    {
+        StartCoroutine(TimerProgress());
+    }
+
+    public IEnumerator TimerProgress()
+    {
+        _time = TotalTime;
+        timerSlider.maxValue = TotalTime;
+
+        while(_time > 0)
         {
-            mySlider.value++;
-            timeLeft ++;
-            gameTime = 0;
-            if (mySlider.maxValue == mySlider.value)
-            {
-                SceneManager.LoadScene("Menu");
-            }
+            timerSlider.value = _time;
+
+            _time -= Time.deltaTime;
+            yield return null;
         }
+        Debug.Log("Time is ended!");
     }
 }

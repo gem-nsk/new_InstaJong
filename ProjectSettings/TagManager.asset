@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Field
   - Line
+  - Cell
+  - Music
+  - Data
   layers:
   - Default
   - TransparentFX

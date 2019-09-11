@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Linq;
 using genField;
 using System.Drawing;
 
+
+
 public class GameControllerScr : MonoBehaviour
 {
+
+    public bool Helper = false;
+
     public int cellCount;
     //private LineRenderer lr;
 
     //public Material mat;
+
+    public float DelayBeforeDestroy = 0.3f;
 
     public List<CellScr> AllCells = new List<CellScr>();
 
@@ -31,8 +39,32 @@ public class GameControllerScr : MonoBehaviour
     public static bool refresh { get; set; }
 
     public bool searchPath = true;
+    public bool isRefreshing = false;
+
+    public GridLayoutGroup grid;
+    public ParticleSystem LikeSystem;
+
+    public GameUI ui;
+
+    public static bool Interactable = true;
+    public Image blinkImage;
+
+    public ImagePreviewer _previewer;
 
 
+
+
+    [Header("Player stats")]
+    public PlayerStats stats;
+
+    #region Singleton
+    public static GameControllerScr instance;
+    private void Awake()
+    {
+        instance = this;
+    }
+    #endregion
+    #region MainCode
     void Start()
     {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
@@ -43,13 +75,19 @@ public class GameControllerScr : MonoBehaviour
         Line = GameObject.FindGameObjectsWithTag("Line");
         if (loadGame == false)
         {
-            CreateButtonCells();
+           StartCoroutine( CreateButtonCells());
         }
         else {
             loadMap();
         }
         
         Camera.main.transparencySortMode = TransparencySortMode.Orthographic;
+
+        stats = PlayerStats.GetPlayerStats();
+        stats.LoadData();
+
+        ui.Init();
+
     }
 
     private void Update()
@@ -59,6 +97,10 @@ public class GameControllerScr : MonoBehaviour
             placeCells();
             refresh = false;
         }
+        if(blinkImage != null)
+        {
+            blinkImage.color = new UnityEngine.Color(1,1,1, Mathf.Clamp(Mathf.PingPong(Time.time, 1), 0.5f, 1));
+        }
     }
 
     private void OnDestroy()
@@ -66,7 +108,9 @@ public class GameControllerScr : MonoBehaviour
         transformUnity.fromUnityToFile(field);
     }
 
-    public void CreateButtonCells()
+
+
+    public IEnumerator CreateButtonCells()
     {
         //mapGenerator = new MapGenerator();
         //var path = Application.dataPath + "/Resources/";
@@ -76,22 +120,67 @@ public class GameControllerScr : MonoBehaviour
         field = new Field(20, 13, 36, 4);
         field.initField(true);
         field.generateField();
-        SearchPath();
+        yield return StartCoroutine( SearchPath());
         placeCells();
-        
+
+
+        yield return new WaitForEndOfFrame();
+        grid.enabled = false;
+
+        SortHierarchy();
+
     }
 
-    public void SearchPath()
+    public void SortHierarchy()
+    {
+        if (AllCells.Count > 0)
+        {
+            AllCells.Sort(delegate (CellScr a, CellScr b)
+            {
+                return (a.GetComponent<CellScr>().randomNum).CompareTo(b.GetComponent<CellScr>().randomNum);
+            });
+        }
+
+        for (int i = 0; i < AllCells.Count; i++)
+        {
+            AllCells[i].transform.SetSiblingIndex(i);
+        }
+    }
+
+    public void SetBlinkingImage(CellScr cell)
+    {
+        if(blinkImage)
+        {
+            StandartcolorForFirstCell();   
+        }
+        if (cell.state  == 1)
+        blinkImage = cell.GetComponent<Image>();
+    }
+    public void StopBlinking()
+    {
+        blinkImage = null;
+    }
+
+    public void StandartcolorForFirstCell()
+    {
+        if(blinkImage)
+        {
+            blinkImage.color = new UnityEngine.Color(1, 1, 1);
+            StopBlinking();
+        }
+    }
+
+    public IEnumerator SearchPath()
     {
         List<Transform> forLine = new List<Transform>();
         
         Debug.Log("Ищу путь...");
-        if (pathParser.parse(field) < 0) Refresh();
+        if (pathParser.parse(field) < 0) StartCoroutine( Refresh(false));
         else
         {
             if (pathParser.PathExists == true)
             {
-                
+                yield return null;
 
                 string IDFirst = "cellButton" + pathParser.path.idFirst;
                 string IDSecond = "cellButton" + pathParser.path.idSecond;
@@ -101,7 +190,11 @@ public class GameControllerScr : MonoBehaviour
                     if (child.name == IDFirst || child.name == IDSecond)
                     {
                         var ChildButton = child.gameObject.GetComponent<Image>();
-                        //ChildButton.color = UnityEngine.Color.yellow;
+                        //helper
+                        if(Helper)
+                        {
+                            ChildButton.color = UnityEngine.Color.yellow;
+                        }
                     }
                     
                 }
@@ -111,8 +204,6 @@ public class GameControllerScr : MonoBehaviour
                 //CreateLine(pathParser.points);
             }
         }
-        
-        
     }
 
     private List<Transform> fromPointsToTransform(List<Point> points)
@@ -142,9 +233,12 @@ public class GameControllerScr : MonoBehaviour
         placeCells();
     }
 
+   
     public void placeCells()
     {
         clearField();
+
+
         for (int i = 0; i < cellCount; i++)
         {
             var coords = field.findCoordsById(i + 1);
@@ -168,20 +262,67 @@ public class GameControllerScr : MonoBehaviour
         }
     }
 
-    public void Refresh()
+    public IEnumerator Refresh(bool UseInstaCoins)
     {
+
+        if (isRefreshing)
+            yield break;
+
+        if(UseInstaCoins)
+        {
+            stats.AddInstaCoins(stats.RefreshPrice);
+        }
+
+        isRefreshing = true;
+        int _step = 3;
+
+        StandartcolorForFirstCell();
+
+        foreach (CellScr _cell in AllCells)
+        {
+            if(_cell.randomNum != 0)
+            {
+                _cell.Hide();
+                _step--;
+                if(_step <= 0)
+                {
+                    yield return new WaitForEndOfFrame();
+                    _step = 3;
+                }
+            }
+        }
+        yield return new WaitForSeconds(AllCells[0].LerpTime);
+
+        grid.enabled = true;
+
         field = field.refreshField(field);
+
+
         refresh = true;
-        SearchPath();
+        yield return StartCoroutine( SearchPath());
+
+        yield return new WaitForEndOfFrame();
+
+        grid.enabled = false;
+        
+        SortHierarchy();
+
+        isRefreshing = false;
+        
     }
 
+    public void OpenImagePreview(int id)
+    {
+        _previewer.gameObject.SetActive(true);
+        _previewer.Preview(id);
+    }
 
     public void CreateLine(List<Point> points)
     {
         List<Transform> path = fromPointsToTransform(points);
         WaitForTime wait = Line[0].gameObject.GetComponent<WaitForTime>();
         LR = Line[0].gameObject.GetComponent<LineRenderer>();
-        wait.Test();
+        wait.StartTimer();
         LR.material.color = UnityEngine.Color.red;
         LR.sortingOrder = 4;
         LR.sortingLayerName = "Cell";
@@ -215,6 +356,14 @@ public class GameControllerScr : MonoBehaviour
         lr.positionCount = 0;
     }
 
+    #endregion
+
+    public void PlayLikeParticles(Vector3 pos)
+    {
+        LikeSystem.transform.position = new Vector3(pos.x, pos.y, pos.z - 10);
+        LikeSystem.Play();
+    }
+    
     //public IEnumerator waiter()
     //{
     //    CreateLine(points);
@@ -223,7 +372,4 @@ public class GameControllerScr : MonoBehaviour
     //    yield return new WaitForSeconds(5);
 
     //}
-
-    
-
 }

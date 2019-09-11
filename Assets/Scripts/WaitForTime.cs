@@ -4,21 +4,22 @@ using UnityEngine;
 
 public class WaitForTime : MonoBehaviour
 {
-    // Start is called before the first frame update
+
+    public LineRenderer rend;
+
     void Start()
     {
-        StartCoroutine(Test());
+        StartTimer();
+    }
+    public void StartTimer()
+    {
+        StartCoroutine(DestroyTimer());
     }
 
-    // Update is called once per frame
-    void Update()
+    public IEnumerator DestroyTimer()
     {
-        
-    }
-
-    public IEnumerator Test()
-    {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(GameControllerScr.instance.DelayBeforeDestroy);
+        rend.positionCount = 0;
         Debug.Log("Wait is over");
     }
 }

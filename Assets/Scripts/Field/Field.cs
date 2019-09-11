@@ -69,6 +69,8 @@ namespace genField
             Random random = new Random();
             int rInt;
             int maxRange = countElements;
+
+
             
             for (int n = 0; n < countTypes; n++)
             {
