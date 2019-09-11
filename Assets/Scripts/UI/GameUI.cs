@@ -19,6 +19,13 @@ public class GameUI : MonoBehaviour
         UpdateCoins(GameControllerScr.instance.stats.InstaCoins);
         UpdatePoints(GameControllerScr.instance.stats.Points);
     }
+    private void OnDisable()
+    {
+        GameControllerScr.instance.stats._addInstaCoins -= UpdateCoins;
+        GameControllerScr.instance.stats._addPoints -= UpdatePoints;
+
+    }
+
     public void UpdateCoins(int _coins)
     {
         text_InstaCoins.text = _coins + "";

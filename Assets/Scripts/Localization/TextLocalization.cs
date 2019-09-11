@@ -8,10 +8,15 @@ public class TextLocalization : MonoBehaviour
     public string key;
 
     // Use this for initialization
+    private void Start()
+    {
+        GetText();
+    }
     public void GetText()
     {
         Text text = GetComponent<Text>();
         text.text = LocalizationManager.instance.GetLocalizedValue(key);
+
     }
     private void OnEnable()
     {

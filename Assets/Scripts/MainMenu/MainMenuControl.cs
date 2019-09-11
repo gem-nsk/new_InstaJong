@@ -34,7 +34,7 @@ public class MainMenuControl : MonoBehaviour
     public void NewGamePressed()
     {
 
-        DownloadImagesFromInstagram();
+        //DownloadImagesFromInstagram();
 
         GameControllerScr.loadGame = false;
         SceneManager.LoadScene("Game");
@@ -81,6 +81,11 @@ public class MainMenuControl : MonoBehaviour
             }
             i++;
         }
+    }
+
+    public void Music_button()
+    {
+        Music.instance.SwitchMusic();
     }
 
 }

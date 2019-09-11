@@ -78,12 +78,12 @@ public class GameControllerScr : MonoBehaviour
            StartCoroutine( CreateButtonCells());
         }
         else {
-            loadMap();
+           StartCoroutine(  loadMap());
         }
         
         Camera.main.transparencySortMode = TransparencySortMode.Orthographic;
 
-        stats = PlayerStats.GetPlayerStats();
+        stats = PlayerStats.instance;
         stats.LoadData();
 
         ui.Init();
@@ -226,11 +226,16 @@ public class GameControllerScr : MonoBehaviour
         return pathLine;
     }
 
-    public void loadMap()
+    public IEnumerator loadMap()
     {
         TransformUnity transform = new TransformUnity();
         field  = transform.fromFileToUnity();
         placeCells();
+
+        yield return new WaitForEndOfFrame();
+
+        grid.enabled = false;
+        SortHierarchy();
     }
 
    
@@ -270,7 +275,7 @@ public class GameControllerScr : MonoBehaviour
 
         if(UseInstaCoins)
         {
-            stats.AddInstaCoins(stats.RefreshPrice);
+            stats.AddInstaCoins(-stats.RefreshPrice);
         }
 
         isRefreshing = true;
