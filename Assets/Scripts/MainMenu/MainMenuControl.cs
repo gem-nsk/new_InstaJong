@@ -72,12 +72,22 @@ public class MainMenuControl : MonoBehaviour
         var list = webClient.DownloadString("https://api.instagram.com/v1/users/self/media/recent/?access_token=" + token);
         var dyn = JsonConvert.DeserializeObject<RootObject>(list);
         int i = 1;
+
+        
+
         foreach (var data in dyn.data)
         {
             string url = data.images.thumbnail.url;
+            string urlStandard = data.images.standard_resolution.url;
+            string caption_text = data.caption.text;
+            Debug.Log(caption_text);
+            List<string> descriptions = new List<string>();
+            descriptions.Add(caption_text);
+            
             using (WebClient client = new WebClient())
             {
-                client.DownloadFileAsync(new Uri(url), @"D:\workspace\InstaJong\Assets\Resources\image\file"+i+".jpg");
+                //client.DownloadFileAsync(new Uri(url), @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\image\file"+i+".jpg");
+                client.DownloadFileAsync(new Uri(urlStandard), @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\imageStandard\file" + i + ".jpg");
             }
             i++;
         }

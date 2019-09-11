@@ -51,7 +51,7 @@ public class GameControllerScr : MonoBehaviour
 
     public ImagePreviewer _previewer;
 
-
+    public List<string> descriptions { get; set; }
 
 
     [Header("Player stats")]
@@ -112,14 +112,14 @@ public class GameControllerScr : MonoBehaviour
 
     public IEnumerator CreateButtonCells()
     {
-        //mapGenerator = new MapGenerator();
-        //var path = Application.dataPath + "/Resources/";
-        //var map = mapGenerator.mapFromFile(path + "map.txt");
-        //field = mapGenerator.mapFromString(map.map,map.width,map.height);
+        mapGenerator = new MapGenerator();
+        var path = Application.dataPath + "/Resources/";
+        var map = mapGenerator.mapFromFile(path + "map.txt");
+        field = mapGenerator.mapFromString(map.map,map.width,map.height);
 
-        field = new Field(20, 13, 36, 4);
-        field.initField(true);
-        field.generateField();
+        //field = new Field(20, 13, 20, 4);
+        //field.initField(true);
+        //field.generateField();
         yield return StartCoroutine( SearchPath());
         placeCells();
 
