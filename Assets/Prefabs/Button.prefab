@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 655918642545751800}
   - component: {fileID: 8292273852291492660}
-  - component: {fileID: 3688872397028231687}
   - component: {fileID: 4347080332539767082}
   m_Layer: 0
   m_Name: Button
@@ -45,18 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d290c34476fb90b4f9ff400899f5c268, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3688872397028231687
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2698507664635026625}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 350f93c490d9c3f4bb551e6c4b7bdef6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4347080332539767082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,6 +57,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellCount: 0
+  DelayBeforeDestroy: 0.3
   AllCells: []
+  LR: {fileID: 0}
   cellButton: {fileID: 0}
   cellGroup: {fileID: 0}
+  searchPath: 1
+  grid: {fileID: 0}
+  LikeSystem: {fileID: 0}
+  blinkImage: {fileID: 0}

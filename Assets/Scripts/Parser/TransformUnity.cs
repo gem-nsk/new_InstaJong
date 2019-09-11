@@ -48,7 +48,7 @@ namespace genField
         //функция сохраняющая массив в файлы
         public void fromUnityToFile(Field field)
         {
-            Debug.Log(Application.temporaryCachePath);
+            //Debug.Log(Application.temporaryCachePath);
             using (StreamWriter sw = new StreamWriter(Application.temporaryCachePath + "States.txt"))
             {
                 for (int i = 0; i < field.heightField; i++)

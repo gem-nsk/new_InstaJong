@@ -47,10 +47,12 @@ public class MainMenuControl : MonoBehaviour
 
     public void Refresh()
     {
-        GameControllerScr gameController = GameObject.Find("Main Camera").GetComponent(typeof(GameControllerScr)) as GameControllerScr;
+        GameControllerScr.instance.StartCoroutine("Refresh");
+
+        /*GameControllerScr gameController = GameObject.Find("Main Camera").GetComponent(typeof(GameControllerScr)) as GameControllerScr;
         Field field = gameController.field.refreshField(gameController.field);
         gameController.field = field;
-        GameControllerScr.refresh = true;
+        GameControllerScr.refresh = true;*/
     }
 
 }

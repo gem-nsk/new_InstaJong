@@ -13,15 +13,11 @@ public class CellScr : MonoBehaviour
     public int id;
     public int randomNum;
 
-    public Color normCol;
-    public Color partiesCol;
+    public Image img;
 
+    public float LerpTime = 1;
 
-    public static int[] mas = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36,
-                 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36,
-                 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36,
-                 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36};
-
+   
    
 
     public void SetState(int i)
@@ -29,50 +25,85 @@ public class CellScr : MonoBehaviour
         state = i;
         if (i == 0)
         {
-            GetComponent<Image>().color = normCol;
+            Hide();
         }
 
         else if (i == 1)
         {
             //GetComponent<Image>().color = partiesCol;
-            
+
             Image button = GetComponent<Image>();
+
+            //old method with Sprite (around 160 batches)
+
+            /*
             String path = "image/file" + randomNum.ToString();
             button.color = new Color32(255, 255, 255, 255);
             button.sprite = Resources.Load<Sprite>(path);
-            
+            */
+
+            //new method
+            if(randomNum != 0)
+            {
+                Show();
+                button.material = AtlasController.instance.GetMaterialById(randomNum);
+            }
             
         }
     }
-    
-        public static void Shuffle(int[] mas)
+
+    public void Hide()
+    {
+        StopCoroutine(CellVisible(false));
+        StartCoroutine(CellVisible(true));
+    }
+    public void Show()
+    {
+        StopCoroutine(CellVisible(true));
+        StartCoroutine(CellVisible(false));
+    }
+
+    // true - hided; false - visible
+    public IEnumerator CellVisible(bool hided)
+    {
+        float _time = 0;
+        while(_time <= LerpTime)
         {
-
-            Random rand = new Random();
-
-            for (int i = mas.Length - 1; i >= 1; i--)
-            {
-                int j = rand.Next(i + 1);
-
-                int tmp = mas[j];
-                mas[j] = mas[i];
-                mas[i] = tmp;
-            }
+            img.color = new Color(1, 1, 1, Mathf.Lerp(hided ? 1 : 0, hided ? 0 : 1, _time / LerpTime));
+            _time += Time.deltaTime;
+            yield return null;
         }
+        img.color = new Color(1, 1, 1, hided ? 0 : 1);
+    }
 
+    public static void Shuffle(int[] mas)
+    {
 
-        public int GetRandom(int curentNum)
+        Random rand = new Random();
+
+        for (int i = mas.Length - 1; i >= 1; i--)
         {
+            int j = rand.Next(i + 1);
 
-            for (int j = curentNum; j < mas.Length; j++)
-            {
-                randomNum = mas[j];
-
-                return randomNum;
-            }
-
-            return randomNum;
+            int tmp = mas[j];
+            mas[j] = mas[i];
+            mas[i] = tmp;
         }
+    }
+
+
+        //public int GetRandom(int curentNum)
+        //{
+
+        //    for (int j = curentNum; j < mas.Length; j++)
+        //    {
+        //        randomNum = mas[j];
+
+        //        return randomNum;
+        //    }
+
+        //    return randomNum;
+        //}
 
     //private void OnPostRender()
     //{
