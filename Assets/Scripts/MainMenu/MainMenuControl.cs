@@ -6,16 +6,11 @@ using genField;
 
 public class MainMenuControl : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject BuyInstaCoins_ui;
 
-    // Update is called once per frame
-    void Update()
+    public void OpenInstaCoins_button()
     {
-        
+        CanvasController.instance.OpenCanvas(BuyInstaCoins_ui);
     }
 
     public void ContinuePressed()

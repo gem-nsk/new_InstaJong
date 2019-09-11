@@ -12,7 +12,7 @@ public class ui_basement : MonoBehaviour
         {
             if(_group == null)
             {
-                GetComponent<CanvasGroup>();
+               _group = GetComponent<CanvasGroup>();
             }
             return _group;
         }
@@ -20,12 +20,12 @@ public class ui_basement : MonoBehaviour
         {
             if (_group == null)
             {
-                GetComponent<CanvasGroup>();
+                _group = GetComponent<CanvasGroup>();
             }
             _group = value;
         }
     }
-    private float SmoothTIme = 1;
+    private float SmoothTIme = 0.3f;
 
     public virtual void Activate()
     {
@@ -34,8 +34,12 @@ public class ui_basement : MonoBehaviour
     }
     public virtual void DeActivate()
     {
-
-        StartCoroutine(SmoothAlpha(0));
+        StartCoroutine(_DeActivate());
+    }
+    public virtual IEnumerator _DeActivate()
+    {
+       yield return StartCoroutine(SmoothAlpha(0));
+        Destroy(gameObject);
     }
 
     IEnumerator SmoothAlpha(float To)
