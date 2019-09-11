@@ -45,7 +45,7 @@ public class LocalizationManager : MonoBehaviour
     }
     public void UpdateTexts()
     {
-        foreach(TextLocalization t in _localizableTexts)
+        foreach (TextLocalization t in _localizableTexts)
         {
             t.GetText();
         }
@@ -70,49 +70,67 @@ public class LocalizationManager : MonoBehaviour
 #if UNITY_EDITOR
         name = DebugLanguage.ToString();
 #endif
-        LoadLocalizedText(name + ".json");
-        while(GetIsReady())
+        StartCoroutine(LoadLocalizedText(name + ".json"));
+        while (!GetIsReady())
         {
             yield return null;
         }
         UpdateTexts();
-
+        Debug.Log("starting text updates");
     }
 
-    public void LoadLocalizedText(string fileName)
+
+    public IEnumerator LoadLocalizedText(string fileName)
     {
         localizedText = new Dictionary<string, string>();
         string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
+        string dataAsJson = "";
+        LocalizationData loadedData = new LocalizationData();
+#if UNITY_EDITOR
 
         if (File.Exists(filePath))
         {
-            string dataAsJson = "";
-#if UNITY_EDITOR
-           dataAsJson  = File.ReadAllText(filePath);
+            dataAsJson = File.ReadAllText(filePath);
 
-#elif UNITY_ANDROID
             filePath = Path.Combine("jar:file://" + Application.dataPath + "!/assets/", fileName);
 
-            WWW reader = new WWW(filePath);
-            while (!reader.isDone)
-            {
-                dataAsJson = reader.text;
-            }
-#endif
-            LocalizationData loadedData = JsonUtility.FromJson<LocalizationData>(dataAsJson);
+
+            loadedData = JsonUtility.FromJson<LocalizationData>(dataAsJson);
 
             for (int i = 0; i < loadedData.items.Length; i++)
             {
                 localizedText.Add(loadedData.items[i].key, loadedData.items[i].value);
             }
 
-            Debug.Log("Data loaded, dictionary contains: " + localizedText.Count + " entries");
+            Debug.Log("Data loaded, dictionary contains: " + localizedText.Count + " entries, file name: " + filePath);
         }
-        else
+#endif
+#if UNITY_ANDROID
+        if(Application.platform == RuntimePlatform.Android)
         {
-            Debug.LogError("Cannot find file!");
-        }
+            WWW _file = new WWW(filePath);
 
+            if (filePath.Contains("://") || filePath.Contains(":///"))
+            {
+                UnityEngine.Networking.UnityWebRequest www = UnityEngine.Networking.UnityWebRequest.Get(filePath);
+                yield return www.Send();
+                /*
+                while (!reader.isDone)
+                {
+                    dataAsJson = reader.text;
+                }*/
+
+                dataAsJson = www.downloadHandler.text;
+            }
+
+            loadedData = JsonUtility.FromJson<LocalizationData>(dataAsJson);
+
+            for (int i = 0; i < loadedData.items.Length; i++)
+            {
+                localizedText.Add(loadedData.items[i].key, loadedData.items[i].value);
+            }
+        }
+#endif
         isReady = true;
     }
 
@@ -132,5 +150,5 @@ public class LocalizationManager : MonoBehaviour
     {
         return isReady;
     }
-
 }
+

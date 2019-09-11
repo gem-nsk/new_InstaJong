@@ -55,4 +55,9 @@ public class MainMenuControl : MonoBehaviour
         GameControllerScr.refresh = true;*/
     }
 
+    public void Music_button()
+    {
+        Music.instance.SwitchMusic();
+    }
+
 }

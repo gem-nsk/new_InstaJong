@@ -16,10 +16,23 @@ public class Music : MonoBehaviour
         }
         set
         {
-            if(_currentMusicId + value >= MusicClips.Length)
+            if (_currentMusicId + value >= MusicClips.Length)
             {
                 _currentMusicId = 0;
             }
+        }
+    }
+
+    private bool _isPlaying;
+    private bool isPlaying {
+        get
+        {
+            return _isPlaying;
+        }
+        set
+        {
+            _isPlaying = value;
+            Debug.Log(_isPlaying);
         }
     }
 
@@ -42,7 +55,21 @@ public class Music : MonoBehaviour
 
     private void Start()
     {
+        int i = PlayerPrefs.GetInt("Music");
+        isPlaying = PlayerPrefs.HasKey("Music") ? ConvertIntToBool(i) : true;
         PlayRepeatMusic();
+    }
+    bool ConvertIntToBool(int i)
+    {
+        switch (i)
+        {
+            case 0:
+                return false;
+            case 1:
+                return true;
+            default:
+                return false;
+        }
     }
 
     public void PlayRepeatMusic()
@@ -50,9 +77,24 @@ public class Music : MonoBehaviour
         StartCoroutine(RepeatMusic());
     }
 
+    public void SwitchMusic()
+    {
+        isPlaying = !isPlaying;
+        PlayerPrefs.SetInt("Music", isPlaying? 1 : 0);
+        switch(isPlaying)
+        {
+            case true:
+                PlayRepeatMusic();
+                break;
+            case false:
+                StopMusic();
+                break;
+        }
+    }
+
     public IEnumerator RepeatMusic()
     {
-        while(true)
+        while(isPlaying)
         {
             yield return new WaitForSeconds(PlayMusicClip(_currentMusicId));
             _currentMusicId++;
@@ -67,5 +109,10 @@ public class Music : MonoBehaviour
         Debug.Log("Next clip after " + MusicClips[id].length + " seconds");
 
         return MusicClips[id].length;
+    }
+
+    public void StopMusic()
+    {
+        source.Stop();
     }
 }

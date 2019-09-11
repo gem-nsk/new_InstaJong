@@ -19,6 +19,21 @@ public class PlayerStats : MonoBehaviour
     public delegate void del_AddInstaCoins(int coins);
     public del_AddInstaCoins _addInstaCoins;
 
+
+    public static PlayerStats instance;
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     //constructor
     public void LoadData()
     {
@@ -34,10 +49,7 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    public static PlayerStats GetPlayerStats()
-    {
-        return GameObject.FindGameObjectWithTag("Data").GetComponent<PlayerStats>();
-    }
+   
 
     public void SaveData()
     {
