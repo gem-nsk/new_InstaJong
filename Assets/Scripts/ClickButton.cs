@@ -187,7 +187,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
 
 
                 panel.color = UnityEngine.Color.white * 0.0F;
-                Debug.Log("Delete " + idFirstClick + " and " + idSecondClick);
+                //Debug.Log("Delete " + idFirstClick + " and " + idSecondClick);
                 if (idFirstClick == gameController.pathParser.path.idFirst
                     || idSecondClick == gameController.pathParser.path.idSecond
                     || idFirstClick == gameController.pathParser.path.idSecond
