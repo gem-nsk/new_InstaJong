@@ -1073,6 +1073,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentCanvas: {fileID: 0}
+  canvasList:
+  - {fileID: 798926291608319558, guid: cd22c2d960e478a41aa79a94c1982259, type: 3}
+  - {fileID: 4082726910996535974, guid: e0b613aad509c0741b97120fe1bac911, type: 3}
 --- !u!4 &753999251
 Transform:
   m_ObjectHideFlags: 0
@@ -2742,7 +2745,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0234375, y: -0.025390625}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0.050049, y: -0.049927}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1828637107
@@ -3337,7 +3340,7 @@ MonoBehaviour:
   InstaCoins: 0
   DefaultInstaCoinsValue: 500
   Points: 0
-  RefreshPrice: 5
+  RefreshPrice: 100
 --- !u!4 &2118844685
 Transform:
   m_ObjectHideFlags: 0

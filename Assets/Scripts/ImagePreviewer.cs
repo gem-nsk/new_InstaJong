@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ImagePreviewer : MonoBehaviour
+public class ImagePreviewer : ui_basement
 {
     public Image img;
-    public Animator anim;
+    public RectTransform _ImgSize;
     public Text description;
     public Text username;
 
@@ -24,20 +24,18 @@ public class ImagePreviewer : MonoBehaviour
         //img.material = mat;
         //Material mat = new Material(fileStandard);
         //Debug.Log(id);
-        img.sprite = Resources.Load<Sprite>("imageStandard/file"+id);
-    }
-    public void Close()
-    {
-        StartCoroutine(CloseAnim());
-    }
+        Sprite spr = Resources.Load<Sprite>("imageStandard/file" + id);
 
-    IEnumerator CloseAnim()
-    {
-        anim.SetTrigger("Close");
-        yield return new WaitForSeconds(0.3f);
-        gameObject.SetActive(false);
-    }
 
+        img.sprite = spr;
+        _ImgSize.sizeDelta = new Vector2(spr.textureRect.width, spr.textureRect.height);
+    }
+    public override void DeActivate()
+    {
+        base.DeActivate();
+    }
+    
+    
     public void setDescriprion(int id)
     {
         Debug.Log(id);

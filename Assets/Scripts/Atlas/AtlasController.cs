@@ -4,21 +4,25 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
+using System.IO;
+
+[System.Serializable]
+public class PostInfo
+{
+    public int id;
+    public string thumbnail;
+    public string standard;
+    public int likes;
+    public int comments;
+    public string post_url;
+    public string description;
+    public string usernameFrom;
+}
 
 public class AtlasController : MonoBehaviour
 {
 
-    public class PostInfo
-    {
-        public int id;
-        public string thumbnail;
-        public string standard;
-        public int likes;
-        public int comments;
-        public string post_url;
-        public string description;
-        public string usernameFrom;
-    }
+    
 
     public List<PostInfo> posts;
 
@@ -40,13 +44,14 @@ public class AtlasController : MonoBehaviour
         }
         else Destroy(gameObject);
 
+        DownloadImagesFromInstagram();
+
         Pack();
         CreateMaterials();
-        DownloadImagesFromInstagram();    
 
     }
     #endregion;
-  
+
     public void CreateMaterials()
     {
         foreach(Rect _rect in rect)
@@ -69,12 +74,17 @@ public class AtlasController : MonoBehaviour
 
     public void Pack()
     {
+        //packing textures from download
+
+
+
+        //old
+
         Texture2D atlas = new Texture2D(2048, 2048);
         rect = atlas.PackTextures(Sprites, 2, 4096);
         mat.SetTexture("_MainTex", atlas);
     }
-
-    public void DownloadImagesFromInstagram()
+    public IEnumerator DownloadImagesFromInstagram()
     {
 
         
@@ -110,11 +120,46 @@ public class AtlasController : MonoBehaviour
             using (WebClient client = new WebClient())
             {
                 //client.DownloadFileAsync(new Uri(url), @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\image\file"+i+".jpg");
-                client.DownloadFileAsync(new System.Uri(post_info.standard),
-                    @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\imageStandard\file" + i + ".jpg");
+                switch(Application.platform)
+                {
+                    case RuntimePlatform.Android:
+                        client.DownloadFile(new System.Uri(post_info.thumbnail),
+                   "jar:file://" + Application.dataPath + "!/assets/t_" + i + ".jpg");
+                        break;
+                    default:
+                        client.DownloadFile(new System.Uri(post_info.thumbnail),
+                    Application.streamingAssetsPath + "\file\\t_" + i + ".jpg");
+                        break;
+                }
+                client.DownloadFileCompleted += Client_DownloadFileCompleted;
+                
+                   // @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\imageStandard\file" + i + ".jpg");
+            }
+            using (WebClient client = new WebClient())
+            {
+                //client.DownloadFileAsync(new Uri(url), @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\image\file"+i+".jpg");
+                switch (Application.platform)
+                {
+                    case RuntimePlatform.Android:
+                        client.DownloadFile(new System.Uri(post_info.standard),
+                   "jar:file://" + Application.dataPath + "!/assets/s_" + i + ".jpg");
+                        break;
+                    default:
+                        client.DownloadFile(new System.Uri(post_info.standard),
+                    Application.streamingAssetsPath + "\file\\s_" + i + ".jpg");
+                        break;
+                }
+
+                // @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\imageStandard\file" + i + ".jpg");
             }
             i++;
-
         }
+        yield return null;
+        Debug.Log( Directory.GetFiles(Application.streamingAssetsPath + "/file/").Length);
+    }
+
+    private void Client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+    {
+        Debug.Log(e.UserState);
     }
 }

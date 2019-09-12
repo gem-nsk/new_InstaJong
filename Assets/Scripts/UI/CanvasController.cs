@@ -6,6 +6,8 @@ public class CanvasController : MonoBehaviour
 {
     public ui_basement _currentCanvas;
 
+    public GameObject[] canvasList;
+
     public static CanvasController instance;
     private void Awake()
     {
@@ -20,13 +22,25 @@ public class CanvasController : MonoBehaviour
         }
     }
 
-    public void OpenCanvas(GameObject _canvas)
+    public GameObject OpenCanvas(GameObject _canvas)
     {
         if (_currentCanvas)
             _currentCanvas.DeActivate();
 
         _currentCanvas = Instantiate(_canvas).GetComponent<ui_basement>();
         _currentCanvas.Activate();
+
+        return _currentCanvas.gameObject;
+    }
+    public GameObject OpenCanvas(int id)
+    {
+        if (_currentCanvas)
+            _currentCanvas.DeActivate();
+
+        _currentCanvas = Instantiate(canvasList[id]).GetComponent<ui_basement>();
+        _currentCanvas.Activate();
+
+        return _currentCanvas.gameObject;
     }
     public void CloseCanvas()
     {

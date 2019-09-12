@@ -6,6 +6,9 @@ using UnityEngine.UI;
 using System.Linq;
 using genField;
 using System.Drawing;
+using System.IO;
+using System;
+using UnityEngine.Networking;
 
 
 
@@ -49,7 +52,7 @@ public class GameControllerScr : MonoBehaviour
     public static bool Interactable = true;
     public Image blinkImage;
 
-    public ImagePreviewer _previewer;
+    public GameObject _previewer;
 
     public List<string> descriptions { get; set; }
 
@@ -102,24 +105,52 @@ public class GameControllerScr : MonoBehaviour
             blinkImage.color = new UnityEngine.Color(1,1,1, Mathf.Clamp(Mathf.PingPong(Time.time, 1), 0.5f, 1));
         }
     }
-
+    
     private void OnDestroy()
     {
         transformUnity.fromUnityToFile(field);
     }
-
+    
 
 
     public IEnumerator CreateButtonCells()
     {
-        mapGenerator = new MapGenerator();
-        var path = Application.dataPath + "/Resources/";
-        var map = mapGenerator.mapFromFile(path + "map.txt");
-        field = mapGenerator.mapFromString(map.map,map.width,map.height);
+        //        mapGenerator = new MapGenerator();
+        //        string filePath = Path.Combine(Application.streamingAssetsPath, "map.txt");
+        //#if UNITY_ANDROID
+        //        //Android
 
-        //field = new Field(20, 13, 20, 4);
-        //field.initField(true);
-        //field.generateField();
+        //        if(Application.platform == RuntimePlatform.Android)
+        //        {
+        //           TextAsset s = (TextAsset)Resources.Load("map");
+        //            string str = s.text;
+
+        //            var map = mapGenerator.mapFromFile(str);
+        //            field = mapGenerator.mapFromString(map.map, map.width, map.height);
+        //        }
+
+        //#endif
+        //#if UNITY_EDITOR
+        //        //Editor
+        //        else
+        //        {
+
+        //            TextAsset s = (TextAsset)Resources.Load("map");
+        //            Debug.Log(s.text);
+
+        //            String str = s.text;
+
+
+        //            var map = mapGenerator.mapFromFile(str);
+
+        //            field = mapGenerator.mapFromString(map.map, map.width, map.height);
+        //        }
+        //#endif
+
+
+        field = new Field(20, 13, 20, 4);
+        field.initField(true);
+        field.generateField();
         yield return StartCoroutine( SearchPath());
         placeCells();
 
@@ -226,10 +257,39 @@ public class GameControllerScr : MonoBehaviour
         return pathLine;
     }
 
+
     public IEnumerator loadMap()
     {
         TransformUnity transform = new TransformUnity();
-        field  = transform.fromFileToUnity();
+
+        //ids
+        string path = Application.temporaryCachePath;
+        string[] data = new string[3];
+
+        UnityWebRequest request = UnityWebRequest.Get(path + "/IDs.txt");
+        yield return request.SendWebRequest();
+
+        data[0] = request.downloadHandler.text;
+        //rnd
+
+        request = UnityWebRequest.Get(path + "/RandomNums.txt");
+        yield return request.SendWebRequest();
+
+        data[1] = request.downloadHandler.text;
+        //states
+
+        request = UnityWebRequest.Get(path + "/States.txt");
+        yield return request.SendWebRequest();
+
+        data[2] = request.downloadHandler.text;
+
+        foreach(string s in data)
+        {
+            Debug.Log(s);
+        }
+
+        field = transform.fromFileToUnity(data[0],data[1],data[2]);
+
         placeCells();
 
         yield return new WaitForEndOfFrame();
@@ -318,8 +378,9 @@ public class GameControllerScr : MonoBehaviour
 
     public void OpenImagePreview(int id)
     {
-        _previewer.gameObject.SetActive(true);
-        _previewer.Preview(id);
+       GameObject _obj = CanvasController.instance.OpenCanvas(_previewer);
+
+        _obj.GetComponent<ImagePreviewer>().Preview(id);
     }
 
     public void CreateLine(List<Point> points)

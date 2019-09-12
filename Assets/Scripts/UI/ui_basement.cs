@@ -30,7 +30,7 @@ public class ui_basement : MonoBehaviour
     public virtual void Activate()
     {
         
-        StartCoroutine(SmoothAlpha(1));
+        StartCoroutine(SmoothAlpha(0, 1));
     }
     public virtual void DeActivate()
     {
@@ -38,20 +38,21 @@ public class ui_basement : MonoBehaviour
     }
     public virtual IEnumerator _DeActivate()
     {
-       yield return StartCoroutine(SmoothAlpha(0));
+       yield return StartCoroutine(SmoothAlpha(1,0));
         Destroy(gameObject);
     }
 
-    IEnumerator SmoothAlpha(float To)
+    IEnumerator SmoothAlpha(float from, float To)
     {
         group.interactable = false;
         float _time = 0;
         while(_time < SmoothTIme)
         {
-            group.alpha = Mathf.Lerp(group.alpha, To, _time / SmoothTIme);
+            group.alpha = Mathf.Lerp(from, To, _time / SmoothTIme);
             _time += Time.deltaTime;
             yield return null;
         }
+        _group.alpha = To;
         group.interactable = true;
     }
 }

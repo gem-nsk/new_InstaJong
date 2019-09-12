@@ -26,21 +26,22 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
     private UnityEngine.Color normCol;
 
     private (CellScr first, CellScr second) objects;
-
+    private CellScr Click;
 
     void Start()
     {
         Buttons = new List<System.Tuple<int, int>>();
         panel = GetComponent<Image>();
+        Click = gameObject.GetComponent(typeof(CellScr)) as CellScr;
+
         //StartCoroutine(Example());
-    }  
+    }
 
 
     public void OnClick()
     {
         if (GameControllerScr.Interactable)
         {
-            var Click = gameObject.GetComponent(typeof(CellScr)) as CellScr;
 
 
             //normCol = panel.color;
@@ -72,6 +73,9 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
 
     public IEnumerator TouchHold()
     {
+        if (Click.randomNum == 0)
+            yield break;
+
         Debug.Log("Touched");
         float _time = 0;
 
