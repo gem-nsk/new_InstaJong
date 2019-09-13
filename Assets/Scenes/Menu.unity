@@ -904,7 +904,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3134792, y: 0.04474075}
   m_AnchorMax: {x: 0.4181459, y: 0.12448149}
-  m_AnchoredPosition: {x: 1.75, y: -1.5}
+  m_AnchoredPosition: {x: 1.75, y: -1.5002441}
   m_SizeDelta: {x: 3.5576, y: 6.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &616400906
@@ -1205,7 +1205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f148557f831dee46932c4a499deeb9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebugLanguage: 1
+  DebugLanguage: 0
 --- !u!4 &788774377
 Transform:
   m_ObjectHideFlags: 0
@@ -2736,6 +2736,7 @@ GameObject:
   - component: {fileID: 1828637108}
   - component: {fileID: 1828637107}
   - component: {fileID: 1828637109}
+  - component: {fileID: 1828637110}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -2825,6 +2826,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d290c34476fb90b4f9ff400899f5c268, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1828637110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828637105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 997366f318ecc13498d50d30e9b05e9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instagramClientId: 9f7d92eac7a8428dbbce660fb3bb41ea
+  instagramClientSecret: c199e20935fe48fdaa9b16126b7094fd
+  instagramRedirectUrl: http://localhost/
 --- !u!1 &1833420651
 GameObject:
   m_ObjectHideFlags: 0
@@ -3161,7 +3177,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2044248058}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1828637110}
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &2044248058
@@ -3396,7 +3423,7 @@ PrefabInstance:
     - target: {fileID: 798926291608319558, guid: cd22c2d960e478a41aa79a94c1982259,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 798926291608319554, guid: cd22c2d960e478a41aa79a94c1982259,
         type: 3}

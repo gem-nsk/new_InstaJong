@@ -132,6 +132,7 @@ public class LocalizationManager : MonoBehaviour
         }
 #endif
         isReady = true;
+        yield return null;
     }
 
     public string GetLocalizedValue(string key)

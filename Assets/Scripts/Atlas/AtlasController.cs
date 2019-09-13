@@ -18,6 +18,7 @@ public class AtlasController : MonoBehaviour
         public string post_url;
         public string description;
         public string usernameFrom;
+        public string tamestamps;
     }
 
     public List<PostInfo> posts;
@@ -78,7 +79,7 @@ public class AtlasController : MonoBehaviour
     {
 
         
-        string token = "55595064.dd12fa9.6dc460358d3544e0a1fc2cac28dcff9b";
+        string token = "20021759479.9f7d92e.e1400359759e4f7b9c7bd99e85e102e4";
         WebClient webClient = new WebClient();
         var list = webClient.DownloadString("https://api.instagram.com/v1/users/self/media/recent/?access_token=" + token);
         var dyn = JsonConvert.DeserializeObject<RootObject>(list);
@@ -99,12 +100,12 @@ public class AtlasController : MonoBehaviour
             //else new_str = data.caption.text;
 
             new_str = data.caption.text;
-            if (new_str.Length > 50) new_str = new_str.Remove(50) + "...";
+            //if (new_str.Length > 50) new_str = new_str.Remove(50) + "...";
             post_info.description = new_str;
             post_info.likes = data.likes.count;
             post_info.comments = data.comments.count;
             post_info.usernameFrom = data.caption.from.username;
-
+            post_info.tamestamps = data.caption.created_time;
             posts.Add(post_info);
 
             using (WebClient client = new WebClient())
@@ -113,7 +114,15 @@ public class AtlasController : MonoBehaviour
                 client.DownloadFileAsync(new System.Uri(post_info.standard),
                     @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\imageStandard\file" + i + ".jpg");
             }
+            using (WebClient client = new WebClient())
+            {
+                //client.DownloadFileAsync(new Uri(url), @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\image\file"+i+".jpg");
+                client.DownloadFileAsync(new System.Uri(post_info.thumbnail),
+                    @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\image\file" + i + ".jpg");
+            }
             i++;
+
+
 
         }
     }

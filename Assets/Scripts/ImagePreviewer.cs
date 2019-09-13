@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,12 +10,13 @@ public class ImagePreviewer : MonoBehaviour
     public Animator anim;
     public Text description;
     public Text username;
+    public Text likesCount;
+    public Text timeStamp;
 
     public void Preview(int id)
     {
         LoadPicture(id);
-        setDescriprion(id);
-        setUsername(id);
+        setCommentField(id);
     }
 
     void LoadPicture(int id)
@@ -38,14 +40,13 @@ public class ImagePreviewer : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void setDescriprion(int id)
+
+    public void setCommentField(int id)
     {
-        Debug.Log(id);
-        description.text = AtlasController.instance.posts[id-1].description;
+        description.text = AtlasController.instance.posts[id - 1].description;
+        username.text = AtlasController.instance.posts[id - 1].usernameFrom;
+        likesCount.text = AtlasController.instance.posts[id - 1].likes.ToString() + " отметок \"нравится\"";
     }
 
-    public void setUsername(int id)
-    {
-        username.text = AtlasController.instance.posts[id - 1].usernameFrom;
-    }
+    
 }
