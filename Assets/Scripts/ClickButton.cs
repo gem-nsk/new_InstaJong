@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using AStarPathfinder;
 using genField;
 using System.Drawing;
+using Image = UnityEngine.UI.Image;
 
 public class ClickButton : MonoBehaviour , IPointerDownHandler
 

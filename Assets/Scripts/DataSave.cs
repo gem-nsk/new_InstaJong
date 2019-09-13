@@ -19,7 +19,6 @@ public class DataSave : MonoBehaviour
         string str = "";
         for (int i = 0; i < list.Count; i++)
         {
-            Debug.Log(list[i].settings);
 
             _root.data.Add(list[i].settings);
         }

@@ -24,11 +24,11 @@ public class ImagePreviewer : ui_basement
         //img.material = mat;
         //Material mat = new Material(fileStandard);
         //Debug.Log(id);
-        Sprite spr = Resources.Load<Sprite>("imageStandard/file" + id);
+        Texture2D spr = AtlasController.instance.posts[id].StandartTexture;
 
+        img.material = AtlasController.instance.GetMaterialById(AtlasController.instance.Atlases[1], id);
 
-        img.sprite = spr;
-        _ImgSize.sizeDelta = new Vector2(spr.textureRect.width, spr.textureRect.height);
+        //_ImgSize.sizeDelta = new Vector2(spr.textureRect.width, spr.textureRect.height);
     }
     public override void DeActivate()
     {

@@ -70,7 +70,7 @@ public class CellScr : MonoBehaviour
             if(settings._randomNum != 0)
             {
                 Show();
-                button.material = AtlasController.instance.GetMaterialById(settings._randomNum);
+                button.material = AtlasController.instance.GetMaterialById(AtlasController.instance.Atlases[0],settings._randomNum);
             }
             
         }

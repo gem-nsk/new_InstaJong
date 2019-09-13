@@ -50,7 +50,7 @@ public class GameControllerScr : MonoBehaviour
     public GameUI ui;
 
     public static bool Interactable = true;
-    public Image blinkImage;
+    public UnityEngine.UI.Image blinkImage;
 
     public GameObject _previewer;
 
@@ -68,7 +68,7 @@ public class GameControllerScr : MonoBehaviour
     }
     #endregion
     #region MainCode
-    void Start()
+    public IEnumerator Start()
     {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         transformUnity = new TransformUnity();
@@ -76,18 +76,22 @@ public class GameControllerScr : MonoBehaviour
         mainCamera = Camera.main;
         LR = new LineRenderer();
         Line = GameObject.FindGameObjectsWithTag("Line");
-        if (loadGame == false)
-        {
-           StartCoroutine( CreateButtonCells());
-        }
-        else {
-           StartCoroutine(  loadMap());
-        }
-        
-        Camera.main.transparencySortMode = TransparencySortMode.Orthographic;
+
 
         stats = PlayerStats.instance;
         stats.LoadData();
+
+        yield return StartCoroutine(AtlasController.instance.Init());
+
+        if (loadGame == false)
+        {
+           yield return StartCoroutine( CreateButtonCells());
+        }
+        else {
+           yield return StartCoroutine(  loadMap());
+        }
+        
+        Camera.main.transparencySortMode = TransparencySortMode.Orthographic;
 
         ui.Init();
 
@@ -186,7 +190,7 @@ public class GameControllerScr : MonoBehaviour
             StandartcolorForFirstCell();   
         }
         if (cell.settings._state == 1)
-        blinkImage = cell.GetComponent<Image>();
+        blinkImage = cell.GetComponent<UnityEngine.UI.Image>();
     }
     public void StopBlinking()
     {
@@ -221,7 +225,7 @@ public class GameControllerScr : MonoBehaviour
 
                     if (child.name == IDFirst || child.name == IDSecond)
                     {
-                        var ChildButton = child.gameObject.GetComponent<Image>();
+                        var ChildButton = child.gameObject.GetComponent<UnityEngine.UI.Image>();
                         //helper
                         if(Helper)
                         {

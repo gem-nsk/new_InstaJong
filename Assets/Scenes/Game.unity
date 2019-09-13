@@ -1174,47 +1174,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03820f231a550db488edfff25e8007f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sprites:
-  - {fileID: 2800000, guid: 782d0fe2c86c80b418ae1200d7cabd05, type: 3}
-  - {fileID: 2800000, guid: d5002880fedbf2e4ea39a5c3426b1b1a, type: 3}
-  - {fileID: 2800000, guid: ecf4762e5c69a4c40bf57f226ee5cea7, type: 3}
-  - {fileID: 2800000, guid: 735a4233e31de3049b6b7446e126e6e7, type: 3}
-  - {fileID: 2800000, guid: 0932358077f6a9742982d9e989451df0, type: 3}
-  - {fileID: 2800000, guid: f201b066124cb4d40a5fe6ab15906f7a, type: 3}
-  - {fileID: 2800000, guid: bcce2d389a767614e9342be20142b2bb, type: 3}
-  - {fileID: 2800000, guid: d42bdc30aa256ab4f8ccbdba5bd29c12, type: 3}
-  - {fileID: 2800000, guid: a2d2a0d0598ba9f40ace394684218d47, type: 3}
-  - {fileID: 2800000, guid: 6a48972b75460bb43bf8116676b4cd6b, type: 3}
-  - {fileID: 2800000, guid: 941ecdc038c0cde41a133d60c93a1415, type: 3}
-  - {fileID: 2800000, guid: 472fdebe516b795459bd66587b3a5618, type: 3}
-  - {fileID: 2800000, guid: 447b89a44287d4440a769f91b4d43698, type: 3}
-  - {fileID: 2800000, guid: dd7a66d5c7735964c8456bf5029191e6, type: 3}
-  - {fileID: 2800000, guid: dbb48858b65efbd429b240bda0f34603, type: 3}
-  - {fileID: 2800000, guid: eaea831c83adcc9459edbf063a45382d, type: 3}
-  - {fileID: 2800000, guid: 46b1f7d0e61af5147b79fb1330633be7, type: 3}
-  - {fileID: 2800000, guid: b434bcbc3b0559d41b8d6c2254c94d20, type: 3}
-  - {fileID: 2800000, guid: 0af235810f68454458c6b0f5147a3dff, type: 3}
-  - {fileID: 2800000, guid: c625c9550595a0844aa3defdbf4932eb, type: 3}
-  - {fileID: 2800000, guid: c5a7047071c094949ab5d317c2dfa5a9, type: 3}
-  - {fileID: 2800000, guid: 8e417f3a6308b454bb3fa44e7f35fd3f, type: 3}
-  - {fileID: 2800000, guid: a23c8cd3881c8f2478d103fcbaf9efca, type: 3}
-  - {fileID: 2800000, guid: 962a699adc066244d92c210b66cc78f5, type: 3}
-  - {fileID: 2800000, guid: eb6c39c83d32b734cba102077154d68d, type: 3}
-  - {fileID: 2800000, guid: 1364be6c640fc3b408983e1bd1221273, type: 3}
-  - {fileID: 2800000, guid: 36510fca2e6134149865232c9eb46c26, type: 3}
-  - {fileID: 2800000, guid: 519ae3aab0ca5a14c974e70601da188a, type: 3}
-  - {fileID: 2800000, guid: 90db3dd94b1b9fc4eb8584a97994e1e2, type: 3}
-  - {fileID: 2800000, guid: 70dc485c449488948852a1a1f2b2ae4b, type: 3}
-  - {fileID: 2800000, guid: 1cfd80b35f6f91c4c9e4cf576164d28d, type: 3}
-  - {fileID: 2800000, guid: 1ac790586661fe84a95c8fa76ffd4fc4, type: 3}
-  - {fileID: 2800000, guid: 347f154ff12225841be32e849afbeb97, type: 3}
-  - {fileID: 2800000, guid: 8c77a259fcd81c0459a0e9dd8f36ef4b, type: 3}
-  - {fileID: 2800000, guid: 3071e7ab3119be64797992a94ce3a172, type: 3}
-  - {fileID: 2800000, guid: e499a163c6f107e40ad0ab184ee75a8b, type: 3}
-  rect: []
-  mat: {fileID: 2100000, guid: a40cd1155cbe24b4bac4a5ff0e7abd7b, type: 2}
-  _CreatedMaterials: []
-  descriptions: []
+  AccountId: 20021759479.9f7d92e.e1400359759e4f7b9c7bd99e85e102e4
+  posts: []
+  Atlases:
+  - rect: []
+    atlas: {fileID: 2100000, guid: a40cd1155cbe24b4bac4a5ff0e7abd7b, type: 2}
+    _CreatedMaterials: []
+  - rect: []
+    atlas: {fileID: 2100000, guid: 20c50327155b8ae4bb1286331404f99b, type: 2}
+    _CreatedMaterials: []
 --- !u!4 &1076781476
 Transform:
   m_ObjectHideFlags: 0
