@@ -4,6 +4,33 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
+using System.IO;
+using UnityEngine.Networking;
+
+[System.Serializable]
+public class PostInfo
+{
+    public int id;
+    public string thumbnail;
+    public string standard;
+    public int likes;
+    public int comments;
+    public string post_url;
+    public string description;
+    public string usernameFrom;
+
+    public Texture2D StandartTexture;
+    public Texture2D ThumbnailTexture;
+}
+[System.Serializable]
+public class _atlas
+{
+    public Rect[] rect;
+    public Material atlas;
+
+    public List<Material> _CreatedMaterials = new List<Material>();
+}
+
 
 public class AtlasController : MonoBehaviour
 {
@@ -20,16 +47,13 @@ public class AtlasController : MonoBehaviour
         public string usernameFrom;
         public string tamestamps;
     }
+    public string AccountId;
+    
 
     public List<PostInfo> posts;
 
-    public Texture2D[] Sprites;
+    public _atlas[] Atlases = new _atlas[2];
 
-    public Rect[] rect;
-    public Material mat;
-
-    public List<Material> _CreatedMaterials = new List<Material>();
-    public List<string> descriptions;
 
     #region Singleton
     public static AtlasController instance;
@@ -41,48 +65,74 @@ public class AtlasController : MonoBehaviour
         }
         else Destroy(gameObject);
 
-        Pack();
-        CreateMaterials();
-        DownloadImagesFromInstagram();    
+
+        
 
     }
     #endregion;
-  
-    public void CreateMaterials()
+
+    public IEnumerator Init()
     {
-        foreach(Rect _rect in rect)
+        yield return StartCoroutine(DownloadImagesFromInstagram());
+        Pack(Atlases[0]);
+        Pack(Atlases[1]);
+        CreateMaterials(Atlases[0]);
+        CreateMaterials(Atlases[1]);
+    }
+
+    public void CreateMaterials(_atlas a)
+    {
+        foreach(Rect _rect in a.rect)
         {
-            Material _mat = new Material(mat);
+            Material _mat = new Material(a.atlas);
 
             _mat.SetTextureScale("_MainTex", new Vector2(_rect.width, _rect.height));
             _mat.SetTextureOffset("_MainTex", new Vector2(_rect.x, _rect.y));
 
-
-            _CreatedMaterials.Add(_mat);
+            a._CreatedMaterials.Add(_mat);
         }
     }
     //returning offset by image id
-    public Material GetMaterialById(int id)
+    public Material GetMaterialById(_atlas a, int id)
     {
-        return _CreatedMaterials[id - 1];
+        return a._CreatedMaterials[id - 1];
     }
     
 
-    public void Pack()
+    public void Pack(_atlas a)
     {
-        Texture2D atlas = new Texture2D(2048, 2048);
-        rect = atlas.PackTextures(Sprites, 2, 4096);
-        mat.SetTexture("_MainTex", atlas);
-    }
+        //packing textures from download
 
-    public void DownloadImagesFromInstagram()
+
+        Texture2D[] Sprites = new Texture2D[posts.Count];
+        for (int i = 0; i < posts.Count; i++)
+        {
+            Sprites[i] = posts[i].ThumbnailTexture;
+        }
+
+        Texture2D texture = new Texture2D(2048, 2048);
+
+        a.rect = texture.PackTextures(Sprites, 5, 4096);
+        a.atlas.SetTexture("_MainTex", texture);
+    }
+    public IEnumerator DownloadImagesFromInstagram()
     {
 
         
+<<<<<<< HEAD
         string token = "20021759479.9f7d92e.e1400359759e4f7b9c7bd99e85e102e4";
         WebClient webClient = new WebClient();
         var list = webClient.DownloadString("https://api.instagram.com/v1/users/self/media/recent/?access_token=" + token);
         var dyn = JsonConvert.DeserializeObject<RootObject>(list);
+=======
+        string token = AccountId;
+        UnityWebRequest request = UnityWebRequest.Get("https://api.instagram.com/v1/users/self/media/recent/?access_token=" + token);
+        yield return request.SendWebRequest();
+
+        //WebClient webClient = new WebClient();
+        //var list = webClient.DownloadString("https://api.instagram.com/v1/users/self/media/recent/?access_token=" + token);
+        var dyn = JsonConvert.DeserializeObject<RootObject>(request.downloadHandler.text);
+>>>>>>> 46f72f3394774b31af86960bf0e7d392fd3ff319
         int i = 1;
 
         posts = new List<PostInfo>();
@@ -105,6 +155,7 @@ public class AtlasController : MonoBehaviour
             post_info.likes = data.likes.count;
             post_info.comments = data.comments.count;
             post_info.usernameFrom = data.caption.from.username;
+<<<<<<< HEAD
             post_info.tamestamps = data.caption.created_time;
             posts.Add(post_info);
 
@@ -124,6 +175,70 @@ public class AtlasController : MonoBehaviour
 
 
 
+=======
+
+
+            //using (WebClient client = new WebClient())
+            //{
+            //    //client.DownloadFileAsync(new Uri(url), @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\image\file"+i+".jpg");
+            //    switch(Application.platform)
+            //    {
+            //        case RuntimePlatform.Android:
+            //            client.DownloadFileAsync(new System.Uri(post_info.thumbnail),
+            //       "jar:file://" + Application.dataPath + "!/assets/t_" + i + ".jpg");
+            //            break;
+            //        default:
+            //            client.DownloadFileAsync(new System.Uri(post_info.thumbnail),
+            //        Application.streamingAssetsPath + "\file\\t_" + i + ".jpg");
+            //            break;
+            //    }
+            //    client.DownloadFileCompleted += Client_DownloadFileCompleted;
+
+            //       // @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\imageStandard\file" + i + ".jpg");
+            //}
+            //using (WebClient client = new WebClient())
+            //{
+            //    //client.DownloadFileAsync(new Uri(url), @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\image\file"+i+".jpg");
+            //    switch (Application.platform)
+            //    {
+            //        case RuntimePlatform.Android:
+            //            client.DownloadFileAsync(new System.Uri(post_info.standard),
+            //       "jar:file://" + Application.dataPath + "!/assets/s_" + i + ".jpg");
+            //            break;
+            //        default:
+            //            client.DownloadFileAsync(new System.Uri(post_info.standard),
+            //        Application.streamingAssetsPath + "\file\\s_" + i + ".jpg");
+            //            break;
+            //    }
+
+            //    // @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\imageStandard\file" + i + ".jpg");
+            //}
+
+            UnityWebRequest s_request = UnityWebRequestTexture.GetTexture(post_info.standard);
+            yield return s_request.SendWebRequest();
+
+            if (s_request.isNetworkError || s_request.isHttpError)
+                Debug.Log("Error");
+
+            post_info.StandartTexture = ((DownloadHandlerTexture)s_request.downloadHandler).texture;
+
+
+            //thumbnails 
+            UnityWebRequest t_request = UnityWebRequestTexture.GetTexture(post_info.thumbnail);
+            yield return t_request.SendWebRequest();
+
+            if (t_request.isNetworkError || t_request.isHttpError)
+                Debug.Log("Error");
+
+            post_info.ThumbnailTexture = ((DownloadHandlerTexture)t_request.downloadHandler).texture;
+
+            posts.Add(post_info);
+
+            i++;
+>>>>>>> 46f72f3394774b31af86960bf0e7d392fd3ff319
         }
+        yield return null;
+        Debug.Log( Directory.GetFiles(Application.persistentDataPath + "/file/").Length);
     }
+
 }

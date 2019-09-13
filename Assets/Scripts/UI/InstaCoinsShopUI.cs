@@ -28,4 +28,9 @@ public class InstaCoinsShopUI : ui_basement
 
         //IAP
     }
+    public void Close()
+    {
+        Debug.Log("Canvas Closed");
+        CanvasController.instance.CloseCanvas();
+    }
 }

@@ -50,7 +50,7 @@ public class GameUI : MonoBehaviour
         }
         else
         {
-            //Open shop menu
+            CanvasController.instance.OpenCanvas(0);
         }
     }
 }

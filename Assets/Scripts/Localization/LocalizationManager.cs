@@ -108,12 +108,11 @@ public class LocalizationManager : MonoBehaviour
 #if UNITY_ANDROID
         if(Application.platform == RuntimePlatform.Android)
         {
-            WWW _file = new WWW(filePath);
 
             if (filePath.Contains("://") || filePath.Contains(":///"))
             {
                 UnityEngine.Networking.UnityWebRequest www = UnityEngine.Networking.UnityWebRequest.Get(filePath);
-                yield return www.Send();
+                yield return www.SendWebRequest();
                 /*
                 while (!reader.isDone)
                 {

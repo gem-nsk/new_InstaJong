@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using AStarPathfinder;
 using genField;
 using System.Drawing;
+using Image = UnityEngine.UI.Image;
 
 public class ClickButton : MonoBehaviour , IPointerDownHandler
 
@@ -26,26 +27,27 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
     private UnityEngine.Color normCol;
 
     private (CellScr first, CellScr second) objects;
-
+    private CellScr Click;
 
     void Start()
     {
         Buttons = new List<System.Tuple<int, int>>();
         panel = GetComponent<Image>();
+        Click = gameObject.GetComponent(typeof(CellScr)) as CellScr;
+
         //StartCoroutine(Example());
-    }  
+    }
 
 
     public void OnClick()
     {
         if (GameControllerScr.Interactable)
         {
-            var Click = gameObject.GetComponent(typeof(CellScr)) as CellScr;
 
 
             //normCol = panel.color;
             //panel.color = UnityEngine.Color.yellow;
-            if (Click.randomNum != 0)
+            if (Click.settings._randomNum != 0)
             {
                 if (first == null)
                 {
@@ -56,7 +58,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
                 {
                     second = Click;
                 }
-                var clickedButtons = System.Tuple.Create(Click.id, Click.randomNum);
+                var clickedButtons = System.Tuple.Create(Click.settings._id, Click.settings._randomNum);
                 Buttons.Add(clickedButtons);
                 //Debug.Log(Buttons.Count);
                 objects.first = first;
@@ -72,6 +74,9 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
 
     public IEnumerator TouchHold()
     {
+        if (Click.settings._randomNum == 0)
+            yield break;
+
         Debug.Log("Touched");
         float _time = 0;
 
@@ -84,7 +89,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
         }
         if(Input.GetMouseButton(0))
         {
-            GameControllerScr.instance.OpenImagePreview(GetComponent<CellScr>().randomNum);
+            GameControllerScr.instance.OpenImagePreview(GetComponent<CellScr>().settings._randomNum);
         }
         else
         {
@@ -101,7 +106,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
             }
             if (Input.GetTouch(0).phase == TouchPhase.Stationary)
             {
-                GameControllerScr.instance.OpenImagePreview(GetComponent<CellScr>().randomNum);
+                GameControllerScr.instance.OpenImagePreview(GetComponent<CellScr>().settings._randomNum);
             }
             else
             {
@@ -172,8 +177,8 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
                 first.SetState(0);
                 second.SetState(0);
 
-                objects.first.randomNum = 0;
-                objects.second.randomNum = 0;
+                objects.first.settings._randomNum = 0;
+                objects.second.settings._randomNum = 0;
 
                 
 
