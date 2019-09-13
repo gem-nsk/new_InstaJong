@@ -115,13 +115,13 @@ public class GameControllerScr : MonoBehaviour
 
         DataSave.save(AllCells, (field.heightField, field.widthField));
     }
-    
+
 
 
     public IEnumerator CreateButtonCells()
     {
         mapGenerator = new MapGenerator();
-        string filePath = Path.Combine(Application.streamingAssetsPath, "map.txt");
+        string filePath = Path.Combine(Application.streamingAssetsPath, "map.txt"); 
 #if UNITY_ANDROID
         //Android
 

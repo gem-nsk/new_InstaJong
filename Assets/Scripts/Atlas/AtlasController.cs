@@ -197,7 +197,7 @@ public class AtlasController : MonoBehaviour
             i++;
         }
         yield return null;
-        Debug.Log( Directory.GetFiles(Application.streamingAssetsPath + "/file/").Length);
+        Debug.Log( Directory.GetFiles(Application.persistentDataPath + "/file/").Length);
     }
 
 }
