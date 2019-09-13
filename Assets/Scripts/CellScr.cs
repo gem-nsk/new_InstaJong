@@ -7,22 +7,46 @@ using UnityEngine.SceneManagement;
 using System.IO;
 using Random = System.Random;
 
+[System.Serializable]
+public class CellJson
+{
+    public int _state;
+    public int _id;
+    public int _randomNum;
+
+    public int _x;
+    public int _y;
+   
+}
+
+public class root
+{
+    public List<CellJson> data = new List<CellJson>();
+    public int width;
+    public int height;
+}
+
+
+
+
 public class CellScr : MonoBehaviour
 {
-    public int state;
-    public int id;
-    public int randomNum;
+    public CellJson settings;
 
     public Image img;
 
     public float LerpTime = 1;
 
-   
+
+    public void SetSettings()
+    {
+
+    }
    
 
     public void SetState(int i)
     {
-        state = i;
+        settings._state = i;
         if (i == 0)
         {
             Hide();
@@ -43,10 +67,10 @@ public class CellScr : MonoBehaviour
             */
 
             //new method
-            if(randomNum != 0)
+            if(settings._randomNum != 0)
             {
                 Show();
-                button.material = AtlasController.instance.GetMaterialById(randomNum);
+                button.material = AtlasController.instance.GetMaterialById(settings._randomNum);
             }
             
         }
@@ -74,21 +98,6 @@ public class CellScr : MonoBehaviour
             yield return null;
         }
         img.color = new Color(1, 1, 1, hided ? 0 : 1);
-    }
-
-    public static void Shuffle(int[] mas)
-    {
-
-        Random rand = new Random();
-
-        for (int i = mas.Length - 1; i >= 1; i--)
-        {
-            int j = rand.Next(i + 1);
-
-            int tmp = mas[j];
-            mas[j] = mas[i];
-            mas[i] = tmp;
-        }
     }
 
 

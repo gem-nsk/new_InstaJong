@@ -108,49 +108,50 @@ public class GameControllerScr : MonoBehaviour
     
     private void OnDestroy()
     {
-        transformUnity.fromUnityToFile(field);
+
+        DataSave.save(AllCells, (field.heightField, field.widthField));
     }
     
 
 
     public IEnumerator CreateButtonCells()
     {
-        //        mapGenerator = new MapGenerator();
-        //        string filePath = Path.Combine(Application.streamingAssetsPath, "map.txt");
-        //#if UNITY_ANDROID
-        //        //Android
+        mapGenerator = new MapGenerator();
+        string filePath = Path.Combine(Application.streamingAssetsPath, "map.txt");
+#if UNITY_ANDROID
+        //Android
 
-        //        if(Application.platform == RuntimePlatform.Android)
-        //        {
-        //           TextAsset s = (TextAsset)Resources.Load("map");
-        //            string str = s.text;
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            TextAsset s = (TextAsset)Resources.Load("map");
+            string str = s.text;
 
-        //            var map = mapGenerator.mapFromFile(str);
-        //            field = mapGenerator.mapFromString(map.map, map.width, map.height);
-        //        }
+            var map = mapGenerator.mapFromFile(str);
+            field = mapGenerator.mapFromString(map.map, map.width, map.height);
+        }
 
-        //#endif
-        //#if UNITY_EDITOR
-        //        //Editor
-        //        else
-        //        {
+#endif
+#if UNITY_EDITOR
+        //Editor
+        else
+        {
 
-        //            TextAsset s = (TextAsset)Resources.Load("map");
-        //            Debug.Log(s.text);
+            TextAsset s = (TextAsset)Resources.Load("map");
+            Debug.Log(s.text);
 
-        //            String str = s.text;
-
-
-        //            var map = mapGenerator.mapFromFile(str);
-
-        //            field = mapGenerator.mapFromString(map.map, map.width, map.height);
-        //        }
-        //#endif
+            String str = s.text;
 
 
-        field = new Field(20, 13, 20, 4);
-        field.initField(true);
-        field.generateField();
+            var map = mapGenerator.mapFromFile(str);
+
+            field = mapGenerator.mapFromString(map.map, map.width, map.height);
+        }
+#endif
+
+
+        //field = new Field(20, 13, 20, 4);
+        //field.initField(true);
+        //field.generateField();
         yield return StartCoroutine( SearchPath());
         placeCells();
 
@@ -168,7 +169,7 @@ public class GameControllerScr : MonoBehaviour
         {
             AllCells.Sort(delegate (CellScr a, CellScr b)
             {
-                return (a.GetComponent<CellScr>().randomNum).CompareTo(b.GetComponent<CellScr>().randomNum);
+                return (a.GetComponent<CellScr>().settings._randomNum).CompareTo(b.GetComponent<CellScr>().settings._randomNum);
             });
         }
 
@@ -184,7 +185,7 @@ public class GameControllerScr : MonoBehaviour
         {
             StandartcolorForFirstCell();   
         }
-        if (cell.state  == 1)
+        if (cell.settings._state == 1)
         blinkImage = cell.GetComponent<Image>();
     }
     public void StopBlinking()
@@ -260,35 +261,48 @@ public class GameControllerScr : MonoBehaviour
 
     public IEnumerator loadMap()
     {
-        TransformUnity transform = new TransformUnity();
+        ((int height, int width), List<CellJson> _list) _data = DataSave.GetData();
 
-        //ids
-        string path = Application.temporaryCachePath;
-        string[] data = new string[3];
+        field = new Field(_data.Item1.width, _data.Item1.height);
+        field.initField(true);
 
-        UnityWebRequest request = UnityWebRequest.Get(path + "/IDs.txt");
-        yield return request.SendWebRequest();
-
-        data[0] = request.downloadHandler.text;
-        //rnd
-
-        request = UnityWebRequest.Get(path + "/RandomNums.txt");
-        yield return request.SendWebRequest();
-
-        data[1] = request.downloadHandler.text;
-        //states
-
-        request = UnityWebRequest.Get(path + "/States.txt");
-        yield return request.SendWebRequest();
-
-        data[2] = request.downloadHandler.text;
-
-        foreach(string s in data)
+        for (int i = 0; i < _data._list.Count; i++)
         {
-            Debug.Log(s);
+            var coords = field.findCoordsById(_data._list[i]._id);
+            field.array[coords.i, coords.j].setId(_data._list[i]._id);
+            field.array[coords.i, coords.j].setRandomNum(_data._list[i]._randomNum);
+            field.array[coords.i, coords.j].setState(_data._list[i]._state);
         }
 
-        field = transform.fromFileToUnity(data[0],data[1],data[2]);
+       // TransformUnity transform = new TransformUnity();
+
+        //ids
+        //string path = Application.temporaryCachePath;
+        //string[] data = new string[3];
+
+        //UnityWebRequest request = UnityWebRequest.Get(path + "/IDs.txt");
+        //yield return request.SendWebRequest();
+
+       // data[0] = request.downloadHandler.text;
+        //rnd
+
+       // request = UnityWebRequest.Get(path + "/RandomNums.txt");
+        //yield return request.SendWebRequest();
+
+       // data[1] = request.downloadHandler.text;
+        //states
+
+       // request = UnityWebRequest.Get(path + "/States.txt");
+       // yield return request.SendWebRequest();
+
+        //data[2] = request.downloadHandler.text;
+
+       // foreach(string s in data)
+       // {
+       //     Debug.Log(s);
+       // }
+
+       // field = transform.fromFileToUnity(data[0],data[1],data[2]);
 
         placeCells();
 
@@ -310,8 +324,8 @@ public class GameControllerScr : MonoBehaviour
             GameObject tmpCell = Instantiate(cellButton);
             tmpCell.transform.SetParent(cellGroup, false);
             tmpCell.name = "cellButton" + (i+1);
-            tmpCell.GetComponent<CellScr>().id = field.array[coords.i, coords.j].getId();
-            tmpCell.GetComponent<CellScr>().randomNum = field.array[coords.i, coords.j].getRandomNum();
+            tmpCell.GetComponent<CellScr>().settings._id = field.array[coords.i, coords.j].getId();
+            tmpCell.GetComponent<CellScr>().settings._randomNum = field.array[coords.i, coords.j].getRandomNum();
             tmpCell.GetComponent<CellScr>().SetState(field.array[coords.i, coords.j].getState());
 
             AllCells.Add(tmpCell.GetComponent<CellScr>());
@@ -345,7 +359,7 @@ public class GameControllerScr : MonoBehaviour
 
         foreach (CellScr _cell in AllCells)
         {
-            if(_cell.randomNum != 0)
+            if(_cell.settings._randomNum != 0)
             {
                 _cell.Hide();
                 _step--;

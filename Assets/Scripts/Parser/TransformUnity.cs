@@ -52,54 +52,56 @@ namespace genField
 
         }
         //функция сохраняющая массив в файлы
-        public void fromUnityToFile(Field field)
-        {
-            //Debug.Log(Application.temporaryCachePath);
-            using (StreamWriter sw = new StreamWriter(Application.temporaryCachePath + "/States.txt"))
-            {
-                for (int i = 0; i < field.heightField; i++)
-                {
-                    for (int j = 0; j < field.widthField; j++)
-                    {
-                        if(j < field.widthField-1)
-                            sw.Write(field.array[i, j].getState() + " ");
-                        else if (i < field.heightField)
-                            sw.Write(field.array[i, j].getState() + "\n");
-                    }
-                    //sw.WriteLine();
 
-                }
-            }
 
-            using (StreamWriter sw = new StreamWriter(Application.temporaryCachePath + "/RandomNums.txt"))
-            {
-                for (int i = 0; i < field.heightField; i++)
-                {
-                    for (int j = 0; j < field.widthField; j++)
-                    {
-                        if (j < field.widthField - 1)
-                            sw.Write(field.array[i, j].getRandomNum() + " ");
-                        else if(i < field.heightField)
-                            sw.Write(field.array[i, j].getRandomNum() + "\n");
-                    }
-                    //sw.WriteLine();
-                }
-            }
+        //public void fromUnityToFile(Field field)
+        //{
+        //    //Debug.Log(Application.temporaryCachePath);
+        //    using (StreamWriter sw = new StreamWriter(Application.temporaryCachePath + "/States.txt"))
+        //    {
+        //        for (int i = 0; i < field.heightField; i++)
+        //        {
+        //            for (int j = 0; j < field.widthField; j++)
+        //            {
+        //                if(j < field.widthField-1)
+        //                    sw.Write(field.array[i, j].getState() + " ");
+        //                else if (i < field.heightField)
+        //                    sw.Write(field.array[i, j].getState() + "\n");
+        //            }
+        //            //sw.WriteLine();
 
-            using (StreamWriter sw = new StreamWriter(Application.temporaryCachePath + "/IDs.txt"))
-            {
-                for (int i = 0; i < field.heightField; i++)
-                {
-                    for (int j = 0; j < field.widthField; j++)
-                    {
-                        if (j < field.widthField - 1)
-                            sw.Write(field.array[i, j].getId() + " ");
-                        else if (i < field.heightField)
-                            sw.Write(field.array[i, j].getId() + "\n");
-                    }
-                    //sw.WriteLine();
-                }
-            }
-        }
+        //        }
+        //    }
+
+        //    using (StreamWriter sw = new StreamWriter(Application.temporaryCachePath + "/RandomNums.txt"))
+        //    {
+        //        for (int i = 0; i < field.heightField; i++)
+        //        {
+        //            for (int j = 0; j < field.widthField; j++)
+        //            {
+        //                if (j < field.widthField - 1)
+        //                    sw.Write(field.array[i, j].getRandomNum() + " ");
+        //                else if(i < field.heightField)
+        //                    sw.Write(field.array[i, j].getRandomNum() + "\n");
+        //            }
+        //            //sw.WriteLine();
+        //        }
+        //    }
+
+        //    using (StreamWriter sw = new StreamWriter(Application.temporaryCachePath + "/IDs.txt"))
+        //    {
+        //        for (int i = 0; i < field.heightField; i++)
+        //        {
+        //            for (int j = 0; j < field.widthField; j++)
+        //            {
+        //                if (j < field.widthField - 1)
+        //                    sw.Write(field.array[i, j].getId() + " ");
+        //                else if (i < field.heightField)
+        //                    sw.Write(field.array[i, j].getId() + "\n");
+        //            }
+        //            //sw.WriteLine();
+        //        }
+        //    }
+        //}
     }
 }

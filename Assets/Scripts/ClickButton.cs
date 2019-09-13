@@ -46,7 +46,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
 
             //normCol = panel.color;
             //panel.color = UnityEngine.Color.yellow;
-            if (Click.randomNum != 0)
+            if (Click.settings._randomNum != 0)
             {
                 if (first == null)
                 {
@@ -57,7 +57,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
                 {
                     second = Click;
                 }
-                var clickedButtons = System.Tuple.Create(Click.id, Click.randomNum);
+                var clickedButtons = System.Tuple.Create(Click.settings._id, Click.settings._randomNum);
                 Buttons.Add(clickedButtons);
                 //Debug.Log(Buttons.Count);
                 objects.first = first;
@@ -73,7 +73,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
 
     public IEnumerator TouchHold()
     {
-        if (Click.randomNum == 0)
+        if (Click.settings._randomNum == 0)
             yield break;
 
         Debug.Log("Touched");
@@ -88,7 +88,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
         }
         if(Input.GetMouseButton(0))
         {
-            GameControllerScr.instance.OpenImagePreview(GetComponent<CellScr>().randomNum);
+            GameControllerScr.instance.OpenImagePreview(GetComponent<CellScr>().settings._randomNum);
         }
         else
         {
@@ -105,7 +105,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
             }
             if (Input.GetTouch(0).phase == TouchPhase.Stationary)
             {
-                GameControllerScr.instance.OpenImagePreview(GetComponent<CellScr>().randomNum);
+                GameControllerScr.instance.OpenImagePreview(GetComponent<CellScr>().settings._randomNum);
             }
             else
             {
@@ -176,8 +176,8 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
                 first.SetState(0);
                 second.SetState(0);
 
-                objects.first.randomNum = 0;
-                objects.second.randomNum = 0;
+                objects.first.settings._randomNum = 0;
+                objects.second.settings._randomNum = 0;
 
                 
 
