@@ -9,6 +9,10 @@ public class ImagePreviewer : ui_basement
     public RectTransform _ImgSize;
     public Text description;
     public Text username;
+    public Text LikeCount;
+    public Image Like;
+    public Material setLike;
+    public Material unLike;
 
     public void Preview(int id)
     {
@@ -45,5 +49,17 @@ public class ImagePreviewer : ui_basement
     public void setUsername(int id)
     {
         username.text = AtlasController.instance.posts[id - 1].usernameFrom;
+    }
+
+    public void setLikesCount(int id)
+    {
+        LikeCount.text = "Нравится: " + AtlasController.instance.posts[id - 1].likes.ToString();
+    }
+
+    public void SendLike()
+    {
+        if (Like.material == setLike) Like.material = unLike;
+        else Like.material = setLike;
+
     }
 }

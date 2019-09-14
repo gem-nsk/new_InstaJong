@@ -18,6 +18,9 @@ public class GameControllerScr : MonoBehaviour
     public bool Helper = false;
 
     public int cellCount;
+    public int cellState;
+    public int cellStateTMP;
+    public int endGameFlag = 0;
     //private LineRenderer lr;
 
     //public Material mat;
@@ -53,12 +56,17 @@ public class GameControllerScr : MonoBehaviour
     public UnityEngine.UI.Image blinkImage;
 
     public GameObject _previewer;
+    public GameObject _endGamePreview;
 
+    public string  mapLoad;
     public List<string> descriptions { get; set; }
 
 
     [Header("Player stats")]
     public PlayerStats stats;
+
+    private List<string> LEVELS;
+    public bool nextLevelFlag = false;
 
     #region Singleton
     public static GameControllerScr instance;
@@ -70,6 +78,12 @@ public class GameControllerScr : MonoBehaviour
     #region MainCode
     public IEnumerator Start()
     {
+        LEVELS = new List<string>();
+        LEVELS.Add("map");
+        LEVELS.Add("map1");
+        mapLoad =LEVELS[0];
+        cellStateTMP = 0;
+        cellState = 0;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         transformUnity = new TransformUnity();
         pathParser = new PathParser();
@@ -101,6 +115,7 @@ public class GameControllerScr : MonoBehaviour
     {
         if (refresh == true)
         {
+            cellStateTMP = cellState;
             placeCells();
             refresh = false;
         }
@@ -108,6 +123,30 @@ public class GameControllerScr : MonoBehaviour
         {
             blinkImage.color = new UnityEngine.Color(1,1,1, Mathf.Clamp(Mathf.PingPong(Time.time, 1), 0.5f, 1));
         }
+        if(endGameFlag == 1)
+        {
+            Debug.Log("You are won");
+            OpenEndGamePreview(1);
+            endGameFlag = 0;
+        }
+        if(endGameFlag == 2)
+        {
+            Debug.Log("You are loose");
+            OpenEndGamePreview(2);
+            endGameFlag = 0;
+        }
+        if(nextLevelFlag == true)
+        {
+            if(mapLoad.Equals(LEVELS[0]))
+            LoadNextLevel(LEVELS[1]);
+        }
+    }
+
+    public void LoadNextLevel(string map)
+    {
+        mapLoad = map;
+        StartCoroutine(CreateButtonCells());
+        StartCoroutine(Refresh(false));
     }
     
     private void OnDestroy()
@@ -127,7 +166,7 @@ public class GameControllerScr : MonoBehaviour
 
         if (Application.platform == RuntimePlatform.Android)
         {
-            TextAsset s = (TextAsset)Resources.Load("map");
+            TextAsset s = (TextAsset)Resources.Load(mapLoad);
             string str = s.text;
 
             var map = mapGenerator.mapFromFile(str);
@@ -140,7 +179,7 @@ public class GameControllerScr : MonoBehaviour
         else
         {
 
-            TextAsset s = (TextAsset)Resources.Load("map");
+            TextAsset s = (TextAsset)Resources.Load(mapLoad);
             Debug.Log(s.text);
 
             String str = s.text;
@@ -331,7 +370,15 @@ public class GameControllerScr : MonoBehaviour
             tmpCell.GetComponent<CellScr>().settings._id = field.array[coords.i, coords.j].getId();
             tmpCell.GetComponent<CellScr>().settings._randomNum = field.array[coords.i, coords.j].getRandomNum();
             tmpCell.GetComponent<CellScr>().SetState(field.array[coords.i, coords.j].getState());
-
+            if(cellStateTMP == 0)
+            {
+                if (field.array[coords.i, coords.j].getState() == 1) cellState++;
+            }
+            else
+            {
+                cellState = cellStateTMP;
+            }
+            
             AllCells.Add(tmpCell.GetComponent<CellScr>());
         }
     }
@@ -380,7 +427,7 @@ public class GameControllerScr : MonoBehaviour
 
         field = field.refreshField(field);
 
-
+        
         refresh = true;
         yield return StartCoroutine( SearchPath());
 
@@ -399,6 +446,12 @@ public class GameControllerScr : MonoBehaviour
        GameObject _obj = CanvasController.instance.OpenCanvas(_previewer);
 
         _obj.GetComponent<ImagePreviewer>().Preview(id);
+    }
+
+    public void OpenEndGamePreview(int state)
+    {
+        GameObject _obj = CanvasController.instance.OpenCanvas(_endGamePreview);
+        _obj.GetComponent<endGamePreviewer>().Preview(state);
     }
 
     public void CreateLine(List<Point> points)

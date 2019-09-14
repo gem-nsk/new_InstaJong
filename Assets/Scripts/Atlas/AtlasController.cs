@@ -121,58 +121,16 @@ public class AtlasController : MonoBehaviour
         foreach (var data in dyn.data)
         {
             var post_info = new PostInfo();
-            string new_str;
+
             post_info.id = i;
             post_info.thumbnail = data.images.thumbnail.url;
             post_info.standard = data.images.standard_resolution.url;
 
-            //if (data.caption.text.Length > 20)
-            //    new_str = data.caption.text.Remove(50) + "...";
-            //else new_str = data.caption.text;
-
-            new_str = data.caption.text;
-            if (new_str.Length > 50) new_str = new_str.Remove(50) + "...";
-            post_info.description = new_str;
+            post_info.description = data.caption.text;
             post_info.likes = data.likes.count;
             post_info.comments = data.comments.count;
             post_info.usernameFrom = data.caption.from.username;
 
-
-            //using (WebClient client = new WebClient())
-            //{
-            //    //client.DownloadFileAsync(new Uri(url), @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\image\file"+i+".jpg");
-            //    switch(Application.platform)
-            //    {
-            //        case RuntimePlatform.Android:
-            //            client.DownloadFileAsync(new System.Uri(post_info.thumbnail),
-            //       "jar:file://" + Application.dataPath + "!/assets/t_" + i + ".jpg");
-            //            break;
-            //        default:
-            //            client.DownloadFileAsync(new System.Uri(post_info.thumbnail),
-            //        Application.streamingAssetsPath + "\file\\t_" + i + ".jpg");
-            //            break;
-            //    }
-            //    client.DownloadFileCompleted += Client_DownloadFileCompleted;
-
-            //       // @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\imageStandard\file" + i + ".jpg");
-            //}
-            //using (WebClient client = new WebClient())
-            //{
-            //    //client.DownloadFileAsync(new Uri(url), @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\image\file"+i+".jpg");
-            //    switch (Application.platform)
-            //    {
-            //        case RuntimePlatform.Android:
-            //            client.DownloadFileAsync(new System.Uri(post_info.standard),
-            //       "jar:file://" + Application.dataPath + "!/assets/s_" + i + ".jpg");
-            //            break;
-            //        default:
-            //            client.DownloadFileAsync(new System.Uri(post_info.standard),
-            //        Application.streamingAssetsPath + "\file\\s_" + i + ".jpg");
-            //            break;
-            //    }
-
-            //    // @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\imageStandard\file" + i + ".jpg");
-            //}
 
             UnityWebRequest s_request = UnityWebRequestTexture.GetTexture(post_info.standard);
             yield return s_request.SendWebRequest();
@@ -197,7 +155,6 @@ public class AtlasController : MonoBehaviour
             i++;
         }
         yield return null;
-        Debug.Log( Directory.GetFiles(Application.persistentDataPath + "/file/").Length);
     }
 
 }
