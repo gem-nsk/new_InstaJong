@@ -53,4 +53,9 @@ public class GameUI : MonoBehaviour
             CanvasController.instance.OpenCanvas(0);
         }
     }
+
+    public void ShowHelp()
+    {
+        StartCoroutine( GameControllerScr.instance.ShowHelp());
+    }
 }

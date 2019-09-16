@@ -69,6 +69,8 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
             {
                 StartCoroutine(DeleteIcons(Buttons));
             }
+
+            GameControllerScr.instance.Save();
         }
     }
 
@@ -122,7 +124,9 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
         GameControllerScr.instance.StopBlinking();
 
         //points
-        GameControllerScr.instance.stats.AddPoints(10);
+        GameControllerScr.instance.stats.AddPoints(15);
+        StartCoroutine(GameControllerScr.instance.SearchPath());
+
     }
 
     public IEnumerator DeleteIcons(List<System.Tuple<int, int>> tuples)
@@ -170,7 +174,6 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
 
                 
 
-                SuccessfulPare();
 
                 yield return new WaitForSeconds(gameController.DelayBeforeDestroy);
 
@@ -199,14 +202,15 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
                     || idSecondClick == gameController.pathParser.path.idFirst)
                 {
                     yield return new WaitForEndOfFrame();
-                    gameController.StartCoroutine("SearchPath");
                     //Debug.Log("find path");
                 }
 
                 //gameController.ResetLine(gameController.LR);
 
+                SuccessfulPare();
+
             }
-            
+
         } //else panel.color = normCol;
 
         else

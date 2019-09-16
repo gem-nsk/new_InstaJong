@@ -3338,7 +3338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InstaCoins: 0
-  DefaultInstaCoinsValue: 500
+  DefaultInstaCoinsValue: 200
   Points: 0
   RefreshPrice: 100
 --- !u!4 &2118844685

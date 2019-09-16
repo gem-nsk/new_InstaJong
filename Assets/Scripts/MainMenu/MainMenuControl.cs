@@ -47,6 +47,7 @@ public class MainMenuControl : MonoBehaviour
     
     public void ButtonBack()
     {
+        GameControllerScr.instance.StopLoading();
         SceneManager.LoadScene("Menu");
     }
 

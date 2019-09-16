@@ -9,8 +9,8 @@ using System.Drawing;
 using System.IO;
 using System;
 using UnityEngine.Networking;
-
-
+using Image = UnityEngine.UI.Image;
+using Color = UnityEngine.Color;
 
 public class GameControllerScr : MonoBehaviour
 {
@@ -110,7 +110,7 @@ public class GameControllerScr : MonoBehaviour
         }
     }
     
-    private void OnDestroy()
+    public void Save()
     {
 
         DataSave.save(AllCells, (field.heightField, field.widthField));
@@ -206,6 +206,16 @@ public class GameControllerScr : MonoBehaviour
         }
     }
 
+    private Image[] helpers = new Image[2];
+    public IEnumerator ShowHelp()
+    {
+        yield return StartCoroutine(SearchPath());
+
+        helpers[0].color = Color.yellow;
+        helpers[1].color = Color.yellow;
+
+    }
+
     public IEnumerator SearchPath()
     {
         List<Transform> forLine = new List<Transform>();
@@ -223,14 +233,13 @@ public class GameControllerScr : MonoBehaviour
                 foreach (Transform child in cellGroup)
                 {
 
-                    if (child.name == IDFirst || child.name == IDSecond)
+                    if (child.name == IDFirst)
                     {
-                        var ChildButton = child.gameObject.GetComponent<UnityEngine.UI.Image>();
-                        //helper
-                        if(Helper)
-                        {
-                            ChildButton.color = UnityEngine.Color.yellow;
-                        }
+                        helpers[0] = child.gameObject.GetComponent<UnityEngine.UI.Image>();
+                    }
+                    else if (child.name == IDSecond)
+                    {
+                        helpers[1] = child.gameObject.GetComponent<UnityEngine.UI.Image>();
                     }
                     
                 }
@@ -447,7 +456,13 @@ public class GameControllerScr : MonoBehaviour
         LikeSystem.transform.position = new Vector3(pos.x, pos.y, pos.z - 10);
         LikeSystem.Play();
     }
-    
+
+    public void StopLoading()
+    {
+        AtlasController.instance.StopLoading();
+    }
+
+
     //public IEnumerator waiter()
     //{
     //    CreateLine(points);
