@@ -251,7 +251,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: c8f24f650e62bb141811a062e025d0ad, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2ba104f72280c2742996d91b12e2e901, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -388,6 +388,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Helper: 0
   cellCount: 198
+  cellState: 0
+  cellStateTMP: 0
+  endGameFlag: 0
   DelayBeforeDestroy: 0.3
   AllCells: []
   LR: {fileID: 271199023}
@@ -402,7 +405,11 @@ MonoBehaviour:
   blinkImage: {fileID: 0}
   _previewer: {fileID: 4082726910996535974, guid: e0b613aad509c0741b97120fe1bac911,
     type: 3}
+  _endGamePreview: {fileID: 8875144992572270659, guid: 1949d6e501261814fae91f8d7541299e,
+    type: 3}
+  mapLoad: 
   stats: {fileID: 0}
+  nextLevelFlag: 0
 --- !u!4 &84232291
 Transform:
   m_ObjectHideFlags: 0
@@ -676,7 +683,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: ff8f512ff8f084040a6aceb305d6444f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 98310ef3a945ffe41b715a01a4596254, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1838,7 +1845,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2350,7 +2357,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 2ecb1a92841567642946e9fd986c4db0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a44f0fc907deb184d8fe195e3ee64720, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

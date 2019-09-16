@@ -92,6 +92,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
         if(Input.GetMouseButton(0))
         {
             GameControllerScr.instance.OpenImagePreview(GetComponent<CellScr>().settings._randomNum);
+            //GameControllerScr.instance.OpenEndGamePreview(1);
         }
         else
         {
@@ -191,8 +192,9 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
                 gameController.field.array[secondCoords.i, secondCoords.j].setState(0);
                 gameController.field.array[secondCoords.i, secondCoords.j].setRandomNum(0);
 
-                
-
+                gameController.cellState-=2;
+                Debug.Log(gameController.cellState);
+                if (gameController.cellState == 0) gameController.endGameFlag = 1;
 
                 panel.color = UnityEngine.Color.white * 0.0F;
                 //Debug.Log("Delete " + idFirstClick + " and " + idSecondClick);

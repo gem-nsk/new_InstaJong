@@ -22,6 +22,7 @@ public class Timer : MonoBehaviour
 
     public IEnumerator TimerProgress()
     {
+        GameControllerScr gameController = GameControllerScr.instance;
         _time = TotalTime;
         timerSlider.maxValue = TotalTime;
 
@@ -33,5 +34,6 @@ public class Timer : MonoBehaviour
             yield return null;
         }
         Debug.Log("Time is ended!");
+        gameController.endGameFlag = 2;
     }
 }

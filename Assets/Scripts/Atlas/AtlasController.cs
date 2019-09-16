@@ -204,14 +204,12 @@ public class AtlasController : MonoBehaviour
         foreach (var data in dyn.data)
         {
             var post_info = new PostInfo();
-            string new_str;
+
             post_info.id = i;
             post_info.thumbnail = data.images.thumbnail.url;
             post_info.standard = data.images.standard_resolution.url;
 
-            new_str = data.caption.text;
-            if (new_str.Length > 50) new_str = new_str.Remove(50) + "...";
-            post_info.description = new_str;
+            post_info.description = data.caption.text;
             post_info.likes = data.likes.count;
             post_info.comments = data.comments.count;
             post_info.usernameFrom = data.caption.from.username;
@@ -260,7 +258,10 @@ public class AtlasController : MonoBehaviour
             loadingBar.value++;
         }
         yield return null;
+<<<<<<< HEAD
         loadingBar?.gameObject.SetActive(false);
+=======
+>>>>>>> 7fb3401324fed52b6ccd620685ca023d78479c30
     }
 
 }
