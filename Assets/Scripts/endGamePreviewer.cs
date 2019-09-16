@@ -38,7 +38,13 @@ public class endGamePreviewer : ui_basement
         GameControllerScr gameController = GameControllerScr.instance;
         switch (state){
             case 1: { gameController.nextLevelFlag = true;  DeActivate(); break; }
-            case 2: SceneManager.LoadScene("Menu"); break;
+            case 2:
+                {
+                    gameController.nextLevelFlag = false;
+                    GameControllerScr.numMap = 0;
+                    SceneManager.LoadScene("Menu");
+                    break;
+                }
         }
     }
 
