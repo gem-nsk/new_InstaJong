@@ -36,7 +36,13 @@ public class _atlas
 
 public class AtlasController : MonoBehaviour
 {
-
+    public _LoadType LoadType;
+    public enum _LoadType
+    {
+        Resources,
+        Internet,
+        Cache
+    }
     public string AccountId;
 
     public List<PostInfo> posts;
@@ -80,8 +86,18 @@ public class AtlasController : MonoBehaviour
         //}
         //else
         //{
-            //if images not saved
-            yield return StartCoroutine(DownloadImagesFromInstagram());
+        //if images not saved
+        switch (LoadType)
+        {
+            case _LoadType.Internet:
+                yield return StartCoroutine(DownloadImagesFromInstagram());
+                break;
+            case _LoadType.Resources:
+                yield return StartCoroutine(LoadingFromResources());
+                break;
+            case _LoadType.Cache:
+                break;
+        }
             DataSave.SavePostsInfo(posts);
         //}
         Pack(Atlases[0]);
@@ -106,6 +122,20 @@ public class AtlasController : MonoBehaviour
             Directory.CreateDirectory(t_path);
             Directory.CreateDirectory(s_path);
             return false;
+        }
+    }
+
+    public void SetLoadingSettings(int totalCount, int step)
+    {
+        if(totalCount  != step)
+        {
+            loadingBar.gameObject.SetActive(true);
+            loadingBar.maxValue = totalCount;
+            loadingBar.value = step;
+        }
+        else
+        {
+            loadingBar.gameObject.SetActive(false);
         }
     }
 
@@ -150,6 +180,27 @@ public class AtlasController : MonoBehaviour
         StopCoroutine(DownloadImagesFromInstagram());
         StopCoroutine(LoadImagesFromCache());
         StopCoroutine(Init());
+    }
+
+    public IEnumerator LoadingFromResources()
+    {
+        TextAsset data = Resources.Load<TextAsset>("saved/posts");
+        root_posts root = JsonUtility.FromJson<root_posts>(data.text);
+
+        for (int i = 1; i <= root._p.Count; i++)
+        {
+
+            root._p[i - 1].ThumbnailTexture = Resources.Load<Texture2D>("saved/t_images/t_" + i);
+            root._p[i - 1].StandartTexture = Resources.Load<Texture2D>("saved/s_images/s_" + i);
+            SetLoadingSettings(root._p.Count, i);
+        }
+
+        foreach(PostInfo p in root._p)
+        {
+            posts.Add(p);
+        }
+        SetLoadingSettings(0, 0);
+        yield return null;
     }
 
     public IEnumerator LoadImagesFromCache()
@@ -198,8 +249,6 @@ public class AtlasController : MonoBehaviour
 
         posts = new List<PostInfo>();
 
-        loadingBar.maxValue = dyn.data.Count;
-        loadingBar.value = 0;
 
         foreach (var data in dyn.data)
         {
@@ -239,29 +288,19 @@ public class AtlasController : MonoBehaviour
 
             posts.Add(post_info);
 
-            var t_bytes = post_info.ThumbnailTexture.EncodeToPNG();
-            var s_bytes = post_info.StandartTexture.EncodeToPNG();
-
-            var t_file = File.Open(Path.Combine(t_path, "t_" + post_info.id + ".png"), FileMode.Create, FileAccess.ReadWrite);
-            var s_file = File.Open(Path.Combine(s_path, "s_" + post_info.id + ".png"), FileMode.Create, FileAccess.ReadWrite);
-
-            BinaryWriter t_writer = new BinaryWriter(t_file);
-            BinaryWriter s_writer = new BinaryWriter(s_file);
-
-            t_writer.Write(t_bytes);
-            s_writer.Write(s_bytes);
-
-            t_writer.Close();
-            s_writer.Close();
+            DataSave.SaveImage(post_info.ThumbnailTexture, "t_"+ post_info.id, "D:/UnityProject/new_InstaJong/Assets/Resources/saved/t_images");
+            DataSave.SaveImage(post_info.StandartTexture, "s_" + post_info.id, "D:/UnityProject/new_InstaJong/Assets/Resources/saved/s_images");
 
             i++;
-            loadingBar.value++;
+            SetLoadingSettings(dyn.data.Count, i);
         }
         yield return null;
-<<<<<<< HEAD
-        loadingBar?.gameObject.SetActive(false);
-=======
->>>>>>> 7fb3401324fed52b6ccd620685ca023d78479c30
+        SetLoadingSettings(0, 0);
     }
 
+    public void CreatePost(PostInfo data)
+    {
+        PostInfo post = data;
+        posts.Add(post);
+    }
 }

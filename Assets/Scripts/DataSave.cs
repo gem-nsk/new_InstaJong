@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-
+[System.Serializable]
 public class root_posts
 {
     public List<PostInfo> _p = new List<PostInfo>();
@@ -82,5 +82,15 @@ public class DataSave : MonoBehaviour
         {
             return null;
         }
+    }
+    public static void SaveImage(Texture2D texture, string name, string filepath)
+    {
+        var bytes = texture.EncodeToPNG();
+        var file = File.Open(Path.Combine(filepath, name + ".png"), FileMode.Create, FileAccess.ReadWrite);
+
+        BinaryWriter writer = new BinaryWriter(file);
+        writer.Write(bytes);
+
+        writer.Close();
     }
 }
