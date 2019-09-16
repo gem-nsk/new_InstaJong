@@ -43,6 +43,7 @@ public class GameControllerScr : MonoBehaviour
 
     public static bool loadGame { get; set; }
     public static bool refresh { get; set; }
+    public static int numMap;
 
     public bool searchPath = true;
     public bool isRefreshing = false;
@@ -81,7 +82,12 @@ public class GameControllerScr : MonoBehaviour
         LEVELS = new List<string>();
         LEVELS.Add("map");
         LEVELS.Add("map1");
+        LEVELS.Add("map2");
+        LEVELS.Add("map3");
+        LEVELS.Add("map4");
+        LEVELS.Add("map5");
         mapLoad =LEVELS[0];
+        numMap = 0;
         cellStateTMP = 0;
         cellState = 0;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
@@ -137,14 +143,20 @@ public class GameControllerScr : MonoBehaviour
         }
         if(nextLevelFlag == true)
         {
-            if(mapLoad.Equals(LEVELS[0]))
-            LoadNextLevel(LEVELS[1]);
+            //Debug.Log(numMap);
+            nextLevelFlag = false;
+            LoadNextLevel();
         }
     }
 
-    public void LoadNextLevel(string map)
+    public void LoadNextLevel()
     {
-        mapLoad = map;
+        if(numMap < 5)
+        {
+            numMap++;
+            
+        }
+        mapLoad = LEVELS[numMap];
         StartCoroutine(CreateButtonCells());
         StartCoroutine(Refresh(false));
     }
