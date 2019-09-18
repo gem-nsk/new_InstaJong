@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
+
 [System.Serializable]
 public class root_posts
 {
@@ -40,17 +41,25 @@ public class DataSave : MonoBehaviour
     public static ((int height, int width), List<CellJson>) GetData()
     {
         string filepath = Application.persistentDataPath + "/grid.json";
-        string dataAsJson = File.ReadAllText(filepath);
-
-        root js = JsonUtility.FromJson<root>(dataAsJson);
-        List<CellJson> list = new List<CellJson>();
-
-        for (int i = 0; i < js.data.Count; i++)
+        if(File.Exists(filepath))
         {
-            list.Add(js.data[i]);
-        }
 
-        return ((js.height, js.width), list);
+            string dataAsJson = File.ReadAllText(filepath);
+
+            root js = JsonUtility.FromJson<root>(dataAsJson);
+            List<CellJson> list = new List<CellJson>();
+
+            for (int i = 0; i < js.data.Count; i++)
+            {
+                list.Add(js.data[i]);
+            }
+
+            return ((js.height, js.width), list);
+        }
+        else
+        {
+            return ((0,0), null);
+        }
     }
 
     public static void SavePostsInfo(List<PostInfo> data)
@@ -93,4 +102,6 @@ public class DataSave : MonoBehaviour
 
         writer.Close();
     }
+
+    
 }

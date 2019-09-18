@@ -42,6 +42,12 @@ public class ui_basement : MonoBehaviour
         Destroy(gameObject);
     }
 
+    //Close thow canvas controller
+    public virtual void CanvasControllerClose()
+    {
+        CanvasController.instance.CloseCanvas();
+    }
+
     IEnumerator SmoothAlpha(float from, float To)
     {
         group.interactable = false;

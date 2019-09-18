@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class PlayerStats : MonoBehaviour
 {
     public int InstaCoins;
@@ -12,6 +14,9 @@ public class PlayerStats : MonoBehaviour
     private const string _pointsPath = "Points";
 
     public int RefreshPrice = 5;
+    public int HelpPrice = 20;
+    public int AddTimePrice = 50;
+
 
     public delegate void del_AddPoint(int points);
     public del_AddPoint _addPoints;
@@ -49,7 +54,11 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-   
+   public void SetPointsTo(int to)
+    {
+        Points = to;
+        SaveData();
+    }
 
     public void SaveData()
     {

@@ -815,7 +815,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 471948145}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1828637109}
+        m_MethodName: OpenRules
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &471948145
@@ -1076,6 +1087,7 @@ MonoBehaviour:
   canvasList:
   - {fileID: 798926291608319558, guid: cd22c2d960e478a41aa79a94c1982259, type: 3}
   - {fileID: 4082726910996535974, guid: e0b613aad509c0741b97120fe1bac911, type: 3}
+  - {fileID: 6499987053344143495, guid: 31ebf349b68890c429af8e800cb89810, type: 3}
 --- !u!4 &753999251
 Transform:
   m_ObjectHideFlags: 0
@@ -1232,6 +1244,7 @@ GameObject:
   m_Component:
   - component: {fileID: 788774377}
   - component: {fileID: 788774376}
+  - component: {fileID: 788774378}
   m_Layer: 0
   m_Name: Localization
   m_TagString: Untagged
@@ -1251,7 +1264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f148557f831dee46932c4a499deeb9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebugLanguage: 0
+  DebugLanguage: 1
 --- !u!4 &788774377
 Transform:
   m_ObjectHideFlags: 0
@@ -1266,6 +1279,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &788774378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788774375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff18164513f59fa40bdc5dcbf607e8f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &930942326
 GameObject:
   m_ObjectHideFlags: 0
@@ -1394,8 +1419,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 14.619}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 13.899902, y: 20.000061}
-  m_SizeDelta: {x: -213.1, y: -251.5}
+  m_AnchoredPosition: {x: 22, y: -0.000015258789}
+  m_SizeDelta: {x: -213.1, y: -271.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &955618424
 MonoBehaviour:
@@ -1420,7 +1445,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 12800000, guid: 5b5341c7965a9de46bd8111684344c5e, type: 3}
     m_FontSize: 83
-    m_FontStyle: 0
+    m_FontStyle: 2
     m_BestFit: 1
     m_MinSize: 8
     m_MaxSize: 100
@@ -1430,8 +1455,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0412\u043E\u0439\u0442\u0438 \u0432 \u0430\u043A\u043A\u0430\u0443\u043D\u0442
-    Instagramm"
+  m_Text: 'signed in:
+
+    @instajong_game'
 --- !u!222 &955618425
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1447,7 +1473,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 955618422}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9fc151ff9ab428047bf323cf85c043f0, type: 3}
   m_Name: 
@@ -1562,10 +1588,10 @@ RectTransform:
   m_Father: {fileID: 1828637106}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.43056253, y: 0.054}
-  m_AnchorMax: {x: 0.46500003, y: 0.11800001}
-  m_AnchoredPosition: {x: 2, y: 1.5}
-  m_SizeDelta: {x: -6.034993, y: -6.960763}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -105, y: 94}
+  m_SizeDelta: {x: 65, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1054693763
 MonoBehaviour:
@@ -1684,8 +1710,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 37.2, y: 11.42}
-  m_SizeDelta: {x: -65.69, y: -22.93}
+  m_AnchoredPosition: {x: 28.5, y: 11.4375}
+  m_SizeDelta: {x: -82.97, y: -22.93}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1186516956
 MonoBehaviour:
@@ -2064,8 +2090,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -3.5, y: 0}
-  m_SizeDelta: {x: -7.0599976, y: -39.2}
+  m_AnchoredPosition: {x: 10.5, y: 0}
+  m_SizeDelta: {x: -38, y: -39.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1592166314
 MonoBehaviour:
@@ -2094,7 +2120,7 @@ MonoBehaviour:
     m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 28
-    m_Alignment: 2
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 0
     m_HorizontalOverflow: 0
@@ -2157,8 +2183,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 30, y: 8.21875}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 28.75, y: 8.21875}
+  m_SizeDelta: {x: -57.39, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1600493472
 MonoBehaviour:
@@ -2799,6 +2825,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BuyInstaCoins_ui: {fileID: 798926291608319558, guid: cd22c2d960e478a41aa79a94c1982259,
     type: 3}
+  Rules_ui: {fileID: 8243194131716475119, guid: 8f27ffc4e5b2a044084e4263c9b8525d,
+    type: 3}
+  musicImg: {fileID: 392009829}
+  Musicicons:
+  - {fileID: -4326742188892486678, guid: e5beff693427370489f9acc85b67d445, type: 3}
+  - {fileID: -6886481329869461866, guid: f66435d24647e2f4086e1b835b841f2c, type: 3}
 --- !u!1 &1833420651
 GameObject:
   m_ObjectHideFlags: 0
@@ -2833,10 +2865,10 @@ RectTransform:
   m_Father: {fileID: 1828637106}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5655208, y: 0.054}
-  m_AnchorMax: {x: 0.601, y: 0.11800001}
-  m_AnchoredPosition: {x: 1, y: 1}
-  m_SizeDelta: {x: -8, y: -8}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 159, y: 90}
+  m_SizeDelta: {x: 64, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1833420653
 MonoBehaviour:
@@ -3090,8 +3122,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.1994375, y: 0.04474075}
   m_AnchorMax: {x: 0.3074792, y: 0.12262964}
-  m_AnchoredPosition: {x: -4.5, y: -0.5}
-  m_SizeDelta: {x: -9, y: 8.68998}
+  m_AnchoredPosition: {x: -4.5, y: -2.5}
+  m_SizeDelta: {x: -9, y: 4.845}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2044248057
 MonoBehaviour:
@@ -3341,6 +3373,8 @@ MonoBehaviour:
   DefaultInstaCoinsValue: 200
   Points: 0
   RefreshPrice: 100
+  HelpPrice: 20
+  AddTimePrice: 50
 --- !u!4 &2118844685
 Transform:
   m_ObjectHideFlags: 0

@@ -9,31 +9,66 @@ public class Timer : MonoBehaviour
     public Slider timerSlider;
 
     public float TotalTime = 600;
-    private float _time;
+    public float _time;
+    public bool _isPaused;
 
-    private void Start()
+   
+   
+    public void SaveTime()
     {
-        StartTime();
+        PlayerPrefs.SetFloat("time", _time);
     }
-    public void StartTime()
+    public void LoadTime()
     {
+        if(PlayerPrefs.HasKey("time"))
+        {
+            _time = PlayerPrefs.GetFloat("time");
+        }
+        else
+        {
+            _time = TotalTime;
+        }
+        StartCoroutine(TimerProgress());
+    }
+    public void SetDefaultTime()
+    {
+        _time = TotalTime;
         StartCoroutine(TimerProgress());
     }
 
     public IEnumerator TimerProgress()
     {
         GameControllerScr gameController = GameControllerScr.instance;
-        _time = TotalTime;
+
         timerSlider.maxValue = TotalTime;
 
-        while(_time > 0)
+        while (_time > 0)
         {
-            timerSlider.value = _time;
+            switch (_isPaused)
+            {
+                case false:
+                    timerSlider.value = _time;
 
-            _time -= Time.deltaTime;
-            yield return null;
+                    _time -= Time.deltaTime;
+                    yield return null;
+                    break;
+                case true:
+
+                    yield return null;
+                    break;
+            }
+            
+           
         }
         Debug.Log("Time is ended!");
         gameController.endGameFlag = 2;
+    }
+    public void AddTime()
+    {
+        _time = TotalTime;
+    }
+    public void TimerState(bool isPaused)
+    {
+        _isPaused = isPaused;
     }
 }

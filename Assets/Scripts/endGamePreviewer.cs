@@ -12,6 +12,7 @@ public class endGamePreviewer : ui_basement
 
     public void Preview(int state)
     {
+        GameControllerScr.instance._Timer.TimerState(true);
         this.state = state;
         switch (state)
         {
@@ -46,6 +47,7 @@ public class endGamePreviewer : ui_basement
                     break;
                 }
         }
+        gameController._Timer.TimerState(false);
     }
 
 }

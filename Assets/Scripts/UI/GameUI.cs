@@ -50,12 +50,32 @@ public class GameUI : MonoBehaviour
         }
         else
         {
-            CanvasController.instance.OpenCanvas(0);
+            CanvasController.instance.OpenCanvas(2);
         }
     }
 
     public void ShowHelp()
     {
-        StartCoroutine( GameControllerScr.instance.ShowHelp());
+        if (GameControllerScr.instance.stats.InstaCoins >= GameControllerScr.instance.stats.HelpPrice)
+        {
+              StartCoroutine( GameControllerScr.instance.ShowHelp());
+            GameControllerScr.instance.stats.AddInstaCoins(-GameControllerScr.instance.stats.HelpPrice);
+        }
+        else
+        {
+            CanvasController.instance.OpenCanvas(0);
+        }
+    }
+    public void Button_AddTime()
+    {
+        if (GameControllerScr.instance.stats.InstaCoins >= GameControllerScr.instance.stats.AddTimePrice)
+        {
+            GameControllerScr.instance._Timer.AddTime();
+            GameControllerScr.instance.stats.AddInstaCoins(-GameControllerScr.instance.stats.AddTimePrice);
+        }
+        else
+        {
+            CanvasController.instance.OpenCanvas(0);
+        }
     }
 }

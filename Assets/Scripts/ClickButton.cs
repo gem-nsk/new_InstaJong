@@ -70,7 +70,6 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
                 StartCoroutine(DeleteIcons(Buttons));
             }
 
-            GameControllerScr.instance.Save();
         }
     }
 
@@ -210,6 +209,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
                 //gameController.ResetLine(gameController.LR);
 
                 SuccessfulPare();
+                GameControllerScr.instance.Save();
 
             }
 

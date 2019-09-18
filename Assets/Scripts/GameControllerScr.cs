@@ -37,6 +37,7 @@ public class GameControllerScr : MonoBehaviour
     public PathParser pathParser;
     public TransformUnity transformUnity;
     public MapGenerator mapGenerator;
+    public Timer _Timer;
 
     public GameObject cellButton;
     public Transform cellGroup;
@@ -99,7 +100,17 @@ public class GameControllerScr : MonoBehaviour
 
 
         stats = PlayerStats.instance;
-        stats.LoadData();
+        if(loadGame)
+        {
+            stats.LoadData();
+            _Timer.LoadTime();
+        }
+        else
+        {
+            stats.LoadData();
+            stats.SetPointsTo(0);
+            _Timer.SetDefaultTime();
+        }
 
         yield return StartCoroutine(AtlasController.instance.Init());
 
@@ -108,7 +119,15 @@ public class GameControllerScr : MonoBehaviour
            yield return StartCoroutine( CreateButtonCells());
         }
         else {
-           yield return StartCoroutine(  loadMap());
+            if(DataSave.GetData().Item2 != null)
+            {
+                yield return StartCoroutine(loadMap());
+            }
+            else
+            {
+                yield return StartCoroutine( CreateButtonCells());
+                _Timer.SetDefaultTime();
+            }
         }
         
         Camera.main.transparencySortMode = TransparencySortMode.Orthographic;
@@ -158,19 +177,19 @@ public class GameControllerScr : MonoBehaviour
         }
         mapLoad = LEVELS[numMap];
         StartCoroutine(CreateButtonCells());
-        StartCoroutine(Refresh(false));
     }
     
     public void Save()
     {
-
         DataSave.save(AllCells, (field.heightField, field.widthField));
+        _Timer.SaveTime();
     }
 
 
 
     public IEnumerator CreateButtonCells()
     {
+        grid.enabled = true;
         mapGenerator = new MapGenerator();
         string filePath = Path.Combine(Application.streamingAssetsPath, "map.txt"); 
 #if UNITY_ANDROID
@@ -215,7 +234,7 @@ public class GameControllerScr : MonoBehaviour
         grid.enabled = false;
 
         SortHierarchy();
-
+        Save();
     }
 
     public void SortHierarchy()
@@ -518,8 +537,9 @@ public class GameControllerScr : MonoBehaviour
 
     public void PlayLikeParticles(Vector3 pos)
     {
-        LikeSystem.transform.position = new Vector3(pos.x, pos.y, pos.z - 10);
-        LikeSystem.Play();
+        ParticleSystem sys = Instantiate(LikeSystem);
+        sys.transform.position = new Vector3(pos.x, pos.y, pos.z - 10);
+        sys.Play();
     }
 
     public void StopLoading()

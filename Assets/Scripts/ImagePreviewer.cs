@@ -28,15 +28,15 @@ public class ImagePreviewer : ui_basement
         //img.material = mat;
         //Material mat = new Material(fileStandard);
         //Debug.Log(id);
-        Texture2D spr = AtlasController.instance.posts[id].StandartTexture;
+        Texture2D spr = AtlasController.instance.posts[id -1].StandartTexture;
 
         img.material = AtlasController.instance.GetMaterialById(AtlasController.instance.Atlases[1], id);
 
         //_ImgSize.sizeDelta = new Vector2(spr.textureRect.width, spr.textureRect.height);
     }
-    public override void DeActivate()
+    public void CLose()
     {
-        base.DeActivate();
+        CanvasController.instance.CloseCanvas();
     }
     
     
