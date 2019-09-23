@@ -33,7 +33,7 @@ public class Rules_ui : ui_basement
             if(i == _slide)
             {
                 go_Slides[i].SetActive(true);
-                SlidesIcons[i].color = new Color(1,1,1,0.8f);
+                SlidesIcons[i].color = new Color(1,1,1,0.3f);
             }
             else
             {

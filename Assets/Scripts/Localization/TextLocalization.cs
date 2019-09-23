@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TextLocalization : MonoBehaviour
 {
     public string key;
-
+    Text _text;
     // Use this for initialization
     private void Start()
     {
@@ -14,10 +14,16 @@ public class TextLocalization : MonoBehaviour
     }
     public void GetText()
     {
-        Text text = GetComponent<Text>();
-        text.text = LocalizationManager.instance.GetLocalizedValue(key);
-
+        _text = GetComponent<Text>();
+        _text.text = LocalizationManager.instance.GetLocalizedValue(key);
     }
+
+    public void AddToText(string t)
+    {
+        GetText();
+        _text.text += t;
+    }
+
     private void OnEnable()
     {
         LocalizationManager.instance.Addtext(this);

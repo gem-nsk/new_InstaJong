@@ -6,29 +6,57 @@ using UnityEngine.UI;
 
 public class endGamePreviewer : ui_basement
 {
-    public Text Description;
+    public TextLocalization[] Score_text;
+    public TextLocalization[] Highscore_text;
+
     private int state;
+
+    public GameObject[] Endings;
 
 
     public void Preview(int state)
     {
         GameControllerScr.instance._Timer.TimerState(true);
         this.state = state;
+
+        AdsController.instance.ShowInterstitial();
+
+        Debug.Log(GameControllerScr.instance.stats.GetScore().ToString());
+
         switch (state)
         {
             case 1:
                 {
-                    Description.text = "You are won";
+                    Endings[0].SetActive(true);
+
+                    Invoke("UpdateScore", 0.05f);
+
+                    Endings[1].SetActive(false);
                     break;
                 }
             case 2:
                 {
-                    Description.text = "You are loose";
+                    Endings[1].SetActive(true);
+
+                    Invoke("UpdateScore", 0.05f);
+
+                    Endings[0].SetActive(false);
                     break;
                 }
             default: break;
         }
     }
+
+    public void UpdateScore()
+    {
+
+        Score_text[0].AddToText(GameControllerScr.instance.stats.GetScore().ToString());
+        Highscore_text[0].AddToText(GameControllerScr.instance.stats.GetHighscore().ToString());
+
+        Score_text[1].AddToText(GameControllerScr.instance.stats.GetScore().ToString());
+        Highscore_text[1].AddToText(GameControllerScr.instance.stats.GetHighscore().ToString());
+    }
+
     public override void DeActivate()
     {
         base.DeActivate();
@@ -49,5 +77,12 @@ public class endGamePreviewer : ui_basement
         }
         gameController._Timer.TimerState(false);
     }
-
+    public void RestartGame()
+    {
+        GameControllerScr.instance.stats.SetPointsTo(0);
+        GameControllerScr.instance._Timer.SetDefaultTime();
+        GameControllerScr.instance._Timer._isPaused = false;
+        StartCoroutine(GameControllerScr.instance.CreateButtonCells());
+        CanvasControllerClose();
+    }
 }

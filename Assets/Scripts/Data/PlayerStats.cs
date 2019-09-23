@@ -7,11 +7,29 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     public int InstaCoins;
-    private const string _instaCoinsPath = "InstaCoins";
     public int DefaultInstaCoinsValue = 500;
 
-    public int Points;
+    private int _points;
+    public int Points
+    {
+        get
+        {
+            return _points;
+        }
+        set
+        {
+            if(value > Points_highscore)
+            {
+                Points_highscore = value;
+            }
+            _points = value;
+        }
+    }
+    public int Points_highscore;
+
+    private const string _instaCoinsPath = "InstaCoins";
     private const string _pointsPath = "Points";
+    public const string _points_hs = "hs";
 
     public int RefreshPrice = 5;
     public int HelpPrice = 20;
@@ -42,15 +60,17 @@ public class PlayerStats : MonoBehaviour
     //constructor
     public void LoadData()
     {
-        if (PlayerPrefs.HasKey(_instaCoinsPath) && PlayerPrefs.HasKey(_pointsPath))
+        if (PlayerPrefs.HasKey(_instaCoinsPath) && PlayerPrefs.HasKey(_pointsPath) && PlayerPrefs.HasKey(_points_hs))
         {
             InstaCoins = PlayerPrefs.GetInt(_instaCoinsPath);
             Points = PlayerPrefs.GetInt(_pointsPath);
+            Points_highscore = PlayerPrefs.GetInt(_points_hs);
         }
         else //default values
         {
             InstaCoins = DefaultInstaCoinsValue;
             Points = 0;
+            Points_highscore = 0;
         }
     }
 
@@ -60,10 +80,20 @@ public class PlayerStats : MonoBehaviour
         SaveData();
     }
 
+    public int GetHighscore()
+    {
+        return Points_highscore;
+    }
+
+    public int GetScore()
+    {
+        return _points;
+    }
     public void SaveData()
     {
         PlayerPrefs.SetInt(_instaCoinsPath, InstaCoins);
         PlayerPrefs.SetInt(_pointsPath, Points);
+        PlayerPrefs.SetInt(_points_hs, Points_highscore);
     }
 
     public void AddPoints(int _points)

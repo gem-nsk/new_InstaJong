@@ -52,6 +52,7 @@ public class MainMenuControl : MonoBehaviour
     
     public void ButtonBack()
     {
+        AdsController.instance.ShowInterstitial();
         GameControllerScr.instance.StopLoading();
         SceneManager.LoadScene("Menu");
     }
@@ -96,5 +97,9 @@ public class MainMenuControl : MonoBehaviour
     public void OpenRules()
     {
         CanvasController.instance.OpenCanvas(Rules_ui);
+    }
+    public void Leaders()
+    {
+        AdsController.instance.ShowInterstitial();
     }
 }

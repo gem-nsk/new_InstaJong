@@ -1016,6 +1016,7 @@ GameObject:
   - component: {fileID: 2046820335342812547}
   - component: {fileID: 602878723481801826}
   - component: {fileID: 1810889735666544476}
+  - component: {fileID: 2996346905309312541}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1084,3 +1085,16 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u041F\u0440\u0430\u0432\u0438\u043B\u0430"
+--- !u!114 &2996346905309312541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8515242767064762014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fc151ff9ab428047bf323cf85c043f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: _ui_rules

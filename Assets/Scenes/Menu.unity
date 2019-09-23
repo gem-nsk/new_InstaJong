@@ -201,7 +201,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 65260553}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1828637109}
+        m_MethodName: Leaders
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &65260553
@@ -1291,6 +1302,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff18164513f59fa40bdc5dcbf607e8f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &843232244
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 843232245}
+  - component: {fileID: 843232246}
+  m_Layer: 0
+  m_Name: AdsController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &843232245
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843232244}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.893261, y: 0.6152805, z: 162.46094}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &843232246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843232244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6a5f2e1f92eb1b4fbe4d0dbbc25ea1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InterstitialId: ca-app-pub-3940256099942544/1033173712
+  VideoId: ca-app-pub-3940256099942544/5224354917
 --- !u!1 &930942326
 GameObject:
   m_ObjectHideFlags: 0
@@ -3371,7 +3427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InstaCoins: 0
   DefaultInstaCoinsValue: 200
-  Points: 0
+  Points_highscore: 0
   RefreshPrice: 100
   HelpPrice: 20
   AddTimePrice: 50

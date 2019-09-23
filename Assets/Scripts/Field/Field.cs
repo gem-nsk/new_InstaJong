@@ -148,18 +148,19 @@ namespace genField
         }
 
         //функция поиска позиции ячейки массива по id
+
+
         public (int i, int j) findCoordsById(int id)
         {
-            for (int i = 1; i < heightField-1; i++)
+            for (int i = 1; i < heightField - 1; i++)
             {
-                for (int j = 1; j < widthField-1; j++)
+                for (int j = 1; j < widthField - 1; j++)
                 {
-                    
+
                     if (array[i, j].getId() == id)
                         return (i, j);
                 }
             }
-
             return (0, 0);
         }
 

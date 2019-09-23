@@ -373,7 +373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerSlider: {fileID: 773875619}
-  TotalTime: 600
+  TotalTime: 300
   _time: 0
   _isPaused: 0
 --- !u!114 &84232290

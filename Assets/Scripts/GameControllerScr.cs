@@ -11,6 +11,7 @@ using System;
 using UnityEngine.Networking;
 using Image = UnityEngine.UI.Image;
 using Color = UnityEngine.Color;
+using Random = UnityEngine.Random;
 
 public class GameControllerScr : MonoBehaviour
 {
@@ -357,35 +358,7 @@ public class GameControllerScr : MonoBehaviour
             field.array[coords.i, coords.j].setState(_data._list[i]._state);
         }
 
-       // TransformUnity transform = new TransformUnity();
-
-        //ids
-        //string path = Application.temporaryCachePath;
-        //string[] data = new string[3];
-
-        //UnityWebRequest request = UnityWebRequest.Get(path + "/IDs.txt");
-        //yield return request.SendWebRequest();
-
-       // data[0] = request.downloadHandler.text;
-        //rnd
-
-       // request = UnityWebRequest.Get(path + "/RandomNums.txt");
-        //yield return request.SendWebRequest();
-
-       // data[1] = request.downloadHandler.text;
-        //states
-
-       // request = UnityWebRequest.Get(path + "/States.txt");
-       // yield return request.SendWebRequest();
-
-        //data[2] = request.downloadHandler.text;
-
-       // foreach(string s in data)
-       // {
-       //     Debug.Log(s);
-       // }
-
-       // field = transform.fromFileToUnity(data[0],data[1],data[2]);
+     
 
         placeCells();
 
@@ -410,6 +383,7 @@ public class GameControllerScr : MonoBehaviour
             tmpCell.GetComponent<CellScr>().settings._id = field.array[coords.i, coords.j].getId();
             tmpCell.GetComponent<CellScr>().settings._randomNum = field.array[coords.i, coords.j].getRandomNum();
             tmpCell.GetComponent<CellScr>().SetState(field.array[coords.i, coords.j].getState());
+
             if(cellStateTMP == 0)
             {
                 if (field.array[coords.i, coords.j].getState() == 1) cellState++;
@@ -519,12 +493,19 @@ public class GameControllerScr : MonoBehaviour
                 
                 //Debug.Log(path[i].position);
             }
-            LR.SetPositions(positions);
+
+
+          LR.SetPositions(positions);
+            
+            
+            
             //ResetLine(LR);
             //waiter();
         }
         
     }
+
+    
 
     public void ResetLine(LineRenderer lr)
     {

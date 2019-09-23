@@ -46,12 +46,17 @@ public class GameUI : MonoBehaviour
     {
         if(GameControllerScr.instance.stats.InstaCoins >= GameControllerScr.instance.stats.RefreshPrice)
         {
-            StartCoroutine(GameControllerScr.instance.Refresh(true));
+            _refresh(true);
         }
         else
         {
             CanvasController.instance.OpenCanvas(2);
         }
+    }
+
+    public void _refresh(bool i)
+    {
+        StartCoroutine(GameControllerScr.instance.Refresh(i));
     }
 
     public void ShowHelp()
