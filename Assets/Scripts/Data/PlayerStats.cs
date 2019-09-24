@@ -35,6 +35,8 @@ public class PlayerStats : MonoBehaviour
     public int HelpPrice = 20;
     public int AddTimePrice = 50;
 
+    public string AccountKey;
+
 
     public delegate void del_AddPoint(int points);
     public del_AddPoint _addPoints;

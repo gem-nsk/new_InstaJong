@@ -1631,8 +1631,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03820f231a550db488edfff25e8007f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadType: 0
-  AccountId: 20021759479.9f7d92e.e1400359759e4f7b9c7bd99e85e102e4
+  LoadType: 1
+  AccountId: 
   posts: []
   Atlases:
   - rect: []

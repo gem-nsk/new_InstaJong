@@ -43,6 +43,9 @@ public class AtlasController : MonoBehaviour
         Internet,
         Cache
     }
+
+    //20021759479.9f7d92e.e1400359759e4f7b9c7bd99e85e102e4 - debug
+
     public string AccountId;
 
     public List<PostInfo> posts;
@@ -78,6 +81,8 @@ public class AtlasController : MonoBehaviour
         posts.Clear();
         loadingBar = GameObject.FindGameObjectWithTag("LoadingBar").GetComponent<Slider>();
         loadingBar?.gameObject.SetActive(true);
+
+        AccountId = PlayerStats.instance.AccountKey;
 
         //if (CheckImageCache())
         //{
@@ -288,8 +293,8 @@ public class AtlasController : MonoBehaviour
 
             posts.Add(post_info);
 
-            DataSave.SaveImage(post_info.ThumbnailTexture, "t_"+ post_info.id, "D:/UnityProject/new_InstaJong/Assets/Resources/saved/t_images");
-            DataSave.SaveImage(post_info.StandartTexture, "s_" + post_info.id, "D:/UnityProject/new_InstaJong/Assets/Resources/saved/s_images");
+           // DataSave.SaveImage(post_info.ThumbnailTexture, "t_"+ post_info.id, Application.persistentDataPath + "/t_images");
+            //DataSave.SaveImage(post_info.StandartTexture, "s_" + post_info.id, Application.persistentDataPath + "/s_images");
 
             i++;
             SetLoadingSettings(dyn.data.Count, i);
