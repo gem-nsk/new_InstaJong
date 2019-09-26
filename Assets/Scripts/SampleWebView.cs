@@ -27,12 +27,30 @@ public class SampleWebView : MonoBehaviour
     public GUIText status;
     WebViewObject webViewObject;
 
+    public GameObject BG;
 
+    public string DebugKey;
+    //20021759479.9f7d92e.e1400359759e4f7b9c7bd99e85e102e4 - ы
+    //20021759479.9f7d92e.e1400359759e4f7b9c7bd99e85e102e4
+    //20021759479.9f7d92e.e4cf6803ec204e899ce887aab2b88cbf
+
+
+    //1445481979.9f7d92e.b0c1bd961d644d3aa03ec861a3af7974 - ёра
+    //1445481979.9f7d92e.b0c1bd961d644d3aa03ec861a3af7974
+
+    //7050105971.9f7d92e.d92bd5e3730d44d8bf8c7aca48e6ed94 - ноготочки
 
 
     public void Login()
     {
+#if UNITY_EDITOR
+
+
+        PlayerStats.instance.AccountKey = DebugKey;
+#else
+
         StartCoroutine(loggingIn());
+#endif
     }
 
     public bool GetAccessToken(string myUrl)
@@ -51,6 +69,7 @@ public class SampleWebView : MonoBehaviour
             PlayerStats.instance.AccountKey = data;
 
             Destroy(webViewObject.gameObject);
+            BG.SetActive(false);
             return true;
         }
         return false;
@@ -58,16 +77,27 @@ public class SampleWebView : MonoBehaviour
 
     public void ClearCookies()
     {
-        webViewObject = (new GameObject("WebViewObject")).AddComponent<WebViewObject>();
-        webViewObject.Init();
+        BG.SetActive(true);
+        if (webViewObject == null)
+        {
+            webViewObject = (new GameObject("WebViewObject")).AddComponent<WebViewObject>();
+            webViewObject.Init();
+        }
         webViewObject.ClearCookies();
         Destroy(webViewObject.gameObject);
+        BG.SetActive(false);
+        PlayerStats.instance.AccountKey = "";
+
+        AtlasController.instance.ClearCache();
     }
 
     IEnumerator loggingIn()
     {
 
+
         Url = "https://www.instagram.com/oauth/authorize/?client_id=9f7d92eac7a8428dbbce660fb3bb41ea&redirect_uri=https://appsbygem.com/&response_type=token";
+
+        BG.SetActive(true);
 
         webViewObject = (new GameObject("WebViewObject")).AddComponent<WebViewObject>();
         webViewObject.Init(

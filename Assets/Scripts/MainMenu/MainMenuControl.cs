@@ -19,24 +19,38 @@ public class MainMenuControl : MonoBehaviour
     public Image musicImg;
     public Sprite[] Musicicons;
 
+
     public void OpenInstaCoins_button()
     {
+
         CanvasController.instance.OpenCanvas(BuyInstaCoins_ui);
     }
 
     public void ContinuePressed()
     {
-        loadLevel();
+        (bool a, string s) _auth = PlayerStats.instance.IsUserAuthorized();
+
+        if (_auth.a)
+        {
+            loadLevel();
+        }
+        else
+        {
+            //open auth window
+            GameObject.FindGameObjectWithTag("Login").GetComponent<SampleWebView>().Login();
+        }
     }
     
       
     public void NewGamePressed()
     {
+        //check instagramm authorization
+
+        CanvasController.instance.OpenCanvas(3);
+
+       
 
         //DownloadImagesFromInstagram();
-
-        GameControllerScr.loadGame = false;
-        SceneManager.LoadScene("Game");
 
     }
 

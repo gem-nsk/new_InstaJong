@@ -7,11 +7,13 @@ using System.IO;
 [System.Serializable]
 public class root_posts
 {
+    public string AccountKey;
     public List<PostInfo> _p = new List<PostInfo>();
 }
 
 public class DataSave : MonoBehaviour
 {
+
 
     public static void save(List<CellScr> list, (int _height, int _width) size)
     {
@@ -66,9 +68,15 @@ public class DataSave : MonoBehaviour
     {
         root_posts root = new root_posts();
 
+        AtlasController.instance.CheckImageDirectory();
+
+        root.AccountKey = PlayerStats.instance.AccountKey;
+
         for (int i = 0; i < data.Count; i++)
         {
             root._p.Add(data[i]);
+            SaveImage(root._p[i].ThumbnailTexture, "t_" + i, Application.persistentDataPath + "/images/thumbnails/");
+            SaveImage(root._p[i].StandartTexture, "s_" + i, Application.persistentDataPath + "/images/standart/");
         }
 
         string str = JsonUtility.ToJson(root);
@@ -103,5 +111,4 @@ public class DataSave : MonoBehaviour
         writer.Close();
     }
 
-    
 }

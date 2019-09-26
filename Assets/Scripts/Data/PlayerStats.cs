@@ -29,13 +29,30 @@ public class PlayerStats : MonoBehaviour
 
     private const string _instaCoinsPath = "InstaCoins";
     private const string _pointsPath = "Points";
+    private const string _IdKey = "AccountId";
     public const string _points_hs = "hs";
 
     public int RefreshPrice = 5;
     public int HelpPrice = 20;
     public int AddTimePrice = 50;
 
-    public string AccountKey;
+    public string accountKey;
+    public string AccountKey
+    {
+        get
+        {
+            if(PlayerPrefs.HasKey(_IdKey))
+            {
+                accountKey = PlayerPrefs.GetString(_IdKey);
+            }
+            return accountKey;
+        }
+        set
+        {
+            accountKey = value;
+            PlayerPrefs.SetString(_IdKey, accountKey);
+        }
+    }
 
 
     public delegate void del_AddPoint(int points);
@@ -56,6 +73,24 @@ public class PlayerStats : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    public (bool auth, string id) IsUserAuthorized()
+    {
+        if(PlayerPrefs.HasKey(_IdKey))
+        {
+            switch(PlayerPrefs.GetString(_IdKey))
+            {
+                case "":
+                    return (false, null);
+                default:
+                    return (true, AccountKey);
+            }
+        }
+        else
+        {
+            return (false, null);
         }
     }
 

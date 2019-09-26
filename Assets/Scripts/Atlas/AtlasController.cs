@@ -45,8 +45,8 @@ public class AtlasController : MonoBehaviour
     }
 
     //20021759479.9f7d92e.e1400359759e4f7b9c7bd99e85e102e4 - debug
+    //1445481979.9f7d92e.b0c1bd961d644d3aa03ec861a3af7974
 
-    public string AccountId;
 
     public List<PostInfo> posts;
 
@@ -79,10 +79,12 @@ public class AtlasController : MonoBehaviour
     public IEnumerator Init()
     {
         posts.Clear();
+
+        Debug.Log("Inited");
+
         loadingBar = GameObject.FindGameObjectWithTag("LoadingBar").GetComponent<Slider>();
         loadingBar?.gameObject.SetActive(true);
 
-        AccountId = PlayerStats.instance.AccountKey;
 
         //if (CheckImageCache())
         //{
@@ -92,18 +94,36 @@ public class AtlasController : MonoBehaviour
         //else
         //{
         //if images not saved
+
+
+
+
         switch (LoadType)
         {
             case _LoadType.Internet:
-                yield return StartCoroutine(DownloadImagesFromInstagram());
+
+                if(CheckImageDirectory())
+                {
+                    yield return StartCoroutine(LoadImagesFromCache());
+                }
+                else
+                {
+                    yield return StartCoroutine(DownloadImagesFromInstagram(PlayerStats.instance.AccountKey));
+                }
+
                 break;
+
             case _LoadType.Resources:
+
                 yield return StartCoroutine(LoadingFromResources());
+
                 break;
+
             case _LoadType.Cache:
+
                 break;
         }
-            DataSave.SavePostsInfo(posts);
+            //DataSave.SavePostsInfo(posts);
         //}
         Pack(Atlases[0]);
         Pack(Atlases[1]);
@@ -111,7 +131,7 @@ public class AtlasController : MonoBehaviour
         CreateMaterials(Atlases[1]);
     }
 
-    bool CheckImageCache()
+    public bool CheckImageDirectory()
     {
 
         if (Directory.Exists(t_path) && Directory.Exists(s_path) && File.Exists(PostsPath))
@@ -146,6 +166,8 @@ public class AtlasController : MonoBehaviour
 
     public void CreateMaterials(_atlas a)
     {
+        a._CreatedMaterials.Clear();
+
         foreach(Rect _rect in a.rect)
         {
             Material _mat = new Material(a.atlas);
@@ -176,15 +198,13 @@ public class AtlasController : MonoBehaviour
 
         Texture2D texture = new Texture2D(2048, 2048);
 
-        a.rect = texture.PackTextures(Sprites, 5, 4096);
+        a.rect = texture.PackTextures(Sprites, 5);
         a.atlas.SetTexture("_MainTex", texture);
     }
 
     public void StopLoading()
     {
-        StopCoroutine(DownloadImagesFromInstagram());
-        StopCoroutine(LoadImagesFromCache());
-        StopCoroutine(Init());
+        StopAllCoroutines();    
     }
 
     public IEnumerator LoadingFromResources()
@@ -210,42 +230,133 @@ public class AtlasController : MonoBehaviour
 
     public IEnumerator LoadImagesFromCache()
     {
-        string[] t = Directory.GetFiles(t_path);
+
 
         root_posts _posts = DataSave.GetpostsData();
 
-        
         loadingBar.maxValue = _posts._p.Count;
         loadingBar.value = 0;
-        if (t.Length == _posts._p.Count)
+
+        if (_posts.AccountKey != PlayerStats.instance.AccountKey)
         {
-            foreach (string s in t)
+            yield return StartCoroutine(DownloadImagesFromInstagram(PlayerStats.instance.AccountKey));
+            yield break;
+        }
+
+
+
+        string[] tpath = Directory.GetFiles(t_path);
+        string[] spath = Directory.GetFiles(s_path);
+
+
+
+        for (int i = 0; i < _posts._p.Count; i++)
+        {
+
+            //UnityWebRequest t_request = UnityWebRequestTexture.GetTexture(tpath[i]);
+            //UnityWebRequest s_request = UnityWebRequestTexture.GetTexture(spath[i]);
+
+            //UnityWebRequest t_request = new UnityWebRequest(tpath[i]);
+            //UnityWebRequest s_request = new UnityWebRequest(spath[i]);
+
+
+            //yield return t_request.SendWebRequest();
+            //yield return s_request.SendWebRequest();
+
+            byte[] t_imgBytes = File.ReadAllBytes(t_path + "t_" + i + ".png"); // File.ReadAllBytes(tpath[i]);
+            byte[] s_imgBytes = File.ReadAllBytes(s_path + "s_" + i + ".png");
+
+            Texture2D t_tex = new Texture2D(2, 2);
+            Texture2D s_tex = new Texture2D(2, 2);
+
+            t_tex.LoadImage(t_imgBytes);
+            s_tex.LoadImage(s_imgBytes);
+
+            //yield return t_request.SendWebRequest();
+            //yield return s_request.SendWebRequest();
+
+
+
+            PostInfo info = new PostInfo
             {
-                var post_info = new PostInfo();
+                StandartTexture = s_tex, //((DownloadHandlerTexture)s_request.downloadHandler).texture,
+                ThumbnailTexture = t_tex, //((DownloadHandlerTexture)t_request.downloadHandler).texture,
+                comments = _posts._p[i].comments,
+                thumbnail = _posts._p[i].thumbnail,
+                description = _posts._p[i].description,
+                id = _posts._p[i].id,
+                likes = _posts._p[i].likes,
+                post_url = _posts._p[i].post_url,
+                standard = _posts._p[i].standard,
+                usernameFrom = _posts._p[i].usernameFrom
+            };
 
-                UnityWebRequest request = UnityWebRequestTexture.GetTexture(s);
-                yield return request.SendWebRequest();
-
-                post_info.ThumbnailTexture = ((DownloadHandlerTexture)request.downloadHandler).texture;
-
-                posts.Add(post_info);
-                Debug.Log("added image");
-                loadingBar.value++;
-            }
+            posts.Add(info);
+            //t_request.Abort();
+            //s_request.Abort();
         }
-        else
-        {
-            Debug.Log("not all files downloaded, reload files...");
+        #region wtf
+        ////load thumbnails;
+        //if (tpath.Length == _posts._p.Count)
+        //{
+        //    foreach (string _s in tpath)
+        //    {
+        //        var post_info = new PostInfo();
 
-            Directory.Delete(Application.persistentDataPath + "/images", true);
-            yield return StartCoroutine(DownloadImagesFromInstagram());
-        }
+
+        //        post_info.ThumbnailTexture = 
+
+        //        posts.Add(post_info);
+        //        loadingBar.value++;
+        //    }
+        //}
+        //else
+        //{
+        //    Debug.Log("not all files downloaded, reload files...");
+
+        //    Directory.Delete(Application.persistentDataPath + "/images", true);
+        //}
+
+        ////load standart textures
+        //if (spath.Length == _posts._p.Count)
+        //{
+        //    foreach (string _s in spath)
+        //    {
+        //        var post_info = new PostInfo();
+
+        //        UnityWebRequest request = UnityWebRequestTexture.GetTexture(_s);
+        //        yield return request.SendWebRequest();
+
+        //        post_info.StandartTexture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+
+        //        posts.Add(post_info);
+        //        loadingBar.value++;
+        //    }
+        //}
+        //else
+        //{
+        //    Debug.Log("not all files downloaded, reload files...");
+
+        //    Directory.Delete(Application.persistentDataPath + "/images", true);
+        //}
+        #endregion
+
         loadingBar.gameObject.SetActive(false);
     }
 
-    public IEnumerator DownloadImagesFromInstagram()
+    public void ClearCache()
     {
-        string token = AccountId;
+        if(Directory.Exists(t_path))
+            Directory.Delete(t_path, true);
+        if (Directory.Exists(s_path))
+            Directory.Delete(s_path, true);
+    }
+
+    public IEnumerator DownloadImagesFromInstagram(string token)
+    {
+
+
+
         UnityWebRequest request = UnityWebRequest.Get("https://api.instagram.com/v1/users/self/media/recent/?access_token=" + token);
         yield return request.SendWebRequest();
 
@@ -262,10 +373,13 @@ public class AtlasController : MonoBehaviour
             post_info.id = i;
             post_info.thumbnail = data.images.thumbnail.url;
             post_info.standard = data.images.standard_resolution.url;
-
+            
+            if(data.caption != null)
             post_info.description = data.caption.text;
             post_info.likes = data.likes.count;
             post_info.comments = data.comments.count;
+
+            if(data.caption != null)
             post_info.usernameFrom = data.caption.from.username;
 
             UnityWebRequest s_request = new UnityWebRequest();
@@ -287,19 +401,22 @@ public class AtlasController : MonoBehaviour
             if (t_request.isNetworkError || t_request.isHttpError)
                 Debug.Log("Error");
 
-            yield return s_request.isDone;
+            yield return t_request.isDone;
 
             post_info.ThumbnailTexture = ((DownloadHandlerTexture)t_request.downloadHandler).texture;
 
             posts.Add(post_info);
 
-           // DataSave.SaveImage(post_info.ThumbnailTexture, "t_"+ post_info.id, Application.persistentDataPath + "/t_images");
-            //DataSave.SaveImage(post_info.StandartTexture, "s_" + post_info.id, Application.persistentDataPath + "/s_images");
+           // DataSave.SaveImage(post_info.ThumbnailTexture, "t_" + post_info.id, Application.persistentDataPath + "/t_images");
+          //  DataSave.SaveImage(post_info.StandartTexture, "s_" + post_info.id, Application.persistentDataPath + "/s_images");
 
             i++;
             SetLoadingSettings(dyn.data.Count, i);
         }
         yield return null;
+
+        DataSave.SavePostsInfo(posts);
+
         SetLoadingSettings(0, 0);
     }
 
