@@ -28,9 +28,9 @@ public class MainMenuControl : MonoBehaviour
 
     public void ContinuePressed()
     {
-        (bool a, string s) _auth = PlayerStats.instance.IsUserAuthorized();
+       // (bool a, string s) _auth = PlayerStats.instance.IsUserAuthorized();
 
-        if (_auth.a)
+        if (PlayerStats.instance.AccountKey != null)
         {
             loadLevel();
         }

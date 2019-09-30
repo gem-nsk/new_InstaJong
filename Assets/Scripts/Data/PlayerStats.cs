@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+[System.Serializable]
+public struct loadSettings
+{
+    public bool SelfAccount;
+    public string AcountId;
+}
 
 public class PlayerStats : MonoBehaviour
 {
@@ -36,31 +42,15 @@ public class PlayerStats : MonoBehaviour
     public int HelpPrice = 20;
     public int AddTimePrice = 50;
 
-    public string accountKey;
-    public string AccountKey
-    {
-        get
-        {
-            if(PlayerPrefs.HasKey(_IdKey))
-            {
-                accountKey = PlayerPrefs.GetString(_IdKey);
-            }
-            return accountKey;
-        }
-        set
-        {
-            accountKey = value;
-            PlayerPrefs.SetString(_IdKey, accountKey);
-        }
-    }
+    public string AccountKey;
 
-
+    public string accountId;
+    
     public delegate void del_AddPoint(int points);
     public del_AddPoint _addPoints;
 
     public delegate void del_AddInstaCoins(int coins);
     public del_AddInstaCoins _addInstaCoins;
-
 
     public static PlayerStats instance;
     private void Awake()
@@ -76,23 +66,23 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    public (bool auth, string id) IsUserAuthorized()
-    {
-        if(PlayerPrefs.HasKey(_IdKey))
-        {
-            switch(PlayerPrefs.GetString(_IdKey))
-            {
-                case "":
-                    return (false, null);
-                default:
-                    return (true, AccountKey);
-            }
-        }
-        else
-        {
-            return (false, null);
-        }
-    }
+    //public (bool auth, string id) IsUserAuthorized()
+    //{
+    //    if(PlayerPrefs.HasKey(_IdKey))
+    //    {
+    //        switch(PlayerPrefs.GetString(_IdKey))
+    //        {
+    //            case "":
+    //                return (false, null);
+    //            default:
+    //                return (true, AccountKey);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        return (false, null);
+    //    }
+    //}
 
     //constructor
     public void LoadData()

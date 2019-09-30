@@ -20,6 +20,8 @@
 
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking;
+using Newtonsoft.Json;
 
 public class SampleWebView : MonoBehaviour
 {
@@ -40,20 +42,19 @@ public class SampleWebView : MonoBehaviour
 
     //7050105971.9f7d92e.d92bd5e3730d44d8bf8c7aca48e6ed94 - ноготочки
 
-
     public void Login()
     {
 #if UNITY_EDITOR
 
 
-        PlayerStats.instance.AccountKey = DebugKey;
+        StartCoroutine(ConvertKeyToId(DebugKey));
 #else
 
         StartCoroutine(loggingIn());
 #endif
     }
 
-    public bool GetAccessToken(string myUrl)
+    public string GetAccessToken(string myUrl)
     {
         string url1 = myUrl;
         string accessToken = "#access_token";
@@ -65,14 +66,24 @@ public class SampleWebView : MonoBehaviour
             Debug.Log("Successfuly authorized. token: " + data);
 
             //save token here
-
-            PlayerStats.instance.AccountKey = data;
+            StartCoroutine(ConvertKeyToId(data));
 
             Destroy(webViewObject.gameObject);
             BG.SetActive(false);
-            return true;
+            return data;
         }
-        return false;
+        return null;
+    }
+
+    public IEnumerator ConvertKeyToId(string key)
+    {
+        UnityWebRequest IdRequest = UnityWebRequest.Get("https://api.instagram.com/v1/users/self?access_token=" + key);
+        yield return IdRequest.SendWebRequest();
+        //get account id
+        var _accId = JsonConvert.DeserializeObject<Assets.Accounts.Convert.RootObject>(IdRequest.downloadHandler.text);
+
+        Debug.Log("Converting..");
+        PlayerStats.instance.AccountKey = _accId.data.username;
     }
 
     public void ClearCookies()
@@ -120,6 +131,7 @@ public class SampleWebView : MonoBehaviour
             ld: (msg) =>
             {
                 Debug.Log(string.Format("CallOnLoaded[{0}]", msg));
+
                 GetAccessToken(msg);
 
 

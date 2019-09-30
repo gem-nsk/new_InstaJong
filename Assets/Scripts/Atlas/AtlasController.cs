@@ -58,6 +58,11 @@ public class AtlasController : MonoBehaviour
 
     public Slider loadingBar;
 
+    public delegate void successFindedAcc();
+    public static successFindedAcc _successFinded;
+
+    public delegate void failedFindAcc(string arg);
+    public static failedFindAcc _failedAcc;
 
     #region Singleton
     public static AtlasController instance;
@@ -108,7 +113,7 @@ public class AtlasController : MonoBehaviour
                 }
                 else
                 {
-                    yield return StartCoroutine(DownloadImagesFromInstagram(PlayerStats.instance.AccountKey));
+                    yield return StartCoroutine(DownloadImagesFromAccount(PlayerStats.instance.AccountKey));
                 }
 
                 break;
@@ -125,10 +130,10 @@ public class AtlasController : MonoBehaviour
         }
             //DataSave.SavePostsInfo(posts);
         //}
-        Pack(Atlases[0]);
-        Pack(Atlases[1]);
-        CreateMaterials(Atlases[0]);
-        CreateMaterials(Atlases[1]);
+        yield return StartCoroutine(Pack(Atlases[0]));
+        yield return StartCoroutine(Pack(Atlases[1]));
+        yield return StartCoroutine(CreateMaterials(Atlases[0]));
+        yield return StartCoroutine(CreateMaterials(Atlases[1]));
     }
 
     public bool CheckImageDirectory()
@@ -154,17 +159,23 @@ public class AtlasController : MonoBehaviour
     {
         if(totalCount  != step)
         {
-            loadingBar.gameObject.SetActive(true);
-            loadingBar.maxValue = totalCount;
-            loadingBar.value = step;
+            if(loadingBar != null)
+            {
+
+                loadingBar.gameObject.SetActive(true);
+                loadingBar.maxValue = totalCount;
+                loadingBar.value = step;
+
+            }
         }
         else
         {
+            if(loadingBar != null)
             loadingBar.gameObject.SetActive(false);
         }
     }
 
-    public void CreateMaterials(_atlas a)
+    public IEnumerator CreateMaterials(_atlas a)
     {
         a._CreatedMaterials.Clear();
 
@@ -177,6 +188,7 @@ public class AtlasController : MonoBehaviour
 
             a._CreatedMaterials.Add(_mat);
         }
+        yield return null;
     }
     //returning offset by image id
     public Material GetMaterialById(_atlas a, int id)
@@ -185,7 +197,7 @@ public class AtlasController : MonoBehaviour
     }
     
 
-    public void Pack(_atlas a)
+    public IEnumerator Pack(_atlas a)
     {
         //packing textures from download
 
@@ -200,11 +212,49 @@ public class AtlasController : MonoBehaviour
 
         a.rect = texture.PackTextures(Sprites, 5);
         a.atlas.SetTexture("_MainTex", texture);
+        yield return null;
     }
 
     public void StopLoading()
     {
         StopAllCoroutines();    
+    }
+
+    public void CheckAccount(string AccountName)
+    {
+        StartCoroutine(Finding(AccountName));
+    }
+    public IEnumerator Finding(string accountName)
+    {
+        UnityWebRequest IdRequest = UnityWebRequest.Get("https://www.instagram.com/" + accountName + "/?__a=1");
+        yield return IdRequest.SendWebRequest();
+
+
+        if (IdRequest.downloadHandler.data.Length != 20713) 
+        {
+            var _accId = JsonConvert.DeserializeObject<Assets.Accounts.RootObject>(IdRequest.downloadHandler.text);
+            UnityWebRequest request = UnityWebRequest.Get("https://www.instagram.com/graphql/query/?query_id=17888483320059182&id=" + _accId.graphql.user.id + "&first=20");
+            yield return request.SendWebRequest();
+
+            var dyn = JsonConvert.DeserializeObject<Assets.Accounts.LoadImages.RootObject>(request.downloadHandler.text);
+
+            if(dyn.data.user.edge_owner_to_timeline_media.edges.Count >= 20)
+            {
+                PlayerStats.instance.AccountKey = accountName;
+                _successFinded?.Invoke();
+
+            }
+            else
+            {
+                PlayerStats.instance.AccountKey = null;
+                _failedAcc?.Invoke("Photos less then 20!");
+            }
+        }
+        else
+        {
+            PlayerStats.instance.AccountKey = null;
+            _failedAcc?.Invoke("Account not found!");
+        }
     }
 
     public IEnumerator LoadingFromResources()
@@ -239,7 +289,7 @@ public class AtlasController : MonoBehaviour
 
         if (_posts.AccountKey != PlayerStats.instance.AccountKey)
         {
-            yield return StartCoroutine(DownloadImagesFromInstagram(PlayerStats.instance.AccountKey));
+            yield return StartCoroutine(DownloadImagesFromAccount(PlayerStats.instance.AccountKey));
             yield break;
         }
 
@@ -354,9 +404,6 @@ public class AtlasController : MonoBehaviour
 
     public IEnumerator DownloadImagesFromInstagram(string token)
     {
-
-
-
         UnityWebRequest request = UnityWebRequest.Get("https://api.instagram.com/v1/users/self/media/recent/?access_token=" + token);
         yield return request.SendWebRequest();
 
@@ -364,7 +411,6 @@ public class AtlasController : MonoBehaviour
         int i = 1;
 
         posts = new List<PostInfo>();
-
 
         foreach (var data in dyn.data)
         {
@@ -420,6 +466,73 @@ public class AtlasController : MonoBehaviour
         SetLoadingSettings(0, 0);
     }
 
+    //https://www.instagram.com/graphql/query/?query_id=17888483320059182&id=20021759479&first=20
+    public IEnumerator DownloadImagesFromAccount(string account)
+    {
+        UnityWebRequest IdRequest = UnityWebRequest.Get("https://www.instagram.com/" + account + "/?__a=1");
+        yield return IdRequest.SendWebRequest();
+        //get account id
+        var _accId = JsonConvert.DeserializeObject<Assets.Accounts.RootObject>(IdRequest.downloadHandler.text);
+
+        UnityWebRequest request = UnityWebRequest.Get("https://www.instagram.com/graphql/query/?query_id=17888483320059182&id=" + _accId.graphql.user.id + "&first=20");
+        yield return request.SendWebRequest();
+
+        var dyn = JsonConvert.DeserializeObject<Assets.Accounts.LoadImages.RootObject>(request.downloadHandler.text);
+        int i = 1;
+
+        posts = new List<PostInfo>();
+
+        foreach (var data in dyn.data.user.edge_owner_to_timeline_media.edges)
+        {
+            var post_info = new PostInfo();
+
+            post_info.id = i;
+            post_info.thumbnail = data.node.thumbnail_src;
+            post_info.standard = data.node.display_url;
+
+            if(data.node.edge_media_to_caption.edges.Count > 0)
+            post_info.description = data.node.edge_media_to_caption.edges[0].node.text;
+            post_info.likes = data.node.edge_media_preview_like.count;
+            post_info.comments = data.node.edge_media_to_comment.count;
+            post_info.usernameFrom = _accId.graphql.user.username;
+
+            UnityWebRequest s_request = new UnityWebRequest();
+            s_request = UnityWebRequestTexture.GetTexture(post_info.standard, false);
+            yield return s_request.SendWebRequest();
+
+            if (s_request.isNetworkError || s_request.isHttpError)
+                Debug.Log("Error");
+
+            yield return s_request.isDone;
+
+            post_info.StandartTexture = ((DownloadHandlerTexture)s_request.downloadHandler).texture;
+
+            //thumbnails 
+            UnityWebRequest t_request = new UnityWebRequest();
+            t_request = UnityWebRequestTexture.GetTexture(post_info.thumbnail, false);
+            yield return t_request.SendWebRequest();
+
+            if (t_request.isNetworkError || t_request.isHttpError)
+                Debug.Log("Error");
+
+            yield return t_request.isDone;
+
+            post_info.ThumbnailTexture = ((DownloadHandlerTexture)t_request.downloadHandler).texture;
+
+            posts.Add(post_info);
+
+            // DataSave.SaveImage(post_info.ThumbnailTexture, "t_" + post_info.id, Application.persistentDataPath + "/t_images");
+            //  DataSave.SaveImage(post_info.StandartTexture, "s_" + post_info.id, Application.persistentDataPath + "/s_images");
+
+            i++;
+            SetLoadingSettings(dyn.data.user.edge_owner_to_timeline_media.edges.Count, i);
+        }
+        yield return null;
+
+        DataSave.SavePostsInfo(posts);
+
+        SetLoadingSettings(0, 0);
+    }
     public void CreatePost(PostInfo data)
     {
         PostInfo post = data;

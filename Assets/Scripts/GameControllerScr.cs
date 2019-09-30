@@ -104,17 +104,17 @@ public class GameControllerScr : MonoBehaviour
         if(loadGame)
         {
             stats.LoadData();
-            _Timer.LoadTime();
         }
         else
         {
             stats.LoadData();
             stats.SetPointsTo(0);
-            _Timer.SetDefaultTime();
         }
 
         yield return StartCoroutine(AtlasController.instance.Init());
 
+
+        #region GridLoading
         if (loadGame == false)
         {
            yield return StartCoroutine( CreateButtonCells());
@@ -130,10 +130,16 @@ public class GameControllerScr : MonoBehaviour
                 _Timer.SetDefaultTime();
             }
         }
-        
+        #endregion
         Camera.main.transparencySortMode = TransparencySortMode.Orthographic;
 
         ui.Init();
+
+        if (loadGame)
+            _Timer.LoadTime();
+        else
+            _Timer.SetDefaultTime();
+
 
     }
 

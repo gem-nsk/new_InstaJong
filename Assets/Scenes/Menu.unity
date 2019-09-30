@@ -1851,7 +1851,7 @@ MonoBehaviour:
   Url: https://google.com
   status: {fileID: 1499083930}
   BG: {fileID: 755409097}
-  DebugKey: 20021759479.9f7d92e.e1400359759e4f7b9c7bd99e85e102e4
+  DebugKey: 7050105971.9f7d92e.d92bd5e3730d44d8bf8c7aca48e6ed94
 --- !u!4 &1018711766
 Transform:
   m_ObjectHideFlags: 0
@@ -2458,9 +2458,9 @@ RectTransform:
   m_Father: {fileID: 1254517483}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 786, y: 125}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 472, y: 140}
   m_SizeDelta: {x: 416.5, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1589053376
@@ -3597,51 +3597,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1970948341}
   m_CullTransparentMesh: 0
---- !u!1 &1995674484
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1995674486}
-  - component: {fileID: 1995674485}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1995674485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1995674484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b392875c36ece4489788110c7135006, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Key: 7050105971.9f7d92e.d92bd5e3730d44d8bf8c7aca48e6ed94
-  EncryptedKey: 
---- !u!4 &1995674486
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1995674484}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.1390777, y: -0.51269424, z: 91.63086}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2044248055
 GameObject:
   m_ObjectHideFlags: 0
@@ -3986,7 +3941,8 @@ MonoBehaviour:
   RefreshPrice: 100
   HelpPrice: 20
   AddTimePrice: 50
-  accountKey: 
+  AccountKey: 
+  accountId: 
 --- !u!4 &2118844685
 Transform:
   m_ObjectHideFlags: 0

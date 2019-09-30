@@ -9,13 +9,6 @@ using System.Threading.Tasks;
 namespace AStarPathfinder
 {
 
-    public class CellField
-    {
-        public string state = null;
-        public int value = 0;
-        public CellField() { }
-    }
-
     public class PathNode
     {
         // Координаты точки на карте.
@@ -39,7 +32,7 @@ namespace AStarPathfinder
     public class APathFinder
     {
 
-        public static List<Point> FindPath(CellField[,] field, Point start, Point goal)
+        public static List<Point> FindPath(int[,] field, Point start, Point goal)
         {
 
             // Шаг 1.
@@ -103,7 +96,7 @@ namespace AStarPathfinder
             return Math.Abs(from.X - to.X) + Math.Abs(from.Y - to.Y);
         }
 
-        private static Collection<PathNode> GetNeighbours(PathNode pathNode, Point goal, CellField[,] field)
+        private static Collection<PathNode> GetNeighbours(PathNode pathNode, Point goal, int[,] field)
         {
             int state;
             var result = new Collection<PathNode>();
@@ -124,42 +117,10 @@ namespace AStarPathfinder
                 if (point.Y < 0 || point.Y >= field.GetLength(1))
                 { i++; continue; }
                 // Проверяем, что по клетке можно ходить.
-                if ((field[point.X, point.Y].value != 0) && (field[point.X, point.Y].value != 1))
+                if ((field[point.X, point.Y] != 0) && (field[point.X, point.Y] != 1))
                 { i++; continue; }
-                if (field[point.X, point.Y].value == 1) state = 1;
+                if (field[point.X, point.Y] == 1) state = 1;
                 else state = 0;
-
-                switch (i)
-                {
-                    case 0:
-                        {
-                            if (field[point.X, point.Y].state == null)
-                                field[point.X, point.Y].state = "D";
-                            break;
-                        }
-                    case 1:
-                        {
-                            if (field[point.X, point.Y].state == null)
-                                field[point.X, point.Y].state = "U";
-                            break;
-                        }
-                    case 2:
-                        {
-                            if (field[point.X, point.Y].state == null)
-                            {
-                                field[point.X, point.Y].state = "R";
-                            }
-                            break;
-                        }
-                    case 3:
-                        {
-                            if (field[point.X, point.Y].state == null)
-                            {
-                                field[point.X, point.Y].state = "L";
-                            }
-                            break;
-                        }
-                }
 
                 i++;
                 // Заполняем данные для точки маршрута.
