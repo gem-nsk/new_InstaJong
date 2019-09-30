@@ -189,3 +189,4 @@ public class AtlasController : MonoBehaviour
         posts.Add(post);
     }
 }
+//https://api.instagram.com/v1/users/self/follows?access_token=20021759479.9f7d92e.e4cf6803ec204e899ce887aab2b88cbf

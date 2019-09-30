@@ -60,7 +60,7 @@ namespace genField
                     int randomNum = field.array[coordsCell.x, coordsCell.y].getRandomNum();
 
                     //ищем все ячейки с одинаковым типом и записываем в список
-                    List<int> foundIdCells = searchSimilarCells(randomNum);
+                    var foundIdCells = searchSimilarCells(randomNum);
 
                     /*
                      * Процесс поиска происходит следующим образом
@@ -72,10 +72,12 @@ namespace genField
                     {
                         //проверяем, не заблокированы ли ячейки, если хоть одна заблокирована,
                         // смысла проводить вычисления нет
-                        if (isBlocked(foundIdCells[i + 1]) || isBlocked(foundIdCells[i])) continue;
+                        //if (isBlocked(foundIdCells[i + 1]) || isBlocked(foundIdCells[i])) continue;
                         //берем координаты первой и второй ячейки
-                        (int x, int y) coordsStart = field.findCoordsById(foundIdCells[i]);
-                        (int x, int y) coordsFinish = field.findCoordsById(foundIdCells[i + 1]);
+                        //(int x, int y) coordsStart = field.findCoordsById(foundIdCells[i]);
+                        //(int x, int y) coordsFinish = field.findCoordsById(foundIdCells[i + 1]);
+                        (int x, int y) coordsStart = foundIdCells[i];
+                        (int x, int y) coordsFinish = foundIdCells[i+1];
                         //Debug.Log(coordsStart + "and" + coordsFinish);
                         //запускаем алгоритм поиска пути
                         if (field.array[coordsStart.x, coordsStart.y].getRandomNum() != 0 &&
@@ -88,7 +90,9 @@ namespace genField
                         if (PathExists == true)
                         {
                             findFlag = true;
-                            path = (foundIdCells[i], foundIdCells[i + 1]);
+                            int idS = field.array[coordsStart.x, coordsStart.y].getId();
+                            int idF = field.array[coordsFinish.x, coordsFinish.y].getId();
+                            path = (idS, idF);
                             PathFound = false;
                             return 0;
                         }
@@ -153,10 +157,10 @@ namespace genField
          * В качестве параметра принимает номер типа (randomNum).
          * Возвращаемое значение: список найденных однотипных ячеек.
         */
-        private List<int> searchSimilarCells(int type)
+        private List<(int i, int j)> searchSimilarCells(int type)
         {
             // Переменная хранит в себе список id найденных однотипных ячеек
-            List<int> OneTypeCollection = new List<int>();
+            List<(int i, int j)> OneTypeCollection = new List<(int i, int j)>();
             /*
              * Начальные координаты цикла (2,2) потому что(0,0) это рамка,
              * а(1, 1) это начальное незаполненное поле для поиска пути.
@@ -167,7 +171,10 @@ namespace genField
                     // если мы нашли на карте (в array) ячейку с тем же типом,
                     // что и передали, то записываем в список
                     if (field.array[i, j].getRandomNum() == type)
-                        OneTypeCollection.Add(field.array[i, j].getId());
+                    {
+                        OneTypeCollection.Add(field.array[i, j].getCoords());
+                    }
+                        
                 }
 
             //возвращаем собранный список из однотипных элементов

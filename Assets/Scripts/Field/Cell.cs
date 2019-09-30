@@ -12,6 +12,8 @@ namespace genField
         private int id = 0;
         private int randomNum = 0;
 
+        private (int i, int j) coords;
+
         //public Color normCol;
         //public Color partiesCol;
 
@@ -42,5 +44,8 @@ namespace genField
                 */
             }
         }
+
+        public (int i, int j) getCoords() { return coords; }
+        public void setCoords(int i, int j) { this.coords = ValueTuple.Create(i,j);}
     }
 }
