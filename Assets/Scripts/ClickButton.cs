@@ -150,25 +150,25 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
 
             bool flg;
             bool find = findPath(gameController.field, firstCoords, secondCoords);
-            if (find == false)
-            {
-                find = findPath(gameController.field, secondCoords, firstCoords);
-                if (find == false)
-                {
-                    flg = false;
-                }
-                else
-                {
-                    flg = true;
-                }
-            }
-            else
-            {
-                flg = true;
-            }
+            //if (find == false)
+            //{
+            //    find = findPath(gameController.field, secondCoords, firstCoords);
+            //    if (find == false)
+            //    {
+            //        flg = false;
+            //    }
+            //    else
+            //    {
+            //        flg = true;
+            //    }
+            //}
+            //else
+            //{
+            //    flg = true;
+            //}
 
 
-            if (flg == true)
+            if (find == true)
             {
                 gameController.CreateLine(path);
 
