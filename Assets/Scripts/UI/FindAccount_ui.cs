@@ -15,10 +15,11 @@ public class FindAccount_ui : ui_basement
     {
         if (InputField.text.Length < 3)
             return;
-        AtlasController._failedAcc += Failed;
-        AtlasController._successFinded += success;
 
-        AtlasController.instance.CheckAccount(InputField.text);
+        DownloadManager.ErrorHandler += Failed;
+        DownloadManager.SuccessfullHandler += success;
+
+        StartCoroutine(PreloadingManager.instance.PreloadAccountImages(InputField.text));
 
         InputObject.SetActive(false);
         LoadingObject.SetActive(true);
@@ -34,23 +35,15 @@ public class FindAccount_ui : ui_basement
         Error_tex.text = args;
     }
 
-    void success()
+    void success(string msg)
     {
-        CanvasControllerClose();
         Debug.Log("Finded");
     }
 
     public override void DeActivate()
     {
-        AtlasController._failedAcc -= Failed;
-        AtlasController._successFinded -= success;
-
-        GameControllerScr.loadGame = false;
-
-
-        SceneManager.LoadScene("Game");
-
-
+        DownloadManager.ErrorHandler -= Failed;
+        DownloadManager.SuccessfullHandler -= success;
 
         base.DeActivate();
     }

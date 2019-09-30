@@ -64,26 +64,20 @@ public class DataSave : MonoBehaviour
         }
     }
 
-    public static void SavePostsInfo(List<PostInfo> data)
+    public static void SavePostsInfo(root_posts data)
     {
-        root_posts root = new root_posts();
-
-        AtlasController.instance.CheckImageDirectory();
-
-        root.AccountKey = PlayerStats.instance.AccountKey;
-
-        for (int i = 0; i < data.Count; i++)
+        for (int i = 0; i < data._p.Count; i++)
         {
-            root._p.Add(data[i]);
-            SaveImage(root._p[i].ThumbnailTexture, "t_" + i, Application.persistentDataPath + "/images/thumbnails/");
-            SaveImage(root._p[i].StandartTexture, "s_" + i, Application.persistentDataPath + "/images/standart/");
+            SaveImage(data._p[i].ThumbnailTexture, "t_" + i, Application.persistentDataPath + "/images/thumbnails/");
+            SaveImage(data._p[i].StandartTexture, "s_" + i, Application.persistentDataPath + "/images/standart/");
         }
 
-        string str = JsonUtility.ToJson(root);
+        string str = JsonUtility.ToJson(data);
 
         File.WriteAllText(Application.persistentDataPath + "/posts.json", str);
     }
 
+   
     public static root_posts GetpostsData()
     {
         root_posts root = new root_posts();

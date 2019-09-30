@@ -99,7 +99,7 @@ public class SampleWebView : MonoBehaviour
         BG.SetActive(false);
         PlayerStats.instance.AccountKey = "";
 
-        AtlasController.instance.ClearCache();
+        //AtlasController.instance.ClearCache();
     }
 
     IEnumerator loggingIn()

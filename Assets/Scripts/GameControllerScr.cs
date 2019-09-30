@@ -111,8 +111,6 @@ public class GameControllerScr : MonoBehaviour
             stats.SetPointsTo(0);
         }
 
-        yield return StartCoroutine(AtlasController.instance.Init());
-
 
         #region GridLoading
         if (loadGame == false)

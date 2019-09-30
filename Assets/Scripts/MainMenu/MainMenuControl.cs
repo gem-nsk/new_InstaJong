@@ -28,17 +28,7 @@ public class MainMenuControl : MonoBehaviour
 
     public void ContinuePressed()
     {
-       // (bool a, string s) _auth = PlayerStats.instance.IsUserAuthorized();
-
-        if (PlayerStats.instance.AccountKey != null)
-        {
-            loadLevel();
-        }
-        else
-        {
-            //open auth window
-            GameObject.FindGameObjectWithTag("Login").GetComponent<SampleWebView>().Login();
-        }
+        StartCoroutine(PreloadingManager.instance.LoadFromCache());
     }
     
       

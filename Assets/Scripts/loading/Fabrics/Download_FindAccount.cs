@@ -1,37 +1,23 @@
-﻿using Assets.Scripts;
-using Newtonsoft.Json;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Net;
 using UnityEngine;
-using System.IO;
+using Newtonsoft.Json;
 using UnityEngine.Networking;
-using UnityEngine.UI;
 
-public class LoadFromAccount : LoadType
+public class Download_FindAccount : Iloading
 {
-    List<PostInfo> posts = new List<PostInfo>();
+    private root_posts posts;
 
-    public LoadFromAccount(string accountId)
+    public root_posts GetPosts()
     {
+        return posts;
     }
 
-    public void GetPosts()
+    public IEnumerator Loading(string key)
     {
-    }
+        posts = new root_posts();
 
-    public int GetProgress()
-    {
-        return 0;
-    }
-
-    public void Load(int args)
-    {
-    }
-
-    public IEnumerator Loading(string args)
-    {
-        UnityWebRequest IdRequest = UnityWebRequest.Get("https://www.instagram.com/" + args + "/?__a=1");
+        UnityWebRequest IdRequest = UnityWebRequest.Get("https://www.instagram.com/" + key + "/?__a=1");
         yield return IdRequest.SendWebRequest();
         //get account id
         var _accId = JsonConvert.DeserializeObject<Assets.Accounts.RootObject>(IdRequest.downloadHandler.text);
@@ -42,7 +28,7 @@ public class LoadFromAccount : LoadType
         var dyn = JsonConvert.DeserializeObject<Assets.Accounts.LoadImages.RootObject>(request.downloadHandler.text);
         int i = 1;
 
-        posts = new List<PostInfo>();
+        posts.AccountKey = _accId.graphql.user.username;
 
         foreach (var data in dyn.data.user.edge_owner_to_timeline_media.edges)
         {
@@ -81,15 +67,22 @@ public class LoadFromAccount : LoadType
 
             post_info.ThumbnailTexture = ((DownloadHandlerTexture)t_request.downloadHandler).texture;
 
-            posts.Add(post_info);
+            posts._p.Add(post_info);
 
             // DataSave.SaveImage(post_info.ThumbnailTexture, "t_" + post_info.id, Application.persistentDataPath + "/t_images");
             //  DataSave.SaveImage(post_info.StandartTexture, "s_" + post_info.id, Application.persistentDataPath + "/s_images");
 
+            DownloadManager.ProgressHandler?.Invoke(i, dyn.data.user.edge_owner_to_timeline_media.edges.Count);
+
             i++;
         }
         yield return null;
-
-        DataSave.SavePostsInfo(posts);
+    }
+    public bool isContainErrors()
+    {
+        if (posts.AccountKey.Contains(DownloadManager.less20Error) || posts.AccountKey.Contains(DownloadManager.notFoundError))
+            return true;
+        else
+            return false;
     }
 }
