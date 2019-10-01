@@ -8,6 +8,7 @@ namespace genField
     public class MapGenerator
     {
         private int countElem = 0;
+        private int countAllElem = 0;
         private int countImagesInType = 0;
         private int countTypes = 0;
         public Field field;
@@ -20,8 +21,12 @@ namespace genField
 
             for (int i = 0; i < height; i++)
                 for (int j = 0; j < width; j++)
+                {
                     if (map[i, j] == "1")
                         countElem++;
+                    countAllElem++;
+                }
+                    
 
             //Console.WriteLine(countElem);
 
@@ -90,6 +95,8 @@ namespace genField
             //mapFromString(map, width, height);
             return (map, width, height);
         }
+
+        public int getCount() { return countAllElem; }
 
     }
 }
