@@ -85,4 +85,26 @@ public class PreloadingManager : MonoBehaviour
             SceneManager.LoadScene("Game");
         }
     }
+    public IEnumerator PreloadHashtagImages(string key)
+    {
+        Iloading search = new Download_hashtagImages();
+
+        Debug.Log("searching...");
+        yield return StartCoroutine(PreloadingManager.instance.LoadingProcess(key, search));
+        if (!search.isContainErrors())
+        {
+            Debug.Log("Starting load account data");
+
+            DataSave.SavePostsInfo(search.GetPosts());
+
+            yield return new WaitForSeconds(1);
+
+            GameControllerScr.loadGame = false;
+            SceneManager.LoadScene("Game");
+        }
+        else
+        {
+            Debug.Log("Account not found");
+        }
+    }
 }

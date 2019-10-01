@@ -83,11 +83,11 @@ public class GameControllerScr : MonoBehaviour
     {
         LEVELS = new List<string>();
         LEVELS.Add("map");
-        LEVELS.Add("map1");
-        LEVELS.Add("map2");
-        LEVELS.Add("map3");
-        LEVELS.Add("map4");
-        LEVELS.Add("map5");
+        //LEVELS.Add("map1");
+        //LEVELS.Add("map2");
+        //LEVELS.Add("map3");
+        //LEVELS.Add("map4");
+        //LEVELS.Add("map5");
         mapLoad =LEVELS[0];
         numMap = 0;
         cellStateTMP = 0;

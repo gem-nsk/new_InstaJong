@@ -22,6 +22,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
+using UnityEngine.UI;
 
 public class SampleWebView : MonoBehaviour
 {
@@ -32,6 +33,8 @@ public class SampleWebView : MonoBehaviour
     public GameObject BG;
 
     public string DebugKey;
+
+    public Text loginText;
     //20021759479.9f7d92e.e1400359759e4f7b9c7bd99e85e102e4 - û
     //20021759479.9f7d92e.e1400359759e4f7b9c7bd99e85e102e4
     //20021759479.9f7d92e.e4cf6803ec204e899ce887aab2b88cbf
@@ -45,13 +48,40 @@ public class SampleWebView : MonoBehaviour
     public void Login()
     {
 #if UNITY_EDITOR
-
-
-        StartCoroutine(ConvertKeyToId(DebugKey));
+        if (PlayerStats.instance.playerSettings.name != null)
+            StartCoroutine(ConvertKeyToId(DebugKey));
+        else
+            ClearCookies();
 #else
-
+        if (PlayerStats.instance.playerSettings.name != null)
         StartCoroutine(loggingIn());
+        else
+            ClearCookies();
 #endif
+    }
+    #region handler
+    private void Start()
+    {
+        PlayerStats.AccountKeyHandler += DisplayLogin;
+
+        loginText.text = PlayerStats.instance.playerSettings.name;
+    }
+    private void OnDestroy()
+    {
+        PlayerStats.AccountKeyHandler -= DisplayLogin;
+    }
+    #endregion
+
+    void DisplayLogin()
+    {
+        if(PlayerStats.instance.playerSettings.name != "")
+        {
+            loginText.text = "@" + PlayerStats.instance.playerSettings.name;
+        }
+        else
+        {
+            loginText.text = "connect your instagram!";
+        }
     }
 
     public string GetAccessToken(string myUrl)
@@ -68,8 +98,6 @@ public class SampleWebView : MonoBehaviour
             //save token here
             StartCoroutine(ConvertKeyToId(data));
 
-            Destroy(webViewObject.gameObject);
-            BG.SetActive(false);
             return data;
         }
         return null;
@@ -83,11 +111,19 @@ public class SampleWebView : MonoBehaviour
         var _accId = JsonConvert.DeserializeObject<Assets.Accounts.Convert.RootObject>(IdRequest.downloadHandler.text);
 
         Debug.Log("Converting..");
-        PlayerStats.instance.AccountKey = _accId.data.username;
+
+        PlayerStats.instance.playerSettings = (_accId.data.username, key);
+
+        Destroy(webViewObject.gameObject);
+        BG.SetActive(false);
+
+        DisplayLogin();
     }
 
     public void ClearCookies()
     {
+#if UNITY_EDITOR
+#elif UNITY_ANDROID
         BG.SetActive(true);
         if (webViewObject == null)
         {
@@ -97,7 +133,9 @@ public class SampleWebView : MonoBehaviour
         webViewObject.ClearCookies();
         Destroy(webViewObject.gameObject);
         BG.SetActive(false);
-        PlayerStats.instance.AccountKey = "";
+#endif
+
+        PlayerStats.instance.playerSettings = (null, null);
 
         //AtlasController.instance.ClearCache();
     }

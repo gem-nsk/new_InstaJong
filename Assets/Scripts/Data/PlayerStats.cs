@@ -2,14 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-[System.Serializable]
-public struct loadSettings
-{
-    public bool SelfAccount;
-    public string AcountId;
-}
-
 public class PlayerStats : MonoBehaviour
 {
     public int InstaCoins;
@@ -42,10 +34,29 @@ public class PlayerStats : MonoBehaviour
     public int HelpPrice = 20;
     public int AddTimePrice = 50;
 
-    public string AccountKey;
+    public (string name, string token) playerSettings
+    {
+        get
+        {
+            if (PlayerPrefs.HasKey("name") && PlayerPrefs.HasKey("token"))
+            {
+                return (PlayerPrefs.GetString("name"), PlayerPrefs.GetString("token"));
+            }
+            else
+            return (null,null);
+        }
+        set
+        {
+            PlayerPrefs.SetString("name", value.name);
+            PlayerPrefs.SetString("token", value.token);
 
-    public string accountId;
-    
+            PlayerStats.AccountKeyHandler();
+        }
+    }
+
+    public delegate void AccountKeyChanged();
+    public static AccountKeyChanged AccountKeyHandler;
+
     public delegate void del_AddPoint(int points);
     public del_AddPoint _addPoints;
 

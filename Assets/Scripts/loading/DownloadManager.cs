@@ -39,7 +39,7 @@ public class DownloadManager : MonoBehaviour
     public static SuccessfulMessage SuccessfullHandler;
 
     public const string less20Error = "photos less than 20";
-    public const string notFoundError = "account not found";
+    public const string notFoundError = "not found";
 
     public root_posts _tempPosts;
 
@@ -65,7 +65,13 @@ public class DownloadManager : MonoBehaviour
             _tempPosts = loading.GetPosts();
             SuccessfullHandler?.Invoke("Account successful loaded");
         }
+    }
 
+    public void StopLoading()
+    {
+        StopAllCoroutines();
+        _tempPosts = new root_posts();
+        Debug.Log("Stop loading");
     }
 
     public root_posts GetPosts()

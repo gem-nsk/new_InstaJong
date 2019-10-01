@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameModeSelect_ui : ui_basement
 {
     public GameObject FindCanvas;
+    public GameObject FindHashtag;
 
     public void PlayGame(int arg)
     {
@@ -19,6 +20,9 @@ public class GameModeSelect_ui : ui_basement
             case 1:
                 FindAcc();
                 break;
+            case 2:
+                FindHash();
+                break;
         }
     }
 
@@ -26,27 +30,21 @@ public class GameModeSelect_ui : ui_basement
     {
         CanvasController.instance.OpenCanvas(FindCanvas);
     }
+    void FindHash()
+    {
+        CanvasController.instance.OpenCanvas(FindHashtag);
+    }
 
     public void PlayAuthorized()
     {
-        string key = "20021759479.9f7d92e.e4cf6803ec204e899ce887aab2b88cbf";
-        StartCoroutine(PreloadingManager.instance.PreloadSelfImages(key));
-
-        //if (PlayerStats.instance.AccountKey != null)
-        //{
-        //    GameControllerScr.loadGame = false;
-        //    SceneManager.LoadScene("Game");
-
-        //}
-        //else
-        //{
-        //    //open auth window
-        //    CanvasControllerClose();
-        //    GameObject.FindGameObjectWithTag("Login").GetComponent<SampleWebView>().Login();
-        //}
+        if(PlayerStats.instance.playerSettings.name != "")
+        {
+            string key = "20021759479.9f7d92e.e4cf6803ec204e899ce887aab2b88cbf";
+            StartCoroutine(PreloadingManager.instance.PreloadSelfImages(key));
+        }
+        else
+        {
+            GameObject.FindGameObjectWithTag("Login").GetComponent<SampleWebView>().Login();
+        }
     }
-
-   
-
-    
 }

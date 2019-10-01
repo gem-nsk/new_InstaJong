@@ -1,0 +1,221 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System.Runtime.Serialization;
+
+namespace Assets.Accounts.Hashtag
+{
+    public class PageInfo
+    {
+        public bool has_next_page { get; set; }
+        public string end_cursor { get; set; }
+    }
+
+    public class Node2
+    {
+        [DataMember(Name = "text")]
+        public string text { get; set; }
+    }
+
+    public class Edge2
+    {
+        [DataMember(Name = "node")]
+        public Node2 node { get; set; }
+    }
+
+    public class EdgeMediaToCaption
+    {
+        [DataMember(Name = "edges")]
+        public List<Edge2> edges { get; set; }
+    }
+
+    public class EdgeMediaToComment
+    {
+        [DataMember(Name = "count")]
+        public int count { get; set; }
+    }
+
+    public class Dimensions
+    {
+        public int height { get; set; }
+        public int width { get; set; }
+    }
+
+    public class EdgeLikedBy
+    {
+        public int count { get; set; }
+    }
+
+    public class EdgeMediaPreviewLike
+    {
+        [DataMember(Name = "count")]
+        public int count { get; set; }
+    }
+
+    public class Owner
+    {
+        [DataMember(Name = "id")]
+        public string id { get; set; }
+    }
+
+    public class ThumbnailResource
+    {
+        public string src { get; set; }
+        public int config_width { get; set; }
+        public int config_height { get; set; }
+    }
+
+    public class Node
+    {
+        public bool comments_disabled { get; set; }
+        public string __typename { get; set; }
+        [DataMember(Name = "id")]
+        public string id { get; set; }
+        [DataMember(Name = "edge_media_to_caption")]
+        public EdgeMediaToCaption edge_media_to_caption { get; set; }
+        public string shortcode { get; set; }
+        [DataMember(Name = "edge_media_to_comment")]
+        public EdgeMediaToComment edge_media_to_comment { get; set; }
+        public int taken_at_timestamp { get; set; }
+        public Dimensions dimensions { get; set; }
+        [DataMember(Name = "display_url")]
+        public string display_url { get; set; }
+        [DataMember(Name = "edge_liked_by")]
+        public EdgeLikedBy edge_liked_by { get; set; }
+        [DataMember(Name = "edge_media_preview_like")]
+        public EdgeMediaPreviewLike edge_media_preview_like { get; set; }
+        [DataMember(Name = "owner")]
+        public Owner owner { get; set; }
+        [DataMember(Name = "thumbnail_src")]
+        public string thumbnail_src { get; set; }
+        public List<ThumbnailResource> thumbnail_resources { get; set; }
+        public bool is_video { get; set; }
+        public string accessibility_caption { get; set; }
+        public int? video_view_count { get; set; }
+    }
+
+    public class Edge
+    {
+        [DataMember(Name = "node")]
+        public Node node { get; set; }
+    }
+
+    public class EdgeHashtagToMedia
+    {
+        public int count { get; set; }
+        public PageInfo page_info { get; set; }
+        [DataMember(Name = "edges")]
+        public List<Edge> edges { get; set; }
+    }
+
+    public class Node4
+    {
+        public string text { get; set; }
+    }
+
+    public class Edge4
+    {
+        public Node4 node { get; set; }
+    }
+
+    public class EdgeMediaToCaption2
+    {
+        public List<Edge4> edges { get; set; }
+    }
+
+    public class EdgeMediaToComment2
+    {
+        public int count { get; set; }
+    }
+
+    public class Dimensions2
+    {
+        public int height { get; set; }
+        public int width { get; set; }
+    }
+
+    public class EdgeLikedBy2
+    {
+        public int count { get; set; }
+    }
+
+    public class EdgeMediaPreviewLike2
+    {
+        public int count { get; set; }
+    }
+
+    public class Owner2
+    {
+        public string id { get; set; }
+    }
+
+    public class ThumbnailResource2
+    {
+        public string src { get; set; }
+        public int config_width { get; set; }
+        public int config_height { get; set; }
+    }
+
+    public class Node3
+    {
+        public string __typename { get; set; }
+        public string id { get; set; }
+        public EdgeMediaToCaption2 edge_media_to_caption { get; set; }
+        public string shortcode { get; set; }
+        public EdgeMediaToComment2 edge_media_to_comment { get; set; }
+        public int taken_at_timestamp { get; set; }
+        public Dimensions2 dimensions { get; set; }
+        public string display_url { get; set; }
+        public EdgeLikedBy2 edge_liked_by { get; set; }
+        public EdgeMediaPreviewLike2 edge_media_preview_like { get; set; }
+        public Owner2 owner { get; set; }
+        public string thumbnail_src { get; set; }
+        public List<ThumbnailResource2> thumbnail_resources { get; set; }
+        public bool is_video { get; set; }
+        public string accessibility_caption { get; set; }
+    }
+
+    public class Edge3
+    {
+        public Node3 node { get; set; }
+    }
+
+    public class EdgeHashtagToTopPosts
+    {
+        public List<Edge3> edges { get; set; }
+    }
+
+    public class EdgeHashtagToContentAdvisory
+    {
+        public int count { get; set; }
+        public List<object> edges { get; set; }
+    }
+
+    public class Hashtag
+    {
+        [DataMember(Name = "id")]
+        public string id { get; set; }
+        public string name { get; set; }
+        public bool allow_following { get; set; }
+        public bool is_following { get; set; }
+        public bool is_top_media_only { get; set; }
+        public string profile_pic_url { get; set; }
+        [DataMember(Name = "edge_hashtag_to_media")]
+        public EdgeHashtagToMedia edge_hashtag_to_media { get; set; }
+        public EdgeHashtagToTopPosts edge_hashtag_to_top_posts { get; set; }
+        public EdgeHashtagToContentAdvisory edge_hashtag_to_content_advisory { get; set; }
+    }
+
+    public class Graphql
+    {
+        [DataMember(Name = "hashtag")]
+        public Hashtag hashtag { get; set; }
+    }
+    [DataContract]
+    public class RootObject
+    {
+        [DataMember(Name = "graphql")]
+        public Graphql graphql { get; set; }
+    }
+}
+    

@@ -11,7 +11,7 @@ public class FindAccount_ui : ui_basement
     public GameObject InputObject;
     public Text Error_tex;
 
-    public void TryFind()
+    public void TryFind(bool acc)
     {
         if (InputField.text.Length < 3)
             return;
@@ -19,7 +19,10 @@ public class FindAccount_ui : ui_basement
         DownloadManager.ErrorHandler += Failed;
         DownloadManager.SuccessfullHandler += success;
 
+        if(acc)
         StartCoroutine(PreloadingManager.instance.PreloadAccountImages(InputField.text));
+        else
+            StartCoroutine(PreloadingManager.instance.PreloadHashtagImages(InputField.text));
 
         InputObject.SetActive(false);
         LoadingObject.SetActive(true);
@@ -44,6 +47,8 @@ public class FindAccount_ui : ui_basement
     {
         DownloadManager.ErrorHandler -= Failed;
         DownloadManager.SuccessfullHandler -= success;
+
+        DownloadManager.instance.StopLoading();
 
         base.DeActivate();
     }
