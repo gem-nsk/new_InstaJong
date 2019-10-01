@@ -18,7 +18,6 @@ public class FindAccount_ui : ui_basement
 
         DownloadManager.ErrorHandler += Failed;
         DownloadManager.SuccessfullHandler += success;
-
         StartCoroutine(PreloadingManager.instance.PreloadAccountImages(InputField.text));
 
         InputObject.SetActive(false);

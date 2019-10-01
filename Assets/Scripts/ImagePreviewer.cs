@@ -10,9 +10,6 @@ public class ImagePreviewer : ui_basement
     public Text description;
     public Text username;
     public Text LikeCount;
-    public Image Like;
-    public Material setLike;
-    public Material unLike;
 
     public void Preview(int id)
     {
@@ -22,7 +19,7 @@ public class ImagePreviewer : ui_basement
     }
 
     void LoadPicture(int id)
-    {
+    { 
         //Material mat = AtlasController.instance.GetMaterialById(id);
 
         //img.material = mat;
@@ -56,10 +53,9 @@ public class ImagePreviewer : ui_basement
         LikeCount.text = "Нравится: " + AtlasController.instance.posts[id - 1].likes.ToString();
     }
 
-    public void SendLike()
+    private void OpenInInstagram()
     {
-        if (Like.material == setLike) Like.material = unLike;
-        else Like.material = setLike;
-
+        string url = "https://www.instagram.com/" + username.text;
+        Application.OpenURL(url);
     }
 }

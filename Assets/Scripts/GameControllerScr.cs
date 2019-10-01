@@ -18,7 +18,7 @@ public class GameControllerScr : MonoBehaviour
 
     public bool Helper = false;
 
-    public int cellCount;
+    private int cellCount;
     public int cellState;
     public int cellStateTMP;
     public int endGameFlag = 0;
@@ -207,6 +207,7 @@ public class GameControllerScr : MonoBehaviour
 
             var map = mapGenerator.mapFromFile(str);
             field = mapGenerator.mapFromString(map.map, map.width, map.height);
+            cellCount = mapGenerator.getCount();
         }
 
 #endif
@@ -222,8 +223,9 @@ public class GameControllerScr : MonoBehaviour
 
 
             var map = mapGenerator.mapFromFile(str);
-
+            
             field = mapGenerator.mapFromString(map.map, map.width, map.height);
+            cellCount = mapGenerator.getCount();
         }
 #endif
 
@@ -376,7 +378,7 @@ public class GameControllerScr : MonoBehaviour
     public void placeCells()
     {
         clearField();
-
+        Debug.Log(cellCount);
 
         for (int i = 0; i < cellCount; i++)
         {
