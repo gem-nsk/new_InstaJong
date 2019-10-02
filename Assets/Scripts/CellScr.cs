@@ -25,7 +25,9 @@ public class root
     public int width;
     public int height;
 
+    public int _scellState;
     public float time;
+    public int _Level;
 }
 
 

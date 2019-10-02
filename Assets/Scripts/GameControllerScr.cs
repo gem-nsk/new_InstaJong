@@ -18,7 +18,7 @@ public class GameControllerScr : MonoBehaviour
 
     public bool Helper = false;
 
-    private int cellCount;
+    private const int cellCount = 112;
     public int cellState;
     public int cellStateTMP;
     public int endGameFlag = 0;
@@ -104,6 +104,7 @@ public class GameControllerScr : MonoBehaviour
         if(loadGame)
         {
             stats.LoadData();
+            StartCoroutine(loadMap());
         }
         else
         {
@@ -191,7 +192,9 @@ public class GameControllerScr : MonoBehaviour
         {
             height = field.heightField,
             width = field.widthField,
-            time = _Timer._time
+            time = _Timer._time,
+            _scellState = cellState,
+            _Level = numMap
         };
 
         foreach(CellScr scr in AllCells)
@@ -219,7 +222,7 @@ public class GameControllerScr : MonoBehaviour
 
             var map = mapGenerator.mapFromFile(str);
             field = mapGenerator.mapFromString(map.map, map.width, map.height);
-            cellCount = mapGenerator.getCount();
+            //cellCount = mapGenerator.getCount();
         }
 
 #endif
@@ -237,7 +240,7 @@ public class GameControllerScr : MonoBehaviour
             var map = mapGenerator.mapFromFile(str);
             
             field = mapGenerator.mapFromString(map.map, map.width, map.height);
-            cellCount = mapGenerator.getCount();
+            //cellCount = mapGenerator.getCount();
         }
 #endif
 
@@ -364,10 +367,13 @@ public class GameControllerScr : MonoBehaviour
     public IEnumerator loadMap()
     {
         root _data = DataSave.GetData();
+
+        numMap = _data._Level;
+
         Debug.Log(_data.height + " - " + _data.width + " list " + _data.data.Count);
         field = new Field(_data.width, _data.height); 
         field.initField(true);
-
+        Debug.Log(_data.data.Count);    
         for (int i = 0; i < _data.data.Count; i++)
         {
             var coords = field.findCoordsById(_data.data[i]._id);
@@ -380,6 +386,8 @@ public class GameControllerScr : MonoBehaviour
 
         yield return new WaitForEndOfFrame();
 
+        cellState = _data._scellState;
+
         grid.enabled = false;
         SortHierarchy();
     }
@@ -388,6 +396,7 @@ public class GameControllerScr : MonoBehaviour
     public void placeCells()
     {
         clearField();
+        Debug.Log(cellCount);
 
         for (int i = 0; i < cellCount; i++)
         {
