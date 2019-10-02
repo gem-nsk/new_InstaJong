@@ -8,6 +8,8 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using UnityEngine;
+using System.Web;
+
 public class User
 {
     public string id { get; set; }
@@ -51,6 +53,7 @@ public class instagramAuth : MonoBehaviour
     private string instagramTokenUrl;
     public string instagramRedirectUrl;
     private string instagramAccessToken;
+<<<<<<< HEAD
     void Start()
     {
         
@@ -62,6 +65,38 @@ public class instagramAuth : MonoBehaviour
         
     }
 
+=======
+    #region NewTest
+    public WebViewObject webViewObject;
+    public GameObject webViewUi;
+
+    public SampleWebView webView;
+    public bool authComplete;
+
+    public static string url;
+
+
+    public void OpenWebView()
+    {
+        webViewUi.SetActive(true);
+    }
+    public void GetAccessToken(string myUrl)
+    {
+        string url1 = myUrl;
+        string accessToken = "#access_token";
+        string error = "? error";
+
+        if (url1.Contains(accessToken))
+        {
+            var data = url1.Substring(url1.LastIndexOf("=") + 1);
+
+        }
+    }
+
+    #endregion
+
+
+>>>>>>> whynotworking
     public void OnClick()
     {
         string result = LoginAsync();

@@ -45,6 +45,7 @@ public class CanvasController : MonoBehaviour
     public void CloseCanvas()
     {
         _currentCanvas.DeActivate();
+        _currentCanvas = null;
     }
     public void CloseCanvas(ui_basement _canvas)
     {

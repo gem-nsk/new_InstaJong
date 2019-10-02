@@ -9,15 +9,19 @@ using System.Drawing;
 using System.IO;
 using System;
 using UnityEngine.Networking;
-
-
+using Image = UnityEngine.UI.Image;
+using Color = UnityEngine.Color;
+using Random = UnityEngine.Random;
 
 public class GameControllerScr : MonoBehaviour
 {
 
     public bool Helper = false;
 
-    public int cellCount;
+    private int cellCount;
+    public int cellState;
+    public int cellStateTMP;
+    public int endGameFlag = 0;
     //private LineRenderer lr;
 
     //public Material mat;
@@ -34,12 +38,14 @@ public class GameControllerScr : MonoBehaviour
     public PathParser pathParser;
     public TransformUnity transformUnity;
     public MapGenerator mapGenerator;
+    public Timer _Timer;
 
     public GameObject cellButton;
     public Transform cellGroup;
 
     public static bool loadGame { get; set; }
     public static bool refresh { get; set; }
+    public static int numMap;
 
     public bool searchPath = true;
     public bool isRefreshing = false;
@@ -53,12 +59,17 @@ public class GameControllerScr : MonoBehaviour
     public UnityEngine.UI.Image blinkImage;
 
     public GameObject _previewer;
+    public GameObject _endGamePreview;
 
+    public string  mapLoad;
     public List<string> descriptions { get; set; }
 
 
     [Header("Player stats")]
     public PlayerStats stats;
+
+    private List<string> LEVELS;
+    public bool nextLevelFlag = false;
 
     #region Singleton
     public static GameControllerScr instance;
@@ -70,6 +81,17 @@ public class GameControllerScr : MonoBehaviour
     #region MainCode
     public IEnumerator Start()
     {
+        LEVELS = new List<string>();
+        LEVELS.Add("map");
+        LEVELS.Add("map1");
+        LEVELS.Add("map2");
+        LEVELS.Add("map3");
+        LEVELS.Add("map4");
+        LEVELS.Add("map5");
+        mapLoad = LEVELS[0];
+        numMap = 0;
+        cellStateTMP = 0;
+        cellState = 0;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         transformUnity = new TransformUnity();
         pathParser = new PathParser();
@@ -79,21 +101,44 @@ public class GameControllerScr : MonoBehaviour
 
 
         stats = PlayerStats.instance;
-        stats.LoadData();
+        if(loadGame)
+        {
+            stats.LoadData();
+        }
+        else
+        {
+            stats.LoadData();
+            stats.SetPointsTo(0);
+        }
 
-        yield return StartCoroutine(AtlasController.instance.Init());
 
+        #region GridLoading
         if (loadGame == false)
         {
            yield return StartCoroutine( CreateButtonCells());
         }
         else {
-           yield return StartCoroutine(  loadMap());
+            if(DataSave.GetData() != null)
+            {
+                Debug.Log("load map");
+                yield return StartCoroutine(loadMap());
+            }
+            else
+            {
+                yield return StartCoroutine( CreateButtonCells());
+                _Timer.AddTime();
+            }
         }
-        
+        #endregion
         Camera.main.transparencySortMode = TransparencySortMode.Orthographic;
 
         ui.Init();
+
+        if (loadGame)
+            _Timer.SetTime(DataSave.GetData().time);
+        else
+            _Timer.StartTimer();
+
 
     }
 
@@ -101,6 +146,7 @@ public class GameControllerScr : MonoBehaviour
     {
         if (refresh == true)
         {
+            cellStateTMP = cellState;
             placeCells();
             refresh = false;
         }
@@ -108,18 +154,59 @@ public class GameControllerScr : MonoBehaviour
         {
             blinkImage.color = new UnityEngine.Color(1,1,1, Mathf.Clamp(Mathf.PingPong(Time.time, 1), 0.5f, 1));
         }
+        if(endGameFlag == 1)
+        {
+            Debug.Log("You are won");
+            OpenEndGamePreview(1);
+            endGameFlag = 0;
+        }
+        if(endGameFlag == 2)
+        {
+            Debug.Log("You are loose");
+            OpenEndGamePreview(2);
+            endGameFlag = 0;
+        }
+        if(nextLevelFlag == true)
+        {
+            //Debug.Log(numMap);
+            nextLevelFlag = false;
+            LoadNextLevel();
+        }
+    }
+
+    public void LoadNextLevel()
+    {
+        if(numMap < 5)
+        {
+            numMap++;
+            
+        }
+        mapLoad = LEVELS[numMap];
+        StartCoroutine(CreateButtonCells());
     }
     
-    private void OnDestroy()
+    public void Save()
     {
+        root r = new root
+        {
+            height = field.heightField,
+            width = field.widthField,
+            time = _Timer._time
+        };
 
-        DataSave.save(AllCells, (field.heightField, field.widthField));
+        foreach(CellScr scr in AllCells)
+        {
+            r.data.Add(scr.settings);
+        }
+
+        DataSave.save(r);
     }
 
 
 
     public IEnumerator CreateButtonCells()
     {
+        grid.enabled = true;
         mapGenerator = new MapGenerator();
         string filePath = Path.Combine(Application.streamingAssetsPath, "map.txt"); 
 #if UNITY_ANDROID
@@ -127,11 +214,12 @@ public class GameControllerScr : MonoBehaviour
 
         if (Application.platform == RuntimePlatform.Android)
         {
-            TextAsset s = (TextAsset)Resources.Load("map");
+            TextAsset s = (TextAsset)Resources.Load(mapLoad);
             string str = s.text;
 
             var map = mapGenerator.mapFromFile(str);
             field = mapGenerator.mapFromString(map.map, map.width, map.height);
+            cellCount = mapGenerator.getCount();
         }
 
 #endif
@@ -140,15 +228,16 @@ public class GameControllerScr : MonoBehaviour
         else
         {
 
-            TextAsset s = (TextAsset)Resources.Load("map");
+            TextAsset s = (TextAsset)Resources.Load(mapLoad);
             Debug.Log(s.text);
 
             String str = s.text;
 
 
             var map = mapGenerator.mapFromFile(str);
-
+            
             field = mapGenerator.mapFromString(map.map, map.width, map.height);
+            cellCount = mapGenerator.getCount();
         }
 #endif
 
@@ -164,7 +253,7 @@ public class GameControllerScr : MonoBehaviour
         grid.enabled = false;
 
         SortHierarchy();
-
+        Save();
     }
 
     public void SortHierarchy()
@@ -206,6 +295,16 @@ public class GameControllerScr : MonoBehaviour
         }
     }
 
+    private Image[] helpers = new Image[2];
+    public IEnumerator ShowHelp()
+    {
+        yield return StartCoroutine(SearchPath());
+
+        helpers[0].color = Color.yellow;
+        helpers[1].color = Color.yellow;
+
+    }
+
     public IEnumerator SearchPath()
     {
         List<Transform> forLine = new List<Transform>();
@@ -223,14 +322,13 @@ public class GameControllerScr : MonoBehaviour
                 foreach (Transform child in cellGroup)
                 {
 
-                    if (child.name == IDFirst || child.name == IDSecond)
+                    if (child.name == IDFirst)
                     {
-                        var ChildButton = child.gameObject.GetComponent<UnityEngine.UI.Image>();
-                        //helper
-                        if(Helper)
-                        {
-                            ChildButton.color = UnityEngine.Color.yellow;
-                        }
+                        helpers[0] = child.gameObject.GetComponent<UnityEngine.UI.Image>();
+                    }
+                    else if (child.name == IDSecond)
+                    {
+                        helpers[1] = child.gameObject.GetComponent<UnityEngine.UI.Image>();
                     }
                     
                 }
@@ -265,48 +363,18 @@ public class GameControllerScr : MonoBehaviour
 
     public IEnumerator loadMap()
     {
-        ((int height, int width), List<CellJson> _list) _data = DataSave.GetData();
-
-        field = new Field(_data.Item1.width, _data.Item1.height);
+        root _data = DataSave.GetData();
+        Debug.Log(_data.height + " - " + _data.width + " list " + _data.data.Count);
+        field = new Field(_data.width, _data.height); 
         field.initField(true);
 
-        for (int i = 0; i < _data._list.Count; i++)
+        for (int i = 0; i < _data.data.Count; i++)
         {
-            var coords = field.findCoordsById(_data._list[i]._id);
-            field.array[coords.i, coords.j].setId(_data._list[i]._id);
-            field.array[coords.i, coords.j].setRandomNum(_data._list[i]._randomNum);
-            field.array[coords.i, coords.j].setState(_data._list[i]._state);
+            var coords = field.findCoordsById(_data.data[i]._id);
+            field.array[coords.i, coords.j].setId(_data.data[i]._id);
+            field.array[coords.i, coords.j].setRandomNum(_data.data[i]._randomNum);
+            field.array[coords.i, coords.j].setState(_data.data[i]._state);
         }
-
-       // TransformUnity transform = new TransformUnity();
-
-        //ids
-        //string path = Application.temporaryCachePath;
-        //string[] data = new string[3];
-
-        //UnityWebRequest request = UnityWebRequest.Get(path + "/IDs.txt");
-        //yield return request.SendWebRequest();
-
-       // data[0] = request.downloadHandler.text;
-        //rnd
-
-       // request = UnityWebRequest.Get(path + "/RandomNums.txt");
-        //yield return request.SendWebRequest();
-
-       // data[1] = request.downloadHandler.text;
-        //states
-
-       // request = UnityWebRequest.Get(path + "/States.txt");
-       // yield return request.SendWebRequest();
-
-        //data[2] = request.downloadHandler.text;
-
-       // foreach(string s in data)
-       // {
-       //     Debug.Log(s);
-       // }
-
-       // field = transform.fromFileToUnity(data[0],data[1],data[2]);
 
         placeCells();
 
@@ -321,7 +389,6 @@ public class GameControllerScr : MonoBehaviour
     {
         clearField();
 
-
         for (int i = 0; i < cellCount; i++)
         {
             var coords = field.findCoordsById(i + 1);
@@ -332,6 +399,15 @@ public class GameControllerScr : MonoBehaviour
             tmpCell.GetComponent<CellScr>().settings._randomNum = field.array[coords.i, coords.j].getRandomNum();
             tmpCell.GetComponent<CellScr>().SetState(field.array[coords.i, coords.j].getState());
 
+            if(cellStateTMP == 0)
+            {
+                if (field.array[coords.i, coords.j].getState() == 1) cellState++;
+            }
+            else
+            {
+                cellState = cellStateTMP;
+            }
+            
             AllCells.Add(tmpCell.GetComponent<CellScr>());
         }
     }
@@ -380,7 +456,7 @@ public class GameControllerScr : MonoBehaviour
 
         field = field.refreshField(field);
 
-
+        
         refresh = true;
         yield return StartCoroutine( SearchPath());
 
@@ -399,6 +475,12 @@ public class GameControllerScr : MonoBehaviour
        GameObject _obj = CanvasController.instance.OpenCanvas(_previewer);
 
         _obj.GetComponent<ImagePreviewer>().Preview(id);
+    }
+
+    public void OpenEndGamePreview(int state)
+    {
+        GameObject _obj = CanvasController.instance.OpenCanvas(_endGamePreview);
+        _obj.GetComponent<endGamePreviewer>().Preview(state);
     }
 
     public void CreateLine(List<Point> points)
@@ -426,12 +508,19 @@ public class GameControllerScr : MonoBehaviour
                 
                 //Debug.Log(path[i].position);
             }
-            LR.SetPositions(positions);
+
+
+          LR.SetPositions(positions);
+            
+            
+            
             //ResetLine(LR);
             //waiter();
         }
         
     }
+
+    
 
     public void ResetLine(LineRenderer lr)
     {
@@ -444,10 +533,17 @@ public class GameControllerScr : MonoBehaviour
 
     public void PlayLikeParticles(Vector3 pos)
     {
-        LikeSystem.transform.position = new Vector3(pos.x, pos.y, pos.z - 10);
-        LikeSystem.Play();
+        ParticleSystem sys = Instantiate(LikeSystem);
+        sys.transform.position = new Vector3(pos.x, pos.y, pos.z - 10);
+        sys.Play();
     }
-    
+
+    public void StopLoading()
+    {
+        AtlasController.instance.StopLoading();
+    }
+
+
     //public IEnumerator waiter()
     //{
     //    CreateLine(points);

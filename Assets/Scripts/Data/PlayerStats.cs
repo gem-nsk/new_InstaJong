@@ -5,20 +5,63 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     public int InstaCoins;
-    private const string _instaCoinsPath = "InstaCoins";
     public int DefaultInstaCoinsValue = 500;
 
-    public int Points;
+    private int _points;
+    public int Points
+    {
+        get
+        {
+            return _points;
+        }
+        set
+        {
+            if(value > Points_highscore)
+            {
+                Points_highscore = value;
+            }
+            _points = value;
+        }
+    }
+    public int Points_highscore;
+
+    private const string _instaCoinsPath = "InstaCoins";
     private const string _pointsPath = "Points";
+    private const string _IdKey = "AccountId";
+    public const string _points_hs = "hs";
 
     public int RefreshPrice = 5;
+    public int HelpPrice = 20;
+    public int AddTimePrice = 50;
+
+    public (string name, string token) playerSettings
+    {
+        get
+        {
+            if (PlayerPrefs.HasKey("name") && PlayerPrefs.HasKey("token"))
+            {
+                return (PlayerPrefs.GetString("name"), PlayerPrefs.GetString("token"));
+            }
+            else
+            return (null,null);
+        }
+        set
+        {
+            PlayerPrefs.SetString("name", value.name);
+            PlayerPrefs.SetString("token", value.token);
+
+            PlayerStats.AccountKeyHandler();
+        }
+    }
+
+    public delegate void AccountKeyChanged();
+    public static AccountKeyChanged AccountKeyHandler;
 
     public delegate void del_AddPoint(int points);
     public del_AddPoint _addPoints;
 
     public delegate void del_AddInstaCoins(int coins);
     public del_AddInstaCoins _addInstaCoins;
-
 
     public static PlayerStats instance;
     private void Awake()
@@ -34,27 +77,61 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    //public (bool auth, string id) IsUserAuthorized()
+    //{
+    //    if(PlayerPrefs.HasKey(_IdKey))
+    //    {
+    //        switch(PlayerPrefs.GetString(_IdKey))
+    //        {
+    //            case "":
+    //                return (false, null);
+    //            default:
+    //                return (true, AccountKey);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        return (false, null);
+    //    }
+    //}
+
     //constructor
     public void LoadData()
     {
-        if (PlayerPrefs.HasKey(_instaCoinsPath) && PlayerPrefs.HasKey(_pointsPath))
+        if (PlayerPrefs.HasKey(_instaCoinsPath) && PlayerPrefs.HasKey(_pointsPath) && PlayerPrefs.HasKey(_points_hs))
         {
             InstaCoins = PlayerPrefs.GetInt(_instaCoinsPath);
             Points = PlayerPrefs.GetInt(_pointsPath);
+            Points_highscore = PlayerPrefs.GetInt(_points_hs);
         }
         else //default values
         {
             InstaCoins = DefaultInstaCoinsValue;
             Points = 0;
+            Points_highscore = 0;
         }
     }
 
-   
+   public void SetPointsTo(int to)
+    {
+        Points = to;
+        SaveData();
+    }
 
+    public int GetHighscore()
+    {
+        return Points_highscore;
+    }
+
+    public int GetScore()
+    {
+        return _points;
+    }
     public void SaveData()
     {
         PlayerPrefs.SetInt(_instaCoinsPath, InstaCoins);
         PlayerPrefs.SetInt(_pointsPath, Points);
+        PlayerPrefs.SetInt(_points_hs, Points_highscore);
     }
 
     public void AddPoints(int _points)

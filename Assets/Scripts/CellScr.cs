@@ -24,6 +24,8 @@ public class root
     public List<CellJson> data = new List<CellJson>();
     public int width;
     public int height;
+
+    public float time;
 }
 
 

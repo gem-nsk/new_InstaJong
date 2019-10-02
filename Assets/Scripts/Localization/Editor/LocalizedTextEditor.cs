@@ -7,6 +7,7 @@ using System.IO;
 public class LocalizedTextEditor : EditorWindow
 {
     public LocalizationData localizationData;
+    Vector2 scrollPos;
 
     [MenuItem("Window/Localized Text Editor")]
     static void Init()
@@ -20,9 +21,17 @@ public class LocalizedTextEditor : EditorWindow
         {
             SerializedObject serializedObject = new SerializedObject(this);
             SerializedProperty serializedProperty = serializedObject.FindProperty("localizationData");
+
+            EditorGUILayout.BeginVertical();
+            scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(600), GUILayout.Height(700));
+
             EditorGUILayout.PropertyField(serializedProperty, true);
             serializedObject.ApplyModifiedProperties();
 
+           
+
+            GUILayout.EndScrollView();
+            EditorGUILayout.EndVertical();
             if (GUILayout.Button("Save data"))
             {
                 SaveGameData();

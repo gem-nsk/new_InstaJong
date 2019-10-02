@@ -10,8 +10,7 @@ public class ImagePreviewer : ui_basement
     public RectTransform _ImgSize;
     public Text description;
     public Text username;
-    public Text likesCount;
-    public Text timeStamp;
+    public Text LikeCount;
 
     public void Preview(int id)
     {
@@ -20,21 +19,21 @@ public class ImagePreviewer : ui_basement
     }
 
     void LoadPicture(int id)
-    {
+    { 
         //Material mat = AtlasController.instance.GetMaterialById(id);
 
         //img.material = mat;
         //Material mat = new Material(fileStandard);
         //Debug.Log(id);
-        Texture2D spr = AtlasController.instance.posts[id].StandartTexture;
+        Texture2D spr = AtlasController.instance.posts[id -1].StandartTexture;
 
         img.material = AtlasController.instance.GetMaterialById(AtlasController.instance.Atlases[1], id);
 
         //_ImgSize.sizeDelta = new Vector2(spr.textureRect.width, spr.textureRect.height);
     }
-    public override void DeActivate()
+    public void CLose()
     {
-        base.DeActivate();
+        CanvasController.instance.CloseCanvas();
     }
     
     
@@ -51,5 +50,18 @@ public class ImagePreviewer : ui_basement
         likesCount.text = AtlasController.instance.posts[id - 1].likes.ToString() + " отметок \"нравится\"";
     }
 
+<<<<<<< HEAD
     
+=======
+    public void setLikesCount(int id)
+    {
+        LikeCount.text = "Нравится: " + AtlasController.instance.posts[id - 1].likes.ToString();
+    }
+
+    private void OpenInInstagram()
+    {
+        string url = "https://www.instagram.com/" + username.text;
+        Application.OpenURL(url);
+    }
+>>>>>>> whynotworking
 }

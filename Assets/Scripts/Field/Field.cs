@@ -39,6 +39,7 @@ namespace genField
                 for (int j = 0; j < widthField; j++)
                 {
                     array[i, j] = new Cell();
+                    array[i, j].setCoords(i, j);
                     if (i >= 1 && j >= 1 && i < heightField - 1 && j < widthField - 1)
                     {
                         array[i, j].setId(newId);
@@ -148,20 +149,28 @@ namespace genField
         }
 
         //функция поиска позиции ячейки массива по id
+
+
         public (int i, int j) findCoordsById(int id)
         {
-            for (int i = 1; i < heightField-1; i++)
+            //for (int i = 1; i < heightField - 1; i++)
+            //{
+            //    for (int j = 1; j < widthField - 1; j++)
+            //    {
+
+            //        if (array[i, j].getId() == id)
+            //            return (i, j);
+            //    }
+            //}
+
+            foreach (Cell cell in array)
             {
-                for (int j = 1; j < widthField-1; j++)
-                {
-                    
-                    if (array[i, j].getId() == id)
-                        return (i, j);
-                }
+                if (cell.getId() == id) return cell.getCoords();
             }
 
             return (0, 0);
         }
+
 
         //функция поиска позиции ячейки массива по координатам
         public int findIdByCoords(int i, int j)

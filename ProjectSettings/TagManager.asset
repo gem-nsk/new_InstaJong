@@ -9,6 +9,8 @@ TagManager:
   - Cell
   - Music
   - Data
+  - LoadingBar
+  - Login
   layers:
   - Default
   - TransparentFX

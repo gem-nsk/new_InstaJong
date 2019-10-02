@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using genField;
-
+using UnityEngine.UI;
 using Newtonsoft.Json;
 using System.IO;
 using System.Net;
@@ -14,25 +14,34 @@ using Assets.Scripts;
 public class MainMenuControl : MonoBehaviour
 {
     public GameObject BuyInstaCoins_ui;
+    public GameObject Rules_ui;
+
+    public Image musicImg;
+    public Sprite[] Musicicons;
+
 
     public void OpenInstaCoins_button()
     {
+
         CanvasController.instance.OpenCanvas(BuyInstaCoins_ui);
     }
 
     public void ContinuePressed()
     {
-        loadLevel();
+        PreloadingManager.instance._LoadFromCache();
     }
     
       
     public void NewGamePressed()
     {
+        //check instagramm authorization
+
+        CanvasController.instance.OpenCanvas(3);
+
+       
 
         //DownloadImagesFromInstagram();
 
-        GameControllerScr.loadGame = false;
-        SceneManager.LoadScene("Game");
     }
 
     public void loadLevel()
@@ -47,6 +56,8 @@ public class MainMenuControl : MonoBehaviour
     
     public void ButtonBack()
     {
+        AdsController.instance.ShowInterstitial();
+        GameControllerScr.instance.StopLoading();
         SceneManager.LoadScene("Menu");
     }
 
@@ -60,10 +71,39 @@ public class MainMenuControl : MonoBehaviour
         GameControllerScr.refresh = true;*/
     }
 
-   
-    public void Music_button()
+    private void Start()
     {
-        Music.instance.SwitchMusic();
+         bool b = Music.instance.isPlaying;
+        switch (b)
+        {
+            case true:
+                musicImg.sprite = Musicicons[0];
+                break;
+            case false:
+                musicImg.sprite = Musicicons[1];
+                break;
+        }
     }
 
+    public void Music_button()
+    {
+       bool b = Music.instance.SwitchMusic();
+        switch(b)
+        {
+            case true:
+                musicImg.sprite = Musicicons[0];
+                break;
+            case false:
+                musicImg.sprite = Musicicons[1];
+                break;
+        }
+    }
+    public void OpenRules()
+    {
+        CanvasController.instance.OpenCanvas(Rules_ui);
+    }
+    public void Leaders()
+    {
+        AdsController.instance.ShowInterstitial();
+    }
 }

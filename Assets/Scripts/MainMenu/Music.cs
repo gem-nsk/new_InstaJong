@@ -24,7 +24,7 @@ public class Music : MonoBehaviour
     }
 
     private bool _isPlaying;
-    private bool isPlaying {
+    public bool isPlaying {
         get
         {
             return _isPlaying;
@@ -77,7 +77,7 @@ public class Music : MonoBehaviour
         StartCoroutine(RepeatMusic());
     }
 
-    public void SwitchMusic()
+    public bool SwitchMusic()
     {
         isPlaying = !isPlaying;
         PlayerPrefs.SetInt("Music", isPlaying? 1 : 0);
@@ -90,6 +90,7 @@ public class Music : MonoBehaviour
                 StopMusic();
                 break;
         }
+        return isPlaying;
     }
 
     public IEnumerator RepeatMusic()

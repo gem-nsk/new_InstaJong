@@ -43,6 +43,7 @@ public class LocalizationManager : MonoBehaviour
     {
         _localizableTexts.Remove(t);
     }
+    
     public void UpdateTexts()
     {
         foreach (TextLocalization t in _localizableTexts)
@@ -50,7 +51,7 @@ public class LocalizationManager : MonoBehaviour
             t.GetText();
         }
     }
-
+    
     public IEnumerator Start()
     {
         string name;

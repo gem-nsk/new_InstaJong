@@ -69,6 +69,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
             {
                 StartCoroutine(DeleteIcons(Buttons));
             }
+
         }
     }
 
@@ -90,6 +91,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
         if(Input.GetMouseButton(0))
         {
             GameControllerScr.instance.OpenImagePreview(GetComponent<CellScr>().settings._randomNum);
+            //GameControllerScr.instance.OpenEndGamePreview(1);
         }
         else
         {
@@ -122,7 +124,9 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
         GameControllerScr.instance.StopBlinking();
 
         //points
-        GameControllerScr.instance.stats.AddPoints(10);
+        GameControllerScr.instance.stats.AddPoints(15);
+        StartCoroutine(GameControllerScr.instance.SearchPath());
+
     }
 
     public IEnumerator DeleteIcons(List<System.Tuple<int, int>> tuples)
@@ -170,7 +174,6 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
 
                 
 
-                SuccessfulPare();
 
                 yield return new WaitForSeconds(gameController.DelayBeforeDestroy);
 
@@ -188,8 +191,9 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
                 gameController.field.array[secondCoords.i, secondCoords.j].setState(0);
                 gameController.field.array[secondCoords.i, secondCoords.j].setRandomNum(0);
 
-                
-
+                gameController.cellState-=2;
+                Debug.Log(gameController.cellState);
+                if (gameController.cellState == 0) gameController.endGameFlag = 1;
 
                 panel.color = UnityEngine.Color.white * 0.0F;
                 //Debug.Log("Delete " + idFirstClick + " and " + idSecondClick);
@@ -199,14 +203,16 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
                     || idSecondClick == gameController.pathParser.path.idFirst)
                 {
                     yield return new WaitForEndOfFrame();
-                    gameController.StartCoroutine("SearchPath");
                     //Debug.Log("find path");
                 }
 
                 //gameController.ResetLine(gameController.LR);
 
+                SuccessfulPare();
+                GameControllerScr.instance.Save();
+
             }
-            
+
         } //else panel.color = normCol;
 
         else
