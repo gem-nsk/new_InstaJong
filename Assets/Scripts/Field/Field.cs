@@ -40,17 +40,10 @@ namespace genField
                 {
                     array[i, j] = new Cell();
                     array[i, j].setCoords(i, j);
-                    if (i >= 1 && j >= 1 && i < heightField - 1 && j < widthField - 1)
-                    {
-                        array[i, j].setId(newId);
-                        newId += 1;
-                        countElements++;
-                    }
-                    else
-                    {
-                        array[i, j].setId(0);
-                        array[i, j].setState(2);
-                    }
+
+                    array[i, j].setId(newId);
+                    newId += 1;
+                    countElements++;
 
                 }
             //установка всех ячеек в state 1

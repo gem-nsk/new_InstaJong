@@ -29,20 +29,6 @@ namespace genField
         public void setState(int state)
         {
             this.state = state;
-            if (this.state == 0)
-            {
-                //GetComponent<Image>().color = normCol;
-            }
-            else if (this.state == 1)
-            {
-                //GetComponent<Image>().color = partiesCol;
-                /*
-                Image button = GetComponent<Image>();
-                String path = "image/file" + randomNum.ToString();
-                button.color = new Color32(255, 255, 255, 255);
-                button.sprite = Resources.Load<Sprite>(path);
-                */
-            }
         }
 
         public (int i, int j) getCoords() { return coords; }

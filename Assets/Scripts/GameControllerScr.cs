@@ -456,7 +456,6 @@ public class GameControllerScr : MonoBehaviour
 
         field = field.refreshField(field);
 
-        
         refresh = true;
         yield return StartCoroutine( SearchPath());
 

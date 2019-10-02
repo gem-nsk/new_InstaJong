@@ -172,9 +172,6 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
             {
                 gameController.CreateLine(path);
 
-                
-
-
                 yield return new WaitForSeconds(gameController.DelayBeforeDestroy);
 
                 first.SetState(0);
@@ -182,8 +179,6 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
 
                 objects.first.settings._randomNum = 0;
                 objects.second.settings._randomNum = 0;
-
-                
 
                 gameController.field.array[firstCoords.i, firstCoords.j].setState(0);
                 gameController.field.array[firstCoords.i, firstCoords.j].setRandomNum(0);
@@ -197,13 +192,17 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
 
                 panel.color = UnityEngine.Color.white * 0.0F;
                 //Debug.Log("Delete " + idFirstClick + " and " + idSecondClick);
+                //дело в этом
                 if (idFirstClick == gameController.pathParser.path.idFirst
                     || idSecondClick == gameController.pathParser.path.idSecond
                     || idFirstClick == gameController.pathParser.path.idSecond
                     || idSecondClick == gameController.pathParser.path.idFirst)
                 {
-                    yield return new WaitForEndOfFrame();
-                    //Debug.Log("find path");
+                    StartCoroutine(gameController.SearchPath());
+                    yield return new WaitForSeconds(1);
+                    Debug.Log("#find path");
+
+                    
                 }
 
                 //gameController.ResetLine(gameController.LR);
