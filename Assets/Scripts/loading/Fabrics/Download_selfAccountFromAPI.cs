@@ -35,6 +35,8 @@ public class Download_selfAccountFromAPI : Iloading
 
         _tempPosts.AccountKey = dyn.data[0].caption.from.username;
 
+        DownloadManager.instance.CreateLoadingBar();
+
         foreach (var data in dyn.data)
         {
             var post_info = new PostInfo();
@@ -85,6 +87,7 @@ public class Download_selfAccountFromAPI : Iloading
             DownloadManager.ProgressHandler?.Invoke(i, dyn.data.Count);
 
         }
+        DownloadManager.instance.DeleteLoadingBar();
         yield return null;
     }
 

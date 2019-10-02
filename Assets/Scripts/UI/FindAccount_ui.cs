@@ -20,9 +20,9 @@ public class FindAccount_ui : ui_basement
         DownloadManager.SuccessfullHandler += success;
 
         if(acc)
-        StartCoroutine(PreloadingManager.instance.PreloadAccountImages(InputField.text));
+        PreloadingManager.instance._PreloadAccountImages(InputField.text);
         else
-            StartCoroutine(PreloadingManager.instance.PreloadHashtagImages(InputField.text));
+            PreloadingManager.instance._PreloadHashtagImages(InputField.text);
 
         InputObject.SetActive(false);
         LoadingObject.SetActive(true);
@@ -41,15 +41,12 @@ public class FindAccount_ui : ui_basement
     void success(string msg)
     {
         Debug.Log("Finded");
+        DownloadManager.ErrorHandler -= Failed;
+        DownloadManager.SuccessfullHandler -= success;
     }
 
     public override void DeActivate()
     {
-        DownloadManager.ErrorHandler -= Failed;
-        DownloadManager.SuccessfullHandler -= success;
-
-        DownloadManager.instance.StopLoading();
-
         base.DeActivate();
     }
 }

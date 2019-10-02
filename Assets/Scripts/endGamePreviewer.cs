@@ -80,7 +80,7 @@ public class endGamePreviewer : ui_basement
     public void RestartGame()
     {
         GameControllerScr.instance.stats.SetPointsTo(0);
-        GameControllerScr.instance._Timer.SetDefaultTime();
+        GameControllerScr.instance._Timer.AddTime();
         GameControllerScr.instance._Timer._isPaused = false;
         StartCoroutine(GameControllerScr.instance.CreateButtonCells());
         CanvasControllerClose();

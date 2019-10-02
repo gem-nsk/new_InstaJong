@@ -43,11 +43,13 @@ namespace AStarPathfinder
 
             if (GetCountTurn(points) <= 2)
             {
+                foreach (Point point in points) Debug.Log(point);
                 return points;
             }
             else
             {
                 ClearField(points);
+                foreach (Point point in points) Debug.Log(point);
                 return PathCleaner(points);
             }
         }
@@ -84,8 +86,8 @@ namespace AStarPathfinder
             int count = 0;
             for (int i = 0; i < points.Count - 2; i++)
             {
-                if ((points[i].X - points[i + 2].X == 1 || points[i].X - points[i + 2].X == -1) &&
-                   (points[i].Y - points[i + 2].Y == 1 || points[i].Y - points[i + 2].Y == -1))
+                if (Math.Abs(points[i].X - points[i + 2].X) == 1 &&
+                    Math.Abs(points[i].Y - points[i + 2].Y) == 1)
                 {
                     count++;
                 }
@@ -100,11 +102,30 @@ namespace AStarPathfinder
                 if ((Math.Abs(path[i].X - path[i + 2].X) == 1) &&
                     (Math.Abs(path[i].Y - path[i + 2].Y) == 1))
                 {
-                    if(barrier == 1)
-                        fieldForFinder[path[i + 1].X, path[i + 1].Y] = 1;
-                    else if(barrier == 2)
-                        fieldForFinder[path[i + 1].X, path[i + 1].Y] = -2;
+                    if (barrier == 1)
+                    {
+
+                        if (fieldForFinder[path[i + 1].X, path[i + 1].Y] != 1)
+                            fieldForFinder[path[i + 1].X, path[i + 1].Y] = 1;
+                        else
+                            fieldForFinder[path[i + 1].X, path[i + 1].Y] += 1;
+                    }
                 }
+            }
+        }
+
+        private void SetFix()
+        {
+            if (start.X == finish.X)
+            {
+                int dY = Math.Abs(start.Y - finish.Y);
+                for (int j = 0; j < dY; j++)
+                {
+                    if (start.Y != j && finish.Y != j)
+                        fieldForFinder[start.X, j] = -2;
+                }
+                fieldForFinder[start.X, start.Y] = 0;
+                fieldForFinder[finish.X, finish.Y] = 0;
             }
         }
 
@@ -116,7 +137,6 @@ namespace AStarPathfinder
             }
             fieldForFinder[start.X, start.Y] = 0;
             fieldForFinder[finish.X, finish.Y] = 0;
-
         }
 
         private List<Point> PathCleaner(List<Point> points)
@@ -126,15 +146,17 @@ namespace AStarPathfinder
             firstPath = points;
             while (countIter < 30)
             {
-                if(points == firstPath) IssuePenalties(points,2);
-                IssuePenalties(points,1);
+
+                IssuePenalties(points, 1);
                 points = CallFindPath();
+
                 if (GetCountTurn(points) <= 2) return points;
                 else countIter++;
+                SetFix();
+
             }
             return null;
         }
     }
 }
-
 

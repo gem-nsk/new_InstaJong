@@ -83,12 +83,12 @@ public class GameControllerScr : MonoBehaviour
     {
         LEVELS = new List<string>();
         LEVELS.Add("map");
-        //LEVELS.Add("map1");
-        //LEVELS.Add("map2");
-        //LEVELS.Add("map3");
-        //LEVELS.Add("map4");
-        //LEVELS.Add("map5");
-        mapLoad =LEVELS[0];
+        LEVELS.Add("map1");
+        LEVELS.Add("map2");
+        LEVELS.Add("map3");
+        LEVELS.Add("map4");
+        LEVELS.Add("map5");
+        mapLoad = LEVELS[0];
         numMap = 0;
         cellStateTMP = 0;
         cellState = 0;
@@ -118,14 +118,15 @@ public class GameControllerScr : MonoBehaviour
            yield return StartCoroutine( CreateButtonCells());
         }
         else {
-            if(DataSave.GetData().Item2 != null)
+            if(DataSave.GetData() != null)
             {
+                Debug.Log("load map");
                 yield return StartCoroutine(loadMap());
             }
             else
             {
                 yield return StartCoroutine( CreateButtonCells());
-                _Timer.SetDefaultTime();
+                _Timer.AddTime();
             }
         }
         #endregion
@@ -134,9 +135,9 @@ public class GameControllerScr : MonoBehaviour
         ui.Init();
 
         if (loadGame)
-            _Timer.LoadTime();
+            _Timer.SetTime(DataSave.GetData().time);
         else
-            _Timer.SetDefaultTime();
+            _Timer.StartTimer();
 
 
     }
@@ -186,8 +187,19 @@ public class GameControllerScr : MonoBehaviour
     
     public void Save()
     {
-        DataSave.save(AllCells, (field.heightField, field.widthField));
-        _Timer.SaveTime();
+        root r = new root
+        {
+            height = field.heightField,
+            width = field.widthField,
+            time = _Timer._time
+        };
+
+        foreach(CellScr scr in AllCells)
+        {
+            r.data.Add(scr.settings);
+        }
+
+        DataSave.save(r);
     }
 
 
@@ -351,20 +363,18 @@ public class GameControllerScr : MonoBehaviour
 
     public IEnumerator loadMap()
     {
-        ((int height, int width), List<CellJson> _list) _data = DataSave.GetData();
-
-        field = new Field(_data.Item1.width, _data.Item1.height);
+        root _data = DataSave.GetData();
+        Debug.Log(_data.height + " - " + _data.width + " list " + _data.data.Count);
+        field = new Field(_data.width, _data.height); 
         field.initField(true);
 
-        for (int i = 0; i < _data._list.Count; i++)
+        for (int i = 0; i < _data.data.Count; i++)
         {
-            var coords = field.findCoordsById(_data._list[i]._id);
-            field.array[coords.i, coords.j].setId(_data._list[i]._id);
-            field.array[coords.i, coords.j].setRandomNum(_data._list[i]._randomNum);
-            field.array[coords.i, coords.j].setState(_data._list[i]._state);
+            var coords = field.findCoordsById(_data.data[i]._id);
+            field.array[coords.i, coords.j].setId(_data.data[i]._id);
+            field.array[coords.i, coords.j].setRandomNum(_data.data[i]._randomNum);
+            field.array[coords.i, coords.j].setState(_data.data[i]._state);
         }
-
-     
 
         placeCells();
 
@@ -378,7 +388,6 @@ public class GameControllerScr : MonoBehaviour
     public void placeCells()
     {
         clearField();
-        Debug.Log(cellCount);
 
         for (int i = 0; i < cellCount; i++)
         {

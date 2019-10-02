@@ -94,6 +94,7 @@ namespace AStarPathfinder
         private static int GetHeuristicPathLength(Point from, Point to)
         {
             return Math.Abs(from.X - to.X) + Math.Abs(from.Y - to.Y);
+            //return Math.Max(Math.Abs(from.X - to.X) , Math.Abs(from.Y - to.Y));
         }
 
         private static Collection<PathNode> GetNeighbours(PathNode pathNode, Point goal, int[,] field)
@@ -117,9 +118,9 @@ namespace AStarPathfinder
                 if (point.Y < 0 || point.Y >= field.GetLength(1))
                 { i++; continue; }
                 // Проверяем, что по клетке можно ходить.
-                if ((field[point.X, point.Y] != 0) && (field[point.X, point.Y] != 1))
+                if ((field[point.X, point.Y] < 0))
                 { i++; continue; }
-                if (field[point.X, point.Y] == 1) state = 1;
+                if (field[point.X, point.Y] > 0) state = field[point.X, point.Y];
                 else state = 0;
 
                 i++;

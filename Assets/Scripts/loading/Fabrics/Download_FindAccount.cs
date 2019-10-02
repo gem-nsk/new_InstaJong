@@ -30,6 +30,8 @@ public class Download_FindAccount : Iloading
 
         posts.AccountKey = _accId.graphql.user.username;
 
+        DownloadManager.instance.CreateLoadingBar();
+
         foreach (var data in dyn.data.user.edge_owner_to_timeline_media.edges)
         {
             var post_info = new PostInfo();
@@ -76,6 +78,7 @@ public class Download_FindAccount : Iloading
 
             i++;
         }
+        DownloadManager.instance.DeleteLoadingBar();
         yield return null;
     }
     public bool isContainErrors()

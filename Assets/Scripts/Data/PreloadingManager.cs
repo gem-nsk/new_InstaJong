@@ -19,8 +19,6 @@ public class PreloadingManager : MonoBehaviour
         }
     }
 
-   
-    
     IEnumerator LoadingProcess(string _key, Iloading type)
     {
         yield return StartCoroutine( DownloadManager.instance.Downloading(_key, type));
@@ -28,8 +26,11 @@ public class PreloadingManager : MonoBehaviour
         yield return StartCoroutine(AtlasController.instance.Init(_loadedData));
 
     }
-
-    public IEnumerator PreloadAccountImages(string key)
+    public void _PreloadAccountImages(string key)
+    {
+        StartCoroutine(PreloadAccountImages(key));
+    }
+     IEnumerator PreloadAccountImages(string key)
     {
         Iloading search = new SearchAccount();
 
@@ -55,8 +56,11 @@ public class PreloadingManager : MonoBehaviour
             Debug.Log("Account not found");
         }
     }
-
-    public IEnumerator PreloadSelfImages(string key)
+    public void _PreloadFromSelfImages(string key)
+    {
+        StartCoroutine(PreloadSelfImages(key));
+    }
+     IEnumerator PreloadSelfImages(string key)
     {
         Iloading type = new Download_selfAccountFromAPI();
 
@@ -70,7 +74,11 @@ public class PreloadingManager : MonoBehaviour
         SceneManager.LoadScene("Game");
     }
 
-    public IEnumerator LoadFromCache()
+    public void _LoadFromCache()
+    {
+        StartCoroutine(LoadFromCache());
+    }
+     IEnumerator LoadFromCache()
     {
         root_posts posts = DataSave.GetpostsData();
 
@@ -85,7 +93,12 @@ public class PreloadingManager : MonoBehaviour
             SceneManager.LoadScene("Game");
         }
     }
-    public IEnumerator PreloadHashtagImages(string key)
+
+    public void _PreloadHashtagImages(string key)
+    {
+        StartCoroutine(PreloadHashtagImages(key));
+    }
+     IEnumerator PreloadHashtagImages(string key)
     {
         Iloading search = new Download_hashtagImages();
 

@@ -24,7 +24,6 @@ public class Download_hashtagImages : Iloading
 
         if (IdRequest.downloadHandler.data.Length != 20713)
         {
-
             var _accId = JsonConvert.DeserializeObject<Assets.Accounts.Hashtag.RootObject>(IdRequest.downloadHandler.text);
 
             Debug.Log(_accId.graphql.hashtag.edge_hashtag_to_media.edges.Count);
@@ -35,6 +34,8 @@ public class Download_hashtagImages : Iloading
                 yield break;
             }
             int i = 1;
+
+            DownloadManager.instance.CreateLoadingBar();
 
             posts.AccountKey = key;
 
@@ -88,6 +89,7 @@ public class Download_hashtagImages : Iloading
                     yield break;
                 }
             }
+            DownloadManager.instance.DeleteLoadingBar();
             yield return null;
         }
         else

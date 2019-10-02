@@ -31,6 +31,8 @@ public class Download_FromCache : Iloading
             string[] tpath = Directory.GetFiles(t_path);
             string[] spath = Directory.GetFiles(s_path);
 
+            DownloadManager.instance.CreateLoadingBar();
+
             for (int i = 0; i < _posts._p.Count; i++)
             {
                 byte[] t_imgBytes = File.ReadAllBytes(t_path + "t_" + i + ".png"); // File.ReadAllBytes(tpath[i]);
@@ -60,6 +62,7 @@ public class Download_FromCache : Iloading
                 DownloadManager.ProgressHandler?.Invoke(i, posts._p.Count);
             }
             yield return null;
+            DownloadManager.instance.DeleteLoadingBar();
         }
         else
         {

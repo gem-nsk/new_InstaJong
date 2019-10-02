@@ -28,7 +28,7 @@ public class MainMenuControl : MonoBehaviour
 
     public void ContinuePressed()
     {
-        StartCoroutine(PreloadingManager.instance.LoadFromCache());
+        PreloadingManager.instance._LoadFromCache();
     }
     
       

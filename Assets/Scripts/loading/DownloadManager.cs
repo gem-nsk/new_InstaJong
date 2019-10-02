@@ -29,6 +29,9 @@ public class DownloadManager : MonoBehaviour
         }
     }
     #endregion
+
+    public GameObject LoadingCanvas;
+
     public delegate void _DownloadingProgress(int value, int Total);
     public static _DownloadingProgress ProgressHandler;
 
@@ -50,6 +53,7 @@ public class DownloadManager : MonoBehaviour
 
     public IEnumerator Downloading(string key, Iloading _loading)
     {
+
         Iloading loading = _loading;
 
         //checking witch account to load
@@ -65,6 +69,7 @@ public class DownloadManager : MonoBehaviour
             _tempPosts = loading.GetPosts();
             SuccessfullHandler?.Invoke("Account successful loaded");
         }
+
     }
 
     public void StopLoading()
@@ -77,5 +82,18 @@ public class DownloadManager : MonoBehaviour
     public root_posts GetPosts()
     {
         return _tempPosts;
+    }
+
+    GameObject _bar;
+    public void CreateLoadingBar()
+    {
+       _bar = CanvasController.instance.OpenCanvas(LoadingCanvas);
+    }
+    public void DeleteLoadingBar()
+    {
+        if(_bar)
+        {
+            _bar.GetComponent<ui_basement>().CanvasControllerClose();
+        }
     }
 }

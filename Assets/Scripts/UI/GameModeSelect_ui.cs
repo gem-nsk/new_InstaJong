@@ -8,6 +8,7 @@ public class GameModeSelect_ui : ui_basement
 {
     public GameObject FindCanvas;
     public GameObject FindHashtag;
+    public GameObject UserSearching;
 
     public void PlayGame(int arg)
     {
@@ -39,8 +40,9 @@ public class GameModeSelect_ui : ui_basement
     {
         if(PlayerStats.instance.playerSettings.name != "")
         {
-            string key = "20021759479.9f7d92e.e4cf6803ec204e899ce887aab2b88cbf";
-            StartCoroutine(PreloadingManager.instance.PreloadSelfImages(key));
+            string key = PlayerStats.instance.playerSettings.token;
+            PreloadingManager.instance._PreloadFromSelfImages(key);
+            CanvasController.instance.OpenCanvas(UserSearching);
         }
         else
         {

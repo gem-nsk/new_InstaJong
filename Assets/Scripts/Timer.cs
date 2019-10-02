@@ -12,27 +12,15 @@ public class Timer : MonoBehaviour
     public float _time;
     public bool _isPaused;
 
-   
-   
-    public void SaveTime()
-    {
-        PlayerPrefs.SetFloat("time", _time);
-    }
-    public void LoadTime()
-    {
-        if(PlayerPrefs.HasKey("time"))
-        {
-            _time = PlayerPrefs.GetFloat("time");
-        }
-        else
-        {
-            _time = TotalTime;
-        }
-        StartCoroutine(TimerProgress());
-    }
-    public void SetDefaultTime()
+   public void StartTimer()
     {
         _time = TotalTime;
+        StartCoroutine(TimerProgress());
+    }
+   
+    public void SetTime(float time)
+    {
+        _time = time;
         StartCoroutine(TimerProgress());
     }
 
