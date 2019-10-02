@@ -47,15 +47,7 @@ public class ImagePreviewer : ui_basement
     {
         description.text = AtlasController.instance.posts[id - 1].description;
         username.text = AtlasController.instance.posts[id - 1].usernameFrom;
-        likesCount.text = AtlasController.instance.posts[id - 1].likes.ToString() + " отметок \"нравится\"";
-    }
-
-<<<<<<< HEAD
-    
-=======
-    public void setLikesCount(int id)
-    {
-        LikeCount.text = "Нравится: " + AtlasController.instance.posts[id - 1].likes.ToString();
+        LikeCount.text = AtlasController.instance.posts[id - 1].likes.ToString() + " отметок \"нравится\"";
     }
 
     private void OpenInInstagram()
@@ -63,5 +55,4 @@ public class ImagePreviewer : ui_basement
         string url = "https://www.instagram.com/" + username.text;
         Application.OpenURL(url);
     }
->>>>>>> whynotworking
 }

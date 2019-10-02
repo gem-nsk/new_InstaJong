@@ -152,30 +152,11 @@ public class AtlasController : MonoBehaviour
         StopAllCoroutines();    
     }
 
-<<<<<<< HEAD
-        
-<<<<<<< HEAD
-        string token = "20021759479.9f7d92e.e1400359759e4f7b9c7bd99e85e102e4";
-        WebClient webClient = new WebClient();
-        var list = webClient.DownloadString("https://api.instagram.com/v1/users/self/media/recent/?access_token=" + token);
-        var dyn = JsonConvert.DeserializeObject<RootObject>(list);
-=======
-        string token = AccountId;
-        UnityWebRequest request = UnityWebRequest.Get("https://api.instagram.com/v1/users/self/media/recent/?access_token=" + token);
-        yield return request.SendWebRequest();
-
-        //WebClient webClient = new WebClient();
-        //var list = webClient.DownloadString("https://api.instagram.com/v1/users/self/media/recent/?access_token=" + token);
-        var dyn = JsonConvert.DeserializeObject<RootObject>(request.downloadHandler.text);
->>>>>>> 46f72f3394774b31af86960bf0e7d392fd3ff319
-        int i = 1;
-=======
 
     public IEnumerator LoadingFromResources()
     {
         TextAsset data = Resources.Load<TextAsset>("saved/posts");
         root_posts root = JsonUtility.FromJson<root_posts>(data.text);
->>>>>>> whynotworking
 
         for (int i = 1; i <= root._p.Count; i++)
         {
@@ -186,107 +167,7 @@ public class AtlasController : MonoBehaviour
 
         foreach(PostInfo p in root._p)
         {
-<<<<<<< HEAD
-            var post_info = new PostInfo();
-            string new_str;
-            post_info.id = i;
-            post_info.thumbnail = data.images.thumbnail.url;
-            post_info.standard = data.images.standard_resolution.url;
-
-            //if (data.caption.text.Length > 20)
-            //    new_str = data.caption.text.Remove(50) + "...";
-            //else new_str = data.caption.text;
-
-            new_str = data.caption.text;
-            //if (new_str.Length > 50) new_str = new_str.Remove(50) + "...";
-            post_info.description = new_str;
-            post_info.likes = data.likes.count;
-            post_info.comments = data.comments.count;
-            post_info.usernameFrom = data.caption.from.username;
-<<<<<<< HEAD
-            post_info.tamestamps = data.caption.created_time;
-            posts.Add(post_info);
-
-            using (WebClient client = new WebClient())
-            {
-                //client.DownloadFileAsync(new Uri(url), @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\image\file"+i+".jpg");
-                client.DownloadFileAsync(new System.Uri(post_info.standard),
-                    @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\imageStandard\file" + i + ".jpg");
-            }
-            using (WebClient client = new WebClient())
-            {
-                //client.DownloadFileAsync(new Uri(url), @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\image\file"+i+".jpg");
-                client.DownloadFileAsync(new System.Uri(post_info.thumbnail),
-                    @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\image\file" + i + ".jpg");
-            }
-            i++;
-
-
-
-=======
-
-
-            //using (WebClient client = new WebClient())
-            //{
-            //    //client.DownloadFileAsync(new Uri(url), @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\image\file"+i+".jpg");
-            //    switch(Application.platform)
-            //    {
-            //        case RuntimePlatform.Android:
-            //            client.DownloadFileAsync(new System.Uri(post_info.thumbnail),
-            //       "jar:file://" + Application.dataPath + "!/assets/t_" + i + ".jpg");
-            //            break;
-            //        default:
-            //            client.DownloadFileAsync(new System.Uri(post_info.thumbnail),
-            //        Application.streamingAssetsPath + "\file\\t_" + i + ".jpg");
-            //            break;
-            //    }
-            //    client.DownloadFileCompleted += Client_DownloadFileCompleted;
-
-            //       // @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\imageStandard\file" + i + ".jpg");
-            //}
-            //using (WebClient client = new WebClient())
-            //{
-            //    //client.DownloadFileAsync(new Uri(url), @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\image\file"+i+".jpg");
-            //    switch (Application.platform)
-            //    {
-            //        case RuntimePlatform.Android:
-            //            client.DownloadFileAsync(new System.Uri(post_info.standard),
-            //       "jar:file://" + Application.dataPath + "!/assets/s_" + i + ".jpg");
-            //            break;
-            //        default:
-            //            client.DownloadFileAsync(new System.Uri(post_info.standard),
-            //        Application.streamingAssetsPath + "\file\\s_" + i + ".jpg");
-            //            break;
-            //    }
-
-            //    // @"D:\workspace\GameDev\new_InstaJong\Assets\Resources\imageStandard\file" + i + ".jpg");
-            //}
-
-            UnityWebRequest s_request = UnityWebRequestTexture.GetTexture(post_info.standard);
-            yield return s_request.SendWebRequest();
-
-            if (s_request.isNetworkError || s_request.isHttpError)
-                Debug.Log("Error");
-
-            post_info.StandartTexture = ((DownloadHandlerTexture)s_request.downloadHandler).texture;
-
-
-            //thumbnails 
-            UnityWebRequest t_request = UnityWebRequestTexture.GetTexture(post_info.thumbnail);
-            yield return t_request.SendWebRequest();
-
-            if (t_request.isNetworkError || t_request.isHttpError)
-                Debug.Log("Error");
-
-            post_info.ThumbnailTexture = ((DownloadHandlerTexture)t_request.downloadHandler).texture;
-
-            posts.Add(post_info);
-
-            i++;
->>>>>>> 46f72f3394774b31af86960bf0e7d392fd3ff319
-=======
             posts.Add(p);
->>>>>>> whynotworking
         }
         yield return null;
     }
