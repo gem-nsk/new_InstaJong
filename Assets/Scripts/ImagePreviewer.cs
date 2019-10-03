@@ -11,6 +11,7 @@ public class ImagePreviewer : ui_basement
     public Text description;
     public Text username;
     public Text LikeCount;
+    public string PostId;
 
     public void Preview(int id)
     {
@@ -48,11 +49,12 @@ public class ImagePreviewer : ui_basement
         description.text = AtlasController.instance.posts[id - 1].description;
         username.text = AtlasController.instance.posts[id - 1].usernameFrom;
         LikeCount.text = AtlasController.instance.posts[id - 1].likes.ToString() + " отметок \"нравится\"";
+        PostId = AtlasController.instance.posts[id - 1].postLink;
     }
 
     private void OpenInInstagram()
     {
-        string url = "https://www.instagram.com/" + username.text;
+        string url = "https://www.instagram.com/p/" + PostId;
         Application.OpenURL(url);
     }
 }

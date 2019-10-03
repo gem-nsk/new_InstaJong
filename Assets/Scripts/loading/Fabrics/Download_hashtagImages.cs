@@ -51,7 +51,15 @@ public class Download_hashtagImages : Iloading
                     post_info.description = data.node.edge_media_to_caption.edges[0].node.text;
                 post_info.likes = data.node.edge_media_preview_like.count;
                 post_info.comments = data.node.edge_media_to_comment.count;
-                post_info.usernameFrom = _accId.graphql.hashtag.name;
+
+                //Get username
+                UnityWebRequest NameRequest = UnityWebRequest.Get("https://i.instagram.com/api/v1/users/" + data.node.owner.id + "/info/");
+                yield return NameRequest.SendWebRequest();
+
+                var _accName = JsonConvert.DeserializeObject<Assets.Accounts.Hashtag.GetAccountName.RootObject>(NameRequest.downloadHandler.text);
+
+                post_info.usernameFrom = _accName.user.username;
+                post_info.postLink = data.node.shortcode;
 
                 UnityWebRequest s_request = new UnityWebRequest();
                 s_request = UnityWebRequestTexture.GetTexture(post_info.standard, false);
@@ -105,4 +113,5 @@ public class Download_hashtagImages : Iloading
         else
             return false;
     }
+
 }

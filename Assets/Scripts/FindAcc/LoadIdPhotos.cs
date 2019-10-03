@@ -69,6 +69,7 @@ namespace Assets.Accounts.LoadImages
         public string __typename { get; set; }
         [DataMember(Name = "edge_media_to_caption")]
         public EdgeMediaToCaption edge_media_to_caption { get; set; }
+        [DataMember(Name = "shortcode")]
         public string shortcode { get; set; }
         [DataMember(Name = "edge_media_to_comment")]
         public EdgeMediaToComment edge_media_to_comment { get; set; }

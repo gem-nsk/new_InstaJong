@@ -55,7 +55,8 @@ public class Download_FromCache : Iloading
                     likes = _posts._p[i].likes,
                     post_url = _posts._p[i].post_url,
                     standard = _posts._p[i].standard,
-                    usernameFrom = _posts._p[i].usernameFrom
+                    usernameFrom = _posts._p[i].usernameFrom,
+                    postLink = _posts._p[i].postLink
                 };
 
                 posts._p.Add(info);

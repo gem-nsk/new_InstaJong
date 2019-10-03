@@ -20,6 +20,7 @@ public class PostInfo
     public string post_url;
     public string description;
     public string usernameFrom;
+    public string postLink;
 
     public Texture2D StandartTexture;
     public Texture2D ThumbnailTexture;

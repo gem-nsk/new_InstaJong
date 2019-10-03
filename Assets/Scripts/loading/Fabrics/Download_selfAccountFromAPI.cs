@@ -49,6 +49,7 @@ public class Download_selfAccountFromAPI : Iloading
                 post_info.description = data.caption.text;
             post_info.likes = data.likes.count;
             post_info.comments = data.comments.count;
+            post_info.postLink = data.link.Substring(data.link.LastIndexOf("/p/")+3) ;
 
             if (data.caption != null)
                 post_info.usernameFrom = data.caption.from.username;
