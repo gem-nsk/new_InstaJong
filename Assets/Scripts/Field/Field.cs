@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace genField
 {
@@ -60,12 +61,10 @@ namespace genField
         // раздача randomNum для каждой ячейки
         public int generateField()
         {
-            Random random = new Random();
+            System.Random random = new System.Random();
             int rInt;
             int maxRange = countElements;
-
-
-            
+            Debug.Log("#countElements from Field: " + countElements);
             for (int n = 0; n < countTypes; n++)
             {
                 for (int k = 0; k < countImageInType;)
@@ -93,9 +92,10 @@ namespace genField
 
         public int generateField(List<Tuple<int, int>> aviableCells)
         {
-            Random random = new Random();
+            System.Random random = new System.Random();
             int rInt;
             int maxRange = countElements;
+            Debug.Log("#countElements from Field: " + countElements);
             //цикл по доступным ячейкам
             for (int i = 0; i < aviableCells.Count;)
             {

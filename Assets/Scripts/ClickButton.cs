@@ -198,8 +198,9 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
                     || idFirstClick == gameController.pathParser.path.idSecond
                     || idSecondClick == gameController.pathParser.path.idFirst)
                 {
-                    StartCoroutine(gameController.SearchPath());
-                    yield return new WaitForSeconds(1);
+                    //StartCoroutine(gameController.SearchPath());
+                    //gameController.searchPath = true;
+                    //yield return new WaitForEndOfFrame();
                     Debug.Log("#find path");
 
                     

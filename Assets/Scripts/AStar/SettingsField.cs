@@ -43,13 +43,13 @@ namespace AStarPathfinder
 
             if (GetCountTurn(points) <= 2)
             {
-                foreach (Point point in points) Debug.Log(point);
+                //foreach (Point point in points) Debug.Log(point);
                 return points;
             }
             else
             {
                 ClearField(points);
-                foreach (Point point in points) Debug.Log(point);
+                //foreach (Point point in points) Debug.Log(point);
                 return PathCleaner(points);
             }
         }
@@ -107,8 +107,8 @@ namespace AStarPathfinder
 
                         if (fieldForFinder[path[i + 1].X, path[i + 1].Y] != 1)
                             fieldForFinder[path[i + 1].X, path[i + 1].Y] = 1;
-                        else
-                            fieldForFinder[path[i + 1].X, path[i + 1].Y] += 1;
+                        //else
+                        //    fieldForFinder[path[i + 1].X, path[i + 1].Y] += 1;
                     }
                 }
             }
@@ -116,17 +116,26 @@ namespace AStarPathfinder
 
         private void SetFix()
         {
-            if (start.X == finish.X)
+            //if (start.X == finish.X)
+            //{
+            //    int dY = Math.Abs(start.Y - finish.Y);
+            //    for (int j = 0; j < dY; j++)
+            //    {
+            //        if (start.Y != j && finish.Y != j)
+            //            fieldForFinder[start.X, j] = -2;
+            //    }
+            //    fieldForFinder[start.X, start.Y] = 0;
+            //    fieldForFinder[finish.X, finish.Y] = 0;
+            //}
+
+            int dY = Math.Abs(start.Y - finish.Y);
+            for (int j = 1; j < dY-1; j++)
             {
-                int dY = Math.Abs(start.Y - finish.Y);
-                for (int j = 0; j < dY; j++)
-                {
-                    if (start.Y != j && finish.Y != j)
-                        fieldForFinder[start.X, j] = -2;
-                }
-                fieldForFinder[start.X, start.Y] = 0;
-                fieldForFinder[finish.X, finish.Y] = 0;
+                if (start.Y != j && finish.Y != j)
+                    fieldForFinder[start.X, j] = -2;
             }
+            fieldForFinder[start.X, start.Y] = 0;
+            fieldForFinder[finish.X, finish.Y] = 0;
         }
 
         private void ClearField(List<Point> points)

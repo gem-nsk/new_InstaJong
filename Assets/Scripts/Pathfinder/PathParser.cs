@@ -47,7 +47,7 @@ namespace genField
              * Начальные координаты (2,2) потому что (0,0) это рамка,
              * а (1,1) это начальное незаполненное поле для поиска пути.
              */
-            (int x, int y) coordsCell = (2, 2);
+            (int x, int y) coordsCell = (0, 0);
 
             if(PathExists == false)
             {
@@ -108,11 +108,11 @@ namespace genField
                         if(coordsCell.x < field.heightField - 1)
                         {
                             coordsCell.x++;
-                            coordsCell.y = 2;
+                            coordsCell.y = 0;
                         }
                         else
                         {
-                            coordsCell.x = 2;
+                            coordsCell.x = 0;
                         }
                         
                         
