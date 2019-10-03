@@ -1,17 +1,13 @@
-﻿using System.Collections;
+﻿using genField;
+using System;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using System.Linq;
-using genField;
 using System.Drawing;
 using System.IO;
-using System;
-using UnityEngine.Networking;
-using Image = UnityEngine.UI.Image;
+using UnityEngine;
+using UnityEngine.UI;
 using Color = UnityEngine.Color;
-using Random = UnityEngine.Random;
+using Image = UnityEngine.UI.Image;
 
 public class GameControllerScr : MonoBehaviour
 {
@@ -61,7 +57,7 @@ public class GameControllerScr : MonoBehaviour
     public GameObject _previewer;
     public GameObject _endGamePreview;
 
-    public string  mapLoad;
+    public string mapLoad;
     public List<string> descriptions { get; set; }
 
 
@@ -101,7 +97,7 @@ public class GameControllerScr : MonoBehaviour
 
 
         stats = PlayerStats.instance;
-        if(loadGame)
+        if (loadGame)
         {
             stats.LoadData();
             StartCoroutine(loadMap());
@@ -116,17 +112,18 @@ public class GameControllerScr : MonoBehaviour
         #region GridLoading
         if (loadGame == false)
         {
-           yield return StartCoroutine( CreateButtonCells());
+            yield return StartCoroutine(CreateButtonCells());
         }
-        else {
-            if(DataSave.GetData() != null)
+        else
+        {
+            if (DataSave.GetData() != null)
             {
                 Debug.Log("load map");
                 yield return StartCoroutine(loadMap());
             }
             else
             {
-                yield return StartCoroutine( CreateButtonCells());
+                yield return StartCoroutine(CreateButtonCells());
                 _Timer.AddTime();
             }
         }
@@ -151,23 +148,23 @@ public class GameControllerScr : MonoBehaviour
             placeCells();
             refresh = false;
         }
-        if(blinkImage != null)
+        if (blinkImage != null)
         {
-            blinkImage.color = new UnityEngine.Color(1,1,1, Mathf.Clamp(Mathf.PingPong(Time.time, 1), 0.5f, 1));
+            blinkImage.color = new UnityEngine.Color(1, 1, 1, Mathf.Clamp(Mathf.PingPong(Time.time, 1), 0.5f, 1));
         }
-        if(endGameFlag == 1)
+        if (endGameFlag == 1)
         {
             Debug.Log("You are won");
             OpenEndGamePreview(1);
             endGameFlag = 0;
         }
-        if(endGameFlag == 2)
+        if (endGameFlag == 2)
         {
             Debug.Log("You are loose");
             OpenEndGamePreview(2);
             endGameFlag = 0;
         }
-        if(nextLevelFlag == true)
+        if (nextLevelFlag == true)
         {
             //Debug.Log(numMap);
             nextLevelFlag = false;
@@ -177,15 +174,15 @@ public class GameControllerScr : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        if(numMap < 5)
+        if (numMap < 5)
         {
             numMap++;
-            
+
         }
         mapLoad = LEVELS[numMap];
         StartCoroutine(CreateButtonCells());
     }
-    
+
     public void Save()
     {
         root r = new root
@@ -197,7 +194,7 @@ public class GameControllerScr : MonoBehaviour
             _Level = numMap
         };
 
-        foreach(CellScr scr in AllCells)
+        foreach (CellScr scr in AllCells)
         {
             r.data.Add(scr.settings);
         }
@@ -211,7 +208,7 @@ public class GameControllerScr : MonoBehaviour
     {
         grid.enabled = true;
         mapGenerator = new MapGenerator();
-        string filePath = Path.Combine(Application.streamingAssetsPath, "map.txt"); 
+        string filePath = Path.Combine(Application.streamingAssetsPath, "map.txt");
 #if UNITY_ANDROID
         //Android
 
@@ -238,7 +235,7 @@ public class GameControllerScr : MonoBehaviour
 
 
             var map = mapGenerator.mapFromFile(str);
-            
+
             field = mapGenerator.mapFromString(map.map, map.width, map.height);
             //cellCount = mapGenerator.getCount();
         }
@@ -248,8 +245,9 @@ public class GameControllerScr : MonoBehaviour
         //field = new Field(20, 13, 20, 4);
         //field.initField(true);
         //field.generateField();
-        yield return StartCoroutine( SearchPath());
         placeCells();
+        yield return StartCoroutine(SearchPath());
+        
 
 
         yield return new WaitForEndOfFrame();
@@ -277,12 +275,12 @@ public class GameControllerScr : MonoBehaviour
 
     public void SetBlinkingImage(CellScr cell)
     {
-        if(blinkImage)
+        if (blinkImage)
         {
-            StandartcolorForFirstCell();   
+            StandartcolorForFirstCell();
         }
         if (cell.settings._state == 1)
-        blinkImage = cell.GetComponent<UnityEngine.UI.Image>();
+            blinkImage = cell.GetComponent<UnityEngine.UI.Image>();
     }
     public void StopBlinking()
     {
@@ -291,7 +289,7 @@ public class GameControllerScr : MonoBehaviour
 
     public void StandartcolorForFirstCell()
     {
-        if(blinkImage)
+        if (blinkImage)
         {
             blinkImage.color = new UnityEngine.Color(1, 1, 1);
             StopBlinking();
@@ -311,43 +309,52 @@ public class GameControllerScr : MonoBehaviour
     public IEnumerator SearchPath()
     {
         List<Transform> forLine = new List<Transform>();
-        
+
         Debug.Log("Ищу путь...");
-        if (pathParser.parse(field) < 0) StartCoroutine( Refresh(false));
+        pathParser.parse(field);
+        if (pathParser.PathExists == false)
+        {
+            //searchPath = false;
+            StartCoroutine(Refresh(false));
+        }
+
         else
         {
-            if (pathParser.PathExists == true)
+            //
+
+            string IDFirst = "cellButton" + pathParser.path.idFirst;
+            string IDSecond = "cellButton" + pathParser.path.idSecond;
+            Debug.Log("iDfirst: " + IDFirst  + "; IDsecond: " + IDSecond);
+            foreach (Transform child in cellGroup)
             {
-                yield return null;
-
-                string IDFirst = "cellButton" + pathParser.path.idFirst;
-                string IDSecond = "cellButton" + pathParser.path.idSecond;
-                foreach (Transform child in cellGroup)
+                if (child.name == IDFirst)
                 {
-
-                    if (child.name == IDFirst)
-                    {
-                        helpers[0] = child.gameObject.GetComponent<UnityEngine.UI.Image>();
-                    }
-                    else if (child.name == IDSecond)
-                    {
-                        helpers[1] = child.gameObject.GetComponent<UnityEngine.UI.Image>();
-                    }
                     
+                    helpers[0] = child.gameObject.GetComponent<UnityEngine.UI.Image>();
+                }
+                else if (child.name == IDSecond)
+                {
+                    
+                    helpers[1] = child.gameObject.GetComponent<UnityEngine.UI.Image>();
                 }
 
-                searchPath = false;
-                Debug.Log(pathParser.path);
-                //CreateLine(pathParser.points);
             }
+
+            searchPath = false;
+            pathParser.PathExists = true;
+            pathParser.PathFound = false;
+            Debug.Log(pathParser.path);
+            //CreateLine(pathParser.points);
+            
         }
+        yield return null;
     }
 
     private List<Transform> fromPointsToTransform(List<Point> points)
     {
         List<Transform> pathLine = new List<Transform>();
 
-        for(int i = 0; i < points.Count; i++)
+        for (int i = 0; i < points.Count; i++)
         {
             foreach (Transform child in cellGroup)
             {
@@ -371,7 +378,7 @@ public class GameControllerScr : MonoBehaviour
         numMap = _data._Level;
 
         Debug.Log(_data.height + " - " + _data.width + " list " + _data.data.Count);
-        field = new Field(_data.width, _data.height); 
+        field = new Field(_data.width, _data.height);
         field.initField(true);
         Debug.Log(_data.data.Count);    
         for (int i = 0; i < _data.data.Count; i++)
@@ -392,7 +399,7 @@ public class GameControllerScr : MonoBehaviour
         SortHierarchy();
     }
 
-   
+
     public void placeCells()
     {
         clearField();
@@ -403,12 +410,12 @@ public class GameControllerScr : MonoBehaviour
             var coords = field.findCoordsById(i + 1);
             GameObject tmpCell = Instantiate(cellButton);
             tmpCell.transform.SetParent(cellGroup, false);
-            tmpCell.name = "cellButton" + (i+1);
+            tmpCell.name = "cellButton" + (i + 1);
             tmpCell.GetComponent<CellScr>().settings._id = field.array[coords.i, coords.j].getId();
             tmpCell.GetComponent<CellScr>().settings._randomNum = field.array[coords.i, coords.j].getRandomNum();
             tmpCell.GetComponent<CellScr>().SetState(field.array[coords.i, coords.j].getState());
 
-            if(cellStateTMP == 0)
+            if (cellStateTMP == 0)
             {
                 if (field.array[coords.i, coords.j].getState() == 1) cellState++;
             }
@@ -416,7 +423,7 @@ public class GameControllerScr : MonoBehaviour
             {
                 cellState = cellStateTMP;
             }
-            
+
             AllCells.Add(tmpCell.GetComponent<CellScr>());
         }
     }
@@ -432,11 +439,11 @@ public class GameControllerScr : MonoBehaviour
 
     public IEnumerator Refresh(bool UseInstaCoins)
     {
-
+        Debug.Log("#Refresh");
         if (isRefreshing)
             yield break;
 
-        if(UseInstaCoins)
+        if (UseInstaCoins)
         {
             stats.AddInstaCoins(-stats.RefreshPrice);
         }
@@ -448,11 +455,11 @@ public class GameControllerScr : MonoBehaviour
 
         foreach (CellScr _cell in AllCells)
         {
-            if(_cell.settings._randomNum != 0)
+            if (_cell.settings._randomNum != 0)
             {
                 _cell.Hide();
                 _step--;
-                if(_step <= 0)
+                if (_step <= 0)
                 {
                     yield return new WaitForEndOfFrame();
                     _step = 3;
@@ -465,23 +472,22 @@ public class GameControllerScr : MonoBehaviour
 
         field = field.refreshField(field);
 
-        
         refresh = true;
-        yield return StartCoroutine( SearchPath());
+        yield return StartCoroutine(SearchPath());
 
         yield return new WaitForEndOfFrame();
 
         grid.enabled = false;
-        
+
         SortHierarchy();
 
         isRefreshing = false;
-        
+
     }
 
     public void OpenImagePreview(int id)
     {
-       GameObject _obj = CanvasController.instance.OpenCanvas(_previewer);
+        GameObject _obj = CanvasController.instance.OpenCanvas(_previewer);
 
         _obj.GetComponent<ImagePreviewer>().Preview(id);
     }
@@ -514,22 +520,22 @@ public class GameControllerScr : MonoBehaviour
             {
                 var pointPath = new Vector3(path[i].position.x, path[i].position.y, 100);
                 positions[i] = pointPath;
-                
+
                 //Debug.Log(path[i].position);
             }
 
 
-          LR.SetPositions(positions);
-            
-            
-            
+            LR.SetPositions(positions);
+
+
+
             //ResetLine(LR);
             //waiter();
         }
-        
+
     }
 
-    
+
 
     public void ResetLine(LineRenderer lr)
     {
