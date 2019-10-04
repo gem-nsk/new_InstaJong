@@ -48,6 +48,7 @@ namespace genField
              * а (1,1) это начальное незаполненное поле для поиска пути.
              */
             (int x, int y) coordsCell = (0, 0);
+            
 
             if(PathExists == false)
             {
@@ -55,13 +56,13 @@ namespace genField
                 while (findFlag == false)
                 {
                     //берем id и randomNum 
-
+                    Debug.Log("#pathParser: " + coordsCell);
                     //int id = field.array[coordsCell.x, coordsCell.y].getId();
                     int randomNum = field.array[coordsCell.x, coordsCell.y].getRandomNum();
 
                     //ищем все ячейки с одинаковым типом и записываем в список
                     var foundIdCells = searchSimilarCells(randomNum);
-
+                    Debug.Log("#pathParser/foundCells: " + foundIdCells.Count);
                     /*
                      * Процесс поиска происходит следующим образом
                      * перебором среди списка однотипных ячеек ищем пути
@@ -70,12 +71,7 @@ namespace genField
                      */
                     for (int i = 0; i < foundIdCells.Count - 1; i++)
                     {
-                        //проверяем, не заблокированы ли ячейки, если хоть одна заблокирована,
-                        // смысла проводить вычисления нет
-                        //if (isBlocked(foundIdCells[i + 1]) || isBlocked(foundIdCells[i])) continue;
-                        //берем координаты первой и второй ячейки
-                        //(int x, int y) coordsStart = field.findCoordsById(foundIdCells[i]);
-                        //(int x, int y) coordsFinish = field.findCoordsById(foundIdCells[i + 1]);
+
                         (int x, int y) coordsStart = foundIdCells[i];
                         (int x, int y) coordsFinish = foundIdCells[i+1];
                         //Debug.Log(coordsStart + "and" + coordsFinish);
@@ -100,12 +96,12 @@ namespace genField
                     }
                     //если ячейка не может соединиться ни с какой другой того же типа
                     //, то берем следующую
-                    if (coordsCell.y >= field.widthField - 1 && coordsCell.x >= field.heightField - 1) return -1;
-                    if (coordsCell.y < field.widthField - 1)
+                    //if (coordsCell.y >= field.widthField && coordsCell.x >= field.heightField) return -1;
+                    if (coordsCell.y < field.widthField-1)
                         coordsCell.y++;
                     else
                     {
-                        if(coordsCell.x < field.heightField - 1)
+                        if(coordsCell.x < field.heightField-1)
                         {
                             coordsCell.x++;
                             coordsCell.y = 0;
@@ -113,9 +109,9 @@ namespace genField
                         else
                         {
                             coordsCell.x = 0;
+                            PathExists = false;
+                            break;
                         }
-                        
-                        
                     }
 
 
@@ -165,8 +161,8 @@ namespace genField
              * Начальные координаты цикла (2,2) потому что(0,0) это рамка,
              * а(1, 1) это начальное незаполненное поле для поиска пути.
              */
-            for (int i = 2; i < field.heightField - 2; i++)
-                for (int j = 2; j < field.widthField - 2; j++)
+            for (int i = 0; i < field.heightField; i++)
+                for (int j = 0; j < field.widthField; j++)
                 {
                     // если мы нашли на карте (в array) ячейку с тем же типом,
                     // что и передали, то записываем в список
@@ -187,10 +183,41 @@ namespace genField
             Point finish = new Point(secondClick.i, secondClick.j);
 
             SettingsField settings = new SettingsField(field, field.widthField, field.heightField);
-            points = settings.LittlePathfinder(start, finish);
 
-            if (points == null) return false;
-            else return true;
+            bool flg;
+            bool find;
+            points = settings.LittlePathfinder(start, finish);
+            if (points == null)
+                find = false;
+            else find = true;
+
+            if (find == false)
+            {
+                points = settings.LittlePathfinder(start, finish);
+                if (points == null)
+                    find = false;
+                else find = true;
+
+                if (find == false)
+                    flg = false;
+                else
+                    flg = true;
+
+            }
+            else
+                flg = true;
+
+            if(flg == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+            //if (points == null) return false;
+            //else return true;
         }
 
     }
