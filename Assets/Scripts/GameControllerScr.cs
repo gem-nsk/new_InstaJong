@@ -14,7 +14,7 @@ public class GameControllerScr : MonoBehaviour
 
     public bool Helper = false;
 
-    private const int cellCount = 112;
+    private const int cellCount = 72;
     public int cellState;
     public int cellStateTMP;
     public int endGameFlag = 0;
@@ -235,7 +235,6 @@ public class GameControllerScr : MonoBehaviour
 
 
             var map = mapGenerator.mapFromFile(str);
-
             field = mapGenerator.mapFromString(map.map, map.width, map.height);
             //cellCount = mapGenerator.getCount();
         }
@@ -245,7 +244,7 @@ public class GameControllerScr : MonoBehaviour
         //field = new Field(20, 13, 20, 4);
         //field.initField(true);
         //field.generateField();
-        placeCells();
+        placeCells(); 
         yield return StartCoroutine(SearchPath());
         
 
@@ -254,7 +253,7 @@ public class GameControllerScr : MonoBehaviour
         grid.enabled = false;
 
         SortHierarchy();
-        Save();
+        //Save();
     }
 
     public void SortHierarchy()
@@ -312,6 +311,7 @@ public class GameControllerScr : MonoBehaviour
 
         Debug.Log("Ищу путь...");
         pathParser.parse(field);
+
         if (pathParser.PathExists == false)
         {
             //searchPath = false;

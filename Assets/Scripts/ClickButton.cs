@@ -125,7 +125,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
 
         //points
         GameControllerScr.instance.stats.AddPoints(15);
-        StartCoroutine(GameControllerScr.instance.SearchPath());
+        
 
     }
 
@@ -198,9 +198,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
                     || idFirstClick == gameController.pathParser.path.idSecond
                     || idSecondClick == gameController.pathParser.path.idFirst)
                 {
-                    //StartCoroutine(gameController.SearchPath());
-                    //gameController.searchPath = true;
-                    //yield return new WaitForEndOfFrame();
+                    StartCoroutine(GameControllerScr.instance.SearchPath());
                     Debug.Log("#find path");
 
                     
