@@ -55,7 +55,7 @@ public class SampleWebView : MonoBehaviour
             ClearCookies();
 #else
         if (PlayerStats.instance.playerSettings.name != null)
-        StartCoroutine(loggingIn());
+       DisplayLogin();
         else
             ClearCookies();
 #endif
@@ -65,7 +65,7 @@ public class SampleWebView : MonoBehaviour
     {
         PlayerStats.AccountKeyHandler += DisplayLogin;
 
-        loginText.text = PlayerStats.instance.playerSettings.name;
+        Login();
     }
     private void OnDestroy()
     {
