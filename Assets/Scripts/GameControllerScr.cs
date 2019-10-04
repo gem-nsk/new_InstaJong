@@ -84,6 +84,15 @@ public class GameControllerScr : MonoBehaviour
         LEVELS.Add("map3");
         LEVELS.Add("map4");
         LEVELS.Add("map5");
+        LEVELS.Add("map6");
+        LEVELS.Add("map7");
+        LEVELS.Add("map8");
+        LEVELS.Add("map9");
+        LEVELS.Add("map10");
+        LEVELS.Add("map11");
+        LEVELS.Add("map12");
+        LEVELS.Add("map13");
+
         mapLoad = LEVELS[0];
         numMap = 0;
         cellStateTMP = 0;
@@ -174,12 +183,14 @@ public class GameControllerScr : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        if (numMap < 5)
-        {
-            numMap++;
+        //if (numMap < 5)
+        //{
+        //    numMap++;
 
-        }
-        mapLoad = LEVELS[numMap];
+        //}
+        System.Random random = new System.Random();
+        int numMapInt = random.Next(13);
+        mapLoad = LEVELS[numMapInt];
         StartCoroutine(CreateButtonCells());
     }
 
