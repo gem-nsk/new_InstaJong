@@ -26,7 +26,7 @@ public class ImagePreviewer : ui_basement
         //img.material = mat;
         //Material mat = new Material(fileStandard);
         //Debug.Log(id);
-        Texture2D spr = AtlasController.instance.posts[id -1].StandartTexture;
+       // Texture2D spr = AtlasController.instance.posts[id -1].StandartTexture;
 
         img.material = AtlasController.instance.GetMaterialById(AtlasController.instance.Atlases[1], id);
 

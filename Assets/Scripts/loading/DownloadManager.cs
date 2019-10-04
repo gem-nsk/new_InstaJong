@@ -53,6 +53,8 @@ public class DownloadManager : MonoBehaviour
 
     public IEnumerator Downloading(string key, Iloading _loading)
     {
+        Resources.UnloadUnusedAssets();
+        _tempPosts = new root_posts();
 
         Iloading loading = _loading;
 

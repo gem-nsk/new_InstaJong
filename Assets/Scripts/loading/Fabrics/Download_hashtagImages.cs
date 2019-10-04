@@ -51,14 +51,20 @@ public class Download_hashtagImages : Iloading
                     post_info.description = data.node.edge_media_to_caption.edges[0].node.text;
                 post_info.likes = data.node.edge_media_preview_like.count;
                 post_info.comments = data.node.edge_media_to_comment.count;
-
+                Debug.Log(data.node.owner.id);
                 //Get username
                 UnityWebRequest NameRequest = UnityWebRequest.Get("https://i.instagram.com/api/v1/users/" + data.node.owner.id + "/info/");
                 yield return NameRequest.SendWebRequest();
 
+                Debug.Log(NameRequest.downloadHandler.text);
+
                 var _accName = JsonConvert.DeserializeObject<Assets.Accounts.Hashtag.GetAccountName.RootObject>(NameRequest.downloadHandler.text);
 
-                post_info.usernameFrom = _accName.user.username;
+                if (_accName.user != null)
+                    post_info.usernameFrom = _accName.user.username;
+                else
+                    post_info.usernameFrom = "#" + key;
+
                 post_info.postLink = data.node.shortcode;
 
                 UnityWebRequest s_request = new UnityWebRequest();
@@ -89,7 +95,7 @@ public class Download_hashtagImages : Iloading
                 // DataSave.SaveImage(post_info.ThumbnailTexture, "t_" + post_info.id, Application.persistentDataPath + "/t_images");
                 //  DataSave.SaveImage(post_info.StandartTexture, "s_" + post_info.id, Application.persistentDataPath + "/s_images");
 
-                DownloadManager.ProgressHandler?.Invoke(i, _accId.graphql.hashtag.edge_hashtag_to_media.edges.Count);
+                DownloadManager.ProgressHandler?.Invoke(i, 20);
 
                 i++;
                 if (i > 20)

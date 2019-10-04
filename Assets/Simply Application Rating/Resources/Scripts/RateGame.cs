@@ -30,6 +30,8 @@ public class RateGame : MonoBehaviour {
     public int remindRating; // open rating window at X game start
 
     [Header("References")]
+    public GameObject Star;
+
     // PanelAppRating
     public Button[] starButton;
     public GameObject mainPanel;
@@ -47,7 +49,22 @@ public class RateGame : MonoBehaviour {
 
     private void Start()
     {
-        Init(3);
+        int i = CheckEnter();
+        Debug.Log(i);
+        Init(i);
+    }
+    int CheckEnter()
+    {
+        if (PlayerPrefs.HasKey("enter"))
+        {
+            PlayerPrefs.SetInt("enter", PlayerPrefs.GetInt("enter") + 1);
+            return PlayerPrefs.GetInt("enter");
+        }
+        else
+        {
+            PlayerPrefs.SetInt("enter", 1);
+            return 1;
+        }
     }
 
     public void Init(int gameOpenCounter)
@@ -63,20 +80,35 @@ public class RateGame : MonoBehaviour {
         {
             ratedApp = 0;
             RateApplication(0);
-            mainPanel.SetActive(true);
+
+            Star.SetActive(true);
+
+            mainPanel.SetActive(false);
             acceptButton.interactable = false;
             ratingMarketPanel.SetActive(false);
             feedBackPanel.SetActive(false);
-            BG.SetActive(true);
+            BG.SetActive(false);
 
         }
         else
         {
+            Star.SetActive(false);
+
             mainPanel.SetActive(false);
             ratingMarketPanel.SetActive(false);
             feedBackPanel.SetActive(false);
             BG.SetActive(false);
         }
+    }
+    public void ActivateRating()
+    {
+        mainPanel.SetActive(true);
+        acceptButton.interactable = false;
+        ratingMarketPanel.SetActive(false);
+        feedBackPanel.SetActive(false);
+        BG.SetActive(true);
+        Star.SetActive(false);
+        RateApplication(5);
     }
 
 

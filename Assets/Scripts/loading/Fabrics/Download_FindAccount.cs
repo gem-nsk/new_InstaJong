@@ -45,6 +45,7 @@ public class Download_FindAccount : Iloading
             post_info.likes = data.node.edge_media_preview_like.count;
             post_info.comments = data.node.edge_media_to_comment.count;
             post_info.usernameFrom = _accId.graphql.user.username;
+            post_info.postLink = data.node.shortcode;
 
             UnityWebRequest s_request = new UnityWebRequest();
             s_request = UnityWebRequestTexture.GetTexture(post_info.standard, false);

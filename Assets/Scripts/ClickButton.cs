@@ -200,7 +200,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
                 {
                     //StartCoroutine(gameController.SearchPath());
                     //gameController.searchPath = true;
-                    //yield return new WaitForEndOfFrame();
+                    yield return new WaitForEndOfFrame();
                     Debug.Log("#find path");
 
                     

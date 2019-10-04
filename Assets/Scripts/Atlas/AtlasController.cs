@@ -87,6 +87,17 @@ public class AtlasController : MonoBehaviour
         yield return StartCoroutine(Pack(Atlases[1]));
         yield return StartCoroutine(CreateMaterials(Atlases[0]));
         yield return StartCoroutine(CreateMaterials(Atlases[1]));
+
+        UnloadTextures();
+    }
+
+    void UnloadTextures()
+    {
+        foreach(var v in posts)
+        {
+            Destroy(v.ThumbnailTexture);
+            Destroy(v.StandartTexture);
+        }
     }
 
     //public bool CheckImageDirectory()

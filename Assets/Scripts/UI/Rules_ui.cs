@@ -18,7 +18,7 @@ public class Rules_ui : ui_basement
     public override void Activate()
     {
         base.Activate();
-        NextSlide(false);
+        NextSlide(true);
     }
 
     public void NextSlide(bool next)
@@ -33,12 +33,14 @@ public class Rules_ui : ui_basement
             if(i == _slide)
             {
                 go_Slides[i].SetActive(true);
-                SlidesIcons[i].color = new Color(1,1,1,0.3f);
+                SlidesIcons[i].color = new Color(1, 1, 1, 1f);
+
             }
             else
             {
                 go_Slides[i].SetActive(false);
-                SlidesIcons[i].color = new Color(1, 1, 1, 1f);
+                SlidesIcons[i].color = new Color(1, 1, 1, 0.3f);
+
             }
         }
     }

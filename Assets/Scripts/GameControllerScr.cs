@@ -14,7 +14,7 @@ public class GameControllerScr : MonoBehaviour
 
     public bool Helper = false;
 
-    private const int cellCount = 112;
+    private const int cellCount = 72;
     public int cellState;
     public int cellStateTMP;
     public int endGameFlag = 0;
