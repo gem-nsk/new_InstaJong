@@ -21,10 +21,11 @@ public class InstaCoinsShopUI : ui_basement
     public void BuyButton(int id)
     {
 
+        PurchaseManager.instance.BuyConsumable(id);
         //Adding to Player stats
-        _ShopUnit _unit = Units[id].GetUnit();
+        //_ShopUnit _unit = Units[id].GetUnit();
 
-        PlayerStats.instance.AddInstaCoins(_unit.CoinsCount);
+        //PlayerStats.instance.AddInstaCoins(_unit.CoinsCount);
 
         //IAP
     }

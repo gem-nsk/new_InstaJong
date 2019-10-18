@@ -35,19 +35,19 @@ public class Download_FromCache : Iloading
 
             for (int i = 0; i < _posts._p.Count; i++)
             {
-                byte[] t_imgBytes = File.ReadAllBytes(t_path + "t_" + i + ".png"); // File.ReadAllBytes(tpath[i]);
+                //byte[] t_imgBytes = File.ReadAllBytes(t_path + "t_" + i + ".png"); // File.ReadAllBytes(tpath[i]);
                 byte[] s_imgBytes = File.ReadAllBytes(s_path + "s_" + i + ".png");
 
-                Texture2D t_tex = new Texture2D(2, 2);
+               // Texture2D t_tex = new Texture2D(2, 2);
                 Texture2D s_tex = new Texture2D(2, 2);
 
-                t_tex.LoadImage(t_imgBytes);
+               // t_tex.LoadImage(t_imgBytes);
                 s_tex.LoadImage(s_imgBytes);
 
                 PostInfo info = new PostInfo
                 {
                     StandartTexture = s_tex, //((DownloadHandlerTexture)s_request.downloadHandler).texture,
-                    ThumbnailTexture = t_tex, //((DownloadHandlerTexture)t_request.downloadHandler).texture,
+                    //ThumbnailTexture = t_tex, //((DownloadHandlerTexture)t_request.downloadHandler).texture,
                     comments = _posts._p[i].comments,
                     thumbnail = _posts._p[i].thumbnail,
                     description = _posts._p[i].description,
@@ -60,9 +60,9 @@ public class Download_FromCache : Iloading
                 };
 
                 posts._p.Add(info);
-                DownloadManager.ProgressHandler?.Invoke(i, posts._p.Count);
+                DownloadManager.ProgressHandler?.Invoke(i, _posts._p.Count);
+                yield return null;
             }
-            yield return null;
             DownloadManager.instance.DeleteLoadingBar();
         }
         else

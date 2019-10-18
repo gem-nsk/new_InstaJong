@@ -669,6 +669,7 @@ MonoBehaviour:
   description: {fileID: 7683853003969199146}
   username: {fileID: 1255408679901663429}
   LikeCount: {fileID: 740915621633882875}
+  PostId: 
 --- !u!225 &6765390546785349952
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -715,8 +716,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000030517578, y: 204}
-  m_SizeDelta: {x: 376, y: 124.2}
+  m_AnchoredPosition: {x: 0.000030517578, y: -30.1}
+  m_SizeDelta: {x: 376, y: 592.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6699553389829916032
 CanvasRenderer:
@@ -759,9 +760,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Hello
-
-'
+  m_Text: test
 --- !u!1 &6572164190664045268
 GameObject:
   m_ObjectHideFlags: 0
@@ -799,7 +798,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 54, y: 67.02495}
+  m_AnchoredPosition: {x: 54, y: 66.975006}
   m_SizeDelta: {x: 450, y: 761.55}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &8441606308746036308

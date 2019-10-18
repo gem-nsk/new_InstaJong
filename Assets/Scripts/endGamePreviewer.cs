@@ -66,7 +66,7 @@ public class endGamePreviewer : ui_basement
     {
         GameControllerScr gameController = GameControllerScr.instance;
         switch (state){
-            case 1: { gameController.nextLevelFlag = true;  DeActivate(); break; }
+            case 1: {  DeActivate(); break; }
             case 2:
                 {
                     gameController.nextLevelFlag = false;

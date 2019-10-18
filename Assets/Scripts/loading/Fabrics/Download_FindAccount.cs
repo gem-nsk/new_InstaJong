@@ -22,7 +22,7 @@ public class Download_FindAccount : Iloading
         //get account id
         var _accId = JsonConvert.DeserializeObject<Assets.Accounts.RootObject>(IdRequest.downloadHandler.text);
 
-        UnityWebRequest request = UnityWebRequest.Get("https://www.instagram.com/graphql/query/?query_id=17888483320059182&id=" + _accId.graphql.user.id + "&first=20");
+        UnityWebRequest request = UnityWebRequest.Get("https://www.instagram.com/graphql/query/?query_id=17888483320059182&id=" + _accId.graphql.user.id + "&first=36");
         yield return request.SendWebRequest();
 
         var dyn = JsonConvert.DeserializeObject<Assets.Accounts.LoadImages.RootObject>(request.downloadHandler.text);
@@ -58,18 +58,6 @@ public class Download_FindAccount : Iloading
 
             post_info.StandartTexture = ((DownloadHandlerTexture)s_request.downloadHandler).texture;
 
-            //thumbnails 
-            UnityWebRequest t_request = new UnityWebRequest();
-            t_request = UnityWebRequestTexture.GetTexture(post_info.thumbnail, false);
-            yield return t_request.SendWebRequest();
-
-            if (t_request.isNetworkError || t_request.isHttpError)
-                Debug.Log("Error");
-
-            yield return t_request.isDone;
-
-            post_info.ThumbnailTexture = ((DownloadHandlerTexture)t_request.downloadHandler).texture;
-
             posts._p.Add(post_info);
 
             // DataSave.SaveImage(post_info.ThumbnailTexture, "t_" + post_info.id, Application.persistentDataPath + "/t_images");
@@ -79,7 +67,6 @@ public class Download_FindAccount : Iloading
 
             i++;
         }
-        DownloadManager.instance.DeleteLoadingBar();
         yield return null;
     }
     public bool isContainErrors()

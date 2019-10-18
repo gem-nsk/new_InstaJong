@@ -13,12 +13,14 @@ namespace genField
         private int randomNum = 0;
 
         private (int i, int j) coords;
+        
 
         //public Color normCol;
         //public Color partiesCol;
 
         public Cell() { }
         public Cell(int state) { this.state = state; }
+        public Cell(int i, int j) { setCoords(i, j); }
 
         public int getId() { return id; }
         public int getRandomNum() { return randomNum; }
@@ -33,5 +35,6 @@ namespace genField
 
         public (int i, int j) getCoords() { return coords; }
         public void setCoords(int i, int j) { this.coords = ValueTuple.Create(i,j);}
+
     }
 }

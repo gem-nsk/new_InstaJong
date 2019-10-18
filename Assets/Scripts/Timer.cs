@@ -12,6 +12,8 @@ public class Timer : MonoBehaviour
     public float _time;
     public bool _isPaused;
 
+    public GameObject TimeAddObject;
+
    public void StartTimer()
     {
         _time = TotalTime;
@@ -28,6 +30,7 @@ public class Timer : MonoBehaviour
     {
         GameControllerScr gameController = GameControllerScr.instance;
 
+        TimeAddObject.SetActive(false);
         timerSlider.maxValue = TotalTime;
 
         while (_time > 0)
@@ -37,7 +40,10 @@ public class Timer : MonoBehaviour
                 case false:
                     timerSlider.value = _time;
 
-                    _time -= Time.deltaTime;
+                    if ((timerSlider.value / timerSlider.maxValue) < 0.3f)
+                        TimeAddObject.SetActive(true);
+
+                    _time -= Time.deltaTime * GameControllerScr.numMap * 0.5f;
                     yield return null;
                     break;
                 case true:
@@ -45,15 +51,20 @@ public class Timer : MonoBehaviour
                     yield return null;
                     break;
             }
-            
-           
+        TimeAddObject.SetActive(false);
         }
         Debug.Log("Time is ended!");
-        gameController.endGameFlag = 2;
+        //gameController.endGameFlag = 2;
+        gameController.OpenEndGamePreview(2);
+        GameControllerScr.instance.ClearSave();
     }
     public void AddTime()
     {
         _time = TotalTime;
+    }
+    public void AddTime(float time)
+    {
+        _time += time;
     }
     public void TimerState(bool isPaused)
     {

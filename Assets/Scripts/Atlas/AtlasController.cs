@@ -23,7 +23,6 @@ public class PostInfo
     public string postLink;
 
     public Texture2D StandartTexture;
-    public Texture2D ThumbnailTexture;
 }
 [System.Serializable]
 public class _atlas
@@ -83,8 +82,8 @@ public class AtlasController : MonoBehaviour
 
         posts = data._p;
 
-        yield return StartCoroutine(Pack(Atlases[0]));
-        yield return StartCoroutine(Pack(Atlases[1]));
+        yield return StartCoroutine(Pack(Atlases[0], 1024));
+        yield return StartCoroutine(Pack(Atlases[1], 4096));
         yield return StartCoroutine(CreateMaterials(Atlases[0]));
         yield return StartCoroutine(CreateMaterials(Atlases[1]));
 
@@ -95,7 +94,6 @@ public class AtlasController : MonoBehaviour
     {
         foreach(var v in posts)
         {
-            Destroy(v.ThumbnailTexture);
             Destroy(v.StandartTexture);
         }
     }
@@ -131,8 +129,9 @@ public class AtlasController : MonoBehaviour
             _mat.SetTextureOffset("_MainTex", new Vector2(_rect.x, _rect.y));
 
             a._CreatedMaterials.Add(_mat);
+            yield return null;
+
         }
-        yield return null;
     }
     //returning offset by image id
     public Material GetMaterialById(_atlas a, int id)
@@ -141,7 +140,7 @@ public class AtlasController : MonoBehaviour
     }
     
 
-    public IEnumerator Pack(_atlas a)
+    public IEnumerator Pack(_atlas a, int size)
     {
         //packing textures from download
 
@@ -149,13 +148,14 @@ public class AtlasController : MonoBehaviour
         Texture2D[] Sprites = new Texture2D[posts.Count];
         for (int i = 0; i < posts.Count; i++)
         {
-            Sprites[i] = posts[i].ThumbnailTexture;
+            Sprites[i] = posts[i].StandartTexture;
         }
 
-        Texture2D texture = new Texture2D(2048, 2048);
+        Texture2D texture = new Texture2D(2, 2);
 
-        a.rect = texture.PackTextures(Sprites, 5);
+        a.rect = texture.PackTextures(Sprites, 5, size);
         a.atlas.SetTexture("_MainTex", texture);
+        Debug.Log("Atlas width: " + a.atlas.mainTexture.width + "Atlas height: " + a.atlas.mainTexture.height);
         yield return null;
     }
 
@@ -173,7 +173,6 @@ public class AtlasController : MonoBehaviour
         for (int i = 1; i <= root._p.Count; i++)
         {
 
-            root._p[i - 1].ThumbnailTexture = Resources.Load<Texture2D>("saved/t_images/t_" + i);
             root._p[i - 1].StandartTexture = Resources.Load<Texture2D>("saved/s_images/s_" + i);
         }
 

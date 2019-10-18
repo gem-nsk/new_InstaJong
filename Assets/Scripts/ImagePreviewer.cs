@@ -13,6 +13,17 @@ public class ImagePreviewer : ui_basement
     public Text LikeCount;
     public string PostId;
 
+    public override void Activate()
+    {
+        base.Activate();
+        GameControllerScr.instance._Timer.TimerState(true);
+    }
+
+    public override void DeActivate()
+    {
+        GameControllerScr.instance._Timer.TimerState(false);
+        base.DeActivate();
+    }
     public void Preview(int id)
     {
         LoadPicture(id);
@@ -28,10 +39,28 @@ public class ImagePreviewer : ui_basement
         //Debug.Log(id);
        // Texture2D spr = AtlasController.instance.posts[id -1].StandartTexture;
 
-        img.material = AtlasController.instance.GetMaterialById(AtlasController.instance.Atlases[1], id);
+        Material mat = AtlasController.instance.GetMaterialById(AtlasController.instance.Atlases[1], id);
+        float sizeX = mat.mainTextureScale.x / mat.mainTextureScale.y;
+        float sizeY = mat.mainTextureScale.y / mat.mainTextureScale.x;
 
-        //_ImgSize.sizeDelta = new Vector2(spr.textureRect.width, spr.textureRect.height);
+        float _s = sizeY / sizeX;
+
+        Debug.Log("x: " + sizeX + " y: " + sizeY+ " _s: " + _s);
+
+        img.material = mat;
+        _ImgSize.sizeDelta *= new Vector2(sizeX, sizeY);
+        if (_ImgSize.sizeDelta.x > 900)
+        {
+            float diff = 900 / _ImgSize.sizeDelta.x;
+            _ImgSize.sizeDelta *= new Vector2(diff, diff * 1.5f);
+        }
+        else if (_ImgSize.sizeDelta.y > 900)
+        {
+            float diff = 900 / _ImgSize.sizeDelta.y;
+            _ImgSize.sizeDelta *= new Vector2(diff * sizeX * 1.5f, diff);
+        }
     }
+
     public void CLose()
     {
         CanvasController.instance.CloseCanvas();

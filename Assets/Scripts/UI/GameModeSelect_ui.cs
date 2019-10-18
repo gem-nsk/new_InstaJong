@@ -9,6 +9,7 @@ public class GameModeSelect_ui : ui_basement
     public GameObject FindCanvas;
     public GameObject FindHashtag;
     public GameObject UserSearching;
+    public GameObject HistoryCanvas;
 
     public void PlayGame(int arg)
     {
@@ -23,6 +24,9 @@ public class GameModeSelect_ui : ui_basement
                 break;
             case 2:
                 FindHash();
+                break;
+            case 3:
+                ShowHistory();
                 break;
         }
     }
@@ -48,5 +52,10 @@ public class GameModeSelect_ui : ui_basement
         {
             GameObject.FindGameObjectWithTag("Login").GetComponent<SampleWebView>().Login();
         }
+    }
+
+    public void ShowHistory()
+    {
+        CanvasController.instance.OpenCanvas(HistoryCanvas);
     }
 }

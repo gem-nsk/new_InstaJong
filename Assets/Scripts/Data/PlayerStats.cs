@@ -43,7 +43,7 @@ public class PlayerStats : MonoBehaviour
                 return (PlayerPrefs.GetString("name"), PlayerPrefs.GetString("token"));
             }
             else
-            return (null,null);
+            return ("","");
         }
         set
         {

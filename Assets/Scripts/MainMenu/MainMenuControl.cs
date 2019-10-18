@@ -58,6 +58,7 @@ public class MainMenuControl : MonoBehaviour
     {
         AdsController.instance.ShowInterstitial();
         GameControllerScr.instance.StopLoading();
+        GameControllerScr.instance.Save();
         SceneManager.LoadScene("Menu");
     }
 
@@ -73,6 +74,12 @@ public class MainMenuControl : MonoBehaviour
 
     private void Start()
     {
+        if (!PlayerPrefs.HasKey("firstStart"))
+        {
+            CanvasController.instance.OpenCanvas(Rules_ui);
+            PlayerPrefs.SetInt("firstStart", 1);
+        }
+
          bool b = Music.instance.isPlaying;
         switch (b)
         {
@@ -105,5 +112,10 @@ public class MainMenuControl : MonoBehaviour
     public void Leaders()
     {
         AdsController.instance.ShowInterstitial();
+    }
+
+    public void ShareAccount()
+    {
+         new NativeShare().SetTitle("lets play InstaJong!").SetText("You can try my Account! @" + PlayerStats.instance.playerSettings.name + "\n https://play.google.com/apps/testing/com.GeM.InstaJong").Share();
     }
 }

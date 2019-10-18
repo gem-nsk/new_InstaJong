@@ -53,9 +53,9 @@ public class SampleWebView : MonoBehaviour
             StartCoroutine(ConvertKeyToId(DebugKey));
         else
             ClearCookies();
-#else
+#elif UNITY_ANDROID
         if (PlayerStats.instance.playerSettings.name != null)
-       DisplayLogin();
+       StartCoroutine(loggingIn());
         else
             ClearCookies();
 #endif
@@ -65,7 +65,7 @@ public class SampleWebView : MonoBehaviour
     {
         PlayerStats.AccountKeyHandler += DisplayLogin;
 
-        Login();
+        DisplayLogin();
     }
     private void OnDestroy()
     {
@@ -147,7 +147,7 @@ public class SampleWebView : MonoBehaviour
     {
 
 
-        Url = "https://www.instagram.com/oauth/authorize/?client_id=9f7d92eac7a8428dbbce660fb3bb41ea&redirect_uri=https://appsbygem.com/&response_type=token";
+        Url = "https://www.instagram.com/oauth/authorize/?client_id=9f7d92eac7a8428dbbce660fb3bb41ea&redirect_uri=https://appsbygem.com/authorization/&response_type=token";
 
         BG.SetActive(true);
 

@@ -26,12 +26,12 @@ public class SearchAccount : Iloading
         if (IdRequest.downloadHandler.data.Length != 20713)
         {
             var _accId = JsonConvert.DeserializeObject<Assets.Accounts.RootObject>(IdRequest.downloadHandler.text);
-            UnityWebRequest request = UnityWebRequest.Get("https://www.instagram.com/graphql/query/?query_id=17888483320059182&id=" + _accId.graphql.user.id + "&first=20");
+            UnityWebRequest request = UnityWebRequest.Get("https://www.instagram.com/graphql/query/?query_id=17888483320059182&id=" + _accId.graphql.user.id + "&first=36");
             yield return request.SendWebRequest();
 
             var dyn = JsonConvert.DeserializeObject<Assets.Accounts.LoadImages.RootObject>(request.downloadHandler.text);
 
-            if (dyn.data.user.edge_owner_to_timeline_media.edges.Count >= 20)
+            if (dyn.data.user.edge_owner_to_timeline_media.edges.Count >= 36)
             {
                 posts.AccountKey = _accId.graphql.user.username;
             }

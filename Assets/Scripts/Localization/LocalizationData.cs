@@ -1,4 +1,5 @@
-﻿[System.Serializable]
+﻿using UnityEngine;
+[System.Serializable]
 public class LocalizationData 
 {
     public LocalizationItem[] items;
@@ -8,5 +9,6 @@ public class LocalizationData
 public class LocalizationItem
 {
     public string key;
+    [Multiline()]
     public string value;
 }

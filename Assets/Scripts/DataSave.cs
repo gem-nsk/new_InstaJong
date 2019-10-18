@@ -56,7 +56,7 @@ public class DataSave : MonoBehaviour
     {
         for (int i = 0; i < data._p.Count; i++)
         {
-            SaveImage(data._p[i].ThumbnailTexture, "t_" + i, Application.persistentDataPath + "/images/thumbnails/");
+
             SaveImage(data._p[i].StandartTexture, "s_" + i, Application.persistentDataPath + "/images/standart/");
         }
 

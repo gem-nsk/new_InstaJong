@@ -170,7 +170,7 @@ PlayerSettings:
     Standalone: com.Company.ProductName
     iPhone: com.GeM.InstaJong
   buildNumber: {}
-  AndroidBundleVersionCode: 1
+  AndroidBundleVersionCode: 6
   AndroidMinSdkVersion: 21
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
@@ -263,15 +263,15 @@ PlayerSettings:
   AndroidTargetArchitectures: 1
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: '{inproject}: '
-  AndroidKeyaliasName: 
+  AndroidKeystoreName: D:/UnityProject/new_InstaJong_cc/user.keystore
+  AndroidKeyaliasName: gem
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
   AndroidIsGame: 1
   AndroidEnableTango: 0
   androidEnableBanner: 1
   androidUseLowAccuracyLocation: 0
-  androidUseCustomKeystore: 0
+  androidUseCustomKeystore: 1
   m_AndroidBanners:
   - width: 320
     height: 180
@@ -282,7 +282,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 58892facf1f5ff441af06d166a6b94ab, type: 3}
+      m_Icon: {fileID: 2800000, guid: fc88b065a965bd84399b0fb518dfe742, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0

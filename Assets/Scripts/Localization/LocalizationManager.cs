@@ -54,23 +54,9 @@ public class LocalizationManager : MonoBehaviour
     
     public IEnumerator Start()
     {
-        string name;
-        switch (Application.systemLanguage)
-        {
-            case SystemLanguage.Russian:
-                name = "ru";
-                break;
-            case SystemLanguage.English:
-                name = "eng";
-                break;
-            default:
-                name = "eng";
-                break;
-        }
+        string name = GetLanguage();
+        
 
-#if UNITY_EDITOR
-        name = DebugLanguage.ToString();
-#endif
         StartCoroutine(LoadLocalizedText(name + ".json"));
         while (!GetIsReady())
         {
@@ -80,6 +66,23 @@ public class LocalizationManager : MonoBehaviour
         Debug.Log("starting text updates");
     }
 
+    public string GetLanguage()
+    {
+#if UNITY_EDITOR
+        return DebugLanguage.ToString();
+
+#elif UNITY_ANDROID
+        switch (Application.systemLanguage)
+        {
+            case SystemLanguage.Russian:
+                return "ru";
+            case SystemLanguage.English:
+                return "eng";
+            default:
+                return "eng";
+        }
+#endif
+    }
 
     public IEnumerator LoadLocalizedText(string fileName)
     {

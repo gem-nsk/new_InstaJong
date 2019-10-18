@@ -66,16 +66,16 @@ public class Download_selfAccountFromAPI : Iloading
             post_info.StandartTexture = ((DownloadHandlerTexture)s_request.downloadHandler).texture;
 
             //thumbnails 
-            UnityWebRequest t_request = new UnityWebRequest();
-            t_request = UnityWebRequestTexture.GetTexture(post_info.thumbnail, false);
-            yield return t_request.SendWebRequest();
+            //UnityWebRequest t_request = new UnityWebRequest();
+            //t_request = UnityWebRequestTexture.GetTexture(post_info.thumbnail, false);
+            //yield return t_request.SendWebRequest();
 
-            if (t_request.isNetworkError || t_request.isHttpError)
-                Debug.Log("Error");
+            //if (t_request.isNetworkError || t_request.isHttpError)
+            //    Debug.Log("Error");
 
-            yield return t_request.isDone;
+            //yield return t_request.isDone;
 
-            post_info.ThumbnailTexture = ((DownloadHandlerTexture)t_request.downloadHandler).texture;
+            //post_info.ThumbnailTexture = ((DownloadHandlerTexture)t_request.downloadHandler).texture;
 
             _tempPosts._p.Add(post_info);
 
@@ -88,7 +88,7 @@ public class Download_selfAccountFromAPI : Iloading
             DownloadManager.ProgressHandler?.Invoke(i, dyn.data.Count);
 
         }
-        DownloadManager.instance.DeleteLoadingBar();
+        //DownloadManager.instance.DeleteLoadingBar();
         yield return null;
     }
 

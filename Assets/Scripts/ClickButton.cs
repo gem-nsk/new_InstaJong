@@ -4,7 +4,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using AStarPathfinder;
 using genField;
 using System.Drawing;
 using Image = UnityEngine.UI.Image;
@@ -14,7 +13,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
 {
     
 
-    private List<Point> path;
+    private List<Cell> path;
 
     public float InteractionTime = 1f;
     public Image panel;
@@ -31,6 +30,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
 
     void Start()
     {
+        path = new List<Cell>();
         Buttons = new List<System.Tuple<int, int>>();
         panel = GetComponent<Image>();
         Click = gameObject.GetComponent(typeof(CellScr)) as CellScr;
@@ -67,6 +67,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
             }
             if (Buttons.Count == 2)
             {
+
                 StartCoroutine(DeleteIcons(Buttons));
             }
 
@@ -125,8 +126,8 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
 
         //points
         GameControllerScr.instance.stats.AddPoints(15);
+        GameControllerScr.instance._Timer.AddTime(3);
         
-
     }
 
     public IEnumerator DeleteIcons(List<System.Tuple<int, int>> tuples)
@@ -146,29 +147,13 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
         {
 
             var firstCoords = gameController.field.findCoordsById(idFirstClick);
+            var firstPoint = gameController.field.array[firstCoords.i, firstCoords.j];
             var secondCoords = gameController.field.findCoordsById(idSecondClick);
+            var secondPoint = gameController.field.array[secondCoords.i, secondCoords.j];
 
-            bool flg;
-            bool find = findPath(gameController.field, firstCoords, secondCoords);
-            if (find == false)
-            {
-                find = findPath(gameController.field, secondCoords, firstCoords);
-                if (find == false)
-                {
-                    flg = false;
-                }
-                else
-                {
-                    flg = true;
-                }
-            }
-            else
-            {
-                flg = true;
-            }
+            bool find = findPath(gameController.field, firstPoint, secondPoint);
 
-
-            if (flg == true)
+            if (find == true)
             {
                 gameController.CreateLine(path);
 
@@ -185,26 +170,36 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
 
                 gameController.field.array[secondCoords.i, secondCoords.j].setState(0);
                 gameController.field.array[secondCoords.i, secondCoords.j].setRandomNum(0);
-
+                panel.color = UnityEngine.Color.white * 0.0F;
                 gameController.cellState-=2;
                 Debug.Log(gameController.cellState);
-                if (gameController.cellState == 0) gameController.endGameFlag = 1;
-
-                panel.color = UnityEngine.Color.white * 0.0F;
-                //Debug.Log("Delete " + idFirstClick + " and " + idSecondClick);
-                //дело в этом
-                if (idFirstClick == gameController.pathParser.path.idFirst
-                    || idSecondClick == gameController.pathParser.path.idSecond
-                    || idFirstClick == gameController.pathParser.path.idSecond
-                    || idSecondClick == gameController.pathParser.path.idFirst)
+                //if (gameController.cellState == 0) gameController.endGameFlag = 1;
+                if (gameController.cellState == 0)
                 {
-                    StartCoroutine(GameControllerScr.instance.SearchPath());
-                    Debug.Log("#find path");
-
-                    
+                    gameController._Timer.AddTime();
+                    GameControllerScr.instance.LoadNextLevel();
+                    GameControllerScr.instance.OpenEndGamePreview(1);
                 }
 
-                //gameController.ResetLine(gameController.LR);
+                Debug.Log("Delete " + idFirstClick + " and " + idSecondClick);
+
+                if (idFirstClick == gameController.firstID
+                    || idSecondClick == gameController.secondID
+                    || idFirstClick == gameController.secondID
+                    || idSecondClick == gameController.firstID)
+                {
+                    if (gameController.cellState >= 2)
+                    {
+                        StartCoroutine(GameControllerScr.instance.SearchPath());
+
+                        Debug.Log("#find path");
+                    }
+
+
+
+                }
+
+                gameController.ResetLine(gameController.LR);
 
                 SuccessfulPare();
                 GameControllerScr.instance.Save();
@@ -212,13 +207,16 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
             }
 
         } //else panel.color = normCol;
-
+        
         else
         {
             Debug.Log("Pare not correct!");
             GameControllerScr.instance.StandartcolorForFirstCell();
 
         }
+
+        Debug.Log("#ClickButton/OnClick/first:" + Buttons[0]);
+        Debug.Log("#ClickButton/OnClick/second:" + Buttons[1]);
         Buttons.Clear();
 
 
@@ -229,20 +227,24 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
 
     }
 
-    private bool findPath(Field field, (int i, int j) firstClick, (int i, int j) secondClick)
+    private bool findPath(Field field, Cell firstClick, Cell secondClick)
     {
 
-        Point start = new Point(firstClick.i, firstClick.j);
-        Point finish = new Point(secondClick.i, secondClick.j);
+        //Point start = new Point(firstClick.i, firstClick.j);
+        //Point finish = new Point(secondClick.i, secondClick.j);
 
-        SettingsField settings = new SettingsField(field, field.widthField, field.heightField);
-        path = settings.LittlePathfinder(start, finish);
+        //SettingsField settings = new SettingsField(field);
+        //path = settings.LittlePathfinder(start, finish);
 
-        if (path == null) {return false; }
-        else
-        {
-            return true;
-        }
+        //if (path == null) {return false; }
+        //else
+        //{
+        //    return true;
+        //}
+        var matrix = PikachuPathfinder.CreateMatrix(field);
+        path = PikachuPathfinder.GetWayBetweenTwoCell(matrix, firstClick, secondClick);
+        if (path.Count == 0) return false;
+        else return true;
     }
 
     public void OnPointerDown(PointerEventData eventData)

@@ -28,7 +28,7 @@ public class Download_hashtagImages : Iloading
 
             Debug.Log(_accId.graphql.hashtag.edge_hashtag_to_media.edges.Count);
 
-            if (_accId.graphql.hashtag.edge_hashtag_to_media.edges.Count < 20)
+            if (_accId.graphql.hashtag.edge_hashtag_to_media.edges.Count < 36)
             {
                 posts.AccountKey = DownloadManager.less20Error;
                 yield break;
@@ -78,18 +78,6 @@ public class Download_hashtagImages : Iloading
 
                 post_info.StandartTexture = ((DownloadHandlerTexture)s_request.downloadHandler).texture;
 
-                //thumbnails 
-                UnityWebRequest t_request = new UnityWebRequest();
-                t_request = UnityWebRequestTexture.GetTexture(post_info.thumbnail, false);
-                yield return t_request.SendWebRequest();
-
-                if (t_request.isNetworkError || t_request.isHttpError)
-                    Debug.Log("Error");
-
-                yield return t_request.isDone;
-
-                post_info.ThumbnailTexture = ((DownloadHandlerTexture)t_request.downloadHandler).texture;
-
                 posts._p.Add(post_info);
 
                 // DataSave.SaveImage(post_info.ThumbnailTexture, "t_" + post_info.id, Application.persistentDataPath + "/t_images");
@@ -98,7 +86,7 @@ public class Download_hashtagImages : Iloading
                 DownloadManager.ProgressHandler?.Invoke(i, 20);
 
                 i++;
-                if (i > 20)
+                if (i > 36)
                 {
                     yield break;
                 }

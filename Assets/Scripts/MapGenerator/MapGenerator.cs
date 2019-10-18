@@ -15,7 +15,7 @@ namespace genField
 
         public MapGenerator() { }
 
-        public Field mapFromString(String[,] map, int width, int height)
+        public Field mapFromString(String[,] map, int width, int height, int cnt)
         {
 
 
@@ -26,12 +26,20 @@ namespace genField
                         countElem++;
                     countAllElem++;
                 }
-                    
+
 
             //Console.WriteLine(countElem);
+            if(cnt <= 20)
+            {
+                if (countElem % 4 == 0) { countTypes = countElem / 4; countImagesInType = 4; }
+            }else
+            {
+                if (countElem % 2 == 0) { countTypes = countElem / 2; countImagesInType = 2; }
 
-            if (countElem % 4 == 0) { countTypes = countElem / 4; countImagesInType = 4; }
-            else if (countElem % 2 == 0) { countTypes = countElem / 2; countImagesInType = 2; }
+            }
+            //if (countElem % 4 == 0) { countTypes = countElem / 4; countImagesInType = 4; }
+            //else if (countElem % 2 == 0) { countTypes = countElem / 2; countImagesInType = 2; }
+
             //else { return -1; }
 
 
