@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public struct _ShopUnit
 {
     public string IAP_Id;
     public int CoinsCount;
+    public Text PriceText;
 
     public _ShopUnit GetUnit()
     {
@@ -17,6 +19,15 @@ public struct _ShopUnit
 public class InstaCoinsShopUI : ui_basement
 {
     public _ShopUnit[] Units;
+
+    public override void Activate()
+    {
+        base.Activate();
+        foreach(_ShopUnit unit in Units)
+        {
+            unit.PriceText.text = PurchaseManager.GetProductPrice(unit.IAP_Id);
+        }
+    }
 
     public void BuyButton(int id)
     {

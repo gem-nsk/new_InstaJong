@@ -35,7 +35,7 @@ public class SampleWebView : MonoBehaviour
     public string DebugKey;
 
     public Text loginText;
-    public GameObject DeleteLoginButton;
+    public GameObject[] DeleteLoginButton;
     //20021759479.9f7d92e.e1400359759e4f7b9c7bd99e85e102e4 - û
     //20021759479.9f7d92e.e1400359759e4f7b9c7bd99e85e102e4
     //20021759479.9f7d92e.e4cf6803ec204e899ce887aab2b88cbf
@@ -78,12 +78,14 @@ public class SampleWebView : MonoBehaviour
         if(PlayerStats.instance.playerSettings.name != "")
         {
             loginText.text = "@" + PlayerStats.instance.playerSettings.name;
-            DeleteLoginButton.SetActive(true);
+            foreach(GameObject ob in DeleteLoginButton)
+            ob.SetActive(true);
         }
         else
         {
             loginText.text = "connect your instagram!";
-            DeleteLoginButton.SetActive(false);
+            foreach (GameObject ob in DeleteLoginButton)
+                ob.SetActive(false);
         }
     }
 

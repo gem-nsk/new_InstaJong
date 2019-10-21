@@ -13,12 +13,23 @@ public class Rules_ui : ui_basement
 
     public override void CanvasControllerClose()
     {
+        GameControllerScr c = GameControllerScr.instance;
+        if (c)
+        {
+            c._Timer._isPaused = false;
+        }
         base.CanvasControllerClose();
     }
     public override void Activate()
     {
         base.Activate();
         NextSlide(true);
+
+        GameControllerScr c = GameControllerScr.instance;
+        if(c)
+        {
+            c._Timer._isPaused = true;
+        }
     }
 
     public void NextSlide(bool next)

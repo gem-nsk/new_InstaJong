@@ -461,10 +461,13 @@ MonoBehaviour:
   Units:
   - IAP_Id: _user
     CoinsCount: 1050
+    PriceText: {fileID: 0}
   - IAP_Id: _pro
     CoinsCount: 2100
+    PriceText: {fileID: 0}
   - IAP_Id: _celebrity
     CoinsCount: 3150
+    PriceText: {fileID: 0}
 --- !u!225 &2924696071149837782
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1138,7 +1141,6 @@ GameObject:
   - component: {fileID: 2806308237128036909}
   - component: {fileID: 6034486192226318352}
   - component: {fileID: 8642719499350919902}
-  - component: {fileID: 206551412539059777}
   m_Layer: 5
   m_Name: ButtonText
   m_TagString: Untagged
@@ -1207,19 +1209,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 175 P
---- !u!114 &206551412539059777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3780893570297476410}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fc151ff9ab428047bf323cf85c043f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: _ui_instacoins_buy
 --- !u!1 &5296105527818473627
 GameObject:
   m_ObjectHideFlags: 0
@@ -1532,7 +1521,6 @@ GameObject:
   - component: {fileID: 8997331650950498227}
   - component: {fileID: 2256789678220832220}
   - component: {fileID: 4923270027812444711}
-  - component: {fileID: 3742054025042534280}
   m_Layer: 5
   m_Name: ButtonText
   m_TagString: Untagged
@@ -1601,19 +1589,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 107 P
---- !u!114 &3742054025042534280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5924230890200902588}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fc151ff9ab428047bf323cf85c043f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: _ui_instacoins_buy
 --- !u!1 &6028634855729393185
 GameObject:
   m_ObjectHideFlags: 0
@@ -1700,7 +1675,6 @@ GameObject:
   - component: {fileID: 3276817921545399236}
   - component: {fileID: 4361662695666165267}
   - component: {fileID: 3755247696409238126}
-  - component: {fileID: 3968006815570348650}
   m_Layer: 5
   m_Name: ButtonText
   m_TagString: Untagged
@@ -1769,19 +1743,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 75 P
---- !u!114 &3968006815570348650
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6967741322789831612}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fc151ff9ab428047bf323cf85c043f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: _ui_instacoins_buy
 --- !u!1 &7100412396892061533
 GameObject:
   m_ObjectHideFlags: 0

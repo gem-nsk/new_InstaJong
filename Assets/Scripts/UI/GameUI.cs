@@ -11,6 +11,8 @@ public class GameUI : MonoBehaviour
     public Text _text_AddedPoints;
     public Animator AddedPointsAnimator;
 
+    public GameObject rules;
+
     public void Init()
     {
         GameControllerScr.instance.stats._addInstaCoins += UpdateCoins;
@@ -18,6 +20,13 @@ public class GameUI : MonoBehaviour
 
         UpdateCoins(GameControllerScr.instance.stats.InstaCoins);
         UpdatePoints(GameControllerScr.instance.stats.Points);
+
+        if (!PlayerPrefs.HasKey("firstStart"))
+        {
+            CanvasController.instance.OpenCanvas(rules);
+            PlayerPrefs.SetInt("firstStart", 1);
+        }
+
     }
     private void OnDisable()
     {

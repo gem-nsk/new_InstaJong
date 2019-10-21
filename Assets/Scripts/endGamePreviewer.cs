@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class endGamePreviewer : ui_basement
 {
+    public TextLocalization AddedInstaCoins_text;
     public TextLocalization[] Score_text;
     public TextLocalization[] Highscore_text;
 
@@ -55,6 +56,8 @@ public class endGamePreviewer : ui_basement
 
         Score_text[1].AddToText(GameControllerScr.instance.stats.GetScore().ToString());
         Highscore_text[1].AddToText(GameControllerScr.instance.stats.GetHighscore().ToString());
+
+        AddedInstaCoins_text.AddToText(GameControllerScr.instance.stats.AddLevelInstaCoins(GameControllerScr.numMap).ToString());
     }
 
     public override void DeActivate()

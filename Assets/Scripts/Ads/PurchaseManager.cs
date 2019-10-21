@@ -60,6 +60,17 @@ public class PurchaseManager : MonoBehaviour, IStoreListener
         else { return false; }
     }
 
+    public static string GetProductPrice(string id)
+    {
+        Product product = m_StoreController.products.WithID(id);
+        if (product.hasReceipt)
+        {
+            return product.metadata.localizedPriceString;
+        }
+        else
+            return "loading";
+    }
+
     public void InitializePurchasing()
     {
         var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
@@ -110,6 +121,17 @@ public class PurchaseManager : MonoBehaviour, IStoreListener
 
         m_StoreController = controller;
         m_StoreExtensionProvider = extensions;
+
+        if(CheckBuyState(NC_PRODUCTS[0]))
+        {
+            AdsController.instance.Init(true);
+            Debug.Log("Ads inited with no ads");
+        }
+        else
+        {
+            AdsController.instance.Init(false);
+            Debug.Log("Ads inited");
+        }
     }
 
     public void OnInitializeFailed(InitializationFailureReason error)

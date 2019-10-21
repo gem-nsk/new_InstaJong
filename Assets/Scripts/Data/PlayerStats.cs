@@ -33,6 +33,7 @@ public class PlayerStats : MonoBehaviour
     public int RefreshPrice = 5;
     public int HelpPrice = 20;
     public int AddTimePrice = 50;
+    public int CoinsPerLevel = 50;
 
     public (string name, string token) playerSettings
     {
@@ -53,6 +54,7 @@ public class PlayerStats : MonoBehaviour
             PlayerStats.AccountKeyHandler();
         }
     }
+
 
     public delegate void AccountKeyChanged();
     public static AccountKeyChanged AccountKeyHandler;
@@ -139,6 +141,12 @@ public class PlayerStats : MonoBehaviour
         Points += _points;
         _addPoints?.Invoke(_points);
         SaveData();
+    }
+    public int AddLevelInstaCoins(int level)
+    {
+        int _c = level * CoinsPerLevel;
+        AddInstaCoins(_c);
+        return _c;
     }
 
     public void AddInstaCoins(int _coins)

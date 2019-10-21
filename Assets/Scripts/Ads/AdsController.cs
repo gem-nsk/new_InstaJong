@@ -17,6 +17,8 @@ public class AdsController : MonoBehaviour
     public RewardedAd _video;
     public InterstitialAd _interstital;
 
+    private bool DisabledAd;
+
     #region Singleton
     public static AdsController instance;
     private void Awake()
@@ -33,10 +35,16 @@ public class AdsController : MonoBehaviour
     }
     #endregion
 
-    public void Start()
+    public void Init(bool _disabledAd)
     {
+        this.DisabledAd = _disabledAd;
+
+        PurchaseManager.OnPurchaseNonConsumable += PurchaseManager_OnPurchaseNonConsumable;
+
         MobileAds.Initialize(initStatus => { });
         LoadVideo();
+
+        if(!_disabledAd)
         LoadInterstital();
 
         _video.OnAdClosed += VideoWatched;
@@ -48,6 +56,13 @@ public class AdsController : MonoBehaviour
         _interstital.OnAdFailedToLoad += Interstitial_failedtoLoad;
         _interstital.OnAdLoaded += Debug_InterstitialLoaded;
     }
+
+    private void PurchaseManager_OnPurchaseNonConsumable(UnityEngine.Purchasing.PurchaseEventArgs args)
+    {
+        DisabledAd = true;
+    }
+
+  
 
     private void _interstital_OnAdOpening(object sender, System.EventArgs e)
     {
@@ -107,6 +122,7 @@ public class AdsController : MonoBehaviour
     }
     public void ShowInterstitial()
     {
+        if(!DisabledAd)
         _interstital.Show();
     }
 }

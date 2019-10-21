@@ -51,6 +51,7 @@ public class GameModeSelect_ui : ui_basement
         else
         {
             GameObject.FindGameObjectWithTag("Login").GetComponent<SampleWebView>().Login();
+            CanvasControllerClose();
         }
     }
 

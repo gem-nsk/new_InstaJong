@@ -1209,6 +1209,7 @@ MonoBehaviour:
   text_points: {fileID: 566586175}
   _text_AddedPoints: {fileID: 1659481148}
   AddedPointsAnimator: {fileID: 1579119668}
+  rules: {fileID: 8243194131716475119, guid: 8f27ffc4e5b2a044084e4263c9b8525d, type: 3}
 --- !u!1 &1217823599
 GameObject:
   m_ObjectHideFlags: 0
@@ -1694,7 +1695,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -244.1, y: -50}
+  m_AnchoredPosition: {x: -244.09998, y: -50}
   m_SizeDelta: {x: 363.71997, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1579119668

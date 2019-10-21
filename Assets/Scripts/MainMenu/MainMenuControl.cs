@@ -31,15 +31,10 @@ public class MainMenuControl : MonoBehaviour
         PreloadingManager.instance._LoadFromCache();
     }
     
-      
     public void NewGamePressed()
     {
         //check instagramm authorization
-
         CanvasController.instance.OpenCanvas(3);
-
-       
-
         //DownloadImagesFromInstagram();
 
     }
@@ -65,21 +60,11 @@ public class MainMenuControl : MonoBehaviour
     public void Refresh()
     {
         GameControllerScr.instance.StartCoroutine("Refresh");
-
-        /*GameControllerScr gameController = GameObject.Find("Main Camera").GetComponent(typeof(GameControllerScr)) as GameControllerScr;
-        Field field = gameController.field.refreshField(gameController.field);
-        gameController.field = field;
-        GameControllerScr.refresh = true;*/
     }
 
     private void Start()
     {
-        if (!PlayerPrefs.HasKey("firstStart"))
-        {
-            CanvasController.instance.OpenCanvas(Rules_ui);
-            PlayerPrefs.SetInt("firstStart", 1);
-        }
-
+       
          bool b = Music.instance.isPlaying;
         switch (b)
         {
@@ -117,5 +102,10 @@ public class MainMenuControl : MonoBehaviour
     public void ShareAccount()
     {
          new NativeShare().SetTitle("lets play InstaJong!").SetText("You can try my Account! @" + PlayerStats.instance.playerSettings.name + "\n https://play.google.com/apps/testing/com.GeM.InstaJong").Share();
+    }
+
+    public void BuyNoAds()
+    {
+        PurchaseManager.instance.BuyNonConsumable(0);
     }
 }
