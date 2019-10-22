@@ -9,6 +9,8 @@ public class root_posts
 {
     public string AccountKey;
     public List<PostInfo> _p = new List<PostInfo>();
+
+
 }
 
 public class DataSave : MonoBehaviour

@@ -85,6 +85,16 @@ public class DownloadManager : MonoBehaviour
     {
         return _tempPosts;
     }
+    public void ClearPosts()
+    {
+        foreach(PostInfo p in _tempPosts._p)
+        {
+            p.StandartTexture = null;
+        }
+        _tempPosts._p.Clear();
+        System.GC.Collect();
+        Resources.UnloadUnusedAssets();
+    }
 
     GameObject _bar;
     public void CreateLoadingBar()

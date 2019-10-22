@@ -7,6 +7,7 @@ public class C_Settings
 {
     public string id;
     public int CoinsCount;
+    public string Price;
 }
 
 public class PurchaseManager : MonoBehaviour, IStoreListener
@@ -63,12 +64,8 @@ public class PurchaseManager : MonoBehaviour, IStoreListener
     public static string GetProductPrice(string id)
     {
         Product product = m_StoreController.products.WithID(id);
-        if (product.hasReceipt)
-        {
+            Debug.Log(product.metadata.isoCurrencyCode);
             return product.metadata.localizedPriceString;
-        }
-        else
-            return "loading";
     }
 
     public void InitializePurchasing()
@@ -121,6 +118,11 @@ public class PurchaseManager : MonoBehaviour, IStoreListener
 
         m_StoreController = controller;
         m_StoreExtensionProvider = extensions;
+
+        for (int i = 0; i < C_PRODUCTS.Length; i++)
+        {
+            C_PRODUCTS[i].Price = GetProductPrice(C_PRODUCTS[i].id);
+        }
 
         if(CheckBuyState(NC_PRODUCTS[0]))
         {

@@ -7,7 +7,7 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-
+using System.Collections;
 
 [System.Serializable]
 public class PostInfo
@@ -48,7 +48,7 @@ public class AtlasController : MonoBehaviour
     //1445481979.9f7d92e.b0c1bd961d644d3aa03ec861a3af7974
 
 
-    public List<PostInfo> posts;
+   // public List<PostInfo> posts;
 
     public _atlas[] Atlases = new _atlas[2];
 
@@ -76,28 +76,57 @@ public class AtlasController : MonoBehaviour
 
     public IEnumerator Init(root_posts data)
     {
-        posts.Clear();
+        //posts.Clear();
+
+        //ClearMaterials();
 
         Debug.Log("Inited");
 
-        posts = data._p;
+        Texture2D[] images = new Texture2D[data._p.Count];
+        for (int i = 0; i < data._p.Count; i++)
+        {
+            images[i] = data._p[i].StandartTexture;
+        }
+        //posts = data._p;
 
-        yield return StartCoroutine(Pack(Atlases[0], 1024));
-        yield return StartCoroutine(Pack(Atlases[1], 4096));
+        yield return StartCoroutine(Pack(Atlases[0], 1024, images));
+        yield return StartCoroutine(Pack(Atlases[1], 4096, images));
         yield return StartCoroutine(CreateMaterials(Atlases[0]));
         yield return StartCoroutine(CreateMaterials(Atlases[1]));
-
-        UnloadTextures();
+       // UnloadTextures();
     }
 
-    void UnloadTextures()
+    private void Update()
     {
-        foreach(var v in posts)
+        if(Input.GetKeyDown(KeyCode.S))
         {
-            Destroy(v.StandartTexture);
+            //UnloadTextures();
+            ClearMaterials();
+            Resources.UnloadUnusedAssets();
+            System.GC.Collect();
         }
     }
 
+    //void UnloadTextures()
+    //{
+    //    foreach(var v in posts)
+    //    {
+    //        v.StandartTexture = null;
+    //    }
+    //}
+
+    void ClearMaterials()
+    {
+        foreach(_atlas atlas in Atlases)
+        {
+            for (int i = 0; i < atlas._CreatedMaterials.Count; i++)
+            {
+                atlas._CreatedMaterials[i] = null;
+            }
+            atlas.atlas = null;
+            atlas._CreatedMaterials.Clear();
+        }
+    }
     //public bool CheckImageDirectory()
     //{
 
@@ -140,20 +169,20 @@ public class AtlasController : MonoBehaviour
     }
     
 
-    public IEnumerator Pack(_atlas a, int size)
+    public IEnumerator Pack(_atlas a, int size, Texture2D[] _textures)
     {
         //packing textures from download
 
 
-        Texture2D[] Sprites = new Texture2D[posts.Count];
-        for (int i = 0; i < posts.Count; i++)
-        {
-            Sprites[i] = posts[i].StandartTexture;
-        }
+        //Texture2D[] Sprites = new Texture2D[_textures.Length];
+        //for (int i = 0; i < _textures.Length; i++)
+        //{
+        //    Sprites[i] = posts[i].StandartTexture;
+        //}
 
-        Texture2D texture = new Texture2D(2, 2);
+        Texture2D texture = new Texture2D(2,2);
 
-        a.rect = texture.PackTextures(Sprites, 5, size);
+        a.rect = texture.PackTextures(_textures, 5, size);
         a.atlas.SetTexture("_MainTex", texture);
         Debug.Log("Atlas width: " + a.atlas.mainTexture.width + "Atlas height: " + a.atlas.mainTexture.height);
         yield return null;
@@ -165,23 +194,23 @@ public class AtlasController : MonoBehaviour
     }
 
 
-    public IEnumerator LoadingFromResources()
-    {
-        TextAsset data = Resources.Load<TextAsset>("saved/posts");
-        root_posts root = JsonUtility.FromJson<root_posts>(data.text);
+    //public IEnumerator LoadingFromResources()
+    //{
+    //    TextAsset data = Resources.Load<TextAsset>("saved/posts");
+    //    root_posts root = JsonUtility.FromJson<root_posts>(data.text);
 
-        for (int i = 1; i <= root._p.Count; i++)
-        {
+    //    for (int i = 1; i <= root._p.Count; i++)
+    //    {
 
-            root._p[i - 1].StandartTexture = Resources.Load<Texture2D>("saved/s_images/s_" + i);
-        }
+    //        root._p[i - 1].StandartTexture = Resources.Load<Texture2D>("saved/s_images/s_" + i);
+    //    }
 
-        foreach(PostInfo p in root._p)
-        {
-            posts.Add(p);
-        }
-        yield return null;
-    }
+    //    foreach(PostInfo p in root._p)
+    //    {
+    //        posts.Add(p);
+    //    }
+    //    yield return null;
+    //}
 
     //public void ClearCache()
     //{
@@ -194,10 +223,10 @@ public class AtlasController : MonoBehaviour
 
     //https://www.instagram.com/graphql/query/?query_id=17888483320059182&id=20021759479&first=20
     
-    public void CreatePost(PostInfo data)
-    {
-        PostInfo post = data;
-        posts.Add(post);
-    }
+    //public void CreatePost(PostInfo data)
+    //{
+    //    PostInfo post = data;
+    //    posts.Add(post);
+    //}
 }
 //https://api.instagram.com/v1/users/self/follows?access_token=20021759479.9f7d92e.e4cf6803ec204e899ce887aab2b88cbf

@@ -22,8 +22,9 @@ public class PreloadingManager : MonoBehaviour
     IEnumerator LoadingProcess(string _key, Iloading type)
     {
         yield return StartCoroutine( DownloadManager.instance.Downloading(_key, type));
-        root_posts _loadedData = DownloadManager.instance.GetPosts();
-        yield return StartCoroutine(AtlasController.instance.Init(_loadedData));
+        yield return StartCoroutine(AtlasController.instance.Init(DownloadManager.instance.GetPosts()));
+        //DownloadManager.instance.ClearPosts();
+
 
     }
     public void _PreloadAccountImages(string key)

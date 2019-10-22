@@ -8,20 +8,7 @@ public class Music : MonoBehaviour
     public AudioSource source;
 
     private int _Currentid = 0;
-    private int _currentMusicId
-    {
-        get
-        {
-            return _Currentid;
-        }
-        set
-        {
-            if (_currentMusicId + value >= MusicClips.Length)
-            {
-                _currentMusicId = 0;
-            }
-        }
-    }
+   
 
     private bool _isPlaying;
     public bool isPlaying {
@@ -97,8 +84,8 @@ public class Music : MonoBehaviour
     {
         while(isPlaying)
         {
-            yield return new WaitForSeconds(PlayMusicClip(_currentMusicId));
-            _currentMusicId++;
+            _Currentid = Random.Range(0, MusicClips.Length);
+            yield return new WaitForSeconds(PlayMusicClip(_Currentid));
         }
     }
 

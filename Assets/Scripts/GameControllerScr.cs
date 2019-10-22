@@ -251,7 +251,7 @@ public class GameControllerScr : MonoBehaviour
             string str = s.text;
 
             var map = mapGenerator.mapFromFile(str);
-            int cnt = AtlasController.instance.posts.Count;
+            int cnt = DownloadManager.instance._tempPosts._p.Count;
             field = mapGenerator.mapFromString(map.map, map.width, map.height, cnt);
             //cellCount = mapGenerator.getCount();
         }
@@ -269,7 +269,7 @@ public class GameControllerScr : MonoBehaviour
 
 
             var map = mapGenerator.mapFromFile(str);
-            int cnt = AtlasController.instance.posts.Count;
+            int cnt = DownloadManager.instance._tempPosts._p.Count;
             field = mapGenerator.mapFromString(map.map, map.width, map.height, cnt);
             //cellCount = mapGenerator.getCount();
         }

@@ -60,11 +60,11 @@ public class Timer : MonoBehaviour
     }
     public void AddTime()
     {
-        _time = TotalTime;
+        _time = Mathf.Clamp(_time = TotalTime, 0, TotalTime);
     }
     public void AddTime(float time)
     {
-        _time += time;
+        _time = Mathf.Clamp(_time + time, 0, TotalTime);
     }
     public void TimerState(bool isPaused)
     {

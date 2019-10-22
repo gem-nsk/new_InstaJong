@@ -70,15 +70,15 @@ public class ImagePreviewer : ui_basement
     public void setDescriprion(int id)
     {
         Debug.Log(id);
-        description.text = AtlasController.instance.posts[id-1].description;
+        description.text = DownloadManager.instance._tempPosts._p[id-1].description;
     }
 
     public void setCommentField(int id)
     {
-        description.text = AtlasController.instance.posts[id - 1].description;
-        username.text = AtlasController.instance.posts[id - 1].usernameFrom;
-        LikeCount.text = AtlasController.instance.posts[id - 1].likes.ToString() + " отметок \"нравится\"";
-        PostId = AtlasController.instance.posts[id - 1].postLink;
+        description.text = DownloadManager.instance._tempPosts._p[id - 1].description;
+        username.text = DownloadManager.instance._tempPosts._p[id - 1].usernameFrom;
+        LikeCount.text = DownloadManager.instance._tempPosts._p[id - 1].likes.ToString() + " отметок \"нравится\"";
+        PostId = DownloadManager.instance._tempPosts._p[id - 1].postLink;
     }
 
     private void OpenInInstagram()

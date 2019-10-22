@@ -23,9 +23,10 @@ public class InstaCoinsShopUI : ui_basement
     public override void Activate()
     {
         base.Activate();
-        foreach(_ShopUnit unit in Units)
+
+        for (int i = 0; i < Units.Length; i++)
         {
-            unit.PriceText.text = PurchaseManager.GetProductPrice(unit.IAP_Id);
+            Units[i].PriceText.text = PurchaseManager.instance.C_PRODUCTS[i].Price;
         }
     }
 
