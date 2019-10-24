@@ -17,11 +17,8 @@ namespace genField
 
         public Field() { }
 
-        public Field(int width, int height)
-        {
-            this.widthField = width;
-            this.heightField = height;
-        }
+        public Field(int height, int width) { widthField = width; heightField = height; }
+
         public Field(int width, int height, int countTypes, int countImageInType)
         {
             this.widthField = width;
@@ -40,21 +37,23 @@ namespace genField
                 for (int j = 0; j < widthField; j++)
                 {
                     array[i, j] = new Cell();
-                    array[i, j].setCoords(i, j);
 
+                    array[i, j].setCoords(i, j);
                     array[i, j].setId(newId);
+
+
+
                     newId += 1;
                     countElements++;
 
                 }
-            //установка всех ячеек в state 1
+
             if (allStateOne)
             {
-                for (int i = 2; i < heightField - 2; i++)
-                    for (int j = 2; j < widthField - 2; j++)
+                for (int i = 1; i < heightField - 1; i++)
+                    for (int j = 1; j < widthField - 1; j++)
                         array[i, j].setState(1);
             }
-            Console.WriteLine(countElements);
 
             return 0;
         }
@@ -64,7 +63,6 @@ namespace genField
             System.Random random = new System.Random();
             int rInt;
             int maxRange = countElements;
-            Debug.Log("#countElements from Field: " + countElements);
             for (int n = 0; n < countTypes; n++)
             {
                 for (int k = 0; k < countImageInType;)
@@ -73,7 +71,7 @@ namespace genField
                     rInt = random.Next(1, maxRange);
                     var coords = findCoordsById(rInt);
 
-                    if(coords.i != 0 && coords.j != 0 &&
+                    if (coords.i != 0 && coords.j != 0 &&
                         array[coords.i, coords.j].getState() == 1 &&
                         array[coords.i, coords.j].getRandomNum() == 0)
                     {
@@ -95,7 +93,6 @@ namespace genField
             System.Random random = new System.Random();
             int rInt;
             int maxRange = countElements;
-            Debug.Log("#countElements from Field: " + countElements);
             //цикл по доступным ячейкам
             for (int i = 0; i < aviableCells.Count;)
             {
@@ -146,15 +143,6 @@ namespace genField
 
         public (int i, int j) findCoordsById(int id)
         {
-            //for (int i = 1; i < heightField - 1; i++)
-            //{
-            //    for (int j = 1; j < widthField - 1; j++)
-            //    {
-
-            //        if (array[i, j].getId() == id)
-            //            return (i, j);
-            //    }
-            //}
 
             foreach (Cell cell in array)
             {
@@ -164,60 +152,74 @@ namespace genField
             return (0, 0);
         }
 
-
         //функция поиска позиции ячейки массива по координатам
         public int findIdByCoords(int i, int j)
         {
             return array[i, j].getId();
         }
 
-        public int[,] toIntArray(int num)
+        public int[,] GetMatrix()
         {
-            int[,] intArray = new int[heightField, widthField];
-            switch (num)
+            int[,] matrix = new int[heightField, widthField];
+            for (int y = 0; y < widthField; y++)
             {
-                case 0:
-                    {
-                        for (int i = 0; i < heightField; i++)
-                        {
-                            for (int j = 0; j < widthField; j++)
-                            {
-                                if (array[i, j].getState() == 2 || array[i, j].getState() == 1)
-                                    intArray[i, j] = -4;
-                                if (array[i, j].getState() == 0)
-                                    intArray[i, j] = -1;
-                            }
-                        }
-                        break;
-                    }
-                default: break;
-            };
+                matrix[0, y] = matrix[heightField - 1, y] = 0;
+            }
+            for (int x = 0; x < heightField; x++)
+            {
+                matrix[x, 0] = matrix[x, widthField - 1] = 0;
+            }
 
-            return intArray;
-
-        }
-
-        // функция вывода поля на экран
-
-        public void printField()
-        {
-            Console.Write("\n");
             for (int i = 0; i < heightField; i++)
             {
                 for (int j = 0; j < widthField; j++)
                 {
-                    if (array[i, j].getState() == 1) Console.BackgroundColor = ConsoleColor.Red;
-                    else if (array[i, j].getState() == 0) Console.BackgroundColor = ConsoleColor.Blue;
-                    else if (array[i, j].getState() == 2) Console.BackgroundColor = ConsoleColor.Black;
-                    else Console.BackgroundColor = ConsoleColor.Black;
-
-                    String output = String.Format("{0,3}", array[i, j].getRandomNum().ToString());
-
-                    Console.Write(output);
+                    matrix[i, j] = array[i, j].getRandomNum();
                 }
-                Console.Write("\n");
             }
+            return matrix;
         }
-        
+
+        public Cell[,] DoPair((int row, int col) cell1, (int row, int col) cell2, Cell[,] array)
+        {
+            var matrix = array;
+
+            matrix[cell1.row, cell1.col].setState(0);
+            matrix[cell1.row, cell1.col].setRandomNum(0);
+
+            matrix[cell2.row, cell2.col].setState(0);
+            matrix[cell2.row, cell2.col].setRandomNum(0);
+
+            int firstMoveRow = cell1.row;
+            int secondMoveRow = cell2.row;
+            if (cell1.col == cell2.col)
+            {
+                firstMoveRow = cell1.row > cell2.row ? cell1.row : cell2.row;
+                secondMoveRow = cell1.row > cell2.row ? cell2.row : cell1.row;
+            }
+            int cell1Col = cell1.col;
+            for (int i = firstMoveRow; i < matrix.GetLength(0) - 2; i++)
+            {
+                matrix[i, cell1Col].setRandomNum(matrix[i + 1, cell1Col].getRandomNum());
+                matrix[i, cell1Col].setState(matrix[i + 1, cell1Col].getState());
+            }
+
+            matrix[matrix.GetLength(0) - 2, cell1.col].setState(0);
+            matrix[matrix.GetLength(0) - 2, cell1.col].setRandomNum(0);
+
+            int cell2Col = cell2.col;
+            for (int i = secondMoveRow; i < matrix.GetLength(0) - 2; i++)
+            {
+                matrix[i, cell2Col].setRandomNum(matrix[i + 1, cell2Col].getRandomNum());
+                matrix[i, cell2Col].setState(matrix[i + 1, cell2Col].getState());
+            }
+
+            matrix[matrix.GetLength(0) - 2, cell2.col].setState(0);
+            matrix[matrix.GetLength(0) - 2, cell2.col].setRandomNum(0);
+
+
+            return matrix;
+        }
+
     }
 }

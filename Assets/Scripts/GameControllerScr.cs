@@ -80,25 +80,7 @@ public class GameControllerScr : MonoBehaviour
     #region MainCode
     public IEnumerator Start()
     {
-        LEVELS = new List<string>();
-        LEVELS.Add("map");
-        LEVELS.Add("map1");
-        LEVELS.Add("map2");
-        LEVELS.Add("map3");
-        LEVELS.Add("map4");
-        LEVELS.Add("map5");
-        LEVELS.Add("map6");
-        LEVELS.Add("map7");
-        LEVELS.Add("map8");
-        LEVELS.Add("map9");
-        LEVELS.Add("map10");
-        LEVELS.Add("map11");
-        LEVELS.Add("map12");
-        LEVELS.Add("map13");
-        LEVELS.Add("map14");
-
         numMap = 1;
-        mapLoad = LEVELS[0];
         cellStateTMP = 0;
         cellState = 0;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
@@ -182,27 +164,6 @@ public class GameControllerScr : MonoBehaviour
             ClearSave();
 
         }
-        if (nextLevelFlag == true)
-        {
-            //Debug.Log(numMap);
-            nextLevelFlag = false;
-            //LoadNextLevel();
-        }
-    }
-
-    public void LoadNextLevel()
-    {
-        //if(numMap <= 13)
-        //{
-        //    numMap++;
-        //}
-        cellStateTMP = 0;
-        //numMap - количество пройденных карт
-        numMap++;
-        mapLoad = LEVELS[0];
-
-
-        StartCoroutine(CreateButtonCells());
     }
 
     public void Save()
@@ -240,20 +201,14 @@ public class GameControllerScr : MonoBehaviour
     {
         cellState = 0;
         grid.enabled = true;
-        mapGenerator = new MapGenerator();
-        string filePath = Path.Combine(Application.streamingAssetsPath, "map.txt");
 #if UNITY_ANDROID
         //Android
 
         if (Application.platform == RuntimePlatform.Android)
         {
-            TextAsset s = (TextAsset)Resources.Load(mapLoad);
-            string str = s.text;
-
-            var map = mapGenerator.mapFromFile(str);
-            int cnt = DownloadManager.instance._tempPosts._p.Count;
-            field = mapGenerator.mapFromString(map.map, map.width, map.height, cnt);
-            //cellCount = mapGenerator.getCount();
+            field = new Field(14, 8, 36, 2);
+            field.initField(true);
+            field.generateField();
         }
 
 #endif
@@ -262,16 +217,9 @@ public class GameControllerScr : MonoBehaviour
         else
         {
 
-            TextAsset s = (TextAsset)Resources.Load(mapLoad);
-            Debug.Log(s.text);
-
-            String str = s.text;
-
-
-            var map = mapGenerator.mapFromFile(str);
-            int cnt = DownloadManager.instance._tempPosts._p.Count;
-            field = mapGenerator.mapFromString(map.map, map.width, map.height, cnt);
-            //cellCount = mapGenerator.getCount();
+            field = new Field(14, 8, 36, 2);
+            field.initField(true);
+            field.generateField();
         }
 #endif
 
@@ -420,6 +368,26 @@ public class GameControllerScr : MonoBehaviour
         return pathLine;
     }
 
+    public IEnumerator Strategy(Cell[,] array)
+    {
+        grid.enabled = true;
+
+        field = new Field(14, 8, 36, 4);
+        field.initField(true);
+        for(int i = 0; i < field.heightField; i++)
+        {
+            for(int j = 0; j < field.widthField; j++)
+            {
+                field.array[i, j].setRandomNum(array[i, j].getRandomNum());
+                field.array[i, j].setState(array[i, j].getState());
+            }
+        }
+        placeCells();
+        yield return new WaitForEndOfFrame();
+        grid.enabled = false;
+
+    }
+
 
     public IEnumerator loadMap()
     {
@@ -469,12 +437,22 @@ public class GameControllerScr : MonoBehaviour
             {
                 if (field.array[coords.i, coords.j].getState() == 1) cellState++;
             }
-            //else
-            //{
-            //    cellState = cellStateTMP;
-            //}
 
             AllCells.Add(tmpCell.GetComponent<CellScr>());
+        }
+    }
+
+    public void placeCells(bool flg)
+    {
+        foreach (Transform child in cellGroup)
+        {
+            var currentID = child.GetComponent<CellScr>().settings._id;
+            var (i, j) = field.findCoordsById(currentID);
+
+            child.GetComponent<CellScr>().settings._randomNum = field.array[i, j].getRandomNum();
+            child.GetComponent<CellScr>().settings._state = field.array[i, j].getState();
+            child.GetComponent<CellScr>().settings._id = field.array[i, j].getId();
+
         }
     }
 
@@ -486,7 +464,7 @@ public class GameControllerScr : MonoBehaviour
             GameObject.Destroy(child.gameObject);
         }
     }
-
+    
     public IEnumerator Refresh(bool UseInstaCoins)
     {
         Debug.Log("#Refresh");

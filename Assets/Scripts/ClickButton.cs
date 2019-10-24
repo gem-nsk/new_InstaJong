@@ -159,25 +159,24 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
 
                 yield return new WaitForSeconds(gameController.DelayBeforeDestroy);
 
+                DoPair(firstCoords, secondCoords);
+
                 first.SetState(0);
                 second.SetState(0);
 
                 objects.first.settings._randomNum = 0;
                 objects.second.settings._randomNum = 0;
 
-                gameController.field.array[firstCoords.i, firstCoords.j].setState(0);
-                gameController.field.array[firstCoords.i, firstCoords.j].setRandomNum(0);
-
-                gameController.field.array[secondCoords.i, secondCoords.j].setState(0);
-                gameController.field.array[secondCoords.i, secondCoords.j].setRandomNum(0);
+                
                 panel.color = UnityEngine.Color.white * 0.0F;
-                gameController.cellState-=2;
+
+                gameController.cellState -= 2;
                 Debug.Log(gameController.cellState);
                 //if (gameController.cellState == 0) gameController.endGameFlag = 1;
                 if (gameController.cellState == 0)
                 {
                     gameController._Timer.AddTime();
-                    GameControllerScr.instance.LoadNextLevel();
+
                     GameControllerScr.instance.OpenEndGamePreview(1);
                 }
 
@@ -230,17 +229,6 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
     private bool findPath(Field field, Cell firstClick, Cell secondClick)
     {
 
-        //Point start = new Point(firstClick.i, firstClick.j);
-        //Point finish = new Point(secondClick.i, secondClick.j);
-
-        //SettingsField settings = new SettingsField(field);
-        //path = settings.LittlePathfinder(start, finish);
-
-        //if (path == null) {return false; }
-        //else
-        //{
-        //    return true;
-        //}
         var matrix = PikachuPathfinder.CreateMatrix(field);
         path = PikachuPathfinder.GetWayBetweenTwoCell(matrix, firstClick, secondClick);
         if (path.Count == 0) return false;
@@ -250,5 +238,14 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         StartCoroutine(TouchHold());
+    }
+
+    public void DoPair((int row, int col) cell1, (int row, int col) cell2)
+    {
+        var array = GameControllerScr.instance.field.array;
+        var result = GameControllerScr.instance.field.DoPair(cell1, cell2, array);
+
+        StartCoroutine(GameControllerScr.instance.Strategy(result));
+        
     }
 }
