@@ -105,6 +105,11 @@ public class CellScr : MonoBehaviour
         img.color = new Color(1, 1, 1, hided ? 0 : 1);
     }
 
+    public int GetRandomNum()
+    {
+        return settings._randomNum;
+    }
+
 
         //public int GetRandom(int curentNum)
         //{

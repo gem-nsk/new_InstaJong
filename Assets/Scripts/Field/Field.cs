@@ -190,6 +190,7 @@ namespace genField
             matrix[cell2.row, cell2.col].setState(0);
             matrix[cell2.row, cell2.col].setRandomNum(0);
 
+
             int firstMoveRow = cell1.row;
             int secondMoveRow = cell2.row;
             if (cell1.col == cell2.col)

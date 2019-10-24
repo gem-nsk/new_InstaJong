@@ -371,18 +371,8 @@ public class GameControllerScr : MonoBehaviour
     public IEnumerator Strategy(Cell[,] array)
     {
         grid.enabled = true;
-
-        field = new Field(14, 8, 36, 4);
-        field.initField(true);
-        for(int i = 0; i < field.heightField; i++)
-        {
-            for(int j = 0; j < field.widthField; j++)
-            {
-                field.array[i, j].setRandomNum(array[i, j].getRandomNum());
-                field.array[i, j].setState(array[i, j].getState());
-            }
-        }
-        placeCells();
+        field.array = array;
+        placeCells(true);
         yield return new WaitForEndOfFrame();
         grid.enabled = false;
 
@@ -407,7 +397,7 @@ public class GameControllerScr : MonoBehaviour
             field.array[coords.i, coords.j].setState(_data.data[i]._state);
         }
 
-        placeCells();
+        placeCells(true);
 
         yield return new WaitForEndOfFrame();
 
@@ -448,11 +438,13 @@ public class GameControllerScr : MonoBehaviour
         {
             var currentID = child.GetComponent<CellScr>().settings._id;
             var (i, j) = field.findCoordsById(currentID);
-
+            if (child.GetComponent<CellScr>().GetRandomNum() == field.array[i, j].getRandomNum())
+            {
+                Debug.Log("#Continue");
+                continue;
+            }
             child.GetComponent<CellScr>().settings._randomNum = field.array[i, j].getRandomNum();
-            child.GetComponent<CellScr>().settings._state = field.array[i, j].getState();
-            child.GetComponent<CellScr>().settings._id = field.array[i, j].getId();
-
+            child.GetComponent<CellScr>().SetState(field.array[i, j].getState());
         }
     }
 

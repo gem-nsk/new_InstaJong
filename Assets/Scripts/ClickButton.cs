@@ -243,9 +243,9 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
     public void DoPair((int row, int col) cell1, (int row, int col) cell2)
     {
         var array = GameControllerScr.instance.field.array;
-        var result = GameControllerScr.instance.field.DoPair(cell1, cell2, array);
+        var newArray = GameControllerScr.instance.field.DoPair(cell1, cell2, array);
 
-        StartCoroutine(GameControllerScr.instance.Strategy(result));
+        StartCoroutine(GameControllerScr.instance.Strategy(newArray));
         
     }
 }
