@@ -74,7 +74,8 @@ public class CellScr : MonoBehaviour
             if(settings._randomNum != 0)
             {
                 Show();
-                button.material = AtlasController.instance.GetMaterialById(AtlasController.instance.Atlases[0],settings._randomNum);
+                Texture2D tex = DownloadManager.instance.GetImageById(settings._randomNum);
+                button.sprite = Sprite.Create(tex, new Rect(0,0,tex.width, tex.height), Vector2.zero); //AtlasController.instance.GetMaterialById(AtlasController.instance.Atlases[0],settings._randomNum);
             }
             
         }

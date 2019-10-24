@@ -47,7 +47,9 @@ public class ImagePreviewer : ui_basement
 
         Debug.Log("x: " + sizeX + " y: " + sizeY+ " _s: " + _s);
 
-        img.material = mat;
+        Texture2D tex = DownloadManager.instance.GetImageById(id);
+
+        img.sprite = Sprite.Create(tex, new Rect(0,0, tex.width, tex.height), Vector2.zero);
         _ImgSize.sizeDelta *= new Vector2(sizeX, sizeY);
         if (_ImgSize.sizeDelta.x > 900)
         {

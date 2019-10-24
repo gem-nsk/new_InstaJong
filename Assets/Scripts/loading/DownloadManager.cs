@@ -85,6 +85,13 @@ public class DownloadManager : MonoBehaviour
     {
         return _tempPosts;
     }
+
+    public Texture2D GetImageById(int id)
+    {
+        Debug.Log("id - " + id);
+        return _tempPosts._p[id - 1].StandartTexture;
+    }
+
     public void ClearPosts()
     {
         foreach(PostInfo p in _tempPosts._p)

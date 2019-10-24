@@ -21,8 +21,9 @@ public class PreloadingManager : MonoBehaviour
 
     IEnumerator LoadingProcess(string _key, Iloading type)
     {
+        DownloadManager.instance.ClearPosts();
         yield return StartCoroutine( DownloadManager.instance.Downloading(_key, type));
-        yield return StartCoroutine(AtlasController.instance.Init(DownloadManager.instance.GetPosts()));
+        //yield return StartCoroutine(AtlasController.instance.Init(DownloadManager.instance.GetPosts()));
         //DownloadManager.instance.ClearPosts();
 
 
@@ -87,8 +88,8 @@ public class PreloadingManager : MonoBehaviour
         {
             Iloading load = new Download_FromCache();
             yield return StartCoroutine(load.Loading(null));
-            root_posts _loadedData = load.GetPosts();
-            yield return StartCoroutine(AtlasController.instance.Init(_loadedData));
+            //root_posts _loadedData = load.GetPosts();
+            //yield return StartCoroutine(AtlasController.instance.Init(_loadedData));
 
             GameControllerScr.loadGame = true;
             SceneManager.LoadScene("Game");
