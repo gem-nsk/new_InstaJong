@@ -39,7 +39,7 @@ public class CellScr : MonoBehaviour
 
     public Image img;
 
-    public float LerpTime = 1;
+    public float LerpTime = 0;
 
 
     public void SetSettings()
@@ -71,14 +71,22 @@ public class CellScr : MonoBehaviour
             */
 
             //new method
-            if(settings._randomNum != 0)
+            
+            if(settings._randomNum != 0 && button.sprite == null)
             {
                 Show();
-                Texture2D tex = DownloadManager.instance.GetImageById(settings._randomNum);
-                button.sprite = Sprite.Create(tex, new Rect(0,0,tex.width, tex.height), Vector2.zero); //AtlasController.instance.GetMaterialById(AtlasController.instance.Atlases[0],settings._randomNum);
+                //Texture2D tex = DownloadManager.instance.GetImageById(settings._randomNum);
+                //button.sprite = Sprite.Create(tex, new Rect(0,0,tex.width, tex.height), Vector2.zero); //AtlasController.instance.GetMaterialById(AtlasController.instance.Atlases[0],settings._randomNum);
+                button.sprite = DownloadManager.instance.GetImageById(settings._randomNum);
             }
             
         }
+    }
+
+    public void RemoveSprite()
+    {
+        Image button = GetComponent<Image>();
+        button.sprite = null;
     }
 
     public void Hide()
@@ -96,13 +104,15 @@ public class CellScr : MonoBehaviour
     public IEnumerator CellVisible(bool hided)
     {
         float _time = 0;
-        while(_time <= LerpTime)
-        {
-            img.color = new Color(1, 1, 1, Mathf.Lerp(hided ? 1 : 0, hided ? 0 : 1, _time / LerpTime));
-            _time += Time.deltaTime;
-            yield return null;
-        }
+        //while(_time <= LerpTime)
+        //{
+        //    img.color = new Color(1, 1, 1, Mathf.Lerp(hided ? 1 : 0, hided ? 0 : 1, _time / LerpTime));
+        //    _time += Time.deltaTime;
+        //    yield return null;
+        //}
+        yield return null;
         img.color = new Color(1, 1, 1, hided ? 0 : 1);
+
     }
 
     public int GetRandomNum()

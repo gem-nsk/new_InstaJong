@@ -180,15 +180,19 @@ namespace genField
             return matrix;
         }
 
-        public Cell[,] DoPair((int row, int col) cell1, (int row, int col) cell2, Cell[,] array)
+        public List<int> DoPair((int row, int col) cell1, (int row, int col) cell2, Cell[,] _array)
         {
-            var matrix = array;
+            var matrix = _array;
+            List<int> IDs = new List<int>();
 
             matrix[cell1.row, cell1.col].setState(0);
             matrix[cell1.row, cell1.col].setRandomNum(0);
 
             matrix[cell2.row, cell2.col].setState(0);
             matrix[cell2.row, cell2.col].setRandomNum(0);
+
+            IDs.Add(matrix[cell1.row, cell1.col].getId());
+            IDs.Add(matrix[cell2.row, cell2.col].getId());
 
 
             int firstMoveRow = cell1.row;
@@ -203,23 +207,28 @@ namespace genField
             {
                 matrix[i, cell1Col].setRandomNum(matrix[i + 1, cell1Col].getRandomNum());
                 matrix[i, cell1Col].setState(matrix[i + 1, cell1Col].getState());
+
+                IDs.Add(matrix[i, cell1Col].getId());
             }
 
             matrix[matrix.GetLength(0) - 2, cell1.col].setState(0);
             matrix[matrix.GetLength(0) - 2, cell1.col].setRandomNum(0);
+            IDs.Add(matrix[matrix.GetLength(0) - 2, cell1.col].getId());
 
             int cell2Col = cell2.col;
             for (int i = secondMoveRow; i < matrix.GetLength(0) - 2; i++)
             {
                 matrix[i, cell2Col].setRandomNum(matrix[i + 1, cell2Col].getRandomNum());
                 matrix[i, cell2Col].setState(matrix[i + 1, cell2Col].getState());
+                IDs.Add(matrix[i, cell2Col].getId());
             }
 
             matrix[matrix.GetLength(0) - 2, cell2.col].setState(0);
             matrix[matrix.GetLength(0) - 2, cell2.col].setRandomNum(0);
+            IDs.Add(matrix[matrix.GetLength(0) - 2, cell1Col].getId());
 
 
-            return matrix;
+            return IDs;
         }
 
     }

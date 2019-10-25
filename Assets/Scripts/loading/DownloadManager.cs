@@ -46,6 +46,8 @@ public class DownloadManager : MonoBehaviour
 
     public root_posts _tempPosts;
 
+    private List<Sprite> sprites = new List<Sprite>();
+
     void ProgressDebug(int value, int Total)
     {
         Debug.Log("value - " + value + " Total - " + Total);
@@ -69,9 +71,19 @@ public class DownloadManager : MonoBehaviour
         else
         {
             _tempPosts = loading.GetPosts();
+            ConvertTexturesToSprites ();
+            yield return new WaitForEndOfFrame();
             SuccessfullHandler?.Invoke("Account successful loaded");
         }
 
+    }
+
+    private void ConvertTexturesToSprites()
+    {
+        foreach(PostInfo postInfo in _tempPosts._p)
+        {
+            sprites.Add(Sprite.Create(postInfo.StandartTexture, new Rect(0, 0, postInfo.StandartTexture.width, postInfo.StandartTexture.height), Vector2.zero));
+        }
     }
 
     public void StopLoading()
@@ -86,10 +98,11 @@ public class DownloadManager : MonoBehaviour
         return _tempPosts;
     }
 
-    public Texture2D GetImageById(int id)
+    public Sprite GetImageById(int id)
     {
         Debug.Log("id - " + id);
-        return _tempPosts._p[id - 1].StandartTexture;
+        //return _tempPosts._p[id - 1].StandartTexture;
+        return sprites[id-1];
     }
 
     public void ClearPosts()

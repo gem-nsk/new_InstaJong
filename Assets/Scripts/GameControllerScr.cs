@@ -368,10 +368,17 @@ public class GameControllerScr : MonoBehaviour
         return pathLine;
     }
 
-    public IEnumerator Strategy(Cell[,] array)
+    public IEnumerator Strategy(List<int> IDs)
     {
         grid.enabled = true;
-        field.array = array;
+        const string name = "cellButton";
+        foreach (Transform child in cellGroup)
+        {
+            if (IDs.Contains(int.Parse(child.name.Substring(name.Length))))
+            {
+                child.GetComponent<CellScr>().RemoveSprite();
+            }
+        }
         placeCells(true);
         yield return new WaitForEndOfFrame();
         grid.enabled = false;
@@ -397,7 +404,7 @@ public class GameControllerScr : MonoBehaviour
             field.array[coords.i, coords.j].setState(_data.data[i]._state);
         }
 
-        placeCells(true);
+        placeCells();
 
         yield return new WaitForEndOfFrame();
 
@@ -434,26 +441,36 @@ public class GameControllerScr : MonoBehaviour
 
     public void placeCells(bool flg)
     {
-        foreach (Transform child in cellGroup)
+        clearField();
+        Debug.Log(cellCount);
+
+        for (int i = 0; i < cellCount; i++)
         {
-            var currentID = child.GetComponent<CellScr>().settings._id;
-            var (i, j) = field.findCoordsById(currentID);
-            if (child.GetComponent<CellScr>().GetRandomNum() == field.array[i, j].getRandomNum())
+            var coords = field.findCoordsById(i + 1);
+            GameObject tmpCell = Instantiate(cellButton);
+            tmpCell.transform.SetParent(cellGroup, false);
+            tmpCell.name = "cellButton" + (i + 1);
+            tmpCell.GetComponent<CellScr>().settings._id = field.array[coords.i, coords.j].getId();
+            tmpCell.GetComponent<CellScr>().settings._randomNum = field.array[coords.i, coords.j].getRandomNum();
+            tmpCell.GetComponent<CellScr>().SetState(field.array[coords.i, coords.j].getState());
+
+            if (cellStateTMP == 0)
             {
-                Debug.Log("#Continue");
-                continue;
+                if (field.array[coords.i, coords.j].getState() == 1) cellState++;
             }
-            child.GetComponent<CellScr>().settings._randomNum = field.array[i, j].getRandomNum();
-            child.GetComponent<CellScr>().SetState(field.array[i, j].getState());
+
+            AllCells.Add(tmpCell.GetComponent<CellScr>());
         }
+
     }
+
 
     public void clearField()
     {
         AllCells.Clear();
         foreach (Transform child in cellGroup)
         {
-            GameObject.Destroy(child.gameObject);
+            Destroy(child.gameObject);
         }
     }
     

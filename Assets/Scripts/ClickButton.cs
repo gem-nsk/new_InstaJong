@@ -161,8 +161,8 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
 
                 DoPair(firstCoords, secondCoords);
 
-                first.SetState(0);
-                second.SetState(0);
+                //first.SetState(0, true);
+                //second.SetState(0, true);
 
                 objects.first.settings._randomNum = 0;
                 objects.second.settings._randomNum = 0;
@@ -232,7 +232,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
         var matrix = PikachuPathfinder.CreateMatrix(field);
         path = PikachuPathfinder.GetWayBetweenTwoCell(matrix, firstClick, secondClick);
         if (path.Count == 0) return false;
-        else return true;
+        return true;
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -242,10 +242,13 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
 
     public void DoPair((int row, int col) cell1, (int row, int col) cell2)
     {
+        Debug.Log("Enter DoPair");
         var array = GameControllerScr.instance.field.array;
-        var newArray = GameControllerScr.instance.field.DoPair(cell1, cell2, array);
+        var IDs = GameControllerScr.instance.field.DoPair(cell1, cell2, array);
 
-        StartCoroutine(GameControllerScr.instance.Strategy(newArray));
+        StartCoroutine(GameControllerScr.instance.Strategy(IDs));
         
     }
+
+    
 }

@@ -267,7 +267,7 @@ PlayerSettings:
   AndroidTargetArchitectures: 3
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: D:/UnityProject/new_InstaJong_cc/user.keystore
+  AndroidKeystoreName: '{inproject}: user.keystore'
   AndroidKeyaliasName: gem
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
