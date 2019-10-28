@@ -31,26 +31,31 @@ public class ImagePreviewer : ui_basement
     }
 
     void LoadPicture(int id)
-    { 
+    {
         //Material mat = AtlasController.instance.GetMaterialById(id);
 
         //img.material = mat;
         //Material mat = new Material(fileStandard);
         //Debug.Log(id);
-       // Texture2D spr = AtlasController.instance.posts[id -1].StandartTexture;
+        // Texture2D spr = AtlasController.instance.posts[id -1].StandartTexture;
 
-        Material mat = AtlasController.instance.GetMaterialById(AtlasController.instance.Atlases[1], id);
-        float sizeX = mat.mainTextureScale.x / mat.mainTextureScale.y;
-        float sizeY = mat.mainTextureScale.y / mat.mainTextureScale.x;
+        Sprite spr = DownloadManager.instance.GetImageById(id);
+        img.sprite = spr;
 
-        float _s = sizeY / sizeX;
+        //Material mat = AtlasController.instance.GetMaterialById(AtlasController.instance.Atlases[1], id);
+        //float sizeX = mat.mainTextureScale.x / mat.mainTextureScale.y;
+        //float sizeY = mat.mainTextureScale.y / mat.mainTextureScale.x;
 
-        Debug.Log("x: " + sizeX + " y: " + sizeY+ " _s: " + _s);
+        float sizeX = spr.rect.width / spr.rect.height;
+        float sizeY = spr.rect.height / spr.rect.width;
+
+        //float _s = sizeY / sizeX;
+
+        //Debug.Log("x: " + sizeX + " y: " + sizeY+ " _s: " + _s);
 
         //Texture2D tex = DownloadManager.instance.GetImageById(id);
 
         //img.sprite = Sprite.Create(tex, new Rect(0,0, tex.width, tex.height), Vector2.zero);
-        img.sprite = DownloadManager.instance.GetImageById(id);
         _ImgSize.sizeDelta *= new Vector2(sizeX, sizeY);
         if (_ImgSize.sizeDelta.x > 900)
         {
