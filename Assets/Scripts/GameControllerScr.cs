@@ -63,6 +63,8 @@ public class GameControllerScr : MonoBehaviour
     public string mapLoad;
     public List<string> descriptions { get; set; }
 
+    public static GameStrategy gameStrategy = GameStrategy.Normal;
+
 
     [Header("Player stats")]
     public PlayerStats stats;
@@ -164,6 +166,12 @@ public class GameControllerScr : MonoBehaviour
             ClearSave();
 
         }
+    }
+
+    public void NextLevel()
+    {
+        gameStrategy++;
+        StartCoroutine(CreateButtonCells());
     }
 
     public void Save()
@@ -418,7 +426,6 @@ public class GameControllerScr : MonoBehaviour
     public void placeCells()
     {
         clearField();
-        Debug.Log(cellCount);
 
         for (int i = 0; i < cellCount; i++)
         {
@@ -442,7 +449,6 @@ public class GameControllerScr : MonoBehaviour
     public void placeCells(bool flg)
     {
         clearField();
-        Debug.Log(cellCount);
 
         for (int i = 0; i < cellCount; i++)
         {
@@ -453,11 +459,6 @@ public class GameControllerScr : MonoBehaviour
             tmpCell.GetComponent<CellScr>().settings._id = field.array[coords.i, coords.j].getId();
             tmpCell.GetComponent<CellScr>().settings._randomNum = field.array[coords.i, coords.j].getRandomNum();
             tmpCell.GetComponent<CellScr>().SetState(field.array[coords.i, coords.j].getState());
-
-            if (cellStateTMP == 0)
-            {
-                if (field.array[coords.i, coords.j].getState() == 1) cellState++;
-            }
 
             AllCells.Add(tmpCell.GetComponent<CellScr>());
         }

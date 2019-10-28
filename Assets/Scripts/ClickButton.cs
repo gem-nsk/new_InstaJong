@@ -171,12 +171,12 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
                 panel.color = UnityEngine.Color.white * 0.0F;
 
                 gameController.cellState -= 2;
-                Debug.Log(gameController.cellState);
+                Debug.Log("#cellState: "+gameController.cellState);
                 //if (gameController.cellState == 0) gameController.endGameFlag = 1;
                 if (gameController.cellState == 0)
                 {
                     gameController._Timer.AddTime();
-
+                    gameController.NextLevel();
                     GameControllerScr.instance.OpenEndGamePreview(1);
                 }
 
@@ -244,8 +244,9 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
     {
         Debug.Log("Enter DoPair");
         var array = GameControllerScr.instance.field.array;
-        var IDs = GameControllerScr.instance.field.DoPair(cell1, cell2, array);
-
+        //var IDs = GameControllerScr.instance.field.DoPair(cell1, cell2, array);
+        var strategy = StrategyFactory.CreateInstance(GameControllerScr.gameStrategy);
+        var IDs = strategy.DoPair(cell1,cell2,array);
         StartCoroutine(GameControllerScr.instance.Strategy(IDs));
         
     }

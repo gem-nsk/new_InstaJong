@@ -11,7 +11,6 @@ namespace genField
         private int state = 0;
         private int id = 0;
         private int randomNum = 0;
-        public bool changed = false;
 
         private (int i, int j) coords;
         
