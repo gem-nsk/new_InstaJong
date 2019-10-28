@@ -314,7 +314,7 @@ public class GameControllerScr : MonoBehaviour
 
             firstID = firstPair.Key;
             secondID = firstPair.Value;
-           
+
             foreach (Transform child in cellGroup)
             {
                 if (child.name == IDFirst)
@@ -379,7 +379,6 @@ public class GameControllerScr : MonoBehaviour
 
     public IEnumerator Strategy(List<int> IDs)
     {
-        grid.enabled = true;
         const string name = "cellButton";
         foreach (int id in IDs)
         {
@@ -392,7 +391,6 @@ public class GameControllerScr : MonoBehaviour
         }
         placeCells(true);
         yield return new WaitForEndOfFrame();
-        grid.enabled = false;
 
     }
 
@@ -451,19 +449,34 @@ public class GameControllerScr : MonoBehaviour
 
     public void placeCells(bool flg)
     {
-        clearField();
+        //clearField();
 
-        for (int i = 0; i < cellCount; i++)
+        //for (int i = 0; i < cellCount; i++)
+        //{
+        //    var coords = field.findCoordsById(i + 1);
+        //    GameObject tmpCell = Instantiate(cellButton);
+        //    tmpCell.transform.SetParent(cellGroup, false);
+        //    tmpCell.name = "cellButton" + (i + 1);
+        //    tmpCell.GetComponent<CellScr>().settings._id = field.array[coords.i, coords.j].getId();
+        //    tmpCell.GetComponent<CellScr>().settings._randomNum = field.array[coords.i, coords.j].getRandomNum();
+        //    tmpCell.GetComponent<CellScr>().SetState(field.array[coords.i, coords.j].getState());
+
+        //    AllCells.Add(tmpCell.GetComponent<CellScr>());
+        //}
+        const string name = "cellButton";
+        foreach (Transform child in cellGroup)
         {
-            var coords = field.findCoordsById(i + 1);
-            GameObject tmpCell = Instantiate(cellButton);
-            tmpCell.transform.SetParent(cellGroup, false);
-            tmpCell.name = "cellButton" + (i + 1);
-            tmpCell.GetComponent<CellScr>().settings._id = field.array[coords.i, coords.j].getId();
-            tmpCell.GetComponent<CellScr>().settings._randomNum = field.array[coords.i, coords.j].getRandomNum();
-            tmpCell.GetComponent<CellScr>().SetState(field.array[coords.i, coords.j].getState());
-
-            AllCells.Add(tmpCell.GetComponent<CellScr>());
+            int _id = int.Parse(child.name.Substring(name.Length));
+            var (i, j) = field.findCoordsById(_id);
+            if(child.GetComponent<CellScr>().settings._randomNum == field.array[i, j].getRandomNum())
+            {
+                continue;
+            }
+            else
+            {
+                child.GetComponent<CellScr>().settings._randomNum = field.array[i, j].getRandomNum();
+                child.GetComponent<CellScr>().SetState(field.array[i, j].getState()); 
+            }
         }
 
     }
