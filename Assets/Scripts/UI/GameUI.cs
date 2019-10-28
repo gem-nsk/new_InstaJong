@@ -9,6 +9,7 @@ public class GameUI : MonoBehaviour
     public Text text_points;
 
     public Text _text_AddedPoints;
+    public Text numLevel;
     public Animator AddedPointsAnimator;
 
     public GameObject rules;
@@ -20,6 +21,7 @@ public class GameUI : MonoBehaviour
 
         UpdateCoins(GameControllerScr.instance.stats.InstaCoins);
         UpdatePoints(GameControllerScr.instance.stats.Points);
+        UpdateLevel(GameControllerScr.gameStrategy);
 
         if (!PlayerPrefs.HasKey("firstStart"))
         {
@@ -42,6 +44,11 @@ public class GameUI : MonoBehaviour
     public void UpdatePoints(int _points)
     {
         StartCoroutine(PointsAnim(_points, GameControllerScr.instance.stats.Points));
+    }
+    public void UpdateLevel(GameStrategy strategy)
+    {
+        int level = int.Parse(numLevel.text);
+        numLevel.text = (level + 1).ToString();
     }
     IEnumerator PointsAnim(int _addedPoints, int TotalPoints)
     {

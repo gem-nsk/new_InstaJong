@@ -171,6 +171,7 @@ public class GameControllerScr : MonoBehaviour
     public void NextLevel()
     {
         gameStrategy++;
+        ui.UpdateLevel(gameStrategy);
         StartCoroutine(CreateButtonCells());
     }
 
@@ -380,12 +381,14 @@ public class GameControllerScr : MonoBehaviour
     {
         grid.enabled = true;
         const string name = "cellButton";
-        foreach (Transform child in cellGroup)
+        foreach (int id in IDs)
         {
-            if (IDs.Contains(int.Parse(child.name.Substring(name.Length))))
-            {
-                child.GetComponent<CellScr>().RemoveSprite();
-            }
+            //if (IDs.Contains(int.Parse(child.name.Substring(name.Length))))
+            //{
+            //    child.GetComponent<CellScr>().RemoveSprite();
+            //}
+            GameObject child = cellGroup.transform.Find(name + id).gameObject;
+            child.GetComponent<CellScr>().RemoveSprite();
         }
         placeCells(true);
         yield return new WaitForEndOfFrame();
