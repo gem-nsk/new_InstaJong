@@ -278,14 +278,21 @@ public class GameControllerScr : MonoBehaviour
         }
     }
 
-    private Image[] helpers = new Image[2];
+    private GameObject[] helpers = new GameObject[2];
     public IEnumerator ShowHelp()
     {
-        yield return StartCoroutine(SearchPath());
-
-        helpers[0].color = Color.yellow;
-        helpers[1].color = Color.yellow;
-
+        if(helpers[0].GetComponent<CellScr>().GetRandomNum() > 0 &&
+           helpers[1].GetComponent<CellScr>().GetRandomNum() > 0)
+        {
+            helpers[0].GetComponent<Image>().color = Color.yellow;
+            helpers[1].GetComponent<Image>().color = Color.yellow;
+        }
+        else
+        {
+            yield return StartCoroutine(SearchPath());
+            ShowHelp();
+        }
+        
     }
 
     public IEnumerator SearchPath()
@@ -310,12 +317,11 @@ public class GameControllerScr : MonoBehaviour
                 if (child.name == IDFirst)
                 {
 
-                    helpers[0] = child.gameObject.GetComponent<UnityEngine.UI.Image>();
+                    helpers[0] = child.gameObject;
                 }
                 else if (child.name == IDSecond)
                 {
-
-                    helpers[1] = child.gameObject.GetComponent<UnityEngine.UI.Image>();
+                    helpers[1] = child.gameObject;
                 }
             }
             searchPath = false;
@@ -452,7 +458,7 @@ public class GameControllerScr : MonoBehaviour
             //{
             //    continue;
             //}
-            //child.GetComponent<CellScr>().settings._randomNum = field.array[i, j].getRandomNum();
+            //child.GetComponent<CellScr>().settings.randomNum = field.array[i, j].getRandomNum();
             //child.GetComponent<CellScr>().SetState(field.array[i, j].getState());
 
         }
