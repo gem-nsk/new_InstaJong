@@ -78,6 +78,11 @@ public class DownloadManager : MonoBehaviour
 
     }
 
+    public int GetCount()
+    {
+        return sprites.Count;
+    }
+
     private void ConvertTexturesToSprites()
     {
         foreach(PostInfo postInfo in _tempPosts._p)

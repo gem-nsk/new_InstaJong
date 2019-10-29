@@ -12,7 +12,6 @@ using Image = UnityEngine.UI.Image;
 
 public class GameControllerScr : MonoBehaviour
 {
-
     public bool Helper = false;
 
     private const int cellCount = 112;
@@ -63,7 +62,9 @@ public class GameControllerScr : MonoBehaviour
     public string mapLoad;
     public List<string> descriptions { get; set; }
 
-    public static GameStrategy gameStrategy = GameStrategy.Bottom;
+    public static GameStrategy gameStrategy;
+
+    private int countPhotos;
 
     const string nameButtons = "cellButton";
 
@@ -84,6 +85,8 @@ public class GameControllerScr : MonoBehaviour
     #region MainCode
     public IEnumerator Start()
     {
+        gameStrategy = GameStrategy.Normal;
+        countPhotos = DownloadManager.instance.GetCount();
         numMap = 1;
         cellStateTMP = 0;
         cellState = 0;
@@ -211,42 +214,28 @@ public class GameControllerScr : MonoBehaviour
     public IEnumerator CreateButtonCells()
     {
         cellState = 0;
-        grid.enabled = true;
-#if UNITY_ANDROID
-        //Android
-
-        if (Application.platform == RuntimePlatform.Android)
+        //grid.enabled = true;
+        if(countPhotos == 36)
         {
             field = new Field(14, 8, 36, 2);
-            field.initField(true);
-            field.generateField();
         }
-
-#endif
-#if UNITY_EDITOR
-        //Editor
         else
         {
-
-            field = new Field(14, 8, 36, 2);
-            field.initField(true);
-            field.generateField();
+            field = new Field(14, 8, 18, 4);
         }
-#endif
+        
+        field.initField(true);
+        field.generateField();
 
-
-        //field = new Field(20, 13, 20, 4);
-        //field.initField(true);
-        //field.generateField();
         placeCells();
         yield return StartCoroutine(SearchPath());
 
 
 
         yield return new WaitForEndOfFrame();
-        grid.enabled = false;
+        //grid.enabled = false;
 
-        SortHierarchy();
+        //SortHierarchy();
         //Save();
     }
 
