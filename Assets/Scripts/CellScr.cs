@@ -42,9 +42,25 @@ public class CellScr : MonoBehaviour
     public float LerpTime = 0;
 
 
-    public void SetSettings()
+    public void SetSettings(int s, int i, int r, int x, int y)
     {
+        CellJson setIn = new CellJson
+        {
+            _state = s,
+            _id = i,
+            _randomNum = r,
+            _x = x,
+            _y = y
+        };
 
+        settings = setIn;
+        SetState(setIn._state);
+    }
+
+    public void SetSettings(CellJson setIn)
+    {
+        settings = setIn;
+        SetState(setIn._state);
     }
    
 
@@ -119,30 +135,5 @@ public class CellScr : MonoBehaviour
     {
         return settings._randomNum;
     }
-
-
-        //public int GetRandom(int curentNum)
-        //{
-
-        //    for (int j = curentNum; j < mas.Length; j++)
-        //    {
-        //        randomNum = mas[j];
-
-        //        return randomNum;
-        //    }
-
-        //    return randomNum;
-        //}
-
-    //private void OnPostRender()
-    //{
-    //    GL.PushMatrix(); // Понятие не имею что это значит
-    //    GL.Begin(GL.LINES);// Тоже понятие не имею что это значит, но тут ты можешь выбрать режим рисование, в данном случаи GL.LINES - линия, между каждыми 2 вершинами он будет рисовать линию, можно написать например GL.TRIANGLES - так он будет рисовать между 3 вершинами треугольник.
-    //    mat.SetPass(0);// Материал
-    //    GL.Vertex(p2.position);// Самое главное, начало линии 1 вершина 
-    //    GL.Vertex(p1.position);// Самое главное, конец линии 2 вершина
-    //    GL.End();// Понятие не имею что это значит
-    //    GL.PopMatrix();// Понятие не имею что это значит
-    //}
 
 }

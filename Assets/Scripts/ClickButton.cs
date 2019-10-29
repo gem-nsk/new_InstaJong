@@ -164,8 +164,8 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
                 //first.SetState(0, true);
                 //second.SetState(0, true);
 
-                objects.first.settings._randomNum = 0;
-                objects.second.settings._randomNum = 0;
+                //objects.first.settings._randomNum = 0;
+                //objects.second.settings._randomNum = 0;
 
                 
                 panel.color = UnityEngine.Color.white * 0.0F;
