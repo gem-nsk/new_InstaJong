@@ -30,10 +30,10 @@ public class LeftStrategy : IGameStrategy
         IDs.Add(matrix[cell1Row, matrix.GetLength(1) - 2].getId());
 
         int cell2Row = cell2.row;
-        for (int i = secondMoveCol; i < matrix.GetLength(0) - 2; i++)
+        for (int i = secondMoveCol; i < matrix.GetLength(1) - 2; i++)
         {
-            matrix[cell2Row, i].setRandomNum(matrix[cell1Row, i + 1].getRandomNum());
-            matrix[cell2Row, i].setState(matrix[cell1Row, i + 1].getState());
+            matrix[cell2Row, i].setRandomNum(matrix[cell2Row, i + 1].getRandomNum());
+            matrix[cell2Row, i].setState(matrix[cell2Row, i + 1].getState());
             IDs.Add(matrix[i, cell2Row].getId());
         }
 

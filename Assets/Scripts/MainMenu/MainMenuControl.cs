@@ -19,6 +19,10 @@ public class MainMenuControl : MonoBehaviour
     public Image musicImg;
     public Sprite[] Musicicons;
 
+    private void Awake()
+    {
+        CanvasController.instance.OpenCanvas();
+    }
 
     public void OpenInstaCoins_button()
     {
