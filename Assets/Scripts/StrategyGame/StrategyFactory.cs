@@ -36,18 +36,18 @@ public class StrategyFactory
             case GameStrategy.Right:
                 gameStrategy = new RightStrategy();
                 break;
-            //case GameStrategy.LeftAndRight:
-            //    gameStrategy = new LeftAndRightStrategy();
-            //    break;
-            //case GameStrategy.TopAndBottom:
-            //    gameStrategy = new TopAndBottomStrategy();
-            //    break;
-            //case GameStrategy.XCenter:
-            //    gameStrategy = new XCenterStrategy();
-            //    break;
-            //case GameStrategy.YCenter:
-            //    gameStrategy = new YCenterStrategy();
-            //    break;
+            case GameStrategy.LeftAndRight:
+                gameStrategy = new LeftAndRightStrategy();
+                break;
+            case GameStrategy.TopAndBottom:
+                gameStrategy = new TopAndBottomStrategy();
+                break;
+            case GameStrategy.XCenter:
+                gameStrategy = new XCenterStrategy();
+                break;
+            case GameStrategy.YCenter:
+                gameStrategy = new YCenterStrategy();
+                break;
 
         }
         return gameStrategy;
