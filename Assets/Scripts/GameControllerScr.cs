@@ -48,7 +48,7 @@ public class GameControllerScr : MonoBehaviour
     public bool searchPath = true;
     public bool isRefreshing = false;
 
-    public GridLayoutGroup grid;
+   // public GridLayoutGroup grid;
     public ParticleSystem LikeSystem;
 
     public GameUI ui;
@@ -281,7 +281,7 @@ public class GameControllerScr : MonoBehaviour
     private GameObject[] helpers = new GameObject[2];
     public IEnumerator ShowHelp()
     {
-        if(helpers[0].GetComponent<CellScr>().GetRandomNum() > 0 &&
+        if (helpers[0].GetComponent<CellScr>().GetRandomNum() > 0 &&
            helpers[1].GetComponent<CellScr>().GetRandomNum() > 0)
         {
             helpers[0].GetComponent<Image>().color = Color.yellow;
@@ -292,14 +292,14 @@ public class GameControllerScr : MonoBehaviour
             yield return StartCoroutine(SearchPath());
             ShowHelp();
         }
-        
+    }
 
     public IEnumerator HighlightHelpers()
     {
         yield return StartCoroutine(SearchPath());
 
-        helpers[0].color = Color.yellow;
-        helpers[1].color = Color.yellow;
+        helpers[0].GetComponent<Image>().color = Color.yellow;
+        helpers[1].GetComponent<Image>().color = Color.yellow;
 
         float _time = 0;
         float _elapsedTime = 1;
@@ -394,6 +394,7 @@ public class GameControllerScr : MonoBehaviour
 
             }
         }
+        
     }
 
     private List<Transform> fromPointsToTransform(List<Cell> points)
@@ -454,7 +455,7 @@ public class GameControllerScr : MonoBehaviour
 
         cellState = _data._scellState;
 
-        grid.enabled = false;
+        //grid.enabled = false;
         SortHierarchy();
     }
 
@@ -549,7 +550,7 @@ public class GameControllerScr : MonoBehaviour
         }
         yield return new WaitForSeconds(AllCells[0].LerpTime);
 
-        grid.enabled = true;
+        //grid.enabled = true;
 
         field = field.refreshField(field);
 
@@ -558,7 +559,7 @@ public class GameControllerScr : MonoBehaviour
 
         yield return new WaitForEndOfFrame();
 
-        grid.enabled = false;
+        //grid.enabled = false;
 
         SortHierarchy();
 
