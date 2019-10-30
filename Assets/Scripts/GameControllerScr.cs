@@ -281,17 +281,19 @@ public class GameControllerScr : MonoBehaviour
     private GameObject[] helpers = new GameObject[2];
     public IEnumerator ShowHelp()
     {
-        if(helpers[0].GetComponent<CellScr>().GetRandomNum() > 0 &&
+        if(helpers != null)
+        {
+            if (helpers[0].GetComponent<CellScr>().GetRandomNum() > 0 &&
            helpers[1].GetComponent<CellScr>().GetRandomNum() > 0)
-        {
-            helpers[0].GetComponent<Image>().color = Color.yellow;
-            helpers[1].GetComponent<Image>().color = Color.yellow;
+            {
+                helpers[0].GetComponent<Image>().color = Color.yellow;
+                helpers[1].GetComponent<Image>().color = Color.yellow;
+                yield break; 
+            }
         }
-        else
-        {
-            yield return StartCoroutine(SearchPath());
-            ShowHelp();
-        }
+        yield return StartCoroutine(SearchPath());
+        helpers[0].GetComponent<Image>().color = Color.yellow;
+        helpers[1].GetComponent<Image>().color = Color.yellow;
         
     }
 

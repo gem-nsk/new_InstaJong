@@ -79,7 +79,8 @@ public class GameUI : MonoBehaviour
     {
         if (GameControllerScr.instance.stats.InstaCoins >= GameControllerScr.instance.stats.HelpPrice)
         {
-            GameControllerScr.instance.ShowHelp();
+            StartCoroutine(GameControllerScr.instance.ShowHelp());
+            
             GameControllerScr.instance.stats.AddInstaCoins(-GameControllerScr.instance.stats.HelpPrice);
         }
         else
