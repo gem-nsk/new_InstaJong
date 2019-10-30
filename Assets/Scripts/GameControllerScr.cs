@@ -458,7 +458,7 @@ public class GameControllerScr : MonoBehaviour
         cellState = _data._scellState;
 
         //grid.enabled = false;
-        SortHierarchy();
+       // SortHierarchy();
     }
 
 
@@ -563,7 +563,7 @@ public class GameControllerScr : MonoBehaviour
 
         //grid.enabled = false;
 
-        SortHierarchy();
+//        SortHierarchy();
 
         isRefreshing = false;
 
