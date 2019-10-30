@@ -116,7 +116,9 @@ public class DownloadManager : MonoBehaviour
         {
             p.StandartTexture = null;
         }
+       
         _tempPosts._p.Clear();
+        sprites.Clear();
         System.GC.Collect();
         Resources.UnloadUnusedAssets();
     }
