@@ -48,7 +48,7 @@ public class GameControllerScr : MonoBehaviour
     public bool searchPath = true;
     public bool isRefreshing = false;
 
-    public GridLayoutGroup grid;
+   // public GridLayoutGroup grid;
     public ParticleSystem LikeSystem;
 
     public GameUI ui;
@@ -396,6 +396,7 @@ public class GameControllerScr : MonoBehaviour
 
             }
         }
+        
     }
 
     private List<Transform> fromPointsToTransform(List<Cell> points)
@@ -456,7 +457,7 @@ public class GameControllerScr : MonoBehaviour
 
         cellState = _data._scellState;
 
-        grid.enabled = false;
+        //grid.enabled = false;
         SortHierarchy();
     }
 
@@ -551,7 +552,7 @@ public class GameControllerScr : MonoBehaviour
         }
         yield return new WaitForSeconds(AllCells[0].LerpTime);
 
-        grid.enabled = true;
+        //grid.enabled = true;
 
         field = field.refreshField(field);
 
@@ -560,7 +561,7 @@ public class GameControllerScr : MonoBehaviour
 
         yield return new WaitForEndOfFrame();
 
-        grid.enabled = false;
+        //grid.enabled = false;
 
         SortHierarchy();
 

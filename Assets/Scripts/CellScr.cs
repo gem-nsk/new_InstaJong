@@ -70,8 +70,9 @@ public class CellScr : MonoBehaviour
         settings._state = i;
         if (i == 0)
         {
-            Hide();
             bg.color = new Color(1, 1, 1, 0);
+            img.color = new Color(1, 1, 1, 0);
+            img.sprite = null;
         }
 
         else if (i == 1)
@@ -95,6 +96,7 @@ public class CellScr : MonoBehaviour
                 Show();
                 //Texture2D tex = DownloadManager.instance.GetImageById(settings._randomNum);
                 //button.sprite = Sprite.Create(tex, new Rect(0,0,tex.width, tex.height), Vector2.zero); //AtlasController.instance.GetMaterialById(AtlasController.instance.Atlases[0],settings._randomNum);
+                img.color = new Color(1, 1, 1, 1);
                 img.sprite = DownloadManager.instance.GetImageById(settings._randomNum);
             }
             
@@ -103,8 +105,9 @@ public class CellScr : MonoBehaviour
 
     public void RemoveSprite()
     {
-        Image button = GetComponent<Image>();
-        button.sprite = null;
+        if(settings._randomNum != 0)
+        Hide();
+        img.sprite = null;
     }
 
     public void Hide()
@@ -122,15 +125,16 @@ public class CellScr : MonoBehaviour
     public IEnumerator CellVisible(bool hided)
     {
         float _time = 0;
-        //while(_time <= LerpTime)
-        //{
-        //    img.color = new Color(1, 1, 1, Mathf.Lerp(hided ? 1 : 0, hided ? 0 : 1, _time / LerpTime));
-        //    _time += Time.deltaTime;
-        //    yield return null;
-        //}
+        while (_time <= LerpTime)
+        {
+            img.color = new Color(1, 1, 1, Mathf.Lerp(hided ? 1 : 0, hided ? 0 : 1, _time / LerpTime));
+            bg.color = new Color(1, 1, 1, Mathf.Lerp(hided ? 1 : 0, hided ? 0 : 1, _time / LerpTime));
+            _time += Time.deltaTime;
+            yield return null;
+        }
         yield return null;
         img.color = new Color(1, 1, 1, hided ? 0 : 1);
-
+        bg.color = new Color(1, 1, 1, hided ? 0 : 1);
     }
 
     public int GetRandomNum()
