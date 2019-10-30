@@ -12,7 +12,7 @@ public class GameUI : MonoBehaviour
     public Text numLevel;
     public Animator AddedPointsAnimator;
 
-    public GameObject rules;
+    public Tutorial rules;
 
     public void Init()
     {
@@ -25,7 +25,7 @@ public class GameUI : MonoBehaviour
 
         if (!PlayerPrefs.HasKey("firstStart"))
         {
-            CanvasController.instance.OpenCanvas(rules);
+            StartCoroutine(rules.Init());
             PlayerPrefs.SetInt("firstStart", 1);
         }
 
@@ -79,7 +79,7 @@ public class GameUI : MonoBehaviour
     {
         if (GameControllerScr.instance.stats.InstaCoins >= GameControllerScr.instance.stats.HelpPrice)
         {
-              StartCoroutine( GameControllerScr.instance.ShowHelp());
+              StartCoroutine( GameControllerScr.instance.HighlightHelpers());
             GameControllerScr.instance.stats.AddInstaCoins(-GameControllerScr.instance.stats.HelpPrice);
         }
         else

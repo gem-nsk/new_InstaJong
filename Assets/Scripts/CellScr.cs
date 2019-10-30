@@ -38,6 +38,7 @@ public class CellScr : MonoBehaviour
     public CellJson settings;
 
     public Image img;
+    public Image bg;
 
     public float LerpTime = 0;
 
@@ -54,13 +55,14 @@ public class CellScr : MonoBehaviour
         if (i == 0)
         {
             Hide();
+            bg.color = new Color(1, 1, 1, 0);
         }
 
         else if (i == 1)
         {
             //GetComponent<Image>().color = partiesCol;
 
-            Image button = GetComponent<Image>();
+            
 
             //old method with Sprite (around 160 batches)
 
@@ -72,12 +74,12 @@ public class CellScr : MonoBehaviour
 
             //new method
             
-            if(settings._randomNum != 0 && button.sprite == null)
+            if(settings._randomNum != 0 && img.sprite == null)
             {
                 Show();
                 //Texture2D tex = DownloadManager.instance.GetImageById(settings._randomNum);
                 //button.sprite = Sprite.Create(tex, new Rect(0,0,tex.width, tex.height), Vector2.zero); //AtlasController.instance.GetMaterialById(AtlasController.instance.Atlases[0],settings._randomNum);
-                button.sprite = DownloadManager.instance.GetImageById(settings._randomNum);
+                img.sprite = DownloadManager.instance.GetImageById(settings._randomNum);
             }
             
         }

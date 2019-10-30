@@ -288,13 +288,49 @@ public class GameControllerScr : MonoBehaviour
     }
 
     private Image[] helpers = new Image[2];
-    public IEnumerator ShowHelp()
+
+    public IEnumerator HighlightHelpers()
     {
         yield return StartCoroutine(SearchPath());
 
         helpers[0].color = Color.yellow;
         helpers[1].color = Color.yellow;
 
+        float _time = 0;
+        float _elapsedTime = 1;
+
+        RectTransform[] rects = GetHelpersRect();
+
+        Debug.Log(rects[0].name);
+        Debug.Log(rects[1].name);
+
+        while(_time < _elapsedTime)
+        {
+            rects[0].localScale = Vector3.Lerp(rects[0].localScale, new Vector3(1.2f, 1.2f, 1), _time / _elapsedTime);
+            rects[1].localScale = Vector3.Lerp(rects[1].localScale, new Vector3(1.2f, 1.2f, 1), _time / _elapsedTime);
+            _time += Time.deltaTime;
+            Debug.Log(_time);
+            yield return null;
+        }
+    }
+
+    public GameObject[] GetHelpers()
+    {
+        GameObject[] obj = new GameObject[helpers.Length];
+        for (int i = 0; i < obj.Length; i++)
+        {
+            obj[i] = helpers[i].gameObject;
+        }
+        return obj;
+    }
+    public RectTransform[] GetHelpersRect()
+    {
+        RectTransform[] obj = new RectTransform[helpers.Length];
+        for (int i = 0; i < obj.Length; i++)
+        {
+            obj[i] = helpers[i].GetComponent<RectTransform>();
+        }
+        return obj;
     }
 
     public IEnumerator SearchPath()
@@ -379,6 +415,9 @@ public class GameControllerScr : MonoBehaviour
 
     public IEnumerator Strategy(List<int> IDs)
     {
+        //if (ui.numLevel.text == "1")
+        //    yield break;
+
         const string name = "cellButton";
         foreach (int id in IDs)
         {
