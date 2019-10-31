@@ -14,6 +14,7 @@ using Assets.Scripts;
 public class MainMenuControl : MonoBehaviour
 {
     public GameObject BuyInstaCoins_ui;
+    public GameObject Tutorialmenu_ui;
     public GameObject Rules_ui;
 
     public Image musicImg;
@@ -21,7 +22,7 @@ public class MainMenuControl : MonoBehaviour
 
     private void Awake()
     {
-        CanvasController.instance.OpenCanvas();
+        CanvasController.instance.OpenCanvas(Tutorialmenu_ui);
     }
 
     public void OpenInstaCoins_button()
