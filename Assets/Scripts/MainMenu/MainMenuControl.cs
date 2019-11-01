@@ -13,15 +13,24 @@ using Assets.Scripts;
 
 public class MainMenuControl : MonoBehaviour
 {
+    //Objects
+    public GameObject DAILY_ACC;
+    public GameObject SIGN_IN;
+    public GameObject SHARE_ACC;
+    public GameObject STORE;
+    public GameObject NEW_GAME;
+    //-----------------------
+
     public GameObject BuyInstaCoins_ui;
     public GameObject Tutorialmenu_ui;
     public GameObject Rules_ui;
 
     public Image musicImg;
     public Sprite[] Musicicons;
-
+    public static MainMenuControl instance;
     private void Awake()
     {
+        instance = this;
         CanvasController.instance.OpenCanvas(Tutorialmenu_ui);
     }
 

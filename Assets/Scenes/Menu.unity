@@ -1685,7 +1685,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.33720833, y: 0.21000001}
   m_AnchorMax: {x: 0.662125, y: 0.3347778}
-  m_AnchoredPosition: {x: 0, y: 52}
+  m_AnchoredPosition: {x: 0, y: 51.99997}
   m_SizeDelta: {x: -0.5999756, y: -0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &768816949
@@ -2812,7 +2812,7 @@ Canvas:
   m_GameObject: {fileID: 1254517478}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 408976870}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -4163,6 +4163,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d290c34476fb90b4f9ff400899f5c268, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DAILY_ACC: {fileID: 860683520}
+  SIGN_IN: {fileID: 1625710005}
+  SHARE_ACC: {fileID: 839857441}
+  STORE: {fileID: 768816947}
+  NEW_GAME: {fileID: 1970948341}
   BuyInstaCoins_ui: {fileID: 798926291608319558, guid: cd22c2d960e478a41aa79a94c1982259,
     type: 3}
   Tutorialmenu_ui: {fileID: 1478571770737923203, guid: b9f36ef66622f45a98082dfc27c5319b,
