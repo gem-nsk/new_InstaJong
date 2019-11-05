@@ -12,16 +12,20 @@ public class GameUI : MonoBehaviour
     public Text numLevel;
     public Animator AddedPointsAnimator;
 
+    public Animator _TipAnimator;
+
     public Tutorial rules;
 
     public void Init()
     {
-        GameControllerScr.instance.stats._addInstaCoins += UpdateCoins;
+        //GameControllerScr.instance.stats._addInstaCoins += UpdateCoins;
         GameControllerScr.instance.stats._addPoints += UpdatePoints;
 
-        UpdateCoins(GameControllerScr.instance.stats.InstaCoins);
+        //UpdateCoins(GameControllerScr.instance.stats.InstaCoins);
         UpdatePoints(GameControllerScr.instance.stats.Points);
         UpdateLevel(GameControllerScr.gameStrategy);
+
+        StartCoroutine(TipBlink());
 
         if (!PlayerPrefs.HasKey("firstStart"))
         {
@@ -30,26 +34,29 @@ public class GameUI : MonoBehaviour
         }
 
     }
+
     private void OnDisable()
     {
-        GameControllerScr.instance.stats._addInstaCoins -= UpdateCoins;
+        //GameControllerScr.instance.stats._addInstaCoins -= UpdateCoins;
         GameControllerScr.instance.stats._addPoints -= UpdatePoints;
 
     }
 
-    public void UpdateCoins(int _coins)
-    {
-        text_InstaCoins.text = _coins + "";
-    }
+    //public void UpdateCoins(int _coins)
+    //{
+    //    text_InstaCoins.text = _coins + "";
+    //}
     public void UpdatePoints(int _points)
     {
         StartCoroutine(PointsAnim(_points, GameControllerScr.instance.stats.Points));
     }
+
     public void UpdateLevel(GameStrategy strategy)
     {
         int level = int.Parse(numLevel.text);
         numLevel.text = (level + 1).ToString();
     }
+
     IEnumerator PointsAnim(int _addedPoints, int TotalPoints)
     {
         AddedPointsAnimator.SetTrigger("Action");
@@ -87,6 +94,7 @@ public class GameUI : MonoBehaviour
             CanvasController.instance.OpenCanvas(0);
         }
     }
+
     public void Button_AddTime()
     {
         if (GameControllerScr.instance.stats.InstaCoins >= GameControllerScr.instance.stats.AddTimePrice)
@@ -98,5 +106,23 @@ public class GameUI : MonoBehaviour
         {
             CanvasController.instance.OpenCanvas(0);
         }
+    }
+
+    IEnumerator TipBlink()
+    {
+        float _time = 0;
+        float _IdleTime = 5; 
+        while(_time < _IdleTime)
+        {
+            if(Input.touchCount > 0 || Input.GetMouseButtonDown(0))
+            {
+                _time = 0;
+            }
+            _time += Time.deltaTime;
+            yield return null;
+        }
+
+        _TipAnimator.SetTrigger("Blink");
+        StartCoroutine(TipBlink());
     }
 }

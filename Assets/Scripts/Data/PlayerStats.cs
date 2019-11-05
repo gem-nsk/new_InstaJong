@@ -35,6 +35,14 @@ public class PlayerStats : MonoBehaviour
     public int AddTimePrice = 50;
     public int CoinsPerLevel = 50;
 
+    public const string _id_refresh = "_id_refresh";
+    public const string _id_tip = "_id_tip";
+    public const string _id_time = "_id_time";
+
+    public int _Count_Refresh;
+    public int _Count_Tip;
+    public int _Count_Time;
+
     public (string name, string token) playerSettings
     {
         get
@@ -55,7 +63,6 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-
     public delegate void AccountKeyChanged();
     public static AccountKeyChanged AccountKeyHandler;
 
@@ -65,7 +72,11 @@ public class PlayerStats : MonoBehaviour
     public delegate void del_AddInstaCoins(int coins);
     public del_AddInstaCoins _addInstaCoins;
 
+    public delegate void del_changePack(int refresh, int tip, int time);
+    public del_changePack _changePackHandler;
+
     public static PlayerStats instance;
+
     private void Awake()
     {
         if(instance == null)
@@ -102,12 +113,21 @@ public class PlayerStats : MonoBehaviour
     {
         if (PlayerPrefs.HasKey(_instaCoinsPath) && PlayerPrefs.HasKey(_pointsPath) && PlayerPrefs.HasKey(_points_hs))
         {
+            _Count_Time = PlayerPrefs.GetInt(_id_time);
+            _Count_Tip = PlayerPrefs.GetInt(_id_tip);
+            _Count_Refresh = PlayerPrefs.GetInt(_id_refresh);
+
             InstaCoins = PlayerPrefs.GetInt(_instaCoinsPath);
             Points = PlayerPrefs.GetInt(_pointsPath);
             Points_highscore = PlayerPrefs.GetInt(_points_hs);
         }
         else //default values
         {
+
+            _Count_Time = 0;
+            _Count_Refresh = 0;
+            _Count_Tip = 0;
+
             InstaCoins = DefaultInstaCoinsValue;
             Points = 0;
             Points_highscore = 0;
@@ -131,6 +151,10 @@ public class PlayerStats : MonoBehaviour
     }
     public void SaveData()
     {
+        PlayerPrefs.SetInt(_id_refresh, _Count_Refresh);
+        PlayerPrefs.SetInt(_id_time, _Count_Time);
+        PlayerPrefs.SetInt(_id_tip, _Count_Tip);
+
         PlayerPrefs.SetInt(_instaCoinsPath, InstaCoins);
         PlayerPrefs.SetInt(_pointsPath, Points);
         PlayerPrefs.SetInt(_points_hs, Points_highscore);
@@ -142,6 +166,19 @@ public class PlayerStats : MonoBehaviour
         _addPoints?.Invoke(_points);
         SaveData();
     }
+
+    public void AddPack(int _tipCount, int _timeCount, int _refreshCount)
+    {
+        _Count_Refresh += _refreshCount;
+        _Count_Time += _timeCount;
+        _Count_Tip += _tipCount;
+
+        if (_changePackHandler != null)
+            _changePackHandler(_Count_Refresh, _Count_Tip, _Count_Time);
+
+        SaveData();
+    }
+
     public int AddLevelInstaCoins(int level)
     {
         int _c = level * CoinsPerLevel;

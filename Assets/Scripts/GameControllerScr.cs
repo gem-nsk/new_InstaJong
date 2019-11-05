@@ -54,7 +54,7 @@ public class GameControllerScr : MonoBehaviour
     public GameUI ui;
 
     public static bool Interactable = true;
-    public UnityEngine.UI.Image blinkImage;
+    public CellScr blinkImage;
 
     public GameObject _previewer;
     public GameObject _endGamePreview;
@@ -152,7 +152,7 @@ public class GameControllerScr : MonoBehaviour
         }
         if (blinkImage != null)
         {
-            blinkImage.color = new UnityEngine.Color(1, 1, 1, Mathf.Clamp(Mathf.PingPong(Time.time, 1), 0.5f, 1));
+            blinkImage.img.color = new UnityEngine.Color(1, 1, 1, Mathf.Clamp(Mathf.PingPong(Time.time, 1), 0.5f, 1));
         }
         if (endGameFlag == 1)
         {
@@ -262,7 +262,7 @@ public class GameControllerScr : MonoBehaviour
             StandartcolorForFirstCell();
         }
         if (cell.settings._state == 1)
-            blinkImage = cell.GetComponent<UnityEngine.UI.Image>();
+            blinkImage = cell.GetComponent<CellScr>();
     }
     public void StopBlinking()
     {
@@ -273,7 +273,7 @@ public class GameControllerScr : MonoBehaviour
     {
         if (blinkImage)
         {
-            blinkImage.color = new UnityEngine.Color(1, 1, 1);
+            blinkImage.img.color = new UnityEngine.Color(1, 1, 1);
             StopBlinking();
         }
     }
