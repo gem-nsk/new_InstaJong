@@ -11,6 +11,14 @@ public class GameModeSelect_ui : ui_basement
     public GameObject UserSearching;
     public GameObject HistoryCanvas;
 
+    public GameObject Tutorial;
+
+    public override void Activate()
+    {
+        base.Activate();
+        //CanvasController.instance.OpenCanvas(Tutorial);
+    }
+
     public void PlayGame(int arg)
     {
         switch (arg)
