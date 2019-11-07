@@ -12,6 +12,10 @@ public class GameUI : MonoBehaviour
     public Text numLevel;
     public Animator AddedPointsAnimator;
 
+    public Text _Refresh_text;
+    public Text _Tip_text;
+    public Text _Time_text;
+
     public Animator _TipAnimator;
 
     public Tutorial rules;
@@ -20,6 +24,8 @@ public class GameUI : MonoBehaviour
     {
         //GameControllerScr.instance.stats._addInstaCoins += UpdateCoins;
         GameControllerScr.instance.stats._addPoints += UpdatePoints;
+        GameControllerScr.instance.stats._changePackHandler += UpdatePackInfo;
+        GameControllerScr.instance.stats.AddPack(0, 0, 0);
 
         //UpdateCoins(GameControllerScr.instance.stats.InstaCoins);
         UpdatePoints(GameControllerScr.instance.stats.Points);
@@ -39,13 +45,20 @@ public class GameUI : MonoBehaviour
     {
         //GameControllerScr.instance.stats._addInstaCoins -= UpdateCoins;
         GameControllerScr.instance.stats._addPoints -= UpdatePoints;
-
+        GameControllerScr.instance.stats._changePackHandler -= UpdatePackInfo;
     }
 
     //public void UpdateCoins(int _coins)
     //{
     //    text_InstaCoins.text = _coins + "";
     //}
+    public void UpdatePackInfo(int refresh, int tip, int time)
+    {
+        _Refresh_text.text = refresh + "";
+        _Tip_text.text = tip + "";
+        _Time_text.text = time + "";
+    }
+
     public void UpdatePoints(int _points)
     {
         StartCoroutine(PointsAnim(_points, GameControllerScr.instance.stats.Points));
@@ -67,14 +80,20 @@ public class GameUI : MonoBehaviour
 
     public void RefreshButton()
     {
-        if(GameControllerScr.instance.stats.InstaCoins >= GameControllerScr.instance.stats.RefreshPrice)
+        if(PlayerStats.instance._Count_Refresh > 0)
         {
             _refresh(true);
+            PlayerStats.instance.AddPack(0, 0, -1);
         }
         else
         {
             CanvasController.instance.OpenCanvas(2);
         }
+
+        //if(GameControllerScr.instance.stats.InstaCoins >= GameControllerScr.instance.stats.RefreshPrice)
+        //{
+        //    _refresh(true);
+        //}
     }
 
     public void _refresh(bool i)
@@ -84,10 +103,10 @@ public class GameUI : MonoBehaviour
 
     public void ShowHelp()
     {
-        if (GameControllerScr.instance.stats.InstaCoins >= GameControllerScr.instance.stats.HelpPrice)
+        if (PlayerStats.instance._Count_Tip > 0)
         {
               StartCoroutine( GameControllerScr.instance.HighlightHelpers());
-            GameControllerScr.instance.stats.AddInstaCoins(-GameControllerScr.instance.stats.HelpPrice);
+            GameControllerScr.instance.stats.AddPack(-1, 0,0);
         }
         else
         {
@@ -97,10 +116,10 @@ public class GameUI : MonoBehaviour
 
     public void Button_AddTime()
     {
-        if (GameControllerScr.instance.stats.InstaCoins >= GameControllerScr.instance.stats.AddTimePrice)
+        if (PlayerStats.instance._Count_Time > 0)
         {
             GameControllerScr.instance._Timer.AddTime();
-            GameControllerScr.instance.stats.AddInstaCoins(-GameControllerScr.instance.stats.AddTimePrice);
+            GameControllerScr.instance.stats.AddPack(0, -1, 0);
         }
         else
         {

@@ -31,6 +31,7 @@ public class MainMenuControl : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        Application.targetFrameRate = 60;
         CanvasController.instance.OpenCanvas(Tutorialmenu_ui);
     }
 
