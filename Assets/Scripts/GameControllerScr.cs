@@ -68,6 +68,8 @@ public class GameControllerScr : MonoBehaviour
 
     const string nameButtons = "cellButton";
 
+    public GameObject Tutorial;
+
 
     [Header("Player stats")]
     public PlayerStats stats;
@@ -75,11 +77,48 @@ public class GameControllerScr : MonoBehaviour
     private List<string> LEVELS;
     public bool nextLevelFlag = false;
 
+    //ForTutorial
+    public GameObject Refresh_t;
+    public GameObject Hint_t;
+    public GameObject Time_t;
+    public GameObject Timer_t;
+    public GameObject Score_t;
+    public GameObject Pause_t;
+
     #region Singleton
     public static GameControllerScr instance;
     private void Awake()
     {
         instance = this;
+
+        List<RectTransform> RTs = new List<RectTransform>();
+        RTs.Add((RectTransform)Refresh_t.transform);
+        RTs.Add((RectTransform)Refresh_t.transform);
+        RTs.Add((RectTransform)Hint_t.transform);
+        RTs.Add((RectTransform)Time_t.transform);
+        RTs.Add((RectTransform)Timer_t.transform);
+        RTs.Add((RectTransform)Timer_t.transform);
+        RTs.Add((RectTransform)Score_t.transform);
+        RTs.Add((RectTransform)Pause_t.transform);
+
+        string[] messages = {
+            "Вы можете нажать на кнопку, чтобы перемешать поле",
+            "Поле перемешается автоматически и бесплатно, если не будет хода",
+
+            "Если не видите ход, можете воспользовать подсказкой",
+
+            "Если время кончается, можете добавить время",
+
+            "У вас есть 4 минуты чтобы пройти уровень",
+            "За каждую удаленную пару, будет прибавляться время",
+
+            "За найденную пару вам будут начисляться очки",
+
+            "Нажатием на эту кнопку вы поставите игру на паузу и вернетесь в меню"
+        };
+
+        CanvasController.instance.OpenCanvas(Tutorial);
+        TutorialMenu_ui.instance.Init(RTs, 8, messages, true);
     }
     #endregion
     #region MainCode

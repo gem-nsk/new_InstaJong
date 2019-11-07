@@ -4837,6 +4837,9 @@ MonoBehaviour:
   HelpPrice: 210
   AddTimePrice: 350
   CoinsPerLevel: 50
+  _Count_Refresh: 0
+  _Count_Tip: 0
+  _Count_Time: 0
 --- !u!4 &2118844685
 Transform:
   m_ObjectHideFlags: 0

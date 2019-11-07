@@ -427,8 +427,16 @@ MonoBehaviour:
   _endGamePreview: {fileID: 8875144992572270659, guid: 1949d6e501261814fae91f8d7541299e,
     type: 3}
   mapLoad: 
+  Tutorial: {fileID: 1478571770737923203, guid: b9f36ef66622f45a98082dfc27c5319b,
+    type: 3}
   stats: {fileID: 0}
   nextLevelFlag: 0
+  Refresh_t: {fileID: 500201613}
+  Hint_t: {fileID: 1217823599}
+  Time_t: {fileID: 1503867047}
+  Timer_t: {fileID: 773875617}
+  Score_t: {fileID: 1579119666}
+  Pause_t: {fileID: 1916648458}
 --- !u!4 &84232291
 Transform:
   m_ObjectHideFlags: 0
@@ -1394,7 +1402,7 @@ Canvas:
   m_GameObject: {fileID: 1117201703}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
