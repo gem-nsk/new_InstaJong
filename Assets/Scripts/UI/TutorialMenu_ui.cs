@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -34,7 +35,7 @@ public class TutorialMenu_ui: ui_basement
 
         width = rt.rect.width;
         height = rt.rect.height;
-
+        
 
         Init();
 
@@ -59,9 +60,11 @@ public class TutorialMenu_ui: ui_basement
             RTs[i]
             );
             hints_messages.Add(kp);
+            
         }
 
         NextHint();
+        
     }
 
     public void MakeHint(string message, RectTransform position)
@@ -75,6 +78,33 @@ public class TutorialMenu_ui: ui_basement
         Debug.Log(position.transform.position);
         
         idCurrentHint = idCurrentHint + 1;
+        StartCoroutine(ShowHint());
+
+    }
+
+    private IEnumerator ShowHint()
+    {
+        while (true)
+        {
+            yield return StartCoroutine(SizeTip(hint.GetComponent<RectTransform>(),true));
+            yield return new WaitForSeconds(5);
+            yield return StartCoroutine(SizeTip(hint.GetComponent<RectTransform>(),false));
+
+        }
+    }
+
+    private IEnumerator SizeTip(RectTransform TipSize, bool hided)
+    {
+        float _time = 0;
+        float _smoothTime = 1;
+
+
+        while (_time < _smoothTime)
+        {
+            TipSize.sizeDelta = new Vector2(TipSize.sizeDelta.x, Mathf.Lerp(TipSize.sizeDelta.y, hided ? 440 : 150, _time / _smoothTime));
+            _time += Time.deltaTime;
+            yield return null;
+        }
     }
 
     public void NextHint()
@@ -88,6 +118,7 @@ public class TutorialMenu_ui: ui_basement
             var msg = hints_messages[idCurrentHint].Key;
             var pos = hints_messages[idCurrentHint].Value;
             MakeHint(msg, pos);
+            
         }
         else
         {
