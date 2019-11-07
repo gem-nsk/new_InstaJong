@@ -11,12 +11,32 @@ public class GameModeSelect_ui : ui_basement
     public GameObject UserSearching;
     public GameObject HistoryCanvas;
 
+    public GameObject MyAccount_t;
+    public GameObject Hashtag_t;
+    public GameObject FindAccoount_t;
+    public GameObject History_t;
+
     public GameObject Tutorial;
 
     public override void Activate()
     {
         base.Activate();
-        //CanvasController.instance.OpenCanvas(Tutorial);
+
+        List<RectTransform> RTs = new List<RectTransform>();
+        RTs.Add((RectTransform)MyAccount_t.transform);
+        RTs.Add((RectTransform)Hashtag_t.transform);
+        RTs.Add((RectTransform)FindAccoount_t.transform);
+        RTs.Add((RectTransform)History_t.transform);
+
+        string[] messages = {
+        "Вы можете играть фотографиями вашего профиля",
+        "Вы можете найти фотографии по хэштегу",
+        "Вы можете найти конкретный аккаунт",
+        "Вы можете просмотреть историю вашего поиска",
+        };
+
+        CanvasController.instance.OpenCanvas(Tutorial, false);
+        TutorialMenu_ui.instance.Init(RTs, 4, messages, false);
     }
 
     public void PlayGame(int arg)

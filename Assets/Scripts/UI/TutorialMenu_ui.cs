@@ -9,6 +9,7 @@ public class TutorialMenu_ui: ui_basement
 
     public Transform hints;
     public GameObject hint;
+    public GameObject hintReverse;
     private string hintName = "Hint";
     private int countHints = 5;
     private int idCurrentHint = 0;
@@ -17,17 +18,25 @@ public class TutorialMenu_ui: ui_basement
     private float width;
     private float height;
 
+    private bool rotate;
+
+    public static TutorialMenu_ui instance;
+
+    public Sprite normalPos;
+    public Sprite inversePos;
+
     private string[] messages = {
-        "Аккаунт дня",
-        "Войти в аккаунт",
-        "Поделиться аккаунтом",
-        "Магазин",
-        "Новая игра"
+        "Вы можете играть фотографиями популярного аккаунта",
+        "Вы можете войти в свой аккаунт, чтобы играть фотографиями вашего профиля",
+        "Вы можете поделиться своим аккаунтом, чтобы ваши друзья могли в него поиграть",
+        "Здесь вы можете купить монетки, подсказки, бонусы или отключить рекламу",
+        "Здесь вы можете начать игру"
     };
 
     public override void Activate()
     {
         base.Activate();
+        instance = this;
 
         //GetComponent<Canvas>().worldCamera = Camera.main;
 
@@ -35,24 +44,18 @@ public class TutorialMenu_ui: ui_basement
 
         width = rt.rect.width;
         height = rt.rect.height;
-        
-
-        Init();
+       
 
         //Camera.main.WorldToScreenPoint();
         //Camera.main.ScreenToWorldPoint();
         
     }
 
-    private void Init()
+    public void Init(List<RectTransform> RTs, int countHints, string[] messages, bool rotate)
     {
-        List<RectTransform> RTs = new List<RectTransform>();
-        RTs.Add((RectTransform)MainMenuControl.instance.DAILY_ACC.transform);
-        RTs.Add((RectTransform)MainMenuControl.instance.SIGN_IN.transform);
-        RTs.Add((RectTransform)MainMenuControl.instance.SHARE_ACC.transform);
-        RTs.Add((RectTransform)MainMenuControl.instance.STORE.transform);
-        RTs.Add((RectTransform)MainMenuControl.instance.NEW_GAME.transform);
-
+        this.messages = messages;
+        this.countHints = countHints;
+        this.rotate = rotate;
         for(int i = 0; i < countHints; i++)
         {
             var kp = new KeyValuePair<string, RectTransform>(
@@ -69,16 +72,33 @@ public class TutorialMenu_ui: ui_basement
 
     public void MakeHint(string message, RectTransform position)
     {
-        GameObject _hint = Instantiate(hint);
-        _hint.transform.SetParent(hints, false);
-        _hint.name = hintName + (idCurrentHint + 1);
-        _hint.GetComponentInChildren<Text>().text = message;
 
-        _hint.GetComponent<Transform>().position =  new Vector2(position.transform.position.x, position.transform.position.y + height/2); // new Vector2(position.localPosition.y, position.localPosition.x);
+        // new Vector2(position.localPosition.y, position.localPosition.x);
+        if (rotate)
+        {
+            GameObject _hint = Instantiate(hintReverse);
+            _hint.transform.SetParent(hints, false);
+            _hint.name = hintName + (idCurrentHint + 1);
+            _hint.GetComponentInChildren<Text>().text = message;
+
+            _hint.GetComponent<Transform>().position = new Vector2(position.transform.position.x, position.transform.position.y - height / 2);
+            _hint.GetComponent<Image>().sprite = inversePos;
+        }
+        else
+        {
+            GameObject _hint = Instantiate(hint);
+            _hint.transform.SetParent(hints, false);
+            _hint.name = hintName + (idCurrentHint + 1);
+            _hint.GetComponentInChildren<Text>().text = message;
+            _hint.GetComponent<Transform>().position = new Vector2(position.transform.position.x, position.transform.position.y + height / 2);
+        }
+
+        
+
         Debug.Log(position.transform.position);
         
         idCurrentHint = idCurrentHint + 1;
-        StartCoroutine(ShowHint());
+        //StartCoroutine(ShowHint());
 
     }
 

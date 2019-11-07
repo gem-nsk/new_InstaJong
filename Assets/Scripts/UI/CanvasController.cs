@@ -32,6 +32,16 @@ public class CanvasController : MonoBehaviour
 
         return _currentCanvas.gameObject;
     }
+
+    public GameObject OpenCanvas(GameObject _canvas, bool flg)
+    {
+
+        ui_basement canvas = Instantiate(_canvas).GetComponent<ui_basement>();
+        canvas.Activate();
+
+        return canvas.gameObject;
+    }
+
     public GameObject OpenCanvas(int id)
     {
         if (_currentCanvas)

@@ -957,7 +957,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000034332, y: -0.0000092405}
+  m_AnchoredPosition: {x: 0.000034332, y: -0}
   m_SizeDelta: {x: 1738.8, y: 673.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8875222349212782071
@@ -1375,6 +1375,10 @@ MonoBehaviour:
     type: 3}
   HistoryCanvas: {fileID: 1784286084120432557, guid: 8a2ffbae78af1b540a0cf85751118df6,
     type: 3}
+  MyAccount_t: {fileID: 1285688342774944239}
+  Hashtag_t: {fileID: 2073242212390985686}
+  FindAccoount_t: {fileID: 1441083777872844965}
+  History_t: {fileID: 7146420455608578307}
   Tutorial: {fileID: 1478571770737923203, guid: b9f36ef66622f45a98082dfc27c5319b,
     type: 3}
 --- !u!1 &8446601844653601208

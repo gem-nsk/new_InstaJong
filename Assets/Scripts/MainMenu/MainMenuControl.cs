@@ -30,9 +30,25 @@ public class MainMenuControl : MonoBehaviour
     public static MainMenuControl instance;
     private void Awake()
     {
+        List<RectTransform> RTs = new List<RectTransform>();
+        RTs.Add((RectTransform)DAILY_ACC.transform);
+        RTs.Add((RectTransform)SIGN_IN.transform);
+        RTs.Add((RectTransform)SHARE_ACC.transform);
+        RTs.Add((RectTransform)STORE.transform);
+        RTs.Add((RectTransform)NEW_GAME.transform);
+
+        string[] messages = {
+            "Вы можете играть фотографиями популярного аккаунта",
+            "Вы можете войти в свой аккаунт, чтобы играть фотографиями вашего профиля",
+            "Вы можете поделиться своим аккаунтом, чтобы ваши друзья могли в него поиграть",
+            "Здесь вы можете купить монетки, подсказки, бонусы или отключить рекламу",
+            "Здесь вы можете начать игру"
+        };
+
         instance = this;
         Application.targetFrameRate = 60;
         CanvasController.instance.OpenCanvas(Tutorialmenu_ui);
+        TutorialMenu_ui.instance.Init(RTs, 5, messages, false);
     }
 
     public void OpenInstaCoins_button()
