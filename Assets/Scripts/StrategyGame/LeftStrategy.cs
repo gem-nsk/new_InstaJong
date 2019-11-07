@@ -34,7 +34,7 @@ public class LeftStrategy : IGameStrategy
         {
             matrix[cell2Row, i].setRandomNum(matrix[cell2Row, i + 1].getRandomNum());
             matrix[cell2Row, i].setState(matrix[cell2Row, i + 1].getState());
-            IDs.Add(matrix[i, cell2Row].getId());
+            IDs.Add(matrix[cell2Row, i].getId());
         }
 
         matrix[cell2Row, matrix.GetLength(1) - 2].setState(0);

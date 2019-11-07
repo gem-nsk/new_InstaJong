@@ -105,10 +105,10 @@ public class PikachuPathfinder : MonoBehaviour
             }
             if (cell1.getCoords().j == cell2.getCoords().j)
             {
-                Debug.Log("Line y");
+                //Debug.Log("Line y");
                 if (CheckLineY(matrix, cell1.getCoords().i, cell2.getCoords().i, cell1.getCoords().j))
                 {
-                    Debug.Log("ok line y");
+                    //Debug.Log("ok line y");
                     cellsOnLine.Add(cell1);
                     cellsOnLine.Add(cell2);
                     return cellsOnLine;
@@ -294,7 +294,7 @@ public class PikachuPathfinder : MonoBehaviour
 	 */
     private static int CheckMoreLineX(int[,] matrix, Cell cell1, Cell cell2, int type)
     {
-        Debug.Log("check chec more x");
+        //Debug.Log("check chec more x");
         // find point have y min
         Cell minColCell = cell1, maxColCell = cell2;
         if (cell1.getCoords().j > cell2.getCoords().j)
@@ -311,7 +311,7 @@ public class PikachuPathfinder : MonoBehaviour
             colFinish = minColCell.getCoords().j;
             y = minColCell.getCoords().j + type;
             row = maxColCell.getCoords().i;
-            Debug.Log("colFinish = " + colFinish);
+            //Debug.Log("colFinish = " + colFinish);
         }
 
         // find column finish of line
@@ -340,7 +340,7 @@ public class PikachuPathfinder : MonoBehaviour
 
     private static int CheckMoreLineY(int[,] matrix, Cell cell1, Cell cell2, int type)
     {
-        Debug.Log("check more y");
+        //Debug.Log("check more y");
         Cell minRowCell = cell1, maxRowCell = cell2;
         if (cell1.getCoords().i > cell2.getCoords().i)
         {

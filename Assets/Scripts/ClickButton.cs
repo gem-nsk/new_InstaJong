@@ -171,7 +171,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
                 panel.color = UnityEngine.Color.white * 0.0F;
 
                 gameController.cellState -= 2;
-                Debug.Log("#cellState: "+gameController.cellState);
+                //Debug.Log("#cellState: "+gameController.cellState);
                 //if (gameController.cellState == 0) gameController.endGameFlag = 1;
                 if (gameController.cellState == 0)
                 {
@@ -214,8 +214,8 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
 
         }
 
-        Debug.Log("#ClickButton/OnClick/first:" + Buttons[0]);
-        Debug.Log("#ClickButton/OnClick/second:" + Buttons[1]);
+        //Debug.Log("#ClickButton/OnClick/first:" + Buttons[0]);
+        //Debug.Log("#ClickButton/OnClick/second:" + Buttons[1]);
         Buttons.Clear();
 
 

@@ -1600,7 +1600,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6239167319327120278
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1617,8 +1617,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -137.5}
-  m_SizeDelta: {x: -65, y: -462}
+  m_AnchoredPosition: {x: 0, y: -152}
+  m_SizeDelta: {x: -65, y: -476.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3748913994928200360
 CanvasRenderer:
@@ -1659,7 +1659,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Card includes:\n\u2022 5 Tips\n\u2022 3 Refreshes\n\u2022 1 Add time"
+  m_Text: "Card includes:\n\u2022 5 Tips\n\u2022 1 Add time\n\u2022 3 Refreshes"
 --- !u!114 &1798631157437376238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1667,7 +1667,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1035001785332476403}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9fc151ff9ab428047bf323cf85c043f0, type: 3}
   m_Name: 
@@ -4291,7 +4291,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7886697983014718122
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4308,8 +4308,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -137.5}
-  m_SizeDelta: {x: -65, y: -462}
+  m_AnchoredPosition: {x: 0, y: -148.44}
+  m_SizeDelta: {x: -65, y: -472.87}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4995066174810919933
 CanvasRenderer:
@@ -4344,13 +4344,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 42
-    m_Alignment: 4
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u041A\u0430\u0440\u0442\u0430 Celebrity \u043D\u0430 1002 InstaCoins"
+  m_Text: "Card includes:\n\u2022 15 Tips\n\u2022 5 Add time\n\u2022 10 Refreshes"
 --- !u!114 &902941604611042700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4456,7 +4456,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1881854613711125981
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4473,8 +4473,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -137.5}
-  m_SizeDelta: {x: -65, y: -462}
+  m_AnchoredPosition: {x: 0, y: -152}
+  m_SizeDelta: {x: -65, y: -483.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3895253230089195769
 CanvasRenderer:
@@ -4509,13 +4509,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 42
-    m_Alignment: 4
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u041A\u0430\u0440\u0442\u0430 Celebrity \u043D\u0430 1002 InstaCoins"
+  m_Text: "Card includes:\n\u2022 10 Tips\n\u2022 3 Add time\n\u2022 6 Refreshes"
 --- !u!114 &9152106252127107108
 MonoBehaviour:
   m_ObjectHideFlags: 0

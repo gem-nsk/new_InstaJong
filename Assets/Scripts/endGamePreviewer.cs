@@ -9,7 +9,7 @@ public class endGamePreviewer : ui_basement
     public TextLocalization AddedInstaCoins_text;
     public TextLocalization[] Score_text;
     public TextLocalization[] Highscore_text;
-
+    public GameObject _doubleCoinsButton;
     private int state;
 
     public GameObject[] Endings;
@@ -20,7 +20,6 @@ public class endGamePreviewer : ui_basement
         GameControllerScr.instance._Timer.TimerState(true);
         this.state = state;
 
-        AdsController.instance.ShowInterstitial();
 
         Debug.Log(GameControllerScr.instance.stats.GetScore().ToString());
 
@@ -80,6 +79,7 @@ public class endGamePreviewer : ui_basement
         }
         gameController._Timer.TimerState(false);
     }
+
     public void RestartGame()
     {
         GameControllerScr.instance.stats.SetPointsTo(0);
@@ -87,5 +87,19 @@ public class endGamePreviewer : ui_basement
         GameControllerScr.instance._Timer._isPaused = false;
         StartCoroutine(GameControllerScr.instance.CreateButtonCells());
         CanvasControllerClose();
+    }
+
+    public void DoubleCoins()
+    {
+        AdsController.instance.ShowVideo();
+        AdsController.instance._video.OnUserEarnedReward += RewardHandler;
+
+    }
+
+    private void RewardHandler(object sender, GoogleMobileAds.Api.Reward e)
+    {
+        PlayerStats.instance.AddLevelInstaCoins(GameControllerScr.numMap);
+        AdsController.instance._video.OnUserEarnedReward -= RewardHandler;
+        _doubleCoinsButton.SetActive(false);
     }
 }
