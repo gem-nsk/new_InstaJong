@@ -46,6 +46,7 @@ public class MainMenuControl : MonoBehaviour
         };
 
         instance = this;
+        Application.targetFrameRate = 60;
         CanvasController.instance.OpenCanvas(Tutorialmenu_ui);
         TutorialMenu_ui.instance.Init(RTs, 5, messages, false);
     }

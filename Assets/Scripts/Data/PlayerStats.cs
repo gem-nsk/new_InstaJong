@@ -82,6 +82,7 @@ public class PlayerStats : MonoBehaviour
         if(instance == null)
         {
             instance = this;
+            LoadData();
             DontDestroyOnLoad(gameObject);
         }
         else
