@@ -170,10 +170,16 @@ public class TutorialMenu_ui: ui_basement
         {
             if (flg == true)
             {
+                GameControllerScr.instance.StartTutorial()
+                ;
+                endFlg = true;
                 canvas.renderMode = RenderMode.ScreenSpaceCamera;
                 canvas.worldCamera = Camera.main;
+                
+                
             }
             
+
             base.DeActivate();
 
         }
