@@ -16,6 +16,8 @@ public class TutorialMenu_ui: ui_basement
     private List<KeyValuePair<string, RectTransform>> hints_messages = new List<KeyValuePair<string, RectTransform>>();
 
     private GameObject _CurrentHint;
+    private Canvas canvas;
+    private bool flg;
 
     private float width;
     private float height;
@@ -26,6 +28,7 @@ public class TutorialMenu_ui: ui_basement
 
     public Sprite normalPos;
     public Sprite inversePos;
+    public static bool endFlg;
 
     private string[] messages = {
         "Вы можете играть фотографиями популярного аккаунта",
@@ -67,9 +70,29 @@ public class TutorialMenu_ui: ui_basement
             hints_messages.Add(kp);
             
         }
-
+        flg = false;
         NextHint();
         
+    }
+
+    public void Init(List<RectTransform> RTs, int countHints, string[] messages, bool rotate, Canvas canvas)
+    {
+        this.messages = messages;
+        this.countHints = countHints;
+        this.rotate = rotate;
+        this.canvas = canvas;
+        for (int i = 0; i < countHints; i++)
+        {
+            var kp = new KeyValuePair<string, RectTransform>(
+            messages[i],
+            RTs[i]
+            );
+            hints_messages.Add(kp);
+
+        }
+        flg = true;
+        NextHint();
+
     }
 
     public void MakeHint(string message, RectTransform position)
@@ -82,7 +105,7 @@ public class TutorialMenu_ui: ui_basement
             _CurrentHint.name = hintName + (idCurrentHint + 1);
             _CurrentHint.GetComponentInChildren<Text>().text = message;
 
-            _CurrentHint.transform.position = new Vector2(position.transform.position.x, position.transform.position.y - height / 2);
+            _CurrentHint.transform.position = new Vector2(position.transform.position.x, position.transform.position.y);
             _CurrentHint.GetComponent<Image>().sprite = inversePos;
 
         }
@@ -92,7 +115,7 @@ public class TutorialMenu_ui: ui_basement
             _CurrentHint.transform.SetParent(hints, false);
             _CurrentHint.name = hintName + (idCurrentHint + 1);
             _CurrentHint.GetComponentInChildren<Text>().text = message;
-            _CurrentHint.transform.position = new Vector2(position.transform.position.x, position.transform.position.y + height / 2);
+            _CurrentHint.transform.position = new Vector2(position.transform.position.x, position.transform.position.y);
         }
 
         StartCoroutine(ShowHint());
@@ -145,7 +168,14 @@ public class TutorialMenu_ui: ui_basement
         }
         else
         {
+            if (flg == true)
+            {
+                canvas.renderMode = RenderMode.ScreenSpaceCamera;
+                canvas.worldCamera = Camera.main;
+            }
+            
             base.DeActivate();
+
         }
 
         

@@ -210,6 +210,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
         else
         {
             Debug.Log("Pare not correct!");
+           
             GameControllerScr.instance.StandartcolorForFirstCell();
 
         }
