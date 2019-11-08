@@ -14,6 +14,8 @@ using Assets.Scripts;
 public class MainMenuControl : MonoBehaviour
 {
     //Objects
+    public Button ContinueButton;
+    [Header("Tutorial")]
     public GameObject DAILY_ACC;
     public GameObject SIGN_IN;
     public GameObject SHARE_ACC;
@@ -30,27 +32,37 @@ public class MainMenuControl : MonoBehaviour
     public static MainMenuControl instance;
     private void Awake()
     {
-        List<RectTransform> RTs = new List<RectTransform>();
-        RTs.Add((RectTransform)DAILY_ACC.transform);
-        RTs.Add((RectTransform)SIGN_IN.transform);
-        RTs.Add((RectTransform)SHARE_ACC.transform);
-        RTs.Add((RectTransform)STORE.transform);
-        RTs.Add((RectTransform)NEW_GAME.transform);
+        #region tutorial
+        if (!PlayerPrefs.HasKey("_tut1"))
+        {
+            List<RectTransform> RTs = new List<RectTransform>();
+            RTs.Add((RectTransform)DAILY_ACC.transform);
+            RTs.Add((RectTransform)SIGN_IN.transform);
+            RTs.Add((RectTransform)SHARE_ACC.transform);
+            RTs.Add((RectTransform)STORE.transform);
+            RTs.Add((RectTransform)NEW_GAME.transform);
 
-        string[] messages = {
+            string[] messages = {
             "Вы можете играть фотографиями популярного аккаунта",
             "Вы можете войти в свой аккаунт, чтобы играть фотографиями вашего профиля",
             "Вы можете поделиться своим аккаунтом, чтобы ваши друзья могли в него поиграть",
             "Здесь вы можете купить монетки, подсказки, бонусы или отключить рекламу",
             "Здесь вы можете начать игру"
-        };
+            };
 
-        instance = this;
-        Application.targetFrameRate = 60;
-        CanvasController.instance.OpenCanvas(Tutorialmenu_ui);
-        TutorialMenu_ui.instance.Init(RTs, 5, messages, false);
+            instance = this;
+            Application.targetFrameRate = 60;
+
+            CanvasController.instance.OpenCanvas(Tutorialmenu_ui);
+            TutorialMenu_ui.instance.Init(RTs, 5, messages, false);
+
+            PlayerPrefs.SetInt("_tut1", 1);
+        }
+        #endregion
+        bool b = DataSave.IsSaveExists();
+        ContinueButton.interactable = b;
+        ContinueButton.GetComponentInChildren<Text>().color = b ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0.7f);
     }
-
     public void OpenInstaCoins_button()
     {
 

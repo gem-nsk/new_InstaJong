@@ -105,5 +105,16 @@ public class DataSave : MonoBehaviour
             Directory.CreateDirectory(dir);
         }
     }
+    public static bool IsSaveExists()
+    {
+        if(File.Exists(Application.persistentDataPath + "/grid.json"))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
 }

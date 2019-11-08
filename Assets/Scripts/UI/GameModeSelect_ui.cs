@@ -22,21 +22,26 @@ public class GameModeSelect_ui : ui_basement
     {
         base.Activate();
 
-        List<RectTransform> RTs = new List<RectTransform>();
-        RTs.Add((RectTransform)MyAccount_t.transform);
-        RTs.Add((RectTransform)Hashtag_t.transform);
-        RTs.Add((RectTransform)FindAccoount_t.transform);
-        RTs.Add((RectTransform)History_t.transform);
+        if(!PlayerPrefs.HasKey("_tut3"))
+        {
+            List<RectTransform> RTs = new List<RectTransform>();
+            RTs.Add((RectTransform)MyAccount_t.transform);
+            RTs.Add((RectTransform)Hashtag_t.transform);
+            RTs.Add((RectTransform)FindAccoount_t.transform);
+            RTs.Add((RectTransform)History_t.transform);
 
-        string[] messages = {
+            string[] messages = {
         "Вы можете играть фотографиями вашего профиля",
         "Вы можете найти фотографии по хэштегу",
         "Вы можете найти конкретный аккаунт",
         "Вы можете просмотреть историю вашего поиска",
         };
 
-        CanvasController.instance.OpenCanvas(Tutorial, false);
-        TutorialMenu_ui.instance.Init(RTs, 4, messages, false);
+            CanvasController.instance.OpenCanvas(Tutorial, false);
+            TutorialMenu_ui.instance.Init(RTs, 4, messages, false);
+
+            PlayerPrefs.SetInt("_tut3", 1);
+        }
     }
 
     public void PlayGame(int arg)

@@ -33,11 +33,11 @@ public class GameUI : MonoBehaviour
 
         StartCoroutine(TipBlink());
 
-        if (!PlayerPrefs.HasKey("firstStart"))
-        {
-            StartCoroutine(rules.Init());
-            PlayerPrefs.SetInt("firstStart", 1);
-        }
+        //if (!PlayerPrefs.HasKey("firstStart"))
+        //{
+        //    StartCoroutine(rules.Init());
+        //    PlayerPrefs.SetInt("firstStart", 1);
+        //}
 
     }
 

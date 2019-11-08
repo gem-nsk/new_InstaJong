@@ -79,6 +79,7 @@ public class GameControllerScr : MonoBehaviour
     public bool nextLevelFlag = false;
 
     //ForTutorial
+    [Header("Tutorial")]
     public GameObject Refresh_t;
     public GameObject Hint_t;
     public GameObject Time_t;
@@ -96,35 +97,7 @@ public class GameControllerScr : MonoBehaviour
     {
         instance = this;
 
-        RTs = new List<RectTransform>();
-        RTs.Add((RectTransform)Refresh_t.transform);
-        RTs.Add((RectTransform)Refresh_t.transform);
-        RTs.Add((RectTransform)Hint_t.transform);
-        RTs.Add((RectTransform)Time_t.transform);
-        RTs.Add((RectTransform)Timer_t.transform);
-        RTs.Add((RectTransform)Timer_t.transform);
-        RTs.Add((RectTransform)Score_t.transform);
-        RTs.Add((RectTransform)Pause_t.transform);
-
-        string [] _messages = {
-            "Вы можете нажать на кнопку, чтобы перемешать поле",
-            "Поле перемешается автоматически и бесплатно, если не будет хода",
-
-            "Если не видите ход, можете воспользовать подсказкой",
-
-            "Если время кончается, можете добавить время",
-
-            "У вас есть 4 минуты чтобы пройти уровень",
-            "За каждую удаленную пару, будет прибавляться время",
-
-            "За найденную пару вам будут начисляться очки",
-
-            "Нажатием на эту кнопку вы поставите игру на паузу и вернетесь в меню"
-        };
-
-        messages = _messages;
-
-        
+       
     }
     #endregion
     #region MainCode
@@ -184,8 +157,11 @@ public class GameControllerScr : MonoBehaviour
             _Timer.StartTimer();
 
         //Save();
-        
-
+        if(PlayerPrefs.HasKey("_tut2"))
+        {
+            ui.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
+            ui.GetComponent<Canvas>().worldCamera = Camera.main;
+        }
     }
 
     private void Update()
@@ -279,8 +255,43 @@ public class GameControllerScr : MonoBehaviour
         //StartCoroutine(MakeHint("Соедините две подсвеченные картинки"));
         yield return new WaitForEndOfFrame();
 
-        CanvasController.instance.OpenCanvas(Tutorial);
-        TutorialMenu_ui.instance.Init(RTs, 8, messages, true, canvas);
+
+        if (!PlayerPrefs.HasKey("_tut2"))
+        {
+            RTs = new List<RectTransform>();
+            RTs.Add((RectTransform)Refresh_t.transform);
+            RTs.Add((RectTransform)Refresh_t.transform);
+            RTs.Add((RectTransform)Hint_t.transform);
+            RTs.Add((RectTransform)Time_t.transform);
+            RTs.Add((RectTransform)Timer_t.transform);
+            RTs.Add((RectTransform)Timer_t.transform);
+            RTs.Add((RectTransform)Score_t.transform);
+            RTs.Add((RectTransform)Pause_t.transform);
+
+            string[] _messages = {
+            "Вы можете нажать на кнопку, чтобы перемешать поле",
+            "Поле перемешается автоматически и бесплатно, если не будет хода",
+
+            "Если не видите ход, можете воспользовать подсказкой",
+
+            "Если время кончается, можете добавить время",
+
+            "У вас есть 4 минуты чтобы пройти уровень",
+            "За каждую удаленную пару, будет прибавляться время",
+
+            "За найденную пару вам будут начисляться очки",
+
+            "Нажатием на эту кнопку вы поставите игру на паузу и вернетесь в меню"
+        };
+
+            messages = _messages;
+            CanvasController.instance.OpenCanvas(Tutorial);
+
+            TutorialMenu_ui.instance.Init(RTs, 8, messages, true, canvas);
+
+            PlayerPrefs.SetInt("_tut2", 1);
+        }
+        
         //grid.enabled = false;
 
         //SortHierarchy();
