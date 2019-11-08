@@ -338,7 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fc151ff9ab428047bf323cf85c043f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: _endgame_instacoins
+  key: _endgame_doublecoins
 --- !u!1 &2497947616093372435
 GameObject:
   m_ObjectHideFlags: 0
@@ -2449,6 +2449,7 @@ MonoBehaviour:
   Highscore_text:
   - {fileID: 1742465429857602583}
   - {fileID: 2045432439684160943}
+  _doubleCoinsButton: {fileID: 0}
   Endings:
   - {fileID: 653390077073263048}
   - {fileID: 3342621482878085696}

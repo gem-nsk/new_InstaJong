@@ -390,7 +390,7 @@ MonoBehaviour:
   TotalTime: 120
   _time: 0
   _isPaused: 0
-  TimeAddObject: {fileID: 1503867047}
+  TimeAddObject: {fileID: 1503867052}
 --- !u!114 &84232290
 MonoBehaviour:
   m_ObjectHideFlags: 0

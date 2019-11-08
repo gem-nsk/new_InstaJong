@@ -116,9 +116,19 @@ public class AdsController : MonoBehaviour
     }
 
 
-    public void ShowVideo()
+    public bool ShowVideo()
     {
-        _video.Show();
+        if(_video.IsLoaded())
+        {
+            _video.Show();
+            return true;
+        }
+        else
+        {
+            LoadVideo();
+            Debug.Log("Video is not ready");
+            return false;
+        }
     }
     public void ShowInterstitial()
     {

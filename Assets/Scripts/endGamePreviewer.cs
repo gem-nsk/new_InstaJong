@@ -91,8 +91,14 @@ public class endGamePreviewer : ui_basement
 
     public void DoubleCoins()
     {
-        AdsController.instance.ShowVideo();
-        AdsController.instance._video.OnUserEarnedReward += RewardHandler;
+        if( AdsController.instance.ShowVideo())
+        {
+            AdsController.instance._video.OnUserEarnedReward += RewardHandler;
+        }
+        else
+        {
+            CanvasControllerClose();
+        }
 
     }
 

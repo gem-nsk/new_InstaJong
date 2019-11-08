@@ -38,7 +38,8 @@ public struct _ShopUnit
 public class InstaCoinsShopUI : ui_basement
 {
     public _ShopUnit[] Units;
-    public GameObject BuyObject;
+    public GameObject SuccessfulBuy;
+    public GameObject ErrorBuy;
     public Text _InstaCoins;
 
     public override void Activate()
@@ -58,7 +59,7 @@ public class InstaCoinsShopUI : ui_basement
             }
             else
             {
-                Units[i].PriceText.text =   Units[i]._pack._Price + " Instacoins";
+                Units[i].PriceText.text =   Units[i]._pack._Price.ToString();
             }
         }
     }
@@ -70,13 +71,14 @@ public class InstaCoinsShopUI : ui_basement
 
     private void BuyAnimation(UnityEngine.Purchasing.PurchaseEventArgs args)
     {
-        BuyObject.SetActive(true);
+        SuccessfulBuy.SetActive(true);
         PurchaseManager.OnPurchaseConsumable -= BuyAnimation;
     }
 
     public void CloseWindow()
     {
-        BuyObject.SetActive(false);
+        SuccessfulBuy.SetActive(false);
+        ErrorBuy.SetActive(false);
     }
 
     public void BuyButton(int id)
@@ -91,6 +93,7 @@ public class InstaCoinsShopUI : ui_basement
             case _ShopUnit.type.real:
 
                 PurchaseManager.OnPurchaseConsumable += BuyAnimation;
+                PurchaseManager.PurchaseFailed += FailedPurchase;
                 PurchaseManager.instance.BuyConsumable(id);
 
 
@@ -106,12 +109,17 @@ public class InstaCoinsShopUI : ui_basement
         //IAP
     }
 
+    private void FailedPurchase(UnityEngine.Purchasing.Product product, UnityEngine.Purchasing.PurchaseFailureReason failureReason)
+    {
+        ErrorBuy.SetActive(true);
+    }
+
     public void AddPack(_PackData data)
     {
         if(PlayerStats.instance.InstaCoins >= data._Price)
         {
             PlayerStats.instance.AddPack(data._TipsCount, data._AddTimeCount, data._RefreshCount);
-            BuyObject.SetActive(true);
+            SuccessfulBuy.SetActive(true);
 
             PlayerStats.instance.AddInstaCoins(-data._Price);
         }
