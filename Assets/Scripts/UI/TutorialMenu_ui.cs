@@ -15,6 +15,8 @@ public class TutorialMenu_ui: ui_basement
     private int idCurrentHint = 0;
     private List<KeyValuePair<string, RectTransform>> hints_messages = new List<KeyValuePair<string, RectTransform>>();
 
+    private GameObject _CurrentHint;
+
     private float width;
     private float height;
 
@@ -72,28 +74,29 @@ public class TutorialMenu_ui: ui_basement
 
     public void MakeHint(string message, RectTransform position)
     {
-
         // new Vector2(position.localPosition.y, position.localPosition.x);
         if (rotate)
         {
-            GameObject _hint = Instantiate(hintReverse);
-            _hint.transform.SetParent(hints, false);
-            _hint.name = hintName + (idCurrentHint + 1);
-            _hint.GetComponentInChildren<Text>().text = message;
+            _CurrentHint = Instantiate(hintReverse);
+            _CurrentHint.transform.SetParent(hints, false);
+            _CurrentHint.name = hintName + (idCurrentHint + 1);
+            _CurrentHint.GetComponentInChildren<Text>().text = message;
 
-            _hint.GetComponent<Transform>().position = new Vector2(position.transform.position.x, position.transform.position.y - height / 2);
-            _hint.GetComponent<Image>().sprite = inversePos;
+            _CurrentHint.transform.position = new Vector2(position.transform.position.x, position.transform.position.y - height / 2);
+            _CurrentHint.GetComponent<Image>().sprite = inversePos;
+
         }
         else
         {
-            GameObject _hint = Instantiate(hint);
-            _hint.transform.SetParent(hints, false);
-            _hint.name = hintName + (idCurrentHint + 1);
-            _hint.GetComponentInChildren<Text>().text = message;
-            _hint.GetComponent<Transform>().position = new Vector2(position.transform.position.x, position.transform.position.y + height / 2);
+            _CurrentHint = Instantiate(hint);
+            _CurrentHint.transform.SetParent(hints, false);
+            _CurrentHint.name = hintName + (idCurrentHint + 1);
+            _CurrentHint.GetComponentInChildren<Text>().text = message;
+            _CurrentHint.transform.position = new Vector2(position.transform.position.x, position.transform.position.y + height / 2);
         }
 
-        
+        StartCoroutine(ShowHint());
+
 
         Debug.Log(position.transform.position);
         
@@ -102,26 +105,26 @@ public class TutorialMenu_ui: ui_basement
 
     }
 
+   
+
     private IEnumerator ShowHint()
     {
-        while (true)
-        {
-            yield return StartCoroutine(SizeTip(hint.GetComponent<RectTransform>(),true));
-            yield return new WaitForSeconds(5);
-            yield return StartCoroutine(SizeTip(hint.GetComponent<RectTransform>(),false));
+     if(_CurrentHint)       
+            yield return StartCoroutine(SizeTip(_CurrentHint.GetComponent<RectTransform>(),true));
 
-        }
     }
 
     private IEnumerator SizeTip(RectTransform TipSize, bool hided)
     {
         float _time = 0;
-        float _smoothTime = 1;
+        float _smoothTime = 0.3f;
 
+        TipSize.sizeDelta = new Vector2(TipSize.sizeDelta.x, 0);
 
         while (_time < _smoothTime)
         {
-            TipSize.sizeDelta = new Vector2(TipSize.sizeDelta.x, Mathf.Lerp(TipSize.sizeDelta.y, hided ? 440 : 150, _time / _smoothTime));
+            if(TipSize)
+            TipSize.sizeDelta = new Vector2(TipSize.sizeDelta.x, Mathf.Lerp(TipSize.sizeDelta.y, hided ? 365 : 0, _time / _smoothTime));
             _time += Time.deltaTime;
             yield return null;
         }
