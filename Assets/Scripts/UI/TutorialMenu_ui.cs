@@ -81,7 +81,7 @@ public class TutorialMenu_ui: ui_basement
             _hint.name = hintName + (idCurrentHint + 1);
             _hint.GetComponentInChildren<Text>().text = message;
 
-            _hint.GetComponent<Transform>().position = new Vector2(position.transform.position.x, position.transform.position.y - height / 2);
+            _hint.GetComponent<Transform>().position = new Vector2(position.transform.position.x, position.transform.position.y);
             _hint.GetComponent<Image>().sprite = inversePos;
         }
         else
@@ -90,7 +90,7 @@ public class TutorialMenu_ui: ui_basement
             _hint.transform.SetParent(hints, false);
             _hint.name = hintName + (idCurrentHint + 1);
             _hint.GetComponentInChildren<Text>().text = message;
-            _hint.GetComponent<Transform>().position = new Vector2(position.transform.position.x, position.transform.position.y + height / 2);
+            _hint.GetComponent<Transform>().position = new Vector2(position.transform.position.x, position.transform.position.y);
         }
 
         
