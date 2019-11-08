@@ -32,7 +32,7 @@ public class DataSave : MonoBehaviour
 
         // string str = JsonUtility.ToJson(js);
         File.WriteAllText(Application.persistentDataPath + "/grid.json", str);
-        Debug.Log(Application.persistentDataPath);
+
     }
 
     public static root GetData()

@@ -352,10 +352,12 @@ public class GameControllerScr : MonoBehaviour
 
         while(_time < _elapsedTime)
         {
+            if(rects[0])
             rects[0].localScale = Vector3.Lerp(rects[0].localScale, new Vector3(1.2f, 1.2f, 1), _time / _elapsedTime);
+            if(rects[1])
             rects[1].localScale = Vector3.Lerp(rects[1].localScale, new Vector3(1.2f, 1.2f, 1), _time / _elapsedTime);
             _time += Time.deltaTime;
-            Debug.Log(_time);
+
             yield return null;
         }
     }
@@ -465,10 +467,10 @@ public class GameControllerScr : MonoBehaviour
         {
             GameObject child = cellGroup.transform.Find(nameButtons + id).gameObject;
             child.GetComponent<CellScr>().RemoveSprite();
+            yield return null;
         }
         placeCells(true);
-        yield return new WaitForEndOfFrame();
-
+        StartCoroutine(SearchPath());
     }
 
 
@@ -662,7 +664,7 @@ public class GameControllerScr : MonoBehaviour
 
     public void ResetLine(LineRenderer lr)
     {
-        Debug.Log("clear");
+
         //yield return new WaitForSeconds(5);
         lr.positionCount = 0;
     }
