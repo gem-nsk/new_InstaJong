@@ -252,7 +252,7 @@ public class GameControllerScr : MonoBehaviour
         placeCells();
         yield return StartCoroutine(SearchPath());
         //yield return StartCoroutine(ShowHelp());
-        //StartCoroutine(MakeHint("Соедините две подсвеченные картинки"));
+        
         yield return new WaitForEndOfFrame();
 
 
@@ -712,24 +712,68 @@ public class GameControllerScr : MonoBehaviour
     //    yield return new WaitForSeconds(5);
 
     //}
-    private GameObject _CurrentHint;
     public GameObject hintGame;
     private string hintName = "gameHint";
     public Transform BG;
-    public IEnumerator MakeHint(string message)
+    private Vector2? pos = null;
+    public IEnumerator MakeHint(string message, int delay)
     {
-        _CurrentHint = Instantiate(hintGame);
+        GameObject _CurrentHint = Instantiate(hintGame);
         _CurrentHint.transform.SetParent(BG, false);
         _CurrentHint.name = hintName;
         _CurrentHint.GetComponentInChildren<Text>().text = message;
-        _CurrentHint.transform.position = new Vector2(Screen.width/2, 0);
+        if(pos == null)
+        {
+            _CurrentHint.transform.position = new Vector2(Screen.width / 2, 0);
+            pos = _CurrentHint.transform.localPosition;
+            Debug.Log("position: "+pos);
+        }
+            
+        else
+        {
+            _CurrentHint.transform.localPosition = new Vector2(pos.Value.x, pos.Value.y);
+        }
+        
+        yield return new WaitForSeconds(delay);
 
-        yield return null;
-
-    }
-
-    public void RemoveHint()
-    {
         Destroy(_CurrentHint);
+
+
     }
+
+    private string[] hints =
+    {
+        "Нажмите на 2 подсвеченные картинки",
+        "Между двумя картинками рисуется линия. У этой линии не должно быть более двух поворотов.",
+        "При долгом нажатии на картинку откроется ее описание, попробуйте"
+    };
+
+    private int hint_id = 0;
+
+    public void StartTutorial()
+    {
+        StartCoroutine(MakeHint(hints[hint_id],5));
+        StartCoroutine(ShowHelp());
+        
+    }
+
+    public void NextHint()
+    {
+        hint_id++;
+        switch (hint_id)
+        {
+            case 1:
+                {
+                    StartCoroutine(MakeHint(hints[hint_id],5));
+                    StartCoroutine(ShowHelp());
+                    break;
+                }
+            case 2:
+                {
+                    StartCoroutine(MakeHint(hints[hint_id],5));
+                    break;
+                }
+        }
+    }
+
 }

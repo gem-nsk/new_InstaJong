@@ -123,7 +123,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
     {
         GameControllerScr.instance.PlayLikeParticles(transform.position);
         GameControllerScr.instance.StopBlinking();
-
+        GameControllerScr.instance.NextHint();
         //points
         GameControllerScr.instance.stats.AddPoints(15);
         GameControllerScr.instance._Timer.AddTime(3);
@@ -204,13 +204,18 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
                 GameControllerScr.instance.Save();
 
             }
+            else
+            {
+                StartCoroutine(GameControllerScr.instance.MakeHint("Путь содержит больше двух поворотов",1));
+            }
 
         } //else panel.color = normCol;
         
         else
         {
             Debug.Log("Pare not correct!");
-           
+            StartCoroutine(GameControllerScr.instance.MakeHint("Картинки не одинаковые",1));
+            
             GameControllerScr.instance.StandartcolorForFirstCell();
 
         }
