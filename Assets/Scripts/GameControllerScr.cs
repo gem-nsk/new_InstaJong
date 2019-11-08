@@ -69,6 +69,7 @@ public class GameControllerScr : MonoBehaviour
     const string nameButtons = "cellButton";
 
     public GameObject Tutorial;
+    public Canvas canvas;
 
 
     [Header("Player stats")]
@@ -84,14 +85,18 @@ public class GameControllerScr : MonoBehaviour
     public GameObject Timer_t;
     public GameObject Score_t;
     public GameObject Pause_t;
+    private List<RectTransform> RTs;
+    private string[] messages;
 
     #region Singleton
     public static GameControllerScr instance;
+    
+
     private void Awake()
     {
         instance = this;
 
-        List<RectTransform> RTs = new List<RectTransform>();
+        RTs = new List<RectTransform>();
         RTs.Add((RectTransform)Refresh_t.transform);
         RTs.Add((RectTransform)Refresh_t.transform);
         RTs.Add((RectTransform)Hint_t.transform);
@@ -101,7 +106,7 @@ public class GameControllerScr : MonoBehaviour
         RTs.Add((RectTransform)Score_t.transform);
         RTs.Add((RectTransform)Pause_t.transform);
 
-        string[] messages = {
+        string [] _messages = {
             "Вы можете нажать на кнопку, чтобы перемешать поле",
             "Поле перемешается автоматически и бесплатно, если не будет хода",
 
@@ -117,8 +122,9 @@ public class GameControllerScr : MonoBehaviour
             "Нажатием на эту кнопку вы поставите игру на паузу и вернетесь в меню"
         };
 
-        CanvasController.instance.OpenCanvas(Tutorial);
-        TutorialMenu_ui.instance.Init(RTs, 8, messages, true);
+        messages = _messages;
+
+        
     }
     #endregion
     #region MainCode
@@ -178,6 +184,7 @@ public class GameControllerScr : MonoBehaviour
             _Timer.StartTimer();
 
         //Save();
+        
 
     }
 
@@ -268,10 +275,12 @@ public class GameControllerScr : MonoBehaviour
 
         placeCells();
         yield return StartCoroutine(SearchPath());
-
-
-
+        //yield return StartCoroutine(ShowHelp());
+        //StartCoroutine(MakeHint("Соедините две подсвеченные картинки"));
         yield return new WaitForEndOfFrame();
+
+        CanvasController.instance.OpenCanvas(Tutorial);
+        TutorialMenu_ui.instance.Init(RTs, 8, messages, true, canvas);
         //grid.enabled = false;
 
         //SortHierarchy();
@@ -692,4 +701,24 @@ public class GameControllerScr : MonoBehaviour
     //    yield return new WaitForSeconds(5);
 
     //}
+    private GameObject _CurrentHint;
+    public GameObject hintGame;
+    private string hintName = "gameHint";
+    public Transform BG;
+    public IEnumerator MakeHint(string message)
+    {
+        _CurrentHint = Instantiate(hintGame);
+        _CurrentHint.transform.SetParent(BG, false);
+        _CurrentHint.name = hintName;
+        _CurrentHint.GetComponentInChildren<Text>().text = message;
+        _CurrentHint.transform.position = new Vector2(Screen.width/2, 0);
+
+        yield return null;
+
+    }
+
+    public void RemoveHint()
+    {
+        Destroy(_CurrentHint);
+    }
 }

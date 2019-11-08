@@ -24,7 +24,7 @@ public class MainMenuControl : MonoBehaviour
     public GameObject BuyInstaCoins_ui;
     public GameObject Tutorialmenu_ui;
     public GameObject Rules_ui;
-
+    
     public Image musicImg;
     public Sprite[] Musicicons;
     public static MainMenuControl instance;
