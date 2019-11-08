@@ -490,7 +490,7 @@ public class GameControllerScr : MonoBehaviour
         numMap = _data._Level;
 
         Debug.Log(_data.height + " - " + _data.width + " list " + _data.data.Count);
-        field = new Field(_data.width, _data.height);
+        field = new Field(_data.height, _data.width);
         field.initField(true);
         Debug.Log(_data.data.Count);    
         for (int i = 0; i < _data.data.Count; i++)

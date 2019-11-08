@@ -7,7 +7,7 @@ public class Download_FromCache : Iloading
 {
     root_posts posts;
 
-    public string t_path;
+    //public string t_path;
     public string s_path;
     public string PostsPath;
 
@@ -20,7 +20,7 @@ public class Download_FromCache : Iloading
     {
         posts = new root_posts();
 
-        t_path = Application.persistentDataPath + "/images/thumbnails/";
+        //t_path = Application.persistentDataPath + "/images/thumbnails/";
         s_path = Application.persistentDataPath + "/images/standart/";
         PostsPath = Application.persistentDataPath + "/posts.json";
 
@@ -28,7 +28,7 @@ public class Download_FromCache : Iloading
 
         if(_posts != null)
         {
-            string[] tpath = Directory.GetFiles(t_path);
+            //string[] tpath = Directory.GetFiles(t_path);
             string[] spath = Directory.GetFiles(s_path);
 
             DownloadManager.instance.CreateLoadingBar();
@@ -75,8 +75,14 @@ public class Download_FromCache : Iloading
 
     public bool isContainErrors()
     {
-        if (posts.AccountKey.Contains(DownloadManager.less20Error) || posts.AccountKey.Contains(DownloadManager.notFoundError))
-            return true;
+        if (posts.AccountKey != null)
+        {
+            if (posts.AccountKey.Contains(DownloadManager.less20Error) || posts.AccountKey.Contains(DownloadManager.notFoundError))
+                return true;
+            else
+                return false;
+
+        }
         else
             return false;
     }

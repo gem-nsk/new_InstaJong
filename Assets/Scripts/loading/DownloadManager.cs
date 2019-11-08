@@ -105,8 +105,6 @@ public class DownloadManager : MonoBehaviour
 
     public Sprite GetImageById(int id)
     {
-
-        //return _tempPosts._p[id - 1].StandartTexture;
         return sprites[id-1];
     }
 
