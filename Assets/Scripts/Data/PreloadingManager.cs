@@ -87,7 +87,9 @@ public class PreloadingManager : MonoBehaviour
         if(posts != null)
         {
             Iloading load = new Download_FromCache();
-            yield return StartCoroutine(load.Loading(null));
+            //yield return StartCoroutine(load.Loading(null));
+            yield return StartCoroutine(PreloadingManager.instance.LoadingProcess("self",load));
+
             //root_posts _loadedData = load.GetPosts();
             //yield return StartCoroutine(AtlasController.instance.Init(_loadedData));
 

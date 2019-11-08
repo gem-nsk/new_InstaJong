@@ -1769,7 +1769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fc151ff9ab428047bf323cf85c043f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: _ui_instacoins_celebrity
+  key: _ui_instacoins_user
 --- !u!1 &1192613889049936789
 GameObject:
   m_ObjectHideFlags: 0
@@ -5241,7 +5241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fc151ff9ab428047bf323cf85c043f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: _ui_instacoins_celebrity
+  key: _ui_instacoins_pro
 --- !u!1 &7695428478833699120
 GameObject:
   m_ObjectHideFlags: 0
