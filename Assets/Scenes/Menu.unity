@@ -3842,6 +3842,41 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d7c0c7b4dcdc03247915913b7e8d3901, type: 3}
   - {fileID: 8300000, guid: 73f2ee08aa3e80542b0df5b9e2602616, type: 3}
   source: {fileID: 1635263456}
+--- !u!1 &1686580906
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1686580907}
+  m_Layer: 0
+  m_Name: hello
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1686580907
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686580906}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.8071749, y: 0.8071749, z: 0.8071749}
+  m_Children: []
+  m_Father: {fileID: 1828637106}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 201.06505}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1724007447
 GameObject:
   m_ObjectHideFlags: 0
@@ -4107,6 +4142,7 @@ RectTransform:
   - {fileID: 1530661113}
   - {fileID: 271693834}
   - {fileID: 405289324}
+  - {fileID: 1686580907}
   m_Father: {fileID: 1254517483}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4169,11 +4205,14 @@ MonoBehaviour:
   SHARE_ACC: {fileID: 839857441}
   STORE: {fileID: 768816947}
   NEW_GAME: {fileID: 1970948341}
+  HELLO_SPAWN: {fileID: 1686580906}
   BuyInstaCoins_ui: {fileID: 798926291608319558, guid: cd22c2d960e478a41aa79a94c1982259,
     type: 3}
   Tutorialmenu_ui: {fileID: 1478571770737923203, guid: b9f36ef66622f45a98082dfc27c5319b,
     type: 3}
   Rules_ui: {fileID: 8243194131716475119, guid: 8f27ffc4e5b2a044084e4263c9b8525d,
+    type: 3}
+  PrivatePolicy_ui: {fileID: 8734220056535061268, guid: b04bd62b319b94acb8c4eea63ce479d1,
     type: 3}
   musicImg: {fileID: 392009829}
   Musicicons:

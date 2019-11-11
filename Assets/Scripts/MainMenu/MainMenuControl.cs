@@ -21,21 +21,36 @@ public class MainMenuControl : MonoBehaviour
     public GameObject SHARE_ACC;
     public GameObject STORE;
     public GameObject NEW_GAME;
+    public GameObject HELLO_SPAWN;
     //-----------------------
 
     public GameObject BuyInstaCoins_ui;
     public GameObject Tutorialmenu_ui;
     public GameObject Rules_ui;
+    public GameObject PrivatePolicy_ui;
     
     public Image musicImg;
     public Sprite[] Musicicons;
     public static MainMenuControl instance;
     private void Awake()
     {
+        instance = this;
+        if (!PlayerPrefs.HasKey("_tut1"))
+            CanvasController.instance.OpenCanvas(PrivatePolicy_ui);
+        
+        bool b = DataSave.IsSaveExists();
+        //ContinueButton.interactable = b;
+        ContinueButton.GetComponentInChildren<Text>().color = b ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0.7f);
+    }
+
+    public void StartTutourial()
+    {
         #region tutorial
         if (!PlayerPrefs.HasKey("_tut1"))
         {
             List<RectTransform> RTs = new List<RectTransform>();
+            RTs.Add((RectTransform)HELLO_SPAWN.transform);
+            RTs.Add((RectTransform)HELLO_SPAWN.transform);
             RTs.Add((RectTransform)DAILY_ACC.transform);
             RTs.Add((RectTransform)SIGN_IN.transform);
             RTs.Add((RectTransform)SHARE_ACC.transform);
@@ -43,6 +58,8 @@ public class MainMenuControl : MonoBehaviour
             RTs.Add((RectTransform)NEW_GAME.transform);
 
             string[] messages = {
+            "Привет! Добро пожаловать в игру InstaJong!",
+            "Сейчас для вас проведем небольшой инструктаж как играть в эту игру",
             "Вы можете играть фотографиями популярного аккаунта",
             "Вы можете войти в свой аккаунт, чтобы играть фотографиями вашего профиля",
             "Потом вы сможете поделиться своим аккаунтом, чтобы ваши друзья могли в него поиграть",
@@ -50,19 +67,17 @@ public class MainMenuControl : MonoBehaviour
             "Здесь вы можете начать игру"
             };
 
-            instance = this;
+            
             Application.targetFrameRate = 60;
 
             CanvasController.instance.OpenCanvas(Tutorialmenu_ui);
-            TutorialMenu_ui.instance.Init(RTs, 5, messages, false);
+            TutorialMenu_ui.instance.Init(RTs, 7, messages, false);
 
             PlayerPrefs.SetInt("_tut1", 1);
         }
         #endregion
-        bool b = DataSave.IsSaveExists();
-        //ContinueButton.interactable = b;
-        ContinueButton.GetComponentInChildren<Text>().color = b ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0.7f);
     }
+
     public void OpenInstaCoins_button()
     {
 

@@ -719,7 +719,7 @@ public class GameControllerScr : MonoBehaviour
     private string hintName = "gameHint";
     public Transform BG;
     private Vector2? pos = null;
-    public IEnumerator MakeHint(string message, int delay)
+    public IEnumerator MakeHint(string message, float delay)
     {
         GameObject _CurrentHint = Instantiate(hintGame);
         _CurrentHint.transform.SetParent(BG, false);
@@ -759,7 +759,8 @@ public class GameControllerScr : MonoBehaviour
     {
         "Нажмите на 2 подсвеченные картинки",
         "Между двумя картинками рисуется линия. У этой линии не должно быть более двух поворотов.",
-        "При долгом нажатии на картинку откроется ее описание, попробуйте"
+        "При долгом нажатии на картинку откроется ее описание, попробуйте",
+        "Приятной игры!",
     };
 
     private int hint_id = 0;
@@ -771,7 +772,7 @@ public class GameControllerScr : MonoBehaviour
         
     }
 
-    public void NextHint()
+    public IEnumerator NextHint()
     {
         if(isTutorial)
         {
@@ -788,6 +789,14 @@ public class GameControllerScr : MonoBehaviour
                 case 2:
                     {
                         StartCoroutine(MakeHint(hints[hint_id], 5));
+                        yield return new WaitForSeconds(5);
+                        StartCoroutine(NextHint());
+                        break;
+                    }
+                case 3:
+                    {
+                        StartCoroutine(MakeHint(hints[hint_id], 5));
+
                         break;
                     }
             }

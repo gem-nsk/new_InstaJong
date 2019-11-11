@@ -154,7 +154,7 @@ public class TutorialMenu_ui: ui_basement
         while (_time < _smoothTime)
         {
             if(TipSize)
-            TipSize.sizeDelta = new Vector2(TipSize.sizeDelta.x, Mathf.Lerp(TipSize.sizeDelta.y, hided ? 365 : 0, _time / _smoothTime));
+            TipSize.sizeDelta = new Vector2(TipSize.sizeDelta.x, Mathf.Lerp(TipSize.sizeDelta.y, hided ? 500 : 0, _time / _smoothTime));
             _time += Time.deltaTime;
             yield return null;
         }
