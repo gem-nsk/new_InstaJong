@@ -43,6 +43,9 @@ public class FindAccount_ui : ui_basement
         LoadingObject.SetActive(false);
         InputObject.SetActive(true);
 
+        DownloadManager.ErrorHandler -= Failed;
+        DownloadManager.SuccessfullHandler -= success;
+
         Error_tex.text = args;
     }
 
@@ -55,6 +58,9 @@ public class FindAccount_ui : ui_basement
 
     public override void DeActivate()
     {
+        DownloadManager.ErrorHandler -= Failed;
+        DownloadManager.SuccessfullHandler -= success;
+
         base.DeActivate();
     }
 }

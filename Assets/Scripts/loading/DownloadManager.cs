@@ -41,8 +41,8 @@ public class DownloadManager : MonoBehaviour
     public delegate void SuccessfulMessage(string msg);
     public static SuccessfulMessage SuccessfullHandler;
 
-    public const string less20Error = "photos less than 20";
-    public const string notFoundError = "not found";
+    public const string less20Error = "_error_less20";
+    public const string notFoundError = "_error_notfound";
 
     public root_posts _tempPosts;
 
@@ -66,7 +66,7 @@ public class DownloadManager : MonoBehaviour
         //handlers
         if (loading.isContainErrors())
         {
-            ErrorHandler?.Invoke(loading.GetPosts().AccountKey);
+            ErrorHandler?.Invoke(LocalizationManager.instance.GetLocalizedValue(loading.GetPosts().AccountKey));
         }
         else
         {

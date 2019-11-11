@@ -210,6 +210,7 @@ public class GameControllerScr : MonoBehaviour
             width = field.widthField,
             time = _Timer._time,
             _scellState = cellState,
+            _strategy = gameStrategy,
             _Level = numMap
         };
 
@@ -501,6 +502,7 @@ public class GameControllerScr : MonoBehaviour
         root _data = DataSave.GetData();
 
         numMap = _data._Level;
+        gameStrategy = _data._strategy;
 
         Debug.Log(_data.height + " - " + _data.width + " list " + _data.data.Count);
         field = new Field(_data.height, _data.width);
