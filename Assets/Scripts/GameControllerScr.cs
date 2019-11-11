@@ -232,7 +232,7 @@ public class GameControllerScr : MonoBehaviour
         }
     }
 
-
+    private bool isTutorial = false;
     public IEnumerator CreateButtonCells()
     {
         cellState = 0;
@@ -288,6 +288,8 @@ public class GameControllerScr : MonoBehaviour
             CanvasController.instance.OpenCanvas(Tutorial);
 
             TutorialMenu_ui.instance.Init(RTs, 8, messages, true, canvas);
+            isTutorial = true;
+            _Timer._isPaused = true;
 
             PlayerPrefs.SetInt("_tut2", 1);
         }
@@ -703,7 +705,7 @@ public class GameControllerScr : MonoBehaviour
         AtlasController.instance.StopLoading();
     }
 
-
+    #region DownHint
     //public IEnumerator waiter()
     //{
     //    CreateLine(points);
@@ -713,6 +715,7 @@ public class GameControllerScr : MonoBehaviour
 
     //}
     public GameObject hintGame;
+    public Transform HintOffset;
     private string hintName = "gameHint";
     public Transform BG;
     private Vector2? pos = null;
@@ -722,24 +725,35 @@ public class GameControllerScr : MonoBehaviour
         _CurrentHint.transform.SetParent(BG, false);
         _CurrentHint.name = hintName;
         _CurrentHint.GetComponentInChildren<Text>().text = message;
-        if(pos == null)
-        {
-            _CurrentHint.transform.position = new Vector2(Screen.width / 2, 0);
-            pos = _CurrentHint.transform.localPosition;
-            Debug.Log("position: "+pos);
-        }
-            
-        else
-        {
-            _CurrentHint.transform.localPosition = new Vector2(pos.Value.x, pos.Value.y);
-        }
         
+            _CurrentHint.transform.position = HintOffset.position;
+            pos = _CurrentHint.transform.position;
+            Debug.Log("position: "+ Screen.width / 2);
+            
+      
+        yield return StartCoroutine(AnimatedHintShow(_CurrentHint.GetComponent<RectTransform>()));
         yield return new WaitForSeconds(delay);
 
         Destroy(_CurrentHint);
 
 
     }
+
+    public IEnumerator AnimatedHintShow(RectTransform _transform)
+    {
+        float _time = 0;
+        float _elapsedTime = 0.5f;
+        _transform.localScale = new Vector2(_transform.localScale.x, 0);
+
+        while(_time < _elapsedTime)
+        {
+            _transform.localScale = Vector2.Lerp(_transform.localScale, new Vector2(1, 1), _time / _elapsedTime);
+
+            _time += Time.deltaTime;
+            yield return null;
+        }
+    }
+
 
     private string[] hints =
     {
@@ -759,21 +773,26 @@ public class GameControllerScr : MonoBehaviour
 
     public void NextHint()
     {
-        hint_id++;
-        switch (hint_id)
+        if(isTutorial)
         {
-            case 1:
-                {
-                    StartCoroutine(MakeHint(hints[hint_id],5));
-                    StartCoroutine(ShowHelp());
-                    break;
-                }
-            case 2:
-                {
-                    StartCoroutine(MakeHint(hints[hint_id],5));
-                    break;
-                }
+            _Timer._isPaused = false;
+            hint_id++;
+            switch (hint_id)
+            {
+                case 1:
+                    {
+                        StartCoroutine(MakeHint(hints[hint_id], 5));
+                        StartCoroutine(ShowHelp());
+                        break;
+                    }
+                case 2:
+                    {
+                        StartCoroutine(MakeHint(hints[hint_id], 5));
+                        break;
+                    }
+            }
         }
+       
     }
-
+    #endregion
 }

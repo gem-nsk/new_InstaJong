@@ -125,9 +125,9 @@ public class PlayerStats : MonoBehaviour
         else //default values
         {
 
-            _Count_Time = 0;
-            _Count_Refresh = 0;
-            _Count_Tip = 0;
+            _Count_Time = 1;
+            _Count_Refresh = 3;
+            _Count_Tip = 5;
 
             InstaCoins = DefaultInstaCoinsValue;
             Points = 0;

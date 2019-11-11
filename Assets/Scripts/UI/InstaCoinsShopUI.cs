@@ -46,6 +46,11 @@ public class InstaCoinsShopUI : ui_basement
     {
         base.Activate();
 
+        if(GameControllerScr.instance != null)
+        {
+            GameControllerScr.instance._Timer._isPaused = true;
+        }
+
         PlayerStats.instance._addInstaCoins += UpdateInstaCoins;
 
         PlayerStats.instance.AddInstaCoins(0);
@@ -129,6 +134,10 @@ public class InstaCoinsShopUI : ui_basement
     public void Close()
     {
         Debug.Log("Canvas Closed");
+        if (GameControllerScr.instance != null)
+        {
+            GameControllerScr.instance._Timer._isPaused = false;
+        }
         CanvasController.instance.CloseCanvas();
         PlayerStats.instance._addInstaCoins -= UpdateInstaCoins;
     }

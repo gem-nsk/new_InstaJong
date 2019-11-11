@@ -32,7 +32,7 @@ public class Timer : MonoBehaviour
 
         //TimeAddObject.SetActive(false);
         timerSlider.maxValue = TotalTime;
-
+        timerSlider.value = _time;
         while (_time > 0)
         {
             switch (_isPaused)

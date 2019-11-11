@@ -45,7 +45,7 @@ public class MainMenuControl : MonoBehaviour
             string[] messages = {
             "Вы можете играть фотографиями популярного аккаунта",
             "Вы можете войти в свой аккаунт, чтобы играть фотографиями вашего профиля",
-            "Вы можете поделиться своим аккаунтом, чтобы ваши друзья могли в него поиграть",
+            "Потом вы сможете поделиться своим аккаунтом, чтобы ваши друзья могли в него поиграть",
             "Здесь вы можете купить монетки, подсказки, бонусы или отключить рекламу",
             "Здесь вы можете начать игру"
             };
@@ -60,7 +60,7 @@ public class MainMenuControl : MonoBehaviour
         }
         #endregion
         bool b = DataSave.IsSaveExists();
-        ContinueButton.interactable = b;
+        //ContinueButton.interactable = b;
         ContinueButton.GetComponentInChildren<Text>().color = b ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0.7f);
     }
     public void OpenInstaCoins_button()

@@ -81,6 +81,10 @@ public class TutorialMenu_ui: ui_basement
         this.countHints = countHints;
         this.rotate = rotate;
         this.canvas = canvas;
+
+        if(canvas)
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+
         for (int i = 0; i < countHints; i++)
         {
             var kp = new KeyValuePair<string, RectTransform>(
@@ -97,6 +101,9 @@ public class TutorialMenu_ui: ui_basement
 
     public void MakeHint(string message, RectTransform position)
     {
+        if(canvas)
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+
         // new Vector2(position.localPosition.y, position.localPosition.x);
         if (rotate)
         {

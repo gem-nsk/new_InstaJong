@@ -123,6 +123,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
     {
         GameControllerScr.instance.PlayLikeParticles(transform.position);
         GameControllerScr.instance.StopBlinking();
+
         GameControllerScr.instance.NextHint();
         //points
         GameControllerScr.instance.stats.AddPoints(15);
