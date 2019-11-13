@@ -76,7 +76,7 @@ public class PurchaseManager : MonoBehaviour, IStoreListener
         UnityPurchasing.Initialize(this, builder);
     }
 
-    private bool IsInitialized()
+    public bool IsInitialized()
     {
         return m_StoreController != null && m_StoreExtensionProvider != null;
     }

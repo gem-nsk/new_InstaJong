@@ -103,7 +103,7 @@ public class GameControllerScr : MonoBehaviour
     #region MainCode
     public IEnumerator Start()
     {
-        gameStrategy = GameStrategy.Normal;
+        gameStrategy = GameStrategy.Left;
         countPhotos = DownloadManager.instance.GetCount();
         numMap = 1;
         cellStateTMP = 0;
@@ -113,6 +113,8 @@ public class GameControllerScr : MonoBehaviour
         mainCamera = Camera.main;
         LR = new LineRenderer();
         Line = GameObject.FindGameObjectsWithTag("Line");
+
+        Application.targetFrameRate = 60;
 
 
         stats = PlayerStats.instance;
@@ -168,7 +170,7 @@ public class GameControllerScr : MonoBehaviour
     {
         if (refresh == true)
         {
-            cellStateTMP = cellState;
+            //cellStateTMP = cellState;
             placeCells();
             refresh = false;
         }
@@ -198,8 +200,17 @@ public class GameControllerScr : MonoBehaviour
     public void NextLevel()
     {
         gameStrategy++;
-        ui.UpdateLevel(gameStrategy);
+        numMap++;
+        ui.UpdateLevel(numMap);
         StartCoroutine(CreateButtonCells());
+    }
+
+    private void OnApplicationFocus(bool focus)
+    {
+        if(!focus)
+        {
+            Save();
+        }
     }
 
     public void Save()
@@ -490,8 +501,9 @@ public class GameControllerScr : MonoBehaviour
         {
             GameObject child = cellGroup.transform.Find(nameButtons + id).gameObject;
             child.GetComponent<CellScr>().RemoveSprite();
-            yield return null;
         }
+        yield return null;
+
         placeCells(true);
         StartCoroutine(SearchPath());
     }
@@ -547,6 +559,19 @@ public class GameControllerScr : MonoBehaviour
             }
 
             AllCells.Add(tmpCell.GetComponent<CellScr>());
+        }
+        cellState = 0;
+        CalcCellStates();
+    }
+
+    void CalcCellStates()
+    {
+        foreach (CellScr cell in AllCells)
+        {
+            if (cell.settings._randomNum != 0)
+            {
+                cellState++;
+            }
         }
     }
 
@@ -606,16 +631,15 @@ public class GameControllerScr : MonoBehaviour
         {
             if (_cell.settings._randomNum != 0)
             {
-                _cell.Hide();
+                //_cell.Hide();
                 _step--;
                 if (_step <= 0)
                 {
-                    yield return new WaitForEndOfFrame();
                     _step = 3;
                 }
             }
         }
-        yield return new WaitForSeconds(AllCells[0].LerpTime);
+        //yield return new WaitForSeconds(AllCells[0].LerpTime);
 
         //grid.enabled = true;
 

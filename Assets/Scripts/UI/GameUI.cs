@@ -16,6 +16,8 @@ public class GameUI : MonoBehaviour
     public Text _Tip_text;
     public Text _Time_text;
 
+    public ParticleSystem _timeSystem;
+
     public Animator _TipAnimator;
 
     public Tutorial rules;
@@ -27,9 +29,10 @@ public class GameUI : MonoBehaviour
         GameControllerScr.instance.stats._changePackHandler += UpdatePackInfo;
         GameControllerScr.instance.stats.AddPack(0, 0, 0);
 
+        //numLevel.text = GameControllerScr.numMap.ToString();
         //UpdateCoins(GameControllerScr.instance.stats.InstaCoins);
         UpdatePoints(GameControllerScr.instance.stats.Points);
-        UpdateLevel(GameControllerScr.gameStrategy);
+        UpdateLevel(GameControllerScr.numMap);
 
         StartCoroutine(TipBlink());
 
@@ -64,10 +67,9 @@ public class GameUI : MonoBehaviour
         StartCoroutine(PointsAnim(_points, GameControllerScr.instance.stats.Points));
     }
 
-    public void UpdateLevel(GameStrategy strategy)
+    public void UpdateLevel(int level)
     {
-        int level = int.Parse(numLevel.text);
-        numLevel.text = (level + 1).ToString();
+        numLevel.text = level.ToString();
     }
 
     IEnumerator PointsAnim(int _addedPoints, int TotalPoints)
@@ -120,6 +122,7 @@ public class GameUI : MonoBehaviour
         {
             GameControllerScr.instance._Timer.AddTime();
             GameControllerScr.instance.stats.AddPack(0, -1, 0);
+            _timeSystem.Play();
         }
         else
         {

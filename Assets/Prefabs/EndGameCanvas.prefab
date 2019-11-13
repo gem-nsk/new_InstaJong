@@ -2449,7 +2449,7 @@ MonoBehaviour:
   Highscore_text:
   - {fileID: 1742465429857602583}
   - {fileID: 2045432439684160943}
-  _doubleCoinsButton: {fileID: 0}
+  _doubleCoinsButton: {fileID: 6114707048040764136}
   Endings:
   - {fileID: 653390077073263048}
   - {fileID: 3342621482878085696}

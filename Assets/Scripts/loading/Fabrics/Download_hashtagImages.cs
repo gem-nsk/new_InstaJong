@@ -83,7 +83,7 @@ public class Download_hashtagImages : Iloading
                 // DataSave.SaveImage(post_info.ThumbnailTexture, "t_" + post_info.id, Application.persistentDataPath + "/t_images");
                 //  DataSave.SaveImage(post_info.StandartTexture, "s_" + post_info.id, Application.persistentDataPath + "/s_images");
 
-                DownloadManager.ProgressHandler?.Invoke(i, 20);
+                DownloadManager.ProgressHandler?.Invoke(i, 36);
 
                 i++;
                 if (i > 36)
