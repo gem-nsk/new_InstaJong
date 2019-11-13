@@ -99,6 +99,7 @@ public class CellScr : MonoBehaviour
                 //Texture2D tex = DownloadManager.instance.GetImageById(settings._randomNum);
                 //button.sprite = Sprite.Create(tex, new Rect(0,0,tex.width, tex.height), Vector2.zero); //AtlasController.instance.GetMaterialById(AtlasController.instance.Atlases[0],settings._randomNum);
                 img.color = new Color(1, 1, 1, 1);
+                bg.color = new Color(1, 1, 1, 1);
                 img.sprite = DownloadManager.instance.GetImageById(settings._randomNum);
             }
             
@@ -109,6 +110,7 @@ public class CellScr : MonoBehaviour
     {
         if(settings._randomNum != 0)
         //Hide();
+
         img.sprite = null;
     }
 

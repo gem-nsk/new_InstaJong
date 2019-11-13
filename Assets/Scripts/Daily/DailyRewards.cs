@@ -30,7 +30,7 @@ public class DailyRewards : MonoBehaviour
         {
             //calcDays
             System.DateTime date = System.Convert.ToDateTime(PlayerPrefs.GetString(_lastDayKey));
-            if(date != System.Convert.ToDateTime(_DebugaDate)) //System.DateTime.Today)
+            if(date != System.DateTime.Today)// System.Convert.ToDateTime(_DebugaDate)) //System.DateTime.Today)
             {
                 GetReward();
                 Debug.Log(GenerateMessege(_packVariants[0]));

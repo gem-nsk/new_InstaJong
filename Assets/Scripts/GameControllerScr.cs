@@ -103,7 +103,7 @@ public class GameControllerScr : MonoBehaviour
     #region MainCode
     public IEnumerator Start()
     {
-        gameStrategy = GameStrategy.Normal;
+        gameStrategy = GameStrategy.Left;
         countPhotos = DownloadManager.instance.GetCount();
         numMap = 1;
         cellStateTMP = 0;
@@ -203,6 +203,14 @@ public class GameControllerScr : MonoBehaviour
         numMap++;
         ui.UpdateLevel(numMap);
         StartCoroutine(CreateButtonCells());
+    }
+
+    private void OnApplicationFocus(bool focus)
+    {
+        if(!focus)
+        {
+            Save();
+        }
     }
 
     public void Save()

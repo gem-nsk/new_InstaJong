@@ -21,12 +21,10 @@ public class DailyRewards_UI : ui_basement
     public Image _prise;
 
     public GameObject RollButton;
-    public GameObject RollObject;
-    public GameObject ShowObject;
 
     [Header("RewardObject")]
     public Text _rewardText;
-    public Image _rewardImage;
+    public GameObject AcceptButton;
 
     public override void Activate()
     {
@@ -59,13 +57,11 @@ public class DailyRewards_UI : ui_basement
 
         Debug.Log("You get: " + PackEarn());
 
-        RollObject.SetActive(false);
-        ShowObject.SetActive(true);
-
-        _rewardImage.sprite = _current._sprite;
         _rewardText.text = "X" + PackEarn();
 
         PlayerStats.instance.AddPack(_current.data._TipsCount, _current.data._AddTimeCount, _current.data._RefreshCount);
+
+        AcceptButton.SetActive(true);
     }
 
     private string PackEarn()
