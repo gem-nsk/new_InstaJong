@@ -41,12 +41,25 @@ public class InstaCoinsShopUI : ui_basement
     public GameObject SuccessfulBuy;
     public GameObject ErrorBuy;
     public Text _InstaCoins;
+    private bool _authorized;
+
+    public GameObject MainShop;
+    public GameObject ShopLoading;
+
 
     public override void Activate()
     {
         base.Activate();
 
-        if(GameControllerScr.instance != null)
+        StartCoroutine(WaitForAuth());
+    }
+
+    private void auth()
+    {
+        MainShop.SetActive(true);
+        ShopLoading.SetActive(false);
+
+        if (GameControllerScr.instance != null)
         {
             GameControllerScr.instance._Timer._isPaused = true;
         }
@@ -58,20 +71,39 @@ public class InstaCoinsShopUI : ui_basement
 
         for (int i = 0; i < Units.Length; i++)
         {
-            if(Units[i]._Type == _ShopUnit.type.real)
+            if (Units[i]._Type == _ShopUnit.type.real)
             {
                 Units[i].PriceText.text = PurchaseManager.instance.C_PRODUCTS[i].Price;
             }
             else
             {
-                Units[i].PriceText.text =   Units[i]._pack._Price.ToString();
+                Units[i].PriceText.text = Units[i]._pack._Price.ToString();
             }
         }
     }
 
     public void UpdateInstaCoins(int coins)
     {
+        if(_InstaCoins)
         _InstaCoins.text = coins.ToString();
+    }
+
+    public IEnumerator WaitForAuth()
+    {
+        while(!_authorized)
+        {
+            if (PurchaseManager.instance.IsInitialized())
+            {
+                auth();
+                _authorized = true;
+            }
+            yield return null;
+        }
+    }
+
+    public void BuyNoAds()
+    {
+        PurchaseManager.instance.BuyNonConsumable(0);
     }
 
     private void BuyAnimation(UnityEngine.Purchasing.PurchaseEventArgs args)

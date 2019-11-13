@@ -95,7 +95,7 @@ public class CellScr : MonoBehaviour
             
             if(settings._randomNum != 0 && img.sprite == null)
             {
-                Show();
+                //Show();
                 //Texture2D tex = DownloadManager.instance.GetImageById(settings._randomNum);
                 //button.sprite = Sprite.Create(tex, new Rect(0,0,tex.width, tex.height), Vector2.zero); //AtlasController.instance.GetMaterialById(AtlasController.instance.Atlases[0],settings._randomNum);
                 img.color = new Color(1, 1, 1, 1);
@@ -108,36 +108,36 @@ public class CellScr : MonoBehaviour
     public void RemoveSprite()
     {
         if(settings._randomNum != 0)
-        Hide();
+        //Hide();
         img.sprite = null;
     }
 
-    public void Hide()
-    {
-        StopCoroutine(CellVisible(false));
-        StartCoroutine(CellVisible(true));
-    }
-    public void Show()
-    {
-        StopCoroutine(CellVisible(true));
-        StartCoroutine(CellVisible(false));
-    }
+    //public void Hide()
+    //{
+    //    StopCoroutine(CellVisible(false));
+    //    StartCoroutine(CellVisible(true));
+    //}
+    //public void Show()
+    //{
+    //    StopCoroutine(CellVisible(true));
+    //    StartCoroutine(CellVisible(false));
+    //}
 
-    // true - hided; false - visible
-    public IEnumerator CellVisible(bool hided)
-    {
-        float _time = 0;
-        while (_time <= LerpTime)
-        {
-            img.color = new Color(1, 1, 1, Mathf.Lerp(hided ? 1 : 0, hided ? 0 : 1, _time / LerpTime));
-            bg.color = new Color(1, 1, 1, Mathf.Lerp(hided ? 1 : 0, hided ? 0 : 1, _time / LerpTime));
-            _time += Time.deltaTime;
-            yield return null;
-        }
-        yield return null;
-        img.color = new Color(1, 1, 1, hided ? 0 : 1);
-        bg.color = new Color(1, 1, 1, hided ? 0 : 1);
-    }
+    //// true - hided; false - visible
+    //public IEnumerator CellVisible(bool hided)
+    //{
+    //    float _time = 0;
+    //    while (_time <= LerpTime)
+    //    {
+    //        img.color = new Color(1, 1, 1, Mathf.Lerp(hided ? 1 : 0, hided ? 0 : 1, _time / LerpTime));
+    //        bg.color = new Color(1, 1, 1, Mathf.Lerp(hided ? 1 : 0, hided ? 0 : 1, _time / LerpTime));
+    //        _time += Time.deltaTime;
+    //        yield return null;
+    //    }
+    //    yield return null;
+    //    img.color = new Color(1, 1, 1, hided ? 0 : 1);
+    //    bg.color = new Color(1, 1, 1, hided ? 0 : 1);
+    //}
 
     public int GetRandomNum()
     {
