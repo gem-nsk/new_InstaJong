@@ -288,7 +288,7 @@ public class GameControllerScr : MonoBehaviour
             messages = _messages;
             CanvasController.instance.OpenCanvas(Tutorial);
 
-            TutorialMenu_ui.instance.Init(RTs, 8, messages, true, canvas);
+            TutorialMenu_ui.instance.Init(RTs, 8, messages, true, canvas, 1);
             isTutorial = true;
             _Timer._isPaused = true;
 
@@ -797,7 +797,7 @@ public class GameControllerScr : MonoBehaviour
                     }
                 case 3:
                     {
-                        StartCoroutine(MakeHint(hints[hint_id], 5));
+                        StartCoroutine(MakeHint(hints[hint_id], 1.5f));
 
                         break;
                     }

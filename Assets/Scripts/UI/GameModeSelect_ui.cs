@@ -38,7 +38,7 @@ public class GameModeSelect_ui : ui_basement
         };
 
             CanvasController.instance.OpenCanvas(Tutorial, false);
-            TutorialMenu_ui.instance.Init(RTs, 4, messages, false);
+            TutorialMenu_ui.instance.Init(RTs, 4, messages, false, 2);
 
             PlayerPrefs.SetInt("_tut3", 1);
         }

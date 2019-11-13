@@ -17,7 +17,7 @@ public class TutorialMenu_ui: ui_basement
 
     private GameObject _CurrentHint;
     private Canvas canvas;
-    private bool flg;
+    private static bool flg;
 
     private float width;
     private float height;
@@ -29,6 +29,9 @@ public class TutorialMenu_ui: ui_basement
     public Sprite normalPos;
     public Sprite inversePos;
     public static bool endFlg;
+    public static bool MainEnd;
+    private int type;
+    
 
     private string[] messages = {
         "Вы можете играть фотографиями популярного аккаунта",
@@ -56,11 +59,12 @@ public class TutorialMenu_ui: ui_basement
         
     }
 
-    public void Init(List<RectTransform> RTs, int countHints, string[] messages, bool rotate)
+    public void Init(List<RectTransform> RTs, int countHints, string[] messages, bool rotate, int type)
     {
         this.messages = messages;
         this.countHints = countHints;
         this.rotate = rotate;
+        this.type = type;
         for(int i = 0; i < countHints; i++)
         {
             var kp = new KeyValuePair<string, RectTransform>(
@@ -70,17 +74,18 @@ public class TutorialMenu_ui: ui_basement
             hints_messages.Add(kp);
             
         }
-        flg = false;
+        flg = true;
         NextHint();
         
     }
 
-    public void Init(List<RectTransform> RTs, int countHints, string[] messages, bool rotate, Canvas canvas)
+    public void Init(List<RectTransform> RTs, int countHints, string[] messages, bool rotate, Canvas canvas, int type)
     {
         this.messages = messages;
         this.countHints = countHints;
         this.rotate = rotate;
         this.canvas = canvas;
+        this.type = type;
 
         if(canvas)
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
@@ -162,37 +167,67 @@ public class TutorialMenu_ui: ui_basement
 
     public void NextHint()
     {
+
+        switch (type)
+        {
+            case 0:
+                {
+                    DeleteHint();
+
+                    var msg = hints_messages[idCurrentHint].Key;
+                    var pos = hints_messages[idCurrentHint].Value;
+                    MakeHint(msg, pos);
+                    if (idCurrentHint >= countHints)
+                    {
+                        endFlg = true;
+                    }
+                    break;
+                }
+            case 1:case 2:
+                {
+                    if (idCurrentHint < countHints)
+                    {
+                        DeleteHint();
+
+                        var msg = hints_messages[idCurrentHint].Key;
+                        var pos = hints_messages[idCurrentHint].Value;
+                        MakeHint(msg, pos);
+
+                    }
+                    else
+                    {
+                        if(type != 2)
+                        {
+                            if (flg == true)
+                            {
+
+                                GameControllerScr.instance.StartTutorial();
+
+                                endFlg = true;
+                                canvas.renderMode = RenderMode.ScreenSpaceCamera;
+                                canvas.worldCamera = Camera.main;
+
+                            }
+                        }
+                        
+
+
+                        base.DeActivate();
+
+                    }
+                    break;
+                }
+        }
+
         
 
-        if(idCurrentHint < countHints)
-        {
-            DeleteHint();
+    }
 
-            var msg = hints_messages[idCurrentHint].Key;
-            var pos = hints_messages[idCurrentHint].Value;
-            MakeHint(msg, pos);
-            
-        }
-        else
-        {
-            if (flg == true)
-            {
-                GameControllerScr.instance.StartTutorial()
-                ;
-                endFlg = true;
-                canvas.renderMode = RenderMode.ScreenSpaceCamera;
-                canvas.worldCamera = Camera.main;
-                
-                
-            }
-            
-
-            base.DeActivate();
-
-        }
-
+    public void OpenDaily()
+    {
+        if(endFlg)
+        MainMenuControl.instance.OpenDailyAcc();
         
-
     }
 
     public void DeleteHint()
