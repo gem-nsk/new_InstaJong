@@ -167,19 +167,23 @@ public class TutorialMenu_ui: ui_basement
 
     public void NextHint()
     {
-
         switch (type)
         {
             case 0:
                 {
-                    DeleteHint();
-
-                    var msg = hints_messages[idCurrentHint].Key;
-                    var pos = hints_messages[idCurrentHint].Value;
-                    MakeHint(msg, pos);
+                    
                     if (idCurrentHint >= countHints)
                     {
                         endFlg = true;
+
+                    }
+                    else
+                    {
+                        DeleteHint();
+
+                        var msg = hints_messages[idCurrentHint].Key;
+                        var pos = hints_messages[idCurrentHint].Value;
+                        MakeHint(msg, pos);
                     }
                     break;
                 }
