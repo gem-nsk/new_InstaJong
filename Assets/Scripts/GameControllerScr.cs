@@ -745,9 +745,11 @@ public class GameControllerScr : MonoBehaviour
     private string hintName = "gameHint";
     public Transform BG;
     private Vector2? pos = null;
-    public IEnumerator MakeHint(string message, float delay)
+    private GameObject _CurrentHint;
+    public IEnumerator MakeHint(string message)
     {
-        GameObject _CurrentHint = Instantiate(hintGame);
+        
+        _CurrentHint = Instantiate(hintGame);
         _CurrentHint.transform.SetParent(BG, false);
         _CurrentHint.name = hintName;
         _CurrentHint.GetComponentInChildren<Text>().text = message;
@@ -758,9 +760,29 @@ public class GameControllerScr : MonoBehaviour
             
       
         yield return StartCoroutine(AnimatedHintShow(_CurrentHint.GetComponent<RectTransform>()));
+
+
+
+    }
+
+    public IEnumerator MakeHint(string message, float delay)
+    {
+
+        _CurrentHint = Instantiate(hintGame);
+        _CurrentHint.transform.SetParent(BG, false);
+        _CurrentHint.name = hintName;
+        _CurrentHint.GetComponentInChildren<Text>().text = message;
+
+        _CurrentHint.transform.position = HintOffset.position;
+        pos = _CurrentHint.transform.position;
+        Debug.Log("position: " + Screen.width / 2);
+
+
+        yield return StartCoroutine(AnimatedHintShow(_CurrentHint.GetComponent<RectTransform>()));
         yield return new WaitForSeconds(delay);
 
         Destroy(_CurrentHint);
+
 
 
     }
@@ -800,7 +822,8 @@ public class GameControllerScr : MonoBehaviour
 
     public IEnumerator NextHint()
     {
-        if(isTutorial)
+        Destroy(_CurrentHint);
+        if (isTutorial)
         {
             _Timer._isPaused = false;
             hint_id++;
@@ -808,26 +831,23 @@ public class GameControllerScr : MonoBehaviour
             {
                 case 1:
                     {
-                        StartCoroutine(MakeHint(hints[hint_id], 5));
+                        StartCoroutine(MakeHint(hints[hint_id]));
                         StartCoroutine(ShowHelp());
                         break;
                     }
                 case 2:
                     {
-                        StartCoroutine(MakeHint(hints[hint_id], 5));
-                        yield return new WaitForSeconds(5);
-                        StartCoroutine(NextHint());
+                        StartCoroutine(MakeHint(hints[hint_id]));
                         break;
                     }
                 case 3:
                     {
                         StartCoroutine(MakeHint(hints[hint_id], 1.5f));
-
                         break;
                     }
             }
         }
-       
+        yield return null;
     }
     #endregion
 }

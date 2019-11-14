@@ -22,12 +22,15 @@ public class ImagePreviewer : ui_basement
     public override void DeActivate()
     {
         GameControllerScr.instance._Timer.TimerState(false);
+        
         base.DeActivate();
     }
     public void Preview(int id)
     {
         LoadPicture(id);
+        
         setCommentField(id);
+        StartCoroutine(GameControllerScr.instance.NextHint());
     }
 
     void LoadPicture(int id)
@@ -71,7 +74,9 @@ public class ImagePreviewer : ui_basement
 
     public void CLose()
     {
+        StartCoroutine(GameControllerScr.instance.NextHint());
         CanvasController.instance.CloseCanvas();
+        
     }
     
     

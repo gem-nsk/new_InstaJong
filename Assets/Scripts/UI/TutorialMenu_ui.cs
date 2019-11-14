@@ -172,8 +172,13 @@ public class TutorialMenu_ui: ui_basement
             case 0:
                 {
                     
-                    if (idCurrentHint >= countHints)
+                    if (idCurrentHint >= countHints-1)
                     {
+                        DeleteHint();
+
+                        var msg = hints_messages[idCurrentHint].Key;
+                        var pos = hints_messages[idCurrentHint].Value;
+                        MakeHint(msg, pos);
                         endFlg = true;
 
                     }
