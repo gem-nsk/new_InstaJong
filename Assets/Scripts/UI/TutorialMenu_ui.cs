@@ -46,7 +46,7 @@ public class TutorialMenu_ui: ui_basement
     {
         base.Activate();
         instance = this;
-
+        endFlg = false;
         //GetComponent<Canvas>().worldCamera = Camera.main;
 
         RectTransform rt = (RectTransform)hint.transform;
@@ -253,9 +253,11 @@ public class TutorialMenu_ui: ui_basement
 
     public void DeleteHint()
     {
-        var del = GameObject.Find(hintName + idCurrentHint);
         var delObj = GameObject.Find(objName + idCurrentHint);
-        Destroy(del);
         Destroy(delObj);
+        var del = GameObject.Find(hintName + idCurrentHint);
+        
+        Destroy(del);
+        
     }
 }
