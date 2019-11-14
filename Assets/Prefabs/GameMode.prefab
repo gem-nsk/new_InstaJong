@@ -1381,6 +1381,7 @@ MonoBehaviour:
   History_t: {fileID: 7146420455608578307}
   Tutorial: {fileID: 1478571770737923203, guid: b9f36ef66622f45a98082dfc27c5319b,
     type: 3}
+  canvas: {fileID: 4918698793026083768}
 --- !u!1 &8446601844653601208
 GameObject:
   m_ObjectHideFlags: 0

@@ -4130,6 +4130,7 @@ MonoBehaviour:
   STORE: {fileID: 768816947}
   NEW_GAME: {fileID: 1970948341}
   HELLO_SPAWN: {fileID: 1686580906}
+  canvas: {fileID: 1254517482}
   BuyInstaCoins_ui: {fileID: 798926291608319558, guid: cd22c2d960e478a41aa79a94c1982259,
     type: 3}
   Tutorialmenu_ui: {fileID: 1478571770737923203, guid: b9f36ef66622f45a98082dfc27c5319b,

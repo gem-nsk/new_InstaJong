@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class TutorialMenu_ui: ui_basement
 {
-
     public Transform hints;
     public GameObject hint;
     public GameObject hintReverse;
     private string hintName = "Hint";
+    private string objName = "Obj";
     private int countHints = 5;
     private int idCurrentHint = 0;
     private List<KeyValuePair<string, RectTransform>> hints_messages = new List<KeyValuePair<string, RectTransform>>();
@@ -31,7 +31,8 @@ public class TutorialMenu_ui: ui_basement
     public static bool endFlg;
     public static bool MainEnd;
     private int type;
-    
+    private List<RectTransform> rectTransforms;
+
 
     private string[] messages = {
         "Вы можете играть фотографиями популярного аккаунта",
@@ -65,6 +66,7 @@ public class TutorialMenu_ui: ui_basement
         this.countHints = countHints;
         this.rotate = rotate;
         this.type = type;
+        rectTransforms = RTs;
         for(int i = 0; i < countHints; i++)
         {
             var kp = new KeyValuePair<string, RectTransform>(
@@ -104,38 +106,47 @@ public class TutorialMenu_ui: ui_basement
 
     }
 
-    public void MakeHint(string message, RectTransform position)
+    public void MakeHint(string message, RectTransform position, bool e)
     {
         if(canvas)
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
-        // new Vector2(position.localPosition.y, position.localPosition.x);
-        if (rotate)
-        {
-            _CurrentHint = Instantiate(hintReverse);
-            _CurrentHint.transform.SetParent(hints, false);
-            _CurrentHint.name = hintName + (idCurrentHint + 1);
-            _CurrentHint.GetComponentInChildren<Text>().text = message;
+        // подсвечивание
+        
+        if(!endFlg) {
+            var pos = position.position;
+            var obj = Instantiate(position);
+            obj.transform.SetParent(hints, false);
+            obj.transform.position = pos;
+            obj.name = objName + (idCurrentHint + 1);
+            // new Vector2(position.localPosition.y, position.localPosition.x);
+            if (rotate)
+            {
+                _CurrentHint = Instantiate(hintReverse);
+                _CurrentHint.transform.SetParent(hints, false);
+                _CurrentHint.name = hintName + (idCurrentHint + 1);
+                _CurrentHint.GetComponentInChildren<Text>().text = message;
 
-            _CurrentHint.transform.position = new Vector2(position.transform.position.x, position.transform.position.y);
-            _CurrentHint.GetComponent<Image>().sprite = inversePos;
+                _CurrentHint.transform.position = new Vector2(position.transform.position.x, position.transform.position.y);
+                _CurrentHint.GetComponent<Image>().sprite = inversePos;
+
+            }
+            else
+            {
+                _CurrentHint = Instantiate(hint);
+                _CurrentHint.transform.SetParent(hints, false);
+                _CurrentHint.name = hintName + (idCurrentHint + 1);
+                _CurrentHint.GetComponentInChildren<Text>().text = message;
+                _CurrentHint.transform.position = new Vector2(position.transform.position.x, position.transform.position.y);
+            }
+
+            StartCoroutine(ShowHint());
 
         }
-        else
-        {
-            _CurrentHint = Instantiate(hint);
-            _CurrentHint.transform.SetParent(hints, false);
-            _CurrentHint.name = hintName + (idCurrentHint + 1);
-            _CurrentHint.GetComponentInChildren<Text>().text = message;
-            _CurrentHint.transform.position = new Vector2(position.transform.position.x, position.transform.position.y);
-        }
-
-        StartCoroutine(ShowHint());
-
 
         Debug.Log(position.transform.position);
-        
-        idCurrentHint = idCurrentHint + 1;
+        if(e == true)
+            idCurrentHint = idCurrentHint + 1;
         //StartCoroutine(ShowHint());
 
     }
@@ -178,7 +189,7 @@ public class TutorialMenu_ui: ui_basement
 
                         var msg = hints_messages[idCurrentHint].Key;
                         var pos = hints_messages[idCurrentHint].Value;
-                        MakeHint(msg, pos);
+                        MakeHint(msg, pos, false);
                         endFlg = true;
 
                     }
@@ -188,7 +199,8 @@ public class TutorialMenu_ui: ui_basement
 
                         var msg = hints_messages[idCurrentHint].Key;
                         var pos = hints_messages[idCurrentHint].Value;
-                        MakeHint(msg, pos);
+                        MakeHint(msg, pos, true);
+                        
                     }
                     break;
                 }
@@ -200,7 +212,7 @@ public class TutorialMenu_ui: ui_basement
 
                         var msg = hints_messages[idCurrentHint].Key;
                         var pos = hints_messages[idCurrentHint].Value;
-                        MakeHint(msg, pos);
+                        MakeHint(msg, pos, true);
 
                     }
                     else
@@ -242,6 +254,8 @@ public class TutorialMenu_ui: ui_basement
     public void DeleteHint()
     {
         var del = GameObject.Find(hintName + idCurrentHint);
+        var delObj = GameObject.Find(objName + idCurrentHint);
         Destroy(del);
+        Destroy(delObj);
     }
 }

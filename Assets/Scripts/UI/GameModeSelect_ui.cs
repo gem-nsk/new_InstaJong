@@ -18,6 +18,8 @@ public class GameModeSelect_ui : ui_basement
 
     public GameObject Tutorial;
 
+    public Canvas canvas;
+
     public override void Activate()
     {
         base.Activate();

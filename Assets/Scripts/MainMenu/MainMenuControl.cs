@@ -23,6 +23,7 @@ public class MainMenuControl : MonoBehaviour
     public GameObject STORE;
     public GameObject NEW_GAME;
     public GameObject HELLO_SPAWN;
+    public Canvas canvas;
     //-----------------------
 
     public GameObject BuyInstaCoins_ui;
@@ -31,6 +32,8 @@ public class MainMenuControl : MonoBehaviour
     public GameObject PrivatePolicy_ui;
 
     public static bool ended = false;
+
+    
     
     public Image musicImg;
     public Sprite[] Musicicons;
