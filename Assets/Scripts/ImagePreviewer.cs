@@ -30,7 +30,7 @@ public class ImagePreviewer : ui_basement
         LoadPicture(id);
         
         setCommentField(id);
-        StartCoroutine(GameControllerScr.instance.NextHint());
+        //StartCoroutine(GameControllerScr.instance.NextHint());
     }
 
     void LoadPicture(int id)
