@@ -830,7 +830,7 @@ public class GameControllerScr : MonoBehaviour
 
     public void StartTutorial()
     {
-        StartCoroutine(MakeHint(hints[hint_id],5));
+        StartCoroutine(MakeHint(hints[hint_id]));
         StartCoroutine(ShowHelp());
         
     }
@@ -857,7 +857,7 @@ public class GameControllerScr : MonoBehaviour
                     }
                 case 3:
                     {
-                        StartCoroutine(MakeHint(hints[hint_id], 1.5f));
+                        StartCoroutine(MakeHint(hints[hint_id], 5f));
                         break;
                     }
             }
