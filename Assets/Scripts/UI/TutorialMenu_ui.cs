@@ -9,18 +9,15 @@ public class TutorialMenu_ui: ui_basement
     public Transform hints;
     public GameObject hint;
     public GameObject hintReverse;
-    private string hintName = "Hint";
-    private string objName = "Obj";
+    private readonly string hintName = "Hint";
+    private readonly string objName = "Obj";
     private int countHints = 5;
-    private int idCurrentHint = 0;
-    private List<KeyValuePair<string, RectTransform>> hints_messages = new List<KeyValuePair<string, RectTransform>>();
+    private int idCurrentHint;
+    private readonly List<KeyValuePair<string, RectTransform>> hints_messages = new List<KeyValuePair<string, RectTransform>>();
 
     private GameObject _CurrentHint;
     private Canvas canvas;
     private static bool flg;
-
-    private float width;
-    private float height;
 
     private bool rotate;
 
@@ -31,42 +28,19 @@ public class TutorialMenu_ui: ui_basement
     public static bool endFlg;
     public static bool MainEnd;
     private int type;
-    private List<RectTransform> rectTransforms;
-
-
-    private string[] messages = {
-        "Вы можете играть фотографиями популярного аккаунта",
-        "Вы можете войти в свой аккаунт, чтобы играть фотографиями вашего профиля",
-        "Вы можете поделиться своим аккаунтом, чтобы ваши друзья могли в него поиграть",
-        "Здесь вы можете купить монетки, подсказки, бонусы или отключить рекламу",
-        "Здесь вы можете начать игру"
-    };
 
     public override void Activate()
     {
         base.Activate();
         instance = this;
         endFlg = false;
-        //GetComponent<Canvas>().worldCamera = Camera.main;
-
-        RectTransform rt = (RectTransform)hint.transform;
-
-        width = rt.rect.width;
-        height = rt.rect.height;
-       
-
-        //Camera.main.WorldToScreenPoint();
-        //Camera.main.ScreenToWorldPoint();
-        
     }
 
     public void Init(List<RectTransform> RTs, int countHints, string[] messages, bool rotate, int type)
     {
-        this.messages = messages;
         this.countHints = countHints;
         this.rotate = rotate;
         this.type = type;
-        rectTransforms = RTs;
         for(int i = 0; i < countHints; i++)
         {
             var kp = new KeyValuePair<string, RectTransform>(
@@ -83,7 +57,6 @@ public class TutorialMenu_ui: ui_basement
 
     public void Init(List<RectTransform> RTs, int countHints, string[] messages, bool rotate, Canvas canvas, int type)
     {
-        this.messages = messages;
         this.countHints = countHints;
         this.rotate = rotate;
         this.canvas = canvas;
@@ -127,22 +100,18 @@ public class TutorialMenu_ui: ui_basement
             if (rotate)
             {
                 _CurrentHint = Instantiate(hintReverse);
-                _CurrentHint.transform.SetParent(hints, false);
-                _CurrentHint.name = hintName + (idCurrentHint + 1);
-                _CurrentHint.GetComponentInChildren<Text>().text = message;
-
-                _CurrentHint.transform.position = new Vector2(position.transform.position.x, position.transform.position.y);
                 _CurrentHint.GetComponent<Image>().sprite = inversePos;
-
             }
             else
             {
                 _CurrentHint = Instantiate(hint);
-                _CurrentHint.transform.SetParent(hints, false);
-                _CurrentHint.name = hintName + (idCurrentHint + 1);
-                _CurrentHint.GetComponentInChildren<Text>().text = message;
-                _CurrentHint.transform.position = new Vector2(position.transform.position.x, position.transform.position.y);
             }
+
+            _CurrentHint.transform.SetParent(hints, false);
+            _CurrentHint.name = hintName + (idCurrentHint + 1);
+            _CurrentHint.GetComponentInChildren<Text>().text = message;
+            _CurrentHint.transform.position = new Vector2(position.transform.position.x, position.transform.position.y);
+            _CurrentHint.GetComponent<Button>().onClick.AddListener(() => NextHint());
 
             StartCoroutine(ShowHint());
 
@@ -150,8 +119,10 @@ public class TutorialMenu_ui: ui_basement
 
         Debug.Log(position.transform.position);
         if(e == true)
-            idCurrentHint = idCurrentHint + 1;
+            idCurrentHint += 1;
         //StartCoroutine(ShowHint());
+
+       
 
     }
 
@@ -182,6 +153,7 @@ public class TutorialMenu_ui: ui_basement
 
     public void NextHint()
     {
+        Debug.Log(countHints);
         switch (type)
         {
             case 0:
@@ -194,6 +166,8 @@ public class TutorialMenu_ui: ui_basement
                         var msg = hints_messages[idCurrentHint].Key;
                         var pos = hints_messages[idCurrentHint].Value;
                         MakeHint(msg, pos, false);
+                        _CurrentHint.GetComponent<Button>().onClick.RemoveListener(() => NextHint());
+                        _CurrentHint.GetComponent<Button>().onClick.AddListener(() => OpenDaily());
                         endFlg = true;
 
                     }
@@ -204,7 +178,7 @@ public class TutorialMenu_ui: ui_basement
                         var msg = hints_messages[idCurrentHint].Key;
                         var pos = hints_messages[idCurrentHint].Value;
                         MakeHint(msg, pos, true);
-                        
+                        Debug.Log("idCurrentHint " + idCurrentHint);
                     }
                     break;
                 }

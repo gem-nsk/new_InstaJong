@@ -31,7 +31,7 @@ public class MainMenuControl : MonoBehaviour
     public GameObject Rules_ui;
     public GameObject PrivatePolicy_ui;
 
-    public static bool ended = false;
+    public static bool ended;
 
     
     
@@ -54,14 +54,16 @@ public class MainMenuControl : MonoBehaviour
         #region tutorial
         if (!PlayerPrefs.HasKey("_tut1"))
         {
-            List<RectTransform> RTs = new List<RectTransform>();
-            RTs.Add((RectTransform)HELLO_SPAWN.transform);
-            RTs.Add((RectTransform)HELLO_SPAWN.transform);
-            RTs.Add((RectTransform)SIGN_IN.transform);
-            RTs.Add((RectTransform)SHARE_ACC.transform);
-            RTs.Add((RectTransform)STORE.transform);
-            RTs.Add((RectTransform)NEW_GAME.transform);
-            RTs.Add((RectTransform)DAILY_ACC.transform);
+            List<RectTransform> RTs = new List<RectTransform>
+            {
+                (RectTransform)HELLO_SPAWN.transform,
+                (RectTransform)HELLO_SPAWN.transform,
+                (RectTransform)SIGN_IN.transform,
+                (RectTransform)SHARE_ACC.transform,
+                (RectTransform)STORE.transform,
+                (RectTransform)NEW_GAME.transform,
+                (RectTransform)DAILY_ACC.transform
+            };
 
             string[] messages = {
             "Добро пожаловать в игру InstaJong!",

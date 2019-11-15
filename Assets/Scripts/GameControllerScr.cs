@@ -199,7 +199,10 @@ public class GameControllerScr : MonoBehaviour
 
     public void NextLevel()
     {
-        gameStrategy++;
+        if (gameStrategy < GameStrategy.YCenter)
+            gameStrategy++;
+        else
+            gameStrategy = GameStrategy.Normal;
         numMap++;
         ui.UpdateLevel(numMap);
         StartCoroutine(CreateButtonCells());
@@ -421,7 +424,11 @@ public class GameControllerScr : MonoBehaviour
         Dictionary<int, int> currentPairCellIds;
         currentPairCellIds = PikachuPathfinder.GetAvailablePair(matrix,field);
         if (currentPairCellIds.Count == 0)
+        {
             StartCoroutine(Refresh(false));
+            MakeHint("Ходов нет. Перемешиваем поле", 1.5f);
+        }
+            
         else
         {
             KeyValuePair<int, int> firstPair = currentPairCellIds.FirstOrDefault();
