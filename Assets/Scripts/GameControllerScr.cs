@@ -442,7 +442,7 @@ public class GameControllerScr : MonoBehaviour
             foreach (Transform child in cellGroup)
             {
                 if (child.name == IDFirst)
-                {
+                { 
 
                     helpers[0] = child.gameObject;
                 }
