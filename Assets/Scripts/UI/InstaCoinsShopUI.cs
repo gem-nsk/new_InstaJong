@@ -48,6 +48,9 @@ public class InstaCoinsShopUI : ui_basement
 
     //TUTORIAL
     public GameObject SPAWN;
+    public GameObject SPAWN1;
+    public GameObject SPAWN2;
+    public GameObject SPAWN3;
     public GameObject Tutorialmenu_ui;
 
 
@@ -96,24 +99,22 @@ public class InstaCoinsShopUI : ui_basement
         {
             List<RectTransform> RTs = new List<RectTransform>();
             RTs.Add((RectTransform)SPAWN.transform);
-            RTs.Add((RectTransform)SPAWN.transform);
-            RTs.Add((RectTransform)SPAWN.transform);
-            RTs.Add((RectTransform)SPAWN.transform);
-            RTs.Add((RectTransform)SPAWN.transform);
+            RTs.Add((RectTransform)SPAWN1.transform);
+            RTs.Add((RectTransform)SPAWN2.transform);//rev
+            RTs.Add((RectTransform)SPAWN3.transform);//rev
 
             string[] messages = {
-            "Слева вы можете купить InstaCoin-ы. На ваш выбор представлены несколько наборов всегда по выгодным ценам!",
-            "На IC вы можете купить карты, которые в себе содержат определенный набор подсказок.",
-            "Вверху показан ваш текущий баланс IC",
+            "Справа вы можете купить InstaCoin-ы. На ваш выбор представлены несколько наборов всегда по выгодным ценам!",
+            "На InstaCoin-ы вы можете купить карты, которые в себе содержат определенный набор подсказок.",
+            "Вверху показан ваш текущий баланс InstaCoin-ов",
             "Рядом с вашим балансом есть кнопка отключения рекламы, чтобы она не мешала вам играть. Опция платная.",
-            "Попробуйте прямо сейчас купить набор подсказок!",
             };
 
 
             //"А сейчас мы сыграем в аккаунт дня. Нажмите на него прямо сейчас!"
 
             CanvasController.instance.OpenCanvas(Tutorialmenu_ui, false);
-            TutorialMenu_ui.instance.Init(RTs, 5, messages, false, 3);
+            TutorialMenu_ui.instance.Init(RTs, 4, messages, false, 3, (RectTransform)SPAWN2.transform, (RectTransform)SPAWN2.transform);
 
             PlayerPrefs.SetInt("_tut4", 1);
 
