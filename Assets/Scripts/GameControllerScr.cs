@@ -629,9 +629,11 @@ public class GameControllerScr : MonoBehaviour
         {
             stats.AddInstaCoins(-stats.RefreshPrice);
         }
-        
-        
 
+        if (isTutorial)
+        {
+            StartCoroutine(NextHint(hint_id));
+        }
         isRefreshing = true;
         int _step = 3;
 
@@ -842,6 +844,36 @@ public class GameControllerScr : MonoBehaviour
         {
             _Timer._isPaused = false;
             hint_id++;
+            switch (hint_id)
+            {
+                case 1:
+                    {
+                        StartCoroutine(MakeHint(hints[hint_id]));
+                        StartCoroutine(ShowHelp());
+                        break;
+                    }
+                case 2:
+                    {
+                        StartCoroutine(MakeHint(hints[hint_id]));
+                        break;
+                    }
+                case 3:
+                    {
+                        StartCoroutine(MakeHint(hints[hint_id], 5f));
+                        break;
+                    }
+            }
+        }
+        yield return null;
+    }
+
+    public IEnumerator NextHint(int _hint_id)
+    {
+        Destroy(_CurrentHint);
+        if (isTutorial)
+        {
+            _Timer._isPaused = false;
+            hint_id = _hint_id;
             switch (hint_id)
             {
                 case 1:
