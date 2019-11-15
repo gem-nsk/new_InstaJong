@@ -114,11 +114,15 @@ public class TutorialMenu_ui: ui_basement
         // подсвечивание
         
         if(!endFlg) {
+
             var pos = position.position;
             var obj = Instantiate(position);
             obj.transform.SetParent(hints, false);
             obj.transform.position = pos;
             obj.name = objName + (idCurrentHint + 1);
+            var delBut = obj.GetComponent<Button>();
+            Destroy(delBut);
+
             // new Vector2(position.localPosition.y, position.localPosition.x);
             if (rotate)
             {
@@ -204,7 +208,7 @@ public class TutorialMenu_ui: ui_basement
                     }
                     break;
                 }
-            case 1:case 2:
+            case 1:case 2: case 3:
                 {
                     if (idCurrentHint < countHints)
                     {
@@ -217,7 +221,7 @@ public class TutorialMenu_ui: ui_basement
                     }
                     else
                     {
-                        if(type != 2)
+                        if(type != 2 && type != 3)
                         {
                             if (flg == true)
                             {
