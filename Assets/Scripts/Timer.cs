@@ -8,7 +8,9 @@ public class Timer : MonoBehaviour
     [Header("Timer")]
     public Slider timerSlider;
 
-    public float TotalTime = 600;
+    public float TotalTime;
+    public float _MaximumTime = 270;
+    public float _MinimumTIme = 120;
     public float _time;
     public bool _isPaused;
 
@@ -16,6 +18,9 @@ public class Timer : MonoBehaviour
 
     public void StartTimer()
     {
+
+        TotalTime = Mathf.Clamp(_MaximumTime - (GameControllerScr.numMap * 30), _MinimumTIme, _MaximumTime);
+
         _time = TotalTime;
         StartCoroutine(TimerProgress());
     }
@@ -29,6 +34,7 @@ public class Timer : MonoBehaviour
     public IEnumerator TimerProgress()
     {
         GameControllerScr gameController = GameControllerScr.instance;
+        TotalTime = Mathf.Clamp(_MaximumTime - (GameControllerScr.numMap * 30), _MinimumTIme, _MaximumTime);
 
         //TimeAddObject.SetActive(false);
         timerSlider.maxValue = TotalTime;
@@ -45,7 +51,7 @@ public class Timer : MonoBehaviour
                     else
                         TimeAddObject.SetBool("Active", false);
 
-                    _time -= Time.deltaTime * GameControllerScr.numMap * 0.5f;
+                    _time -= Time.deltaTime;
                     yield return null;
                     break;
                 case true:

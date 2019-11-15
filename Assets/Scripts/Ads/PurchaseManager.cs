@@ -149,7 +149,7 @@ public class PurchaseManager : MonoBehaviour, IStoreListener
             OnSuccessNC(args);
         else
         {
-            Debug.Log(C_PRODUCTS[currentProductIndex].id);
+            Debug.Log("Origin product: " + C_PRODUCTS[currentProductIndex].id);
             Debug.Log(string.Format("ProcessPurchase: FAIL. Unrecognized product: '{0}'", args.purchasedProduct.definition.id));
         }
 
