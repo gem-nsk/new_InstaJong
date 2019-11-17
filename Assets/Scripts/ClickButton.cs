@@ -28,8 +28,10 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
     private (CellScr first, CellScr second) objects;
     private CellScr Click;
 
+    private static int step;
     void Start()
     {
+        step = 0;
         path = new List<Cell>();
         Buttons = new List<System.Tuple<int, int>>();
         panel = GetComponent<Image>();
@@ -123,7 +125,11 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
     {
         //GameControllerScr.instance.PlayLikeParticles(transform.position);
         GameControllerScr.instance.StopBlinking();
-        StartCoroutine(GameControllerScr.instance.NextHint());
+        if(step < 2) {
+            StartCoroutine(GameControllerScr.instance.NextHint());
+            step++;
+        }
+        
         //points
         GameControllerScr.instance.stats.AddPoints(15);
         GameControllerScr.instance._Timer.AddTime(3);
