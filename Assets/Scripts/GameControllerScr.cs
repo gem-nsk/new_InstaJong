@@ -21,6 +21,8 @@ public class GameControllerScr : MonoBehaviour
 
     public int firstID;
     public int secondID;
+
+    public static int currentStep = 0;
     //private LineRenderer lr;
 
     //public Material mat;
@@ -194,6 +196,10 @@ public class GameControllerScr : MonoBehaviour
 
             ClearSave();
 
+        }
+        if(!isTutorial)
+        {
+            Destroy(_CurrentHint);
         }
     }
 
@@ -799,6 +805,12 @@ public class GameControllerScr : MonoBehaviour
 
     }
 
+    public void DestroyAllHints()
+    {
+        
+        Destroy(_CurrentHint);
+    }
+
     public IEnumerator AnimatedHintShow(RectTransform _transform)
     {
         float _time = 0;
@@ -834,7 +846,7 @@ public class GameControllerScr : MonoBehaviour
     {
         StartCoroutine(MakeHint(hints[hint_id]));
         StartCoroutine(ShowHelp());
-        
+        currentStep = 0;
     }
 
     public IEnumerator NextHint()
@@ -848,21 +860,39 @@ public class GameControllerScr : MonoBehaviour
             {
                 case 1:
                     {
-                        StartCoroutine(MakeHint(hints[hint_id]));
-                        StartCoroutine(ShowHelp());
+                        if(currentStep == 0)
+                        {
+                            StartCoroutine(MakeHint(hints[hint_id]));
+                            StartCoroutine(ShowHelp());
+                            currentStep = 1;
+                        }
+                        
                         break;
                     }
                 case 2:
                     {
-                        StartCoroutine(MakeHint(hints[hint_id]));
+                        if (currentStep == 1)
+                        {
+                            StartCoroutine(MakeHint(hints[hint_id]));
+                            StartCoroutine(ShowHelp());
+                            currentStep = 2;
+                        }
                         break;
                     }
                 case 3:
                     {
-                        StartCoroutine(MakeHint(hints[hint_id], 5f));
+                        if (currentStep == 2)
+                        {
+                            StartCoroutine(MakeHint(hints[hint_id], 5f));
+                            currentStep = 3;
+                        }
+
                         break;
                     }
             }
+
+            if (currentStep == 3)
+                isTutorial = false;
         }
         yield return null;
     }

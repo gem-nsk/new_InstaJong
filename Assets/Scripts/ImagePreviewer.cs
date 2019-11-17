@@ -16,7 +16,11 @@ public class ImagePreviewer : ui_basement
     public override void Activate()
     {
         base.Activate();
-        StartCoroutine(GameControllerScr.instance.NextHint());
+        if (GameControllerScr.currentStep == 2)
+        {
+            StartCoroutine(GameControllerScr.instance.NextHint(3));
+        }
+            
         GameControllerScr.instance._Timer.TimerState(true);
     }
 

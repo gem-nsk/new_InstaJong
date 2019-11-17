@@ -128,6 +128,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
         if(step < 2) {
             StartCoroutine(GameControllerScr.instance.NextHint());
             step++;
+            GameControllerScr.currentStep = step;
         }
         
         //points
