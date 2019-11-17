@@ -205,6 +205,7 @@ public class GameControllerScr : MonoBehaviour
             gameStrategy = GameStrategy.Normal;
         numMap++;
         ui.UpdateLevel(numMap);
+        GameControllerScr.instance._Timer.UpdateTimeValues();
         StartCoroutine(CreateButtonCells());
     }
 

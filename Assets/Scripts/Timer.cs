@@ -31,10 +31,20 @@ public class Timer : MonoBehaviour
         StartCoroutine(TimerProgress());
     }
 
+    public void UpdateTimeValues()
+    {
+        TotalTime = Mathf.Clamp(_MaximumTime - (GameControllerScr.numMap * 30), _MinimumTIme, _MaximumTime);
+        _time = TotalTime;
+
+        timerSlider.maxValue = TotalTime;
+        timerSlider.value = _time;
+    }
+
     public IEnumerator TimerProgress()
     {
         GameControllerScr gameController = GameControllerScr.instance;
-        TotalTime = Mathf.Clamp(_MaximumTime - (GameControllerScr.numMap * 30), _MinimumTIme, _MaximumTime);
+
+        Debug.Log("Level time - " + TotalTime);
 
         //TimeAddObject.SetActive(false);
         timerSlider.maxValue = TotalTime;
@@ -44,6 +54,8 @@ public class Timer : MonoBehaviour
             switch (_isPaused)
             {
                 case false:
+                    TotalTime = Mathf.Clamp(_MaximumTime - (GameControllerScr.numMap * 30), _MinimumTIme, _MaximumTime);
+
                     timerSlider.value = _time;
 
                     if ((timerSlider.value / timerSlider.maxValue) < 0.3f)
