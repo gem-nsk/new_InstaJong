@@ -427,7 +427,7 @@ public class GameControllerScr : MonoBehaviour
         if (currentPairCellIds.Count == 0)
         {
             StartCoroutine(Refresh(false));
-            MakeHint("Ходов нет. Перемешиваем поле", 1.5f);
+            StartCoroutine(MakeHint("Ходов нет. Перемешиваем поле", 1.5f));
         }
             
         else
@@ -629,6 +629,8 @@ public class GameControllerScr : MonoBehaviour
         {
             stats.AddInstaCoins(-stats.RefreshPrice);
         }
+        
+        
 
         isRefreshing = true;
         int _step = 3;

@@ -111,7 +111,8 @@ public class TutorialMenu_ui: ui_basement
             _CurrentHint.name = hintName + (idCurrentHint + 1);
             _CurrentHint.GetComponentInChildren<Text>().text = message;
             _CurrentHint.transform.position = new Vector2(position.transform.position.x, position.transform.position.y);
-            _CurrentHint.GetComponent<Button>().onClick.AddListener(() => NextHint());
+            if(type == 0)
+                _CurrentHint.GetComponent<Button>().onClick.AddListener(() => NextHint());
 
             StartCoroutine(ShowHint());
 
