@@ -427,7 +427,7 @@ public class GameControllerScr : MonoBehaviour
         if (currentPairCellIds.Count == 0)
         {
             StartCoroutine(Refresh(false));
-            StartCoroutine(MakeHint("Ходов нет. Перемешиваем поле", 1.5f));
+            StartCoroutine(MakeHint("Ходов нет. Перемешиваем поле", 2.5f));
         }
             
         else

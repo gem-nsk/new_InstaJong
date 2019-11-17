@@ -18,7 +18,7 @@ public class TutorialMenu_ui: ui_basement
     private GameObject _CurrentHint;
     private Canvas canvas;
     private static bool flg;
-
+    private RectTransform[] list;
     private bool rotate;
 
     public static TutorialMenu_ui instance;
@@ -36,11 +36,12 @@ public class TutorialMenu_ui: ui_basement
         endFlg = false;
     }
 
-    public void Init(List<RectTransform> RTs, int countHints, string[] messages, bool rotate, int type)
+    public void Init(List<RectTransform> RTs, int countHints, string[] messages, bool rotate, int type, params RectTransform[] args)
     {
         this.countHints = countHints;
         this.rotate = rotate;
         this.type = type;
+        list = args;
         for(int i = 0; i < countHints; i++)
         {
             var kp = new KeyValuePair<string, RectTransform>(
@@ -55,14 +56,14 @@ public class TutorialMenu_ui: ui_basement
         
     }
 
-    public void Init(List<RectTransform> RTs, int countHints, string[] messages, bool rotate, Canvas canvas, int type)
+    public void Init(List<RectTransform> RTs, int countHints, string[] messages, bool rotate, Canvas canvas, int type, params RectTransform[] args)
     {
         this.countHints = countHints;
         this.rotate = rotate;
         this.canvas = canvas;
         this.type = type;
-
-        if(canvas)
+        list = args;
+        if (canvas)
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
         for (int i = 0; i < countHints; i++)
@@ -87,8 +88,17 @@ public class TutorialMenu_ui: ui_basement
         // подсвечивание
         
         if(!endFlg) {
-
             var pos = position.position;
+
+            if(list.Length != 0)
+            {
+                foreach (RectTransform rectTransform in list)
+                {
+                    if (rectTransform.name == position.name)
+                        rotate = true;
+                }
+            }
+            
             var obj = Instantiate(position);
             obj.transform.SetParent(hints, false);
             obj.transform.position = pos;
@@ -111,8 +121,8 @@ public class TutorialMenu_ui: ui_basement
             _CurrentHint.name = hintName + (idCurrentHint + 1);
             _CurrentHint.GetComponentInChildren<Text>().text = message;
             _CurrentHint.transform.position = new Vector2(position.transform.position.x, position.transform.position.y);
-            if(type == 0)
-                _CurrentHint.GetComponent<Button>().onClick.AddListener(() => NextHint());
+            //if(type == 0)
+            _CurrentHint.GetComponent<Button>().onClick.AddListener(() => NextHint());
 
             StartCoroutine(ShowHint());
 
