@@ -46,18 +46,25 @@ public class InstaCoinsShopUI : ui_basement
     public GameObject MainShop;
     public GameObject ShopLoading;
 
+    //TUTORIAL
+    public GameObject SPAWN;
+    public GameObject Tutorialmenu_ui;
+
 
     public override void Activate()
     {
         base.Activate();
 
         StartCoroutine(WaitForAuth());
+
     }
 
     private void auth()
     {
         MainShop.SetActive(true);
         ShopLoading.SetActive(false);
+
+        StartTutourial();
 
         if (GameControllerScr.instance != null)
         {
@@ -80,6 +87,38 @@ public class InstaCoinsShopUI : ui_basement
                 Units[i].PriceText.text = Units[i]._pack._Price.ToString();
             }
         }
+    }
+
+    public void StartTutourial()
+    {
+        #region tutorial
+        if (!PlayerPrefs.HasKey("_tut4"))
+        {
+            List<RectTransform> RTs = new List<RectTransform>();
+            RTs.Add((RectTransform)SPAWN.transform);
+            RTs.Add((RectTransform)SPAWN.transform);
+            RTs.Add((RectTransform)SPAWN.transform);
+            RTs.Add((RectTransform)SPAWN.transform);
+            RTs.Add((RectTransform)SPAWN.transform);
+
+            string[] messages = {
+            "Слева вы можете купить InstaCoin-ы. На ваш выбор представлены несколько наборов всегда по выгодным ценам!",
+            "На IC вы можете купить карты, которые в себе содержат определенный набор подсказок.",
+            "Вверху показан ваш текущий баланс IC",
+            "Рядом с вашим балансом есть кнопка отключения рекламы, чтобы она не мешала вам играть. Опция платная.",
+            "Попробуйте прямо сейчас купить набор подсказок!",
+            };
+
+
+            //"А сейчас мы сыграем в аккаунт дня. Нажмите на него прямо сейчас!"
+
+            CanvasController.instance.OpenCanvas(Tutorialmenu_ui, false);
+            TutorialMenu_ui.instance.Init(RTs, 5, messages, false, 3);
+
+            PlayerPrefs.SetInt("_tut4", 1);
+
+        }
+        #endregion
     }
 
     public void UpdateInstaCoins(int coins)
