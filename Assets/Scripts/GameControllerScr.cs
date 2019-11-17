@@ -805,10 +805,15 @@ public class GameControllerScr : MonoBehaviour
 
         while(_time < _elapsedTime)
         {
-            _transform.localScale = Vector2.Lerp(_transform.localScale, new Vector2(1, 1), _time / _elapsedTime);
+            if (_transform)
+            {
+                _transform.localScale = Vector2.Lerp(_transform.localScale, new Vector2(1, 1), _time / _elapsedTime);
 
-            _time += Time.deltaTime;
-            yield return null;
+                _time += Time.deltaTime;
+                yield return null;
+            }
+            else
+                yield break;
         }
     }
 

@@ -62,6 +62,7 @@ public class endGamePreviewer : ui_basement
     public override void DeActivate()
     {
         base.DeActivate();
+        GameControllerScr.instance._Timer._isPaused = false;
     }
 
     public void Continue()
