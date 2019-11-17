@@ -34,13 +34,13 @@ public class DailyRewards : MonoBehaviour
             {
                 GetReward();
                 Debug.Log(GenerateMessege(_packVariants[0]));
-                SetDate(System.DateTime.Today);
             }
         }
         else
         {
             //set first date
-            SetDate(System.DateTime.Today);
+            if(PlayerPrefs.HasKey("_tut1"))
+            GetReward();
         }
     }
 
@@ -53,7 +53,8 @@ public class DailyRewards : MonoBehaviour
     public void GetReward()
     {
         Debug.Log("New day, take a reward!");
-        CanvasController.instance.OpenCanvas(DailyUI);
+        GameObject g = CanvasController.instance.OpenCanvas(DailyUI);
+        g.GetComponent<DailyRewards_UI>()._this = this;
     }
 
     public string GenerateMessege(_PackData _data)

@@ -19,6 +19,7 @@ public class DailyRewards_UI : ui_basement
     private SpinElement _current;
     public Animator _blobAnim;
     public Image _prise;
+    public DailyRewards _this;
 
     public GameObject RollButton;
 
@@ -78,6 +79,7 @@ public class DailyRewards_UI : ui_basement
 
     public void CloseCanvas()
     {
+        _this.SetDate(System.DateTime.Today);
         CanvasControllerClose();
     }
 
