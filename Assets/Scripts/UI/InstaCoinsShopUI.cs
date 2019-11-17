@@ -110,6 +110,7 @@ public class InstaCoinsShopUI : ui_basement
     {
         SuccessfulBuy.SetActive(true);
         PurchaseManager.OnPurchaseConsumable -= BuyAnimation;
+        PurchaseManager.PurchaseFailed -= FailedPurchase;
     }
 
     public void CloseWindow()
@@ -172,5 +173,7 @@ public class InstaCoinsShopUI : ui_basement
         }
         CanvasController.instance.CloseCanvas();
         PlayerStats.instance._addInstaCoins -= UpdateInstaCoins;
+        PurchaseManager.OnPurchaseConsumable -= BuyAnimation;
+        PurchaseManager.PurchaseFailed -= FailedPurchase;
     }
 }

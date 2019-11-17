@@ -719,12 +719,12 @@ public class GameControllerScr : MonoBehaviour
 
     #endregion
 
-    public void PlayLikeParticles(Vector3 pos)
-    {
-        ParticleSystem sys = Instantiate(LikeSystem);
-        sys.transform.position = new Vector3(pos.x, pos.y, pos.z - 10);
-        sys.Play();
-    }
+    //public void PlayLikeParticles(Vector3 pos)
+    //{
+    //    ParticleSystem sys = Instantiate(LikeSystem);
+    //    sys.transform.position = new Vector3(pos.x, pos.y, pos.z - 10);
+    //    sys.Play();
+    //}
 
     public void StopLoading()
     {

@@ -147,7 +147,12 @@ public class PurchaseManager : MonoBehaviour, IStoreListener
             OnSuccessC(args);
         else if (NC_PRODUCTS.Length > 0 && String.Equals(args.purchasedProduct.definition.id, NC_PRODUCTS[currentProductIndex], StringComparison.Ordinal))
             OnSuccessNC(args);
-        else Debug.Log(string.Format("ProcessPurchase: FAIL. Unrecognized product: '{0}'", args.purchasedProduct.definition.id));
+        else
+        {
+            Debug.Log(C_PRODUCTS[currentProductIndex].id);
+            Debug.Log(string.Format("ProcessPurchase: FAIL. Unrecognized product: '{0}'", args.purchasedProduct.definition.id));
+        }
+
         return PurchaseProcessingResult.Complete;
     }
 
@@ -166,9 +171,10 @@ public class PurchaseManager : MonoBehaviour, IStoreListener
         Debug.Log(NC_PRODUCTS[currentProductIndex] + " Buyed!");
     }
     public delegate void OnFailedPurchase(Product product, PurchaseFailureReason failureReason);
+
     protected virtual void OnFailedP(Product product, PurchaseFailureReason failureReason)
     {
-        if (PurchaseFailed != null) PurchaseFailed(product, failureReason);
+        PurchaseFailed?.Invoke(product, failureReason);
         Debug.Log(string.Format("OnPurchaseFailed: FAIL. Product: '{0}', PurchaseFailureReason: {1}", product.definition.storeSpecificId, failureReason));
     }
 

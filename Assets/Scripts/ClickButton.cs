@@ -121,7 +121,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
 
     public void SuccessfulPare()
     {
-        GameControllerScr.instance.PlayLikeParticles(transform.position);
+        //GameControllerScr.instance.PlayLikeParticles(transform.position);
         GameControllerScr.instance.StopBlinking();
         StartCoroutine(GameControllerScr.instance.NextHint());
         //points
