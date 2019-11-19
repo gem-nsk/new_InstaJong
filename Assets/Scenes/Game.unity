@@ -388,6 +388,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerSlider: {fileID: 773875619}
   TotalTime: 120
+  _MaximumTime: 270
+  _MinimumTIme: 120
   _time: 0
   _isPaused: 0
   TimeAddObject: {fileID: 1503867052}
@@ -7316,8 +7318,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8292273852291492660, guid: c3f54809c6602da48950eeeaec15fc05,
-          type: 3}
+      - m_Target: {fileID: 1117201708}
         m_MethodName: ButtonBack
         m_Mode: 1
         m_Arguments:

@@ -119,7 +119,7 @@ public class TutorialMenu_ui: ui_basement
 
             _CurrentHint.transform.SetParent(hints, false);
             _CurrentHint.name = hintName + (idCurrentHint + 1);
-            _CurrentHint.GetComponentInChildren<Text>().text = message;
+            _CurrentHint.GetComponentInChildren<Text>().text = LocalizationManager.instance.GetLocalizedValue( message);
             _CurrentHint.transform.position = new Vector2(position.transform.position.x, position.transform.position.y);
             //if(type == 0)
             _CurrentHint.GetComponent<Button>().onClick.AddListener(() => NextHint());

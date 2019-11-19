@@ -16,7 +16,7 @@ public class Rules_ui : ui_basement
         GameControllerScr c = GameControllerScr.instance;
         if (c)
         {
-            c._Timer._isPaused = false;
+            c._Timer.SetPaused("rules", false);
         }
         base.CanvasControllerClose();
     }
@@ -28,7 +28,7 @@ public class Rules_ui : ui_basement
         GameControllerScr c = GameControllerScr.instance;
         if(c)
         {
-            c._Timer._isPaused = true;
+            c._Timer.SetPaused("rules", true);
         }
     }
 

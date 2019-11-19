@@ -12,7 +12,7 @@ public class Timer : MonoBehaviour
     public float _MaximumTime = 270;
     public float _MinimumTIme = 120;
     public float _time;
-    public bool _isPaused;
+    private bool _isPaused;
 
     public Animator TimeAddObject;
 
@@ -24,7 +24,7 @@ public class Timer : MonoBehaviour
         _time = TotalTime;
         StartCoroutine(TimerProgress());
     }
-   
+
     public void SetTime(float time)
     {
         _time = time;
@@ -38,6 +38,12 @@ public class Timer : MonoBehaviour
 
         timerSlider.maxValue = TotalTime;
         timerSlider.value = _time;
+    }
+
+    public void SetPaused(string from, bool _isPaused)
+    {
+        Debug.Log(from + (_isPaused ? " Unpaused" : " Paused"));
+        this._isPaused = _isPaused;
     }
 
     public IEnumerator TimerProgress()

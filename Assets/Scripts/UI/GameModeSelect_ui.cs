@@ -33,10 +33,10 @@ public class GameModeSelect_ui : ui_basement
             RTs.Add((RectTransform)History_t.transform);
 
             string[] messages = {
-        "Вы можете играть фотографиями вашего профиля",
-        "Вы можете найти фотографии по хэштегу",
-        "Вы можете найти конкретный аккаунт",
-        "Вы можете просмотреть историю вашего поиска",
+        "_t_tut3_1",
+        "_t_tut3_2",
+        "_t_tut3_3",
+        "_t_tut3_4",
         };
 
             CanvasController.instance.OpenCanvas(Tutorial, false);

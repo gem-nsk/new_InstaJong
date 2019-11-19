@@ -62,7 +62,7 @@ public class endGamePreviewer : ui_basement
     public override void DeActivate()
     {
         base.DeActivate();
-        GameControllerScr.instance._Timer._isPaused = false;
+        GameControllerScr.instance._Timer.SetPaused("end game", false);
     }
 
     public void Continue()
@@ -85,7 +85,7 @@ public class endGamePreviewer : ui_basement
     {
         GameControllerScr.instance.stats.SetPointsTo(0);
         GameControllerScr.instance._Timer.AddTime();
-        GameControllerScr.instance._Timer._isPaused = false;
+        GameControllerScr.instance._Timer.SetPaused("end game", false) ;
         StartCoroutine(GameControllerScr.instance.CreateButtonCells());
         CanvasControllerClose();
     }

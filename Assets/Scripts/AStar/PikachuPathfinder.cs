@@ -56,7 +56,7 @@ public class PikachuPathfinder : MonoBehaviour
                             y = col - 1;
                             result.Add(GetCellId(p1, field), GetCellId(p2, field));
                             //Debug.Log("id1: " + p1.getId() + "id2: " + p2.getId());
-                            Debug.LogWarning("match: cell" + p1.getCoords() + " vs " + p2.getCoords());
+                            //Debug.LogWarning("match: cell" + p1.getCoords() + " vs " + p2.getCoords());
                         }
                     }
                 }
@@ -94,10 +94,10 @@ public class PikachuPathfinder : MonoBehaviour
         {
             if(cell1.getCoords().i == cell2.getCoords().i)
             {
-                Debug.Log("Line x");
+                //Debug.Log("Line x");
                 if(CheckLineX(matrix,cell1.getCoords().j, cell2.getCoords().j, cell1.getCoords().i))
                 {
-                    Debug.Log("ok line x");
+                    //Debug.Log("ok line x");
                     cellsOnLine.Add(cell1);
                     cellsOnLine.Add(cell2);
                     return cellsOnLine;
@@ -120,7 +120,7 @@ public class PikachuPathfinder : MonoBehaviour
             // check in rectangle with x
             if ((t = CheckRectX(matrix, cell1, cell2)) != -1)
             {
-                Debug.Log("rect x");
+                //Debug.Log("rect x");
                 cellsOnLine.Add(cell1);
                 cellsOnLine.Add(new Cell(cell1.getCoords().i, t));
                 cellsOnLine.Add(new Cell(cell2.getCoords().i, t));
@@ -130,7 +130,7 @@ public class PikachuPathfinder : MonoBehaviour
             // check in rectangle with y
             if ((t = CheckRectY(matrix, cell1, cell2)) != -1)
             {
-                Debug.Log("rect y");
+                //Debug.Log("rect y");
                 cellsOnLine.Add(cell1);
                 cellsOnLine.Add(new Cell(t, cell1.getCoords().j));
                 cellsOnLine.Add(new Cell(t, cell2.getCoords().j));
@@ -141,7 +141,7 @@ public class PikachuPathfinder : MonoBehaviour
             // check more right
             if ((t = CheckMoreLineX(matrix, cell1, cell2, 1)) != -1)
             {
-                Debug.Log("more right");
+                //Debug.Log("more right");
                 cellsOnLine.Add(cell1);
                 cellsOnLine.Add(new Cell(cell1.getCoords().i, t));
                 cellsOnLine.Add(new Cell(cell2.getCoords().i, t));
@@ -153,7 +153,7 @@ public class PikachuPathfinder : MonoBehaviour
             // check more left
             if ((t = CheckMoreLineX(matrix, cell1, cell2, -1)) != -1)
             {
-                Debug.Log("more left");
+                //Debug.Log("more left");
                 cellsOnLine.Add(cell1);
                 cellsOnLine.Add(new Cell(cell1.getCoords().i, t));
                 cellsOnLine.Add(new Cell(cell2.getCoords().i, t));
@@ -165,7 +165,7 @@ public class PikachuPathfinder : MonoBehaviour
             // check more down
             if ((t = CheckMoreLineY(matrix, cell1, cell2, 1)) != -1)
             {
-                Debug.Log("more down");
+                //Debug.Log("more down");
                 cellsOnLine.Add(cell1);
                 cellsOnLine.Add(new Cell(t, cell1.getCoords().j));
                 cellsOnLine.Add(new Cell(t, cell2.getCoords().j));
@@ -177,7 +177,7 @@ public class PikachuPathfinder : MonoBehaviour
             // check more up
             if ((t = CheckMoreLineY(matrix, cell1, cell2, -1)) != -1)
             {
-                Debug.Log("more up");
+                //Debug.Log("more up");
                 cellsOnLine.Add(cell1);
                 cellsOnLine.Add(new Cell(t, cell1.getCoords().j));
                 cellsOnLine.Add(new Cell(t, cell2.getCoords().j));
@@ -326,10 +326,10 @@ public class PikachuPathfinder : MonoBehaviour
                 if (CheckLineY(matrix, minColCell.getCoords().i, maxColCell.getCoords().i, y))
                 {
 
-                    Debug.Log("TH X " + type);
-                    Debug.Log("(" + minColCell.getCoords().i + "," + minColCell.getCoords().i + ") -> ("
-                            + minColCell.getCoords().i + "," + y + ") -> (" + maxColCell.getCoords().i + "," + y
-                            + ") -> (" + maxColCell.getCoords().i + "," + maxColCell.getCoords().i + ")");
+                    //Debug.Log("TH X " + type);
+                    //Debug.Log("(" + minColCell.getCoords().i + "," + minColCell.getCoords().i + ") -> ("
+                    //        + minColCell.getCoords().i + "," + y + ") -> (" + maxColCell.getCoords().i + "," + y
+                    //        + ") -> (" + maxColCell.getCoords().i + "," + maxColCell.getCoords().i + ")");
                     return y;
                 }
                 y += type;
@@ -364,10 +364,10 @@ public class PikachuPathfinder : MonoBehaviour
             {
                 if (CheckLineX(matrix, minRowCell.getCoords().j, maxRowCell.getCoords().j, x))
                 {
-                    Debug.Log("TH Y " + type);
-                    Debug.Log("(" + minRowCell.getCoords().i + "," + minRowCell.getCoords().j + ") -> ("
-                            + x + "," + minRowCell.getCoords().j + ") -> (" + x + "," + maxRowCell.getCoords().j
-                            + ") -> (" + maxRowCell.getCoords().i + "," + maxRowCell.getCoords().j + ")");
+                    //Debug.Log("TH Y " + type);
+                    //Debug.Log("(" + minRowCell.getCoords().i + "," + minRowCell.getCoords().j + ") -> ("
+                    //        + x + "," + minRowCell.getCoords().j + ") -> (" + x + "," + maxRowCell.getCoords().j
+                    //        + ") -> (" + maxRowCell.getCoords().i + "," + maxRowCell.getCoords().j + ")");
                     return x;
                 }
                 x += type;

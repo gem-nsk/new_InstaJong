@@ -98,6 +98,28 @@ public class DataSave : MonoBehaviour
         writer.Close();
     }
 
+    public static void SaveImage(Texture2D texture, string name, string filepath, bool overwrite)
+    {
+        if (overwrite)
+        {
+            if (File.Exists(Path.Combine(filepath, name + ".png")))
+            {
+                File.Delete(Path.Combine(filepath, name + ".png"));
+            }
+
+            var bytes = texture.EncodeToPNG();
+
+            CheckDirectory(filepath);
+
+            var file = File.Open(Path.Combine(filepath, name + ".png"), FileMode.Create, FileAccess.ReadWrite);
+
+            BinaryWriter writer = new BinaryWriter(file);
+            writer.Write(bytes);
+
+            writer.Close();
+        }
+    }
+
     static void CheckDirectory(string dir)
     {
         if(!Directory.Exists(dir))

@@ -16,6 +16,9 @@ public class MainMenuControl : MonoBehaviour
 {
     //Objects
     public Button ContinueButton;
+
+    public GameObject ScreenCanvas;
+
     [Header("Tutorial")]
     public GameObject DAILY_ACC;
     public GameObject SIGN_IN;
@@ -33,8 +36,8 @@ public class MainMenuControl : MonoBehaviour
 
     public static bool ended;
 
-    
-    
+
+
     public Image musicImg;
     public Sprite[] Musicicons;
     public static MainMenuControl instance;
@@ -66,13 +69,13 @@ public class MainMenuControl : MonoBehaviour
             };
 
             string[] messages = {
-            "Добро пожаловать в игру InstaJong!",
-            "Сейчас для вас проведем небольшой инструктаж как играть в эту игру",
-            "Вы можете войти в свой аккаунт, чтобы играть фотографиями вашего профиля",
-            "Потом вы сможете поделиться своим аккаунтом, чтобы ваши друзья могли в него поиграть",
-            "Здесь вы можете купить монетки, подсказки, бонусы или отключить рекламу",
-            "Здесь вы можете начать игру",
-            "А сейчас мы сыграем в аккаунт дня. Нажмите на него прямо сейчас!"
+            "_t_tut1_1",
+            "_t_tut1_2",
+            "_t_tut1_3",
+            "_t_tut1_4",
+            "_t_tut1_5",
+            "_t_tut1_6",
+            "_t_tut1_7"
             };
 
 
@@ -81,8 +84,8 @@ public class MainMenuControl : MonoBehaviour
             CanvasController.instance.OpenCanvas(Tutorialmenu_ui);
             TutorialMenu_ui.instance.Init(RTs, 7, messages, false, 0);
 
-            
-            
+
+
         }
         #endregion
     }
@@ -91,10 +94,10 @@ public class MainMenuControl : MonoBehaviour
     {
         //if (ended == false)
         //{
-            var obj = GameObject.Find("DailyAcc");
-            obj.GetComponent<PreferAccountLoading>().StartPlay();
-            ended = true;
-            PlayerPrefs.SetInt("_tut1", 1);
+        var obj = GameObject.Find("DailyAcc");
+        obj.GetComponent<PreferAccountLoading>().StartPlay();
+        ended = true;
+        PlayerPrefs.SetInt("_tut1", 1);
         //}
     }
 
@@ -108,7 +111,7 @@ public class MainMenuControl : MonoBehaviour
     {
         PreloadingManager.instance._LoadFromCache();
     }
-    
+
     public void NewGamePressed()
     {
         //check instagramm authorization
@@ -126,14 +129,8 @@ public class MainMenuControl : MonoBehaviour
         GameControllerScr.loadGame = true;
         SceneManager.LoadScene("Game");
     }
-    
-    public void ButtonBack()
-    {
-        AdsController.instance.ShowInterstitial();
-        GameControllerScr.instance.StopLoading();
-        GameControllerScr.instance.Save();
-        SceneManager.LoadScene("Menu");
-    }
+
+
 
     public void Refresh()
     {
@@ -142,8 +139,8 @@ public class MainMenuControl : MonoBehaviour
 
     private void Start()
     {
-       
-         bool b = Music.instance.isPlaying;
+
+        bool b = Music.instance.isPlaying;
         switch (b)
         {
             case true:
@@ -157,8 +154,8 @@ public class MainMenuControl : MonoBehaviour
 
     public void Music_button()
     {
-       bool b = Music.instance.SwitchMusic();
-        switch(b)
+        bool b = Music.instance.SwitchMusic();
+        switch (b)
         {
             case true:
                 musicImg.sprite = Musicicons[0];
@@ -179,11 +176,75 @@ public class MainMenuControl : MonoBehaviour
 
     public void ShareAccount()
     {
-         new NativeShare().SetTitle("lets play InstaJong!").SetText("You can try my Account! @" + PlayerStats.instance.playerSettings.name + "\n https://play.google.com/apps/testing/com.GeM.InstaJong").Share();
+
+        if (PlayerStats.instance.playerSettings.name != "")
+        {
+            StartCoroutine(Share(true));
+        }
+        else
+        {
+            StartCoroutine(Share(false));
+        }
     }
 
     public void BuyNoAds()
     {
         PurchaseManager.instance.BuyNonConsumable(0);
+    }
+
+    IEnumerator Share(bool authorized)
+    {
+        //share logined account
+
+        ScreenCanvas.SetActive(true);
+
+        string t = "";
+
+        if (authorized)
+        {
+            t = "Lets play with my account!";
+            GameObject.Find("Share_account_name").GetComponent<Text>().text = "@" + PlayerStats.instance.playerSettings.name;
+        }
+        else
+        {
+            GameObject.Find("Share_account_name").GetComponent<Text>().text = "";
+            t = "Lets play InstaJong!";
+        }
+      
+
+            GameObject.Find("Share_header").GetComponent<Text>().text = t;
+
+        string path = Application.persistentDataPath + "/share_screen.png";
+
+        yield return new WaitForEndOfFrame();
+
+        //Texture2D tex = ScreenCapture.CaptureScreenshotAsTexture();
+        //DataSave.SaveImage(tex, "share_screen", Application.persistentDataPath);
+
+        var height = 600;
+        var width = 600;
+
+        Texture2D tex = new Texture2D(width, height, TextureFormat.RGB24, false);
+        Rect _r = new Rect(0,0, width, height);
+
+        tex.ReadPixels(_r, 0, 0);
+        tex.Apply();
+
+        DataSave.SaveImage(tex, "share_screen", Application.persistentDataPath, true);
+
+        Debug.Log(path + " - screenshot saved");
+
+        //yield return new WaitForSeconds(0.05f);
+
+        ScreenCanvas.SetActive(false);
+
+        if (authorized)
+        {
+            new NativeShare().SetTitle("lets play InstaJong!").SetText("Find my account and play! @" + PlayerStats.instance.playerSettings.name + "\n https://play.google.com/apps/testing/com.GeM.InstaJong \n\n\n #InstaJong").AddFile(path).Share();
+        }
+        else
+        {
+            new NativeShare().SetTitle("lets play InstaJong!").SetText("Hey, lets go play InstaJong! \n https://play.google.com/apps/testing/com.GeM.InstaJong \n\n\n #InstaJong").AddFile(path).Share();
+        }
     }
 }

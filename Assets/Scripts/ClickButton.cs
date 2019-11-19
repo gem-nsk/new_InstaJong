@@ -45,10 +45,6 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
     {
         if (GameControllerScr.Interactable)
         {
-
-
-            //normCol = panel.color;
-            //panel.color = UnityEngine.Color.yellow;
             if (Click.settings._randomNum != 0)
             {
                 if (first == null)
@@ -65,6 +61,8 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
                 //Debug.Log(Buttons.Count);
                 objects.first = first;
                 objects.second = second;
+
+                GameControllerScr.ButtonTouchDelegateHandler?.Invoke();
 
             }
             if (Buttons.Count == 2)
@@ -95,6 +93,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
         {
             GameControllerScr.instance.OpenImagePreview(GetComponent<CellScr>().settings._randomNum);
             //GameControllerScr.instance.OpenEndGamePreview(1);
+            GameControllerScr.ButtonHoldDelegateHandler?.Invoke();
         }
         else
         {
@@ -112,6 +111,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
             if (Input.GetTouch(0).phase == TouchPhase.Stationary)
             {
                 GameControllerScr.instance.OpenImagePreview(GetComponent<CellScr>().settings._randomNum);
+                GameControllerScr.ButtonHoldDelegateHandler?.Invoke();
             }
             else
             {
@@ -125,11 +125,14 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
     {
         //GameControllerScr.instance.PlayLikeParticles(transform.position);
         GameControllerScr.instance.StopBlinking();
-        if(step < 2) {
-            StartCoroutine(GameControllerScr.instance.NextHint());
-            step++;
-            GameControllerScr.currentStep = step;
-        }
+
+        GameControllerScr.PareDelegateHandler?.Invoke();
+
+        //if(step < 2) {
+        //    StartCoroutine(GameControllerScr.instance.NextHint());
+        //    step++;
+        //    GameControllerScr.currentStep = step;
+        //}
         
         //points
         GameControllerScr.instance.stats.AddPoints(15);
@@ -213,7 +216,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
             }
             else
             {
-                StartCoroutine(GameControllerScr.instance.MakeHint("Путь содержит больше двух поворотов или нет возможного пути",0.5f));
+                StartCoroutine(GameControllerScr.instance.MakeHint("_t_game_more", 0.5f));
             }
 
         } //else panel.color = normCol;
@@ -221,7 +224,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
         else
         {
             Debug.Log("Pare not correct!");
-            StartCoroutine(GameControllerScr.instance.MakeHint("Картинки не одинаковые",0.5f));
+            StartCoroutine(GameControllerScr.instance.MakeHint("_t_game_different", 0.5f));
             
             GameControllerScr.instance.StandartcolorForFirstCell();
 

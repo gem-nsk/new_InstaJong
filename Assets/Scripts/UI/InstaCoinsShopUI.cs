@@ -60,6 +60,10 @@ public class InstaCoinsShopUI : ui_basement
 
         StartCoroutine(WaitForAuth());
 
+        if (GameControllerScr.instance != null)
+        {
+            GameControllerScr.instance._Timer.SetPaused("shop", true);
+        }
     }
 
     private void auth()
@@ -69,10 +73,7 @@ public class InstaCoinsShopUI : ui_basement
 
         StartTutourial();
 
-        if (GameControllerScr.instance != null)
-        {
-            GameControllerScr.instance._Timer._isPaused = true;
-        }
+        
 
         PlayerStats.instance._addInstaCoins += UpdateInstaCoins;
 
@@ -104,10 +105,14 @@ public class InstaCoinsShopUI : ui_basement
             RTs.Add((RectTransform)SPAWN3.transform);//rev
 
             string[] messages = {
-            "Справа вы можете купить InstaCoin-ы. На ваш выбор представлены несколько наборов всегда по выгодным ценам!",
-            "На InstaCoin-ы вы можете купить карты, которые в себе содержат определенный набор подсказок.",
-            "Вверху показан ваш текущий баланс InstaCoin-ов",
-            "Рядом с вашим балансом есть кнопка отключения рекламы, чтобы она не мешала вам играть. Опция платная.",
+            //"Справа вы можете купить InstaCoin-ы. На ваш выбор представлены несколько наборов всегда по выгодным ценам!",
+            //"На InstaCoin-ы вы можете купить карты, которые в себе содержат определенный набор подсказок.",
+            //"Вверху показан ваш текущий баланс InstaCoin-ов",
+            //"Рядом с вашим балансом есть кнопка отключения рекламы, чтобы она не мешала вам играть. Опция платная.",
+            "_t_tut4_1",
+            "_t_tut4_2",
+            "_t_tut4_3",
+            "_t_tut4_4"
             };
 
 
@@ -203,17 +208,18 @@ public class InstaCoinsShopUI : ui_basement
         }
     }
 
-
-    public void Close()
+    public override void CanvasControllerClose()
     {
         Debug.Log("Canvas Closed");
         if (GameControllerScr.instance != null)
         {
-            GameControllerScr.instance._Timer._isPaused = false;
+            GameControllerScr.instance._Timer.SetPaused("shop", false);
         }
-        CanvasController.instance.CloseCanvas();
+        //CanvasController.instance.CloseCanvas();
         PlayerStats.instance._addInstaCoins -= UpdateInstaCoins;
         PurchaseManager.OnPurchaseConsumable -= BuyAnimation;
         PurchaseManager.PurchaseFailed -= FailedPurchase;
+
+        base.CanvasControllerClose();
     }
 }

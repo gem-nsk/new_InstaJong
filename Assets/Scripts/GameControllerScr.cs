@@ -91,6 +91,15 @@ public class GameControllerScr : MonoBehaviour
     private List<RectTransform> RTs;
     private string[] messages;
 
+    public delegate void PareDelegate();
+    public static PareDelegate PareDelegateHandler;
+
+    public delegate void ButtonTouchDelegate();
+    public static PareDelegate ButtonTouchDelegateHandler;
+
+    public delegate void ButtonHoldDelegate();
+    public static PareDelegate ButtonHoldDelegateHandler;
+
     #region Singleton
     public static GameControllerScr instance;
     
@@ -103,8 +112,29 @@ public class GameControllerScr : MonoBehaviour
     }
     #endregion
     #region MainCode
+
+
+    private void PareDelegateHandlerDebug()
+    {
+        Debug.Log("Pare delegate");
+    }
+
+    private void ButtonHoldDelegateHandlerDebug()
+    {
+        Debug.Log("Button hold delegate");
+    }
+
+    private void ButtonTouchDelegateHandlerDebug()
+    {
+        Debug.Log("Button touch delegate ");
+    }
+
     public IEnumerator Start()
     {
+        PareDelegateHandler += PareDelegateHandlerDebug;
+        ButtonHoldDelegateHandler += ButtonHoldDelegateHandlerDebug;
+        ButtonTouchDelegateHandler += ButtonTouchDelegateHandlerDebug;
+
         gameStrategy = GameStrategy.Normal;
         countPhotos = DownloadManager.instance.GetCount();
         numMap = 1;
@@ -287,19 +317,14 @@ public class GameControllerScr : MonoBehaviour
             RTs.Add((RectTransform)Pause_t.transform);
 
             string[] _messages = {
-            "Вы можете нажать на кнопку, чтобы перемешать поле",
-            "Поле перемешается автоматически и бесплатно, если не будет хода",
-
-            "Если не видите ход, можете воспользовать подсказкой",
-
-            "Если время кончается, можете добавить время",
-
-            "У вас есть 4 минуты чтобы пройти уровень",
-            "За каждую удаленную пару, будет прибавляться время",
-
-            "За найденную пару вам будут начисляться очки",
-
-            "Нажатием на эту кнопку вы поставите игру на паузу и вернетесь в меню"
+            "_t_tut2_1",
+            "_t_tut2_2",
+            "_t_tut2_3",
+            "_t_tut2_4",
+            "_t_tut2_5",
+            "_t_tut2_6",
+            "_t_tut2_7",
+            "_t_tut2_8"
         };
 
             messages = _messages;
@@ -307,7 +332,7 @@ public class GameControllerScr : MonoBehaviour
 
             TutorialMenu_ui.instance.Init(RTs, 8, messages, true, canvas, 1);
             isTutorial = true;
-            _Timer._isPaused = true;
+            _Timer.SetPaused("Tutorial", true);
 
             PlayerPrefs.SetInt("_tut2", 1);
         }
@@ -429,7 +454,7 @@ public class GameControllerScr : MonoBehaviour
         if (currentPairCellIds.Count == 0)
         {
             StartCoroutine(Refresh(false));
-            StartCoroutine(MakeHint("Ходов нет. Перемешиваем поле", 2.5f));
+            StartCoroutine(MakeHint("_t_game_refreshing", 1f));
         }
             
         else
@@ -514,8 +539,8 @@ public class GameControllerScr : MonoBehaviour
         }
         yield return null;
 
+        yield return StartCoroutine(SearchPath());
         placeCells(true);
-        StartCoroutine(SearchPath());
     }
 
 
@@ -756,13 +781,14 @@ public class GameControllerScr : MonoBehaviour
     public Transform BG;
     private Vector2? pos = null;
     private GameObject _CurrentHint;
+
     public IEnumerator MakeHint(string message)
     {
         
         _CurrentHint = Instantiate(hintGame);
         _CurrentHint.transform.SetParent(BG, false);
         _CurrentHint.name = hintName;
-        _CurrentHint.GetComponentInChildren<Text>().text = message;
+        _CurrentHint.GetComponentInChildren<Text>().text = LocalizationManager.instance.GetLocalizedValue(message);
         
             _CurrentHint.transform.position = HintOffset.position;
             pos = _CurrentHint.transform.position;
@@ -770,28 +796,26 @@ public class GameControllerScr : MonoBehaviour
             
       
         yield return StartCoroutine(AnimatedHintShow(_CurrentHint.GetComponent<RectTransform>()));
-
-
-
     }
 
     public IEnumerator MakeHint(string message, float delay)
     {
+        GameObject _tempObj;
 
-        _CurrentHint = Instantiate(hintGame);
-        _CurrentHint.transform.SetParent(BG, false);
-        _CurrentHint.name = hintName;
-        _CurrentHint.GetComponentInChildren<Text>().text = message;
+        _tempObj = Instantiate(hintGame);
+        _tempObj.transform.SetParent(BG, false);
+        _tempObj.name = hintName;
+        _tempObj.GetComponentInChildren<Text>().text = LocalizationManager.instance.GetLocalizedValue(message);
 
-        _CurrentHint.transform.position = HintOffset.position;
-        pos = _CurrentHint.transform.position;
+        _tempObj.transform.position = HintOffset.position;
+        pos = _tempObj.transform.position;
         Debug.Log("position: " + Screen.width / 2);
 
 
-        yield return StartCoroutine(AnimatedHintShow(_CurrentHint.GetComponent<RectTransform>()));
+        yield return StartCoroutine(AnimatedHintShow(_tempObj.GetComponent<RectTransform>()));
         yield return new WaitForSeconds(delay);
 
-        Destroy(_CurrentHint);
+        Destroy(_tempObj);
 
 
 
@@ -826,98 +850,137 @@ public class GameControllerScr : MonoBehaviour
 
     private string[] hints =
     {
-        "Нажмите на 2 подсвеченные картинки",
-        "Между двумя картинками рисуется линия. У этой линии не должно быть более двух поворотов.",
-        "При долгом нажатии на картинку откроется ее описание, попробуйте",
-        "Приятной игры!",
+        "_t_game_1",
+        "_t_game_2",
+        "_t_game_3",
+        "_t_game_4",
     };
 
     private int hint_id = 0;
 
     public void StartTutorial()
     {
-        StartCoroutine(MakeHint(hints[hint_id],5));
-        StartCoroutine(ShowHelp());
+        PareDelegateHandler += TutorialStep;
+        TutorialStep();
+        Debug.Log("tutorial hints started show");
+        //StartCoroutine(MakeHint(hints[hint_id],5));
+        
         currentStep = 0;
     }
 
-    public IEnumerator NextHint()
+    public void TutorialStep()
     {
-        Destroy(_CurrentHint);
-        if (isTutorial)
+        Debug.Log("Tutorial step:"+ hint_id + " text - " + hints[Mathf.Clamp(hint_id, 0, hints.Length - 1)]);
+
+        DestroyAllHints();
+
+        switch (hint_id)
         {
-            _Timer._isPaused = false;
-            hint_id++;
-            switch (hint_id)
-            {
-                case 1:
-                    {
-                            StartCoroutine(MakeHint(hints[hint_id],5));
-                            StartCoroutine(ShowHelp());
+            case 0:
+            case 1:
+
+                StartCoroutine(ShowHelp());
+                StartCoroutine(MakeHint(hints[hint_id]));
+
+                break;
+            case 2:
+
+                PareDelegateHandler -= TutorialStep;
+                ButtonHoldDelegateHandler += TutorialStep;
+
+                StartCoroutine(MakeHint(hints[hint_id]));
+
+                break;
+
+            case 3:
+
+                ButtonHoldDelegateHandler -= TutorialStep;
+
+                StartCoroutine(MakeHint(hints[hint_id], 4));
+
+                break;
+        }
+
+        hint_id++;
+    }
+
+    //public IEnumerator NextHint()
+    //{
+    //    Destroy(_CurrentHint);
+    //    if (isTutorial)
+    //    {
+    //        _Timer._isPaused = false;
+    //        hint_id++;
+    //        switch (hint_id)
+    //        {
+    //            case 1:
+    //                {
+    //                        StartCoroutine(MakeHint(hints[hint_id],5));
+    //                        StartCoroutine(ShowHelp());
                         
-                        break;
-                    }
-                case 2:
-                    {
+    //                    break;
+    //                }
+    //            case 2:
+    //                {
 
-                            StartCoroutine(MakeHint(hints[hint_id],5));
-                        break;
-                    }
-                case 3:
-                    {
+    //                        StartCoroutine(MakeHint(hints[hint_id],5));
+    //                    break;
+    //                }
+    //            case 3:
+    //                {
 
-                            StartCoroutine(MakeHint(hints[hint_id], 5f));
+    //                        StartCoroutine(MakeHint(hints[hint_id], 5f));
 
-                        break;
-                    }
-            }
-        }
-        yield return null;
-    }
+    //                    break;
+    //                }
+    //        }
+    //    }
+    //    yield return null;
+    //}
 
-    public IEnumerator NextHint(int _hintID)
-    {
-        Debug.Log(currentStep);
-        Destroy(_CurrentHint);
-        if (isTutorial)
-        {
-            _Timer._isPaused = false;
-            hint_id = _hintID;
-            switch (hint_id)
-            {
-                case 1:
-                    {
-                        if (currentStep == 0)
-                        {
-                            StartCoroutine(MakeHint(hints[hint_id], 5));
-                            StartCoroutine(ShowHelp());
-                            currentStep = 1;
-                        }
+    //public IEnumerator NextHint(int _hintID)
+    //{
+    //    Debug.Log(currentStep);
+    //    Destroy(_CurrentHint);
+    //    if (isTutorial)
+    //    {
+    //        _Timer._isPaused = false;
+    //        hint_id = _hintID;
+    //        switch (hint_id)
+    //        {
+    //            case 1:
+    //                {
+    //                    if (currentStep == 0)
+    //                    {
+    //                        StartCoroutine(MakeHint(hints[hint_id], 5));
+    //                        StartCoroutine(ShowHelp());
+    //                        currentStep = 1;
+    //                    }
 
-                        break;
-                    }
-                case 2:
-                    {
-                        if (currentStep == 1)
-                        {
-                            StartCoroutine(MakeHint(hints[hint_id],5));
-                            GameControllerScr.currentStep = 2;
-                        }
-                        break;
-                    }
-                case 3:
-                    {
-                        if (currentStep == 2)
-                        {
-                            StartCoroutine(MakeHint(hints[hint_id], 5f));
-                            currentStep = 3;
-                        }
+    //                    break;
+    //                }
+    //            case 2:
+    //                {
+    //                    if (currentStep == 1)
+    //                    {
+    //                        StartCoroutine(MakeHint(hints[hint_id],5));
+    //                        GameControllerScr.currentStep = 2;
+    //                    }
+    //                    break;
+    //                }
+    //            case 3:
+    //                {
+    //                    if (currentStep == 2)
+    //                    {
+    //                        StartCoroutine(MakeHint(hints[hint_id], 5f));
+    //                        currentStep = 3;
+    //                    }
 
-                        break;
-                    }
-            }
-        }
-        yield return null;
-    }
+    //                    break;
+    //                }
+    //        }
+    //    }
+    //    yield return null;
+    //}
     #endregion
 }

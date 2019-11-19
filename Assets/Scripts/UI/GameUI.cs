@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameUI : MonoBehaviour
 {
@@ -55,11 +56,20 @@ public class GameUI : MonoBehaviour
     //{
     //    text_InstaCoins.text = _coins + "";
     //}
+
     public void UpdatePackInfo(int refresh, int tip, int time)
     {
         _Refresh_text.text = refresh + "";
         _Tip_text.text = tip + "";
         _Time_text.text = time + "";
+    }
+
+    public void ButtonBack()
+    {
+        AdsController.instance.ShowInterstitial();
+        GameControllerScr.instance.StopLoading();
+        GameControllerScr.instance.Save();
+        SceneManager.LoadScene("Menu");
     }
 
     public void UpdatePoints(int _points)
