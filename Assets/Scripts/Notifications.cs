@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Unity.Notifications.Android;
+using Unity.Notifications.iOS;
 using UnityEngine;
+using UnityEngine.Apple;
 
 [System.Serializable]
 public struct _notification
@@ -13,9 +14,10 @@ public struct _notification
 
 public class Notifications : MonoBehaviour
 {
-    int identifier;
     public _notification[] _NotificationList;
 
+#if UNTIY_ANDROID
+    int identifier;
     private void Start()
     {
         AndroidNotificationCenter.CancelAllNotifications();
@@ -74,7 +76,44 @@ public class Notifications : MonoBehaviour
     {
         throw new System.NotImplementedException();
     }
+#endif
+#if UNITY_IOS
 
+    private void Start()
+    {
+        iOSNotificationCenter.RemoveAllScheduledNotifications();
+
+        CreateIosNotification(new System.TimeSpan(1, 0, 0, 0));
+        CreateIosNotification(new System.TimeSpan(2, 0, 0, 0));
+        CreateIosNotification(new System.TimeSpan(3, 0, 0, 0));
+        CreateIosNotification(new System.TimeSpan(5, 0, 0, 0));
+    }
+    public void CreateIosNotification(System.TimeSpan span)
+    {
+        var _time = new iOSNotificationTimeIntervalTrigger()
+        {
+            TimeInterval = span,
+            Repeats = false
+        };
+
+
+        _notification n = GetRandomNotification();
+
+        var _notification = new iOSNotification()
+        {
+            Title = n._Header,
+            Body = n._Message,
+            ShowInForeground = true,
+            ForegroundPresentationOption = (PresentationOption.Alert | PresentationOption.Sound),
+            CategoryIdentifier = "simple_category",
+            ThreadIdentifier = "instajong_thread",
+            Trigger = _time
+        };
+        iOSNotificationCenter.ScheduleNotification(_notification);
+
+    }
+
+#endif
 
     _notification GetRandomNotification()
     {

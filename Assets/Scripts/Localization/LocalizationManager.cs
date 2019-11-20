@@ -71,7 +71,7 @@ public class LocalizationManager : MonoBehaviour
 #if UNITY_EDITOR
         return DebugLanguage.ToString();
 
-#elif UNITY_ANDROID
+#elif UNITY_ANDROID || UNITY_IOS
         switch (Application.systemLanguage)
         {
             case SystemLanguage.Russian:
@@ -109,32 +109,36 @@ public class LocalizationManager : MonoBehaviour
             Debug.Log("Data loaded, dictionary contains: " + localizedText.Count + " entries, file name: " + filePath);
         }
 #endif
-#if UNITY_ANDROID
-        if(Application.platform == RuntimePlatform.Android)
+#if UNITY_ANDROID || UNITY_IOS
+
+
+        if (filePath.Contains("://") || filePath.Contains(":///"))
         {
-
-            if (filePath.Contains("://") || filePath.Contains(":///"))
+            UnityEngine.Networking.UnityWebRequest www = UnityEngine.Networking.UnityWebRequest.Get(filePath);
+            yield return www.SendWebRequest();
+            /*
+            while (!reader.isDone)
             {
-                UnityEngine.Networking.UnityWebRequest www = UnityEngine.Networking.UnityWebRequest.Get(filePath);
-                yield return www.SendWebRequest();
-                /*
-                while (!reader.isDone)
-                {
-                    dataAsJson = reader.text;
-                }*/
+                dataAsJson = reader.text;
+            }*/
 
-                dataAsJson = www.downloadHandler.text;
-            }
+            dataAsJson = www.downloadHandler.text;
+        }
+        else
+        {
+            dataAsJson = System.IO.File.ReadAllText(filePath);
+        }
 
-            loadedData = JsonUtility.FromJson<LocalizationData>(dataAsJson);
+        loadedData = JsonUtility.FromJson<LocalizationData>(dataAsJson);
 
-            for (int i = 0; i < loadedData.items.Length; i++)
-            {
-                localizedText.Add(loadedData.items[i].key, loadedData.items[i].value);
-            }
+        for (int i = 0; i < loadedData.items.Length; i++)
+        {
+            localizedText.Add(loadedData.items[i].key, loadedData.items[i].value);
         }
 #endif
         isReady = true;
+
+        Debug.Log(filePath);
         yield return null;
     }
 

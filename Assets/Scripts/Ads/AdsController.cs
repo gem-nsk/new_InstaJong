@@ -2,7 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GoogleMobileAds;
+#if UNITY_ANDROID
 using GoogleMobileAds.Android;
+#endif
+
+#if UNITY_IOS
+using GoogleMobileAds.iOS;
+#endif
 using GoogleMobileAds.Api;
 
 public class AdsController : MonoBehaviour
@@ -19,7 +25,7 @@ public class AdsController : MonoBehaviour
 
     private bool DisabledAd;
 
-    #region Singleton
+#region Singleton
     public static AdsController instance;
     private void Awake()
     {
@@ -33,7 +39,7 @@ public class AdsController : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    #endregion
+#endregion
 
     public void Init(bool _disabledAd)
     {
