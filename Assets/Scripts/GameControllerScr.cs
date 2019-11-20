@@ -197,10 +197,6 @@ public class GameControllerScr : MonoBehaviour
             ClearSave();
 
         }
-        if(!isTutorial)
-        {
-            Destroy(_CurrentHint);
-        }
     }
 
     public void NextLevel()
@@ -636,10 +632,6 @@ public class GameControllerScr : MonoBehaviour
             stats.AddInstaCoins(-stats.RefreshPrice);
         }
 
-        if (isTutorial)
-        {
-            StartCoroutine(NextHint(hint_id));
-        }
         isRefreshing = true;
         int _step = 3;
 
@@ -844,7 +836,7 @@ public class GameControllerScr : MonoBehaviour
 
     public void StartTutorial()
     {
-        StartCoroutine(MakeHint(hints[hint_id]));
+        StartCoroutine(MakeHint(hints[hint_id],5));
         StartCoroutine(ShowHelp());
         currentStep = 0;
     }
@@ -860,22 +852,56 @@ public class GameControllerScr : MonoBehaviour
             {
                 case 1:
                     {
-                        if(currentStep == 0)
+                            StartCoroutine(MakeHint(hints[hint_id],5));
+                            StartCoroutine(ShowHelp());
+                        
+                        break;
+                    }
+                case 2:
+                    {
+
+                            StartCoroutine(MakeHint(hints[hint_id],5));
+                        break;
+                    }
+                case 3:
+                    {
+
+                            StartCoroutine(MakeHint(hints[hint_id], 5f));
+
+                        break;
+                    }
+            }
+        }
+        yield return null;
+    }
+
+    public IEnumerator NextHint(int _hintID)
+    {
+        Debug.Log(currentStep);
+        Destroy(_CurrentHint);
+        if (isTutorial)
+        {
+            _Timer._isPaused = false;
+            hint_id = _hintID;
+            switch (hint_id)
+            {
+                case 1:
+                    {
+                        if (currentStep == 0)
                         {
-                            StartCoroutine(MakeHint(hints[hint_id]));
+                            StartCoroutine(MakeHint(hints[hint_id], 5));
                             StartCoroutine(ShowHelp());
                             currentStep = 1;
                         }
-                        
+
                         break;
                     }
                 case 2:
                     {
                         if (currentStep == 1)
                         {
-                            StartCoroutine(MakeHint(hints[hint_id]));
-                            StartCoroutine(ShowHelp());
-                            currentStep = 2;
+                            StartCoroutine(MakeHint(hints[hint_id],5));
+                            GameControllerScr.currentStep = 2;
                         }
                         break;
                     }
@@ -887,39 +913,6 @@ public class GameControllerScr : MonoBehaviour
                             currentStep = 3;
                         }
 
-                        break;
-                    }
-            }
-
-            if (currentStep == 3)
-                isTutorial = false;
-        }
-        yield return null;
-    }
-
-    public IEnumerator NextHint(int _hint_id)
-    {
-        Destroy(_CurrentHint);
-        if (isTutorial)
-        {
-            _Timer._isPaused = false;
-            hint_id = _hint_id;
-            switch (hint_id)
-            {
-                case 1:
-                    {
-                        StartCoroutine(MakeHint(hints[hint_id]));
-                        StartCoroutine(ShowHelp());
-                        break;
-                    }
-                case 2:
-                    {
-                        StartCoroutine(MakeHint(hints[hint_id]));
-                        break;
-                    }
-                case 3:
-                    {
-                        StartCoroutine(MakeHint(hints[hint_id], 5f));
                         break;
                     }
             }
