@@ -47,7 +47,7 @@ public class AdsController : MonoBehaviour
 
         PurchaseManager.OnPurchaseNonConsumable += PurchaseManager_OnPurchaseNonConsumable;
 
-        MobileAds.Initialize(initStatus => { });
+        MobileAds.Initialize(initStatus => { Debug.Log(initStatus.ToString()); });
         LoadVideo();
 
         if(!_disabledAd)

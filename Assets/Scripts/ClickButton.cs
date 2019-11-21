@@ -100,7 +100,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
             OnClick();
         }
 #endif
-#if UNITY_ANDROID
+#if UNITY_ANDROID || UNITY_IOS
         if(Input.touchCount > 0)
         {
             while (Input.GetTouch(0).phase == TouchPhase.Began || Input.GetTouch(0).phase == TouchPhase.Moved || Input.GetTouch(0).phase == TouchPhase.Stationary && _time < InteractionTime)
