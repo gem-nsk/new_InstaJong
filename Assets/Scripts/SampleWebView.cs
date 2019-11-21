@@ -53,7 +53,7 @@ public class SampleWebView : MonoBehaviour
             StartCoroutine(ConvertKeyToId(DebugKey));
         else
             ClearCookies();
-#elif UNITY_ANDROID
+#elif UNITY_ANDROID  || UNITY_IOS
         if (PlayerStats.instance.playerSettings.name != null)
        StartCoroutine(loggingIn());
         else
@@ -128,7 +128,8 @@ public class SampleWebView : MonoBehaviour
     public void ClearCookies()
     {
 #if UNITY_EDITOR
-#elif UNITY_ANDROID
+
+#elif UNITY_ANDROID || UNTIY_IOS
         BG.SetActive(true);
         if (webViewObject == null)
         {
