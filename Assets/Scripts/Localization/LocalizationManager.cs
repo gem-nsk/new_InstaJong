@@ -108,8 +108,7 @@ public class LocalizationManager : MonoBehaviour
 
             Debug.Log("Data loaded, dictionary contains: " + localizedText.Count + " entries, file name: " + filePath);
         }
-#endif
-#if UNITY_ANDROID || UNITY_IOS
+#elif UNITY_ANDROID || UNITY_IOS
 
 
         if (filePath.Contains("://") || filePath.Contains(":///"))

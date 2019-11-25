@@ -13,9 +13,8 @@ using GoogleMobileAds.Api;
 
 public class AdsController : MonoBehaviour
 {
-                                //	ca-app-pub-3940256099942544/1033173712
-    public string InterstitialId = "ca-app-pub-3940256099942544/1033173712";
-    public string VideoId = "ca-app-pub-3940256099942544/5224354917";
+    public string InterstitialId = "";
+    public string VideoId = "";
 
     //debug video = ca-app-pub-3940256099942544/5224354917
     //debug interstitial = ca-app-pub-3940256099942544/1033173712
@@ -32,6 +31,15 @@ public class AdsController : MonoBehaviour
         if(instance == null)
         {
             instance = this;
+
+#if UNITY_IOS
+            InterstitialId = "ca-app-pub-3940256099942544/4411468910";
+            VideoId = "ca-app-pub-3940256099942544/1712485313";
+#elif UNITY_ANDROID
+             InterstitialId = "ca-app-pub-3940256099942544/1033173712";
+            VideoId = "ca-app-pub-3940256099942544/5224354917";
+#endif
+
             DontDestroyOnLoad(gameObject);
         }
         else

@@ -85,7 +85,7 @@ public class Music : MonoBehaviour
         while(isPlaying)
         {
             _Currentid = Random.Range(0, MusicClips.Length);
-            yield return new WaitForSeconds(PlayMusicClip(_Currentid));
+            yield return new WaitForSecondsRealtime(PlayMusicClip(_Currentid));
         }
     }
 

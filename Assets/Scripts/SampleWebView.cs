@@ -48,18 +48,34 @@ public class SampleWebView : MonoBehaviour
 
     public void Login()
     {
+
 #if UNITY_EDITOR
-        if (PlayerStats.instance.playerSettings.name != null)
+        if (PlayerStats.instance.playerSettings.name != "")
+        {
             StartCoroutine(ConvertKeyToId(DebugKey));
+            Debug.Log("Started auth");
+        }
         else
+        {
+            Debug.Log("Login clear cookies");
             ClearCookies();
-#elif UNITY_ANDROID  || UNITY_IOS
-        if (PlayerStats.instance.playerSettings.name != null)
-       StartCoroutine(loggingIn());
-        else
-            ClearCookies();
+            StartCoroutine(ConvertKeyToId(DebugKey));
+        }
+#elif UNITY_ANDROID || UNITY_IOS
+        Debug.Log("Login()");
+
+        if (PlayerStats.instance.playerSettings.name == "")
+        {
+            StartCoroutine(loggingIn());
+            Debug.Log("Auth in account");
+        }
+        //else
+        //{
+        //    ClearCookies();
+        //}
 #endif
     }
+
     #region handler
     private void Start()
     {
@@ -67,7 +83,7 @@ public class SampleWebView : MonoBehaviour
 
         DisplayLogin();
     }
-    private void OnDestroy()
+    private void OnDestroy() 
     {
         PlayerStats.AccountKeyHandler -= DisplayLogin;
     }
@@ -110,6 +126,7 @@ public class SampleWebView : MonoBehaviour
 
     public IEnumerator ConvertKeyToId(string key)
     {
+        Debug.Log("Started converting");
         UnityWebRequest IdRequest = UnityWebRequest.Get("https://api.instagram.com/v1/users/self?access_token=" + key);
         yield return IdRequest.SendWebRequest();
         //get account id
@@ -129,21 +146,22 @@ public class SampleWebView : MonoBehaviour
     {
 #if UNITY_EDITOR
 
-#elif UNITY_ANDROID || UNTIY_IOS
+#elif UNITY_ANDROID || UNITY_IOS
+
+        Debug.Log("Clear Cookies()");
         BG.SetActive(true);
         if (webViewObject == null)
         {
             webViewObject = (new GameObject("WebViewObject")).AddComponent<WebViewObject>();
-            webViewObject.Init();
+            webViewObject.Init(enableWKWebView: true);
         }
         webViewObject.ClearCookies();
+
         Destroy(webViewObject.gameObject);
         BG.SetActive(false);
 #endif
 
-        PlayerStats.instance.playerSettings = (null, null);
-
-        //AtlasController.instance.ClearCache();
+        PlayerStats.instance.playerSettings = ("", "");
     }
 
     IEnumerator loggingIn()
@@ -151,6 +169,8 @@ public class SampleWebView : MonoBehaviour
 
 
         Url = "https://www.instagram.com/oauth/authorize/?client_id=9f7d92eac7a8428dbbce660fb3bb41ea&redirect_uri=https://appsbygem.com/authorization/&response_type=token";
+
+        Debug.Log("LoggingIn");
 
         BG.SetActive(true);
 

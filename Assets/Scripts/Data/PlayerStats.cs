@@ -49,6 +49,7 @@ public class PlayerStats : MonoBehaviour
         {
             if (PlayerPrefs.HasKey("name") && PlayerPrefs.HasKey("token"))
             {
+                Debug.Log("Player settings get - " + (PlayerPrefs.GetString("name")));
                 return (PlayerPrefs.GetString("name"), PlayerPrefs.GetString("token"));
             }
             else
@@ -56,6 +57,8 @@ public class PlayerStats : MonoBehaviour
         }
         set
         {
+            Debug.Log("Player setting set - " + value.name);
+
             PlayerPrefs.SetString("name", value.name);
             PlayerPrefs.SetString("token", value.token);
 

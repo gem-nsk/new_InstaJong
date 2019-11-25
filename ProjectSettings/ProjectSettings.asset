@@ -18,7 +18,7 @@ PlayerSettings:
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
   m_ShowUnitySplashScreen: 1
-  m_ShowUnitySplashLogo: 1
+  m_ShowUnitySplashLogo: 0
   m_SplashScreenOverlayOpacity: 0.5
   m_SplashScreenAnimation: 1
   m_SplashScreenLogoStyle: 0
@@ -40,8 +40,6 @@ PlayerSettings:
     width: 1
     height: 1
   m_SplashScreenLogos:
-  - logo: {fileID: 10404, guid: 0000000000000000e000000000000000, type: 0}
-    duration: 2
   - logo: {fileID: 21300000, guid: 421c22f3b37c2804d96570243226c192, type: 3}
     duration: 2
   - logo: {fileID: 21300000, guid: 72c7cc26960c0434499af7326d74d8d8, type: 3}
@@ -53,7 +51,7 @@ PlayerSettings:
   defaultScreenWidthWeb: 960
   defaultScreenHeightWeb: 600
   m_StereoRenderingPath: 0
-  m_ActiveColorSpace: 1
+  m_ActiveColorSpace: 0
   m_MTRendering: 1
   m_StackTraceTypes: 010000000100000001000000010000000100000001000000
   iosShowActivityIndicatorOnLoading: -1
@@ -172,11 +170,12 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.GeM.InstaJong
     Standalone: com.Company.ProductName
-    iPhone: com.GeM.InstaJong
-  buildNumber: {}
+    iPhone: com.GeM.InstaJongApp
+  buildNumber:
+    iPhone: 1
   AndroidBundleVersionCode: 11
-  AndroidMinSdkVersion: 16
-  AndroidTargetSdkVersion: 0
+  AndroidMinSdkVersion: 19
+  AndroidTargetSdkVersion: 28
   AndroidPreferredInstallLocation: 1
   aotOptions: 
   stripEngineCode: 1
@@ -257,7 +256,7 @@ PlayerSettings:
   tvOSManualSigningProvisioningProfileID: 
   iOSManualSigningProvisioningProfileType: 0
   tvOSManualSigningProvisioningProfileType: 0
-  appleEnableAutomaticSigning: 0
+  appleEnableAutomaticSigning: 1
   iOSRequireARKit: 0
   iOSAutomaticallyDetectAndAddCapabilities: 1
   appleEnableProMotion: 0
@@ -504,7 +503,7 @@ PlayerSettings:
   m_BuildTargetBatching: []
   m_BuildTargetGraphicsAPIs:
   - m_BuildTarget: AndroidPlayer
-    m_APIs: 150000000b000000
+    m_APIs: 08000000150000000b000000
     m_Automatic: 0
   - m_BuildTarget: iOSSupport
     m_APIs: 10000000
@@ -521,6 +520,8 @@ PlayerSettings:
     tvOS: 1
   m_BuildTargetGroupLightmapEncodingQuality:
   - m_BuildTarget: Android
+    m_EncodingQuality: 0
+  - m_BuildTarget: iPhone
     m_EncodingQuality: 2
   m_BuildTargetGroupLightmapSettings: []
   playModeTestRunnerEnabled: 0
@@ -830,7 +831,7 @@ PlayerSettings:
     Collab: 0
     ErrorHub: 0
     Hub: 0
-    UNet: 0
+    UNet: 1
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 

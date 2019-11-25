@@ -1,8 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Unity.Notifications.iOS;
 using UnityEngine;
+#if UNITY_ANDROID
+using Unity.Notifications.Android;
+#endif
+
+#if UNITY_IOS
+using Unity.Notifications.iOS;
 using UnityEngine.Apple;
+#endif
 
 [System.Serializable]
 public struct _notification
