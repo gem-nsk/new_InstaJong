@@ -67,6 +67,7 @@ public class SampleWebView : MonoBehaviour
         if (PlayerStats.instance.playerSettings.name == "")
         {
             StartCoroutine(loggingIn());
+
             Debug.Log("Auth in account");
         }
         //else
@@ -115,7 +116,7 @@ public class SampleWebView : MonoBehaviour
         {
             var data = url1.Substring(url1.LastIndexOf("=") + 1);
             Debug.Log("Successfuly authorized. token: " + data);
-
+            AnalyticsEventsController.LogEvent("Authorized");
             //save token here
             StartCoroutine(ConvertKeyToId(data));
 

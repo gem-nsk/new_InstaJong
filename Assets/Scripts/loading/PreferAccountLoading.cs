@@ -50,7 +50,7 @@ namespace Assets.Accounts.Convert.preferAccount
                 CanvasController.instance.OpenCanvas(searchingUi);
                 History.SaveToHistory(_str, 0, 0);
                 PreloadingManager.instance._PreloadAccountImages(_str);
-
+                AnalyticsEventsController.LogEvent("GameMode", "mode", "Prefer");
             }
         }
     }

@@ -238,6 +238,7 @@ public class GameControllerScr : MonoBehaviour
         numMap++;
         ui.UpdateLevel(numMap);
         GameControllerScr.instance._Timer.UpdateTimeValues();
+        AnalyticsEventsController.LogPlayerLevel(numMap);
         StartCoroutine(CreateButtonCells());
     }
 

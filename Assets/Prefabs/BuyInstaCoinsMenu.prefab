@@ -1125,6 +1125,7 @@ MonoBehaviour:
       _TipsCount: 0
       _AddTimeCount: 0
       _Price: 0
+      _EventData: 
     _Type: 0
   - IAP_Id: _pro
     CoinsCount: 2100
@@ -1134,6 +1135,7 @@ MonoBehaviour:
       _TipsCount: 0
       _AddTimeCount: 0
       _Price: 0
+      _EventData: 
     _Type: 0
   - IAP_Id: _celebrity
     CoinsCount: 3150
@@ -1143,6 +1145,7 @@ MonoBehaviour:
       _TipsCount: 0
       _AddTimeCount: 0
       _Price: 0
+      _EventData: 
     _Type: 0
   - IAP_Id: _pack_user
     CoinsCount: 0
@@ -1152,6 +1155,7 @@ MonoBehaviour:
       _TipsCount: 5
       _AddTimeCount: 1
       _Price: 500
+      _EventData: Buyed_user_pack
     _Type: 1
   - IAP_Id: _pack_pro
     CoinsCount: 0
@@ -1161,6 +1165,7 @@ MonoBehaviour:
       _TipsCount: 10
       _AddTimeCount: 3
       _Price: 1000
+      _EventData: Buyed_pro_pack
     _Type: 1
   - IAP_Id: _pack_celebrity
     CoinsCount: 3150
@@ -1170,6 +1175,7 @@ MonoBehaviour:
       _TipsCount: 15
       _AddTimeCount: 5
       _Price: 2000
+      _EventData: Buyed_celebrity_pack
     _Type: 1
   SuccessfulBuy: {fileID: 8426907347461389461}
   ErrorBuy: {fileID: 2238921305093165776}

@@ -8,6 +8,7 @@ public class C_Settings
     public string id;
     public int CoinsCount;
     public string Price;
+    public string _eventData;
 }
 
 public class PurchaseManager : MonoBehaviour, IStoreListener
@@ -162,12 +163,14 @@ public class PurchaseManager : MonoBehaviour, IStoreListener
         if (OnPurchaseConsumable != null) OnPurchaseConsumable(args);
         Debug.Log(C_PRODUCTS[currentProductIndex] + " Buyed!");
 
+        AnalyticsEventsController.LogEvent(C_PRODUCTS[currentProductIndex]._eventData);
         PlayerStats.instance.AddInstaCoins(C_PRODUCTS[currentProductIndex].CoinsCount);
     }
     public delegate void OnSuccessNonConsumable(PurchaseEventArgs args);
     protected virtual void OnSuccessNC(PurchaseEventArgs args)
     {
         if (OnPurchaseNonConsumable != null) OnPurchaseNonConsumable(args);
+        AnalyticsEventsController.LogEvent("No_ads_buyed");
         Debug.Log(NC_PRODUCTS[currentProductIndex] + " Buyed!");
     }
     public delegate void OnFailedPurchase(Product product, PurchaseFailureReason failureReason);

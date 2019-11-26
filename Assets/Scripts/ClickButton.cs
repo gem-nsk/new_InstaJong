@@ -222,7 +222,7 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
         {
             Debug.Log("Pare not correct!");
             StartCoroutine(GameControllerScr.instance.MakeHint("_t_game_different", 0.5f));
-            
+            AnalyticsEventsController.LogEvent("Different pare");
             GameControllerScr.instance.StandartcolorForFirstCell();
 
         }

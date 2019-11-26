@@ -143,7 +143,7 @@ public class RateGame : MonoBehaviour {
     public void AcceptRating()
     {
         // analytics rating
-        AnalyticsManager.ReportRateApp(ratedApp);
+        AnalyticsEventsController.LogEvent("Rating", "stars", ratedApp.ToString());
         if (ratedApp >= 4)
             ShowRateMarket();
         else

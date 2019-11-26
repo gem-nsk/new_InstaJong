@@ -2210,12 +2210,15 @@ MonoBehaviour:
   - id: coins_1
     CoinsCount: 1050
     Price: 
+    _eventData: Buyed_light_pack
   - id: coins_2
     CoinsCount: 2100
     Price: 
+    _eventData: Buyed_medium_pack
   - id: coins_3
     CoinsCount: 3150
     Price: 
+    _eventData: Buyed_mega_pack
 --- !u!4 &903273716
 Transform:
   m_ObjectHideFlags: 0
@@ -4325,10 +4328,12 @@ MonoBehaviour:
     _TipsCount: 3
     _AddTimeCount: 2
     _Price: 0
+    _EventData: 
   - _RefreshCount: 0
     _TipsCount: 0
     _AddTimeCount: 0
     _Price: 0
+    _EventData: 
 --- !u!4 &1743076126
 Transform:
   m_ObjectHideFlags: 0

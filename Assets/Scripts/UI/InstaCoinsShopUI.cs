@@ -9,8 +9,8 @@ public struct _PackData
     public int _RefreshCount;
     public int _TipsCount;
     public int _AddTimeCount;
-
     public int _Price;
+    public string _EventData;
 }
 
 [System.Serializable]
@@ -205,6 +205,8 @@ public class InstaCoinsShopUI : ui_basement
             SuccessfulBuy.SetActive(true);
 
             PlayerStats.instance.AddInstaCoins(-data._Price);
+
+            AnalyticsEventsController.LogEvent(data._EventData);
         }
     }
 

@@ -164,6 +164,7 @@ public class MainMenuControl : MonoBehaviour
                 musicImg.sprite = Musicicons[1];
                 break;
         }
+        AnalyticsEventsController.LogEvent("Music", "state", b.ToString());
     }
     public void OpenRules()
     {
@@ -238,12 +239,15 @@ public class MainMenuControl : MonoBehaviour
 
         ScreenCanvas.SetActive(false);
 
+
         if (authorized)
         {
+            AnalyticsEventsController.LogEvent("Share", "share_type", "authorized");
             new NativeShare().SetTitle("lets play InstaJong!").SetText("Find my account and play! @" + PlayerStats.instance.playerSettings.name + "\n https://play.google.com/apps/testing/com.GeM.InstaJong \n\n\n #InstaJong").AddFile(path).Share();
         }
         else
         {
+            AnalyticsEventsController.LogEvent("Share", "share_type", "Not_authorized");
             new NativeShare().SetTitle("lets play InstaJong!").SetText("Hey, lets go play InstaJong! \n https://play.google.com/apps/testing/com.GeM.InstaJong \n\n\n #InstaJong").AddFile(path).Share();
         }
     }
