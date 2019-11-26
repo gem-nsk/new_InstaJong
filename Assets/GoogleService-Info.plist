@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>589696554525-ifisvp6gn8ckjp0e75jsult5vbsv9e51.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.589696554525-ifisvp6gn8ckjp0e75jsult5vbsv9e51</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>589696554525-hc3ramotudegeegdope84ip3pi1bfe13.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB5GshGb6XB9s0g1hFfxBHVvogH3-RjsCs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>589696554525</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.GeM.InstaJong</string>
+	<key>PROJECT_ID</key>
+	<string>instajong-84110432</string>
+	<key>STORAGE_BUCKET</key>
+	<string>instajong-84110432.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:589696554525:ios:a456c564626feee76258f4</string>
+	<key>DATABASE_URL</key>
+	<string>https://instajong-84110432.firebaseio.com</string>
+</dict>
+</plist>

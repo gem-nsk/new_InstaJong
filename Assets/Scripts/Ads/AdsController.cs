@@ -23,6 +23,7 @@ public class AdsController : MonoBehaviour
     public InterstitialAd _interstital;
 
     private bool DisabledAd;
+    private bool _authorized;
 
 #region Singleton
     public static AdsController instance;
@@ -55,7 +56,7 @@ public class AdsController : MonoBehaviour
 
         PurchaseManager.OnPurchaseNonConsumable += PurchaseManager_OnPurchaseNonConsumable;
 
-        MobileAds.Initialize(initStatus => { Debug.Log(initStatus.ToString()); });
+        MobileAds.Initialize( initStatus => { _authorized = true; });
         LoadVideo();
 
         if(!_disabledAd)
@@ -146,7 +147,10 @@ public class AdsController : MonoBehaviour
     }
     public void ShowInterstitial()
     {
-        if(!DisabledAd)
-        _interstital.Show();
+        if (!DisabledAd)
+            if (_authorized)
+            {
+                _interstital.Show();
+            }
     }
 }

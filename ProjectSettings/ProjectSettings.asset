@@ -170,7 +170,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.GeM.InstaJong
     Standalone: com.Company.ProductName
-    iPhone: com.GeM.InstaJongApp
+    iPhone: com.GeM.InstaJong
   buildNumber:
     iPhone: 1
   AndroidBundleVersionCode: 11

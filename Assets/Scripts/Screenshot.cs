@@ -13,6 +13,7 @@ public class Screenshot : MonoBehaviour
             date = date.Replace(" ", "_");
             date = date.Replace(":", "-");
             ScreenCapture.CaptureScreenshot(Application.persistentDataPath + "/" + date + ".png");
+            Debug.Log(Application.persistentDataPath);
         }
     }
 }

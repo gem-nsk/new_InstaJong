@@ -23,15 +23,12 @@ public class ClickButton : MonoBehaviour , IPointerDownHandler
     
     public static CellScr second;
 
-    private UnityEngine.Color normCol;
 
     private (CellScr first, CellScr second) objects;
     private CellScr Click;
 
-    private static int step;
     void Start()
     {
-        step = 0;
         path = new List<Cell>();
         Buttons = new List<System.Tuple<int, int>>();
         panel = GetComponent<Image>();

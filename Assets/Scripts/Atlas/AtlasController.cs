@@ -7,7 +7,6 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using System.Collections;
 
 [System.Serializable]
 public class PostInfo

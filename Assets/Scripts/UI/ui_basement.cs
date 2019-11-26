@@ -29,7 +29,15 @@ public class ui_basement : MonoBehaviour
 
     public virtual void Activate()
     {
-        
+#if UNITY_IOS
+        bool isIpad = UnityEngine.iOS.Device.generation.ToString().Contains("iPad");
+
+        if(isIpad)
+        {
+            GetComponent<UnityEngine.UI.CanvasScaler>().matchWidthOrHeight = 0;
+        }
+#endif
+
         StartCoroutine(SmoothAlpha(0, 1));
     }
     public virtual void DeActivate()

@@ -66,7 +66,8 @@ public class GameUI : MonoBehaviour
 
     public void ButtonBack()
     {
-        AdsController.instance.ShowInterstitial();
+        
+            AdsController.instance.ShowInterstitial();
         GameControllerScr.instance.StopLoading();
         GameControllerScr.instance.Save();
         SceneManager.LoadScene("Menu");

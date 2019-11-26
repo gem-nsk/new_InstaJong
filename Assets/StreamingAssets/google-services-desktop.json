@@ -1,0 +1,37 @@
+{
+  "client": [
+    {
+      "services": {
+        "appinvite_service": {
+          "status": 1
+        }, 
+        "analytics_service": {
+          "status": 0
+        }
+      }, 
+      "oauth_client": [
+        {
+          "client_id": "589696554525-ifisvp6gn8ckjp0e75jsult5vbsv9e51.apps.googleusercontent.com"
+        }
+      ], 
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5GshGb6XB9s0g1hFfxBHVvogH3-RjsCs"
+        }
+      ], 
+      "client_info": {
+        "mobilesdk_app_id": "1:589696554525:ios:a456c564626feee76258f4", 
+        "android_client_info": {
+          "package_name": "com.GeM.InstaJong"
+        }
+      }
+    }
+  ], 
+  "configuration_version": "1", 
+  "project_info": {
+    "storage_bucket": "instajong-84110432.appspot.com", 
+    "project_id": "instajong-84110432", 
+    "firebase_url": "https://instajong-84110432.firebaseio.com", 
+    "project_number": "589696554525"
+  }
+}

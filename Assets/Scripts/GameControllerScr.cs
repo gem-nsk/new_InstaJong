@@ -280,7 +280,6 @@ public class GameControllerScr : MonoBehaviour
         }
     }
 
-    private bool isTutorial = false;
     public IEnumerator CreateButtonCells()
     {
         cellState = 0;
@@ -331,7 +330,6 @@ public class GameControllerScr : MonoBehaviour
             CanvasController.instance.OpenCanvas(Tutorial);
 
             TutorialMenu_ui.instance.Init(RTs, 8, messages, true, canvas, 1);
-            isTutorial = true;
             _Timer.SetPaused("Tutorial", true);
 
             PlayerPrefs.SetInt("_tut2", 1);
