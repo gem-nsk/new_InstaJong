@@ -1,1 +1,364 @@
-{"items":[{"key":"_newgame","value":"New game"},{"key":"_continue","value":"Continue"},{"key":"_leaders","value":"Leaders"},{"key":"_buycoins","value":"Shop"},{"key":"_signin_instagramm","value":"signin Instagram"},{"key":"_selection_of_photos_from","value":"Selection of photos from:"},{"key":"_login","value":"login"},{"key":"_accounts","value":"accounts"},{"key":"_interesting","value":"interesting"},{"key":"_recommend","value":"recommend"},{"key":"_gotoinst","value":"open Instagram"},{"key":"_ui_instacoins","value":"Shop"},{"key":"_ui_instacoins_user","value":"Card includes:\n• 5 Tips\n• 1 Add time\n• 3 Refreshes"},{"key":"_ui_instacoins_pro","value":"Card includes:\n• 10 Tips\n• 3 Add time\n• 6 Refreshes"},{"key":"_ui_instacoins_celebrity","value":"Card includes:\n• 15 Tips\n• 5 Add time\n• 10 Refreshes"},{"key":"_ui_instacoins_light_pack","value":"<color=#3FCFFF>Light</color> pack"},{"key":"_ui_instacoins_medium_pack","value":"<color=#E5E633>Medium</color> pack"},{"key":"_ui_instacoins_mega_pack","value":"<color=#F25516>Mega</color> pack"},{"key":"_ui_refresh_header","value":"Refreshing not avaible"},{"key":"_ui_refresh_show_ads","value":"Show ads"},{"key":"_ui_refresh_show_ads_button","value":"get 1 refresh"},{"key":"_ui_refresh_shop","value":"Buy instacoins"},{"key":"_ui_refresh_shop_button","value":"Open Shop"},{"key":"_ui_refresh_or","value":"OR"},{"key":"_main_help","value":"help"},{"key":"_main_help_time","value":"add time (50)"},{"key":"_main_help_highlight","value":"show pare (20)"},{"key":"_endgame_score","value":"Score: "},{"key":"_endgame_hs","value":"HighScore: "},{"key":"_endgame_timesup","value":"Time is up"},{"key":"_endgame_tomenu_button","value":"exit to menu"},{"key":"_endgame_restart_button","value":"Restart"},{"key":"_endgame_nextlevel_button","value":"next level"},{"key":"_endgame_levelparsed","value":"Level parsed"},{"key":"_endgame_doublecoins","value":"Double reward X2"},{"key":"_ui_rules","value":"tutorial"},{"key":"_ui_daily","value":"Daily account:"},{"key":"_ui_instacoins_buy","value":"Buy"},{"key":"_ui_gamemode","value":"choose gamemode"},{"key":"_ui_gamemode_your","value":"your photos"},{"key":"_ui_gamemode_hashtag","value":"hashtag"},{"key":"_ui_gamemode_user","value":"find user"},{"key":"_ui_gamemode_history","value":"Recent"},{"key":"_ui_rules_refresh","value":"refresh\n\ninstacoins:\n(350)"},{"key":"_ui_rules_addtime","value":"Add time\n\ninstacoins:\n(350)"},{"key":"_ui_rules_showpare","value":"show pare\n\ninstacoins:\n(210)"},{"key":"_ui_findaccount","value":"find account"},{"key":"_ui_findaccount_findit","value":"find it!"},{"key":"_ui_findhashtag","value":"find hashtag"},{"key":"_ui_searching","value":"searching"},{"key":"_ui_history","value":"history"},{"key":"_ui_history_clear","value":"clear history"},{"key":"_endgame_instacoins","value":"Earend InstaCoins: "},{"key":"_ic","value":"Instacoins"},{"key":"_error_less20","value":"photos less than 20"},{"key":"_daily","value":"Daily reward"},{"key":"_daily_description","value":"roll and get reward"},{"key":"_daily_roll","value":"roll"},{"key":"_daily_take","value":"take"},{"key":"_daily_youget","value":"you get: "}]}
+{
+    "items": [
+        {
+            "key": "_newgame",
+            "value": "New game"
+        },
+        {
+            "key": "_continue",
+            "value": "Continue"
+        },
+        {
+            "key": "_leaders",
+            "value": "Leaders"
+        },
+        {
+            "key": "_buycoins",
+            "value": "Shop"
+        },
+        {
+            "key": "_signin_instagramm",
+            "value": "signin Instagram"
+        },
+        {
+            "key": "_selection_of_photos_from",
+            "value": "Selection of photos from:"
+        },
+        {
+            "key": "_login",
+            "value": "login"
+        },
+        {
+            "key": "_accounts",
+            "value": "accounts"
+        },
+        {
+            "key": "_interesting",
+            "value": "interesting"
+        },
+        {
+            "key": "_recommend",
+            "value": "recommend"
+        },
+        {
+            "key": "_gotoinst",
+            "value": "open Instagram"
+        },
+        {
+            "key": "_ui_instacoins",
+            "value": "Shop"
+        },
+        {
+            "key": "_ui_instacoins_user",
+            "value": "Card includes:\n• 5 Tips\n• 1 Add time\n• 3 Refreshes"
+        },
+        {
+            "key": "_ui_instacoins_pro",
+            "value": "Card includes:\n• 10 Tips\n• 3 Add time\n• 6 Refreshes"
+        },
+        {
+            "key": "_ui_instacoins_celebrity",
+            "value": "Card includes:\n• 15 Tips\n• 5 Add time\n• 10 Refreshes"
+        },
+        {
+            "key": "_ui_instacoins_light_pack",
+            "value": "<color=#3FCFFF>Light</color> pack"
+        },
+        {
+            "key": "_ui_instacoins_medium_pack",
+            "value": "<color=#E5E633>Medium</color> pack"
+        },
+        {
+            "key": "_ui_instacoins_mega_pack",
+            "value": "<color=#F25516>Mega</color> pack"
+        },
+        {
+            "key": "_ui_refresh_header",
+            "value": "Refreshing not avaible"
+        },
+        {
+            "key": "_ui_refresh_show_ads",
+            "value": "Show ads"
+        },
+        {
+            "key": "_ui_refresh_show_ads_button",
+            "value": "get 1 refresh"
+        },
+        {
+            "key": "_ui_refresh_shop",
+            "value": "Buy instacoins"
+        },
+        {
+            "key": "_ui_refresh_shop_button",
+            "value": "Open Shop"
+        },
+        {
+            "key": "_ui_refresh_or",
+            "value": "OR"
+        },
+        {
+            "key": "_main_help",
+            "value": "help"
+        },
+        {
+            "key": "_main_help_time",
+            "value": "add time (50)"
+        },
+        {
+            "key": "_main_help_highlight",
+            "value": "show pare (20)"
+        },
+        {
+            "key": "_endgame_score",
+            "value": "Score: "
+        },
+        {
+            "key": "_endgame_hs",
+            "value": "HighScore: "
+        },
+        {
+            "key": "_endgame_timesup",
+            "value": "Time is up"
+        },
+        {
+            "key": "_endgame_tomenu_button",
+            "value": "exit to menu"
+        },
+        {
+            "key": "_endgame_restart_button",
+            "value": "Restart"
+        },
+        {
+            "key": "_endgame_nextlevel_button",
+            "value": "next level"
+        },
+        {
+            "key": "_endgame_levelparsed",
+            "value": "Level parsed"
+        },
+        {
+            "key": "_endgame_doublecoins",
+            "value": "Double reward X2"
+        },
+        {
+            "key": "_ui_rules",
+            "value": "tutorial"
+        },
+        {
+            "key": "_ui_daily",
+            "value": "Daily account:"
+        },
+        {
+            "key": "_ui_instacoins_buy",
+            "value": "Buy"
+        },
+        {
+            "key": "_ui_gamemode",
+            "value": "choose gamemode"
+        },
+        {
+            "key": "_ui_gamemode_your",
+            "value": "your photos"
+        },
+        {
+            "key": "_ui_gamemode_hashtag",
+            "value": "hashtag"
+        },
+        {
+            "key": "_ui_gamemode_user",
+            "value": "find user"
+        },
+        {
+            "key": "_ui_gamemode_history",
+            "value": "Recent"
+        },
+        {
+            "key": "_ui_rules_refresh",
+            "value": "refresh\n\ninstacoins:\n(350)"
+        },
+        {
+            "key": "_ui_rules_addtime",
+            "value": "Add time\n\ninstacoins:\n(350)"
+        },
+        {
+            "key": "_ui_rules_showpare",
+            "value": "show pare\n\ninstacoins:\n(210)"
+        },
+        {
+            "key": "_ui_findaccount",
+            "value": "find account"
+        },
+        {
+            "key": "_ui_findaccount_findit",
+            "value": "find it!"
+        },
+        {
+            "key": "_ui_findhashtag",
+            "value": "find hashtag"
+        },
+        {
+            "key": "_ui_searching",
+            "value": "searching"
+        },
+        {
+            "key": "_ui_history",
+            "value": "history"
+        },
+        {
+            "key": "_ui_history_clear",
+            "value": "clear history"
+        },
+        {
+            "key": "_endgame_instacoins",
+            "value": "Earend InstaCoins: "
+        },
+        {
+            "key": "_ic",
+            "value": "Instacoins"
+        },
+        {
+            "key": "_error_less20",
+            "value": "photos less than 20"
+        },
+        {
+            "key": "_daily",
+            "value": "Daily reward"
+        },
+        {
+            "key": "_daily_description",
+            "value": "roll and get reward"
+        },
+        {
+            "key": "_daily_roll",
+            "value": "roll"
+        },
+        {
+            "key": "_daily_take",
+            "value": "take"
+        },
+        {
+            "key": "_daily_youget",
+            "value": "you get: "
+        },
+        {
+            "key": "_t_game_1",
+            "value": "Click on the 2 highlighted photos"
+        },
+        {
+            "key": "_t_game_2",
+            "value": "A line is drawn between the two pictures. This line should not have more than two turns"
+        },
+        {
+            "key": "_t_game_3",
+            "value": "With a long press on the picture will open its description, try it"
+        },
+        {
+            "key": "_t_game_4",
+            "value": "Good game!"
+        },
+        {
+            "key": "_t_game_different",
+            "value": "Different elements"
+        },
+        {
+            "key": "_t_game_more",
+            "value": "The path contains more than two turns or there is no possible path"
+        },
+        {
+            "key": "_t_game_refreshing",
+            "value": "No moves available, shuffle the field"
+        },
+        {
+            "key": "_t_tut2_1",
+            "value": "You can click on the button to shuffle the field"
+        },
+        {
+            "key": "_t_tut2_2",
+            "value": "The field moves automatically and is free if there is no move"
+        },
+        {
+            "key": "_t_tut2_3",
+            "value": "If you do not see the move, you can use the hint"
+        },
+        {
+            "key": "_t_tut2_4",
+            "value": "If time runs out, you can add time"
+        },
+        {
+            "key": "_t_tut2_5",
+            "value": "You have 4 minutes to complete the level"
+        },
+        {
+            "key": "_t_tut2_6",
+            "value": "when you finding the pair you will get a little bit of time"
+        },
+        {
+            "key": "_t_tut2_7",
+            "value": "when you finding the pair you will earn points"
+        },
+        {
+            "key": "_t_tut2_8",
+            "value": "Pressing this button will pause the game and return to the menu"
+        },
+        {
+            "key": "_t_tut1_1",
+            "value": "Welcome to the InstaJong!"
+        },
+        {
+            "key": "_t_tut1_2",
+            "value": "Now the tutorial how to play will be started"
+        },
+        {
+            "key": "_t_tut1_3",
+            "value": "You can login to your account to play with your profile pictures"
+        },
+        {
+            "key": "_t_tut1_4",
+            "value": "Then you can share your account so your friends can play it"
+        },
+        {
+            "key": "_t_tut1_5",
+            "value": "Here you can buy coins, hints, bonuses or disable ads"
+        },
+        {
+            "key": "_t_tut1_6",
+            "value": "Here you can start the game"
+        },
+        {
+            "key": "_t_tut1_7",
+            "value": "And now we will play a Daily account. Click on it now!"
+        },
+        {
+            "key": "_t_tut4_1",
+            "value": "On the right you can buy InstaCoins. You can choose from several sets always at competitive prices!"
+        },
+        {
+            "key": "_t_tut4_2",
+            "value": "you can buy cards for InstaCoins, which contain a certain set of tips."
+        },
+        {
+            "key": "_t_tut4_3",
+            "value": "your current InstaCoins balance"
+        },
+        {
+            "key": "_t_tut4_4",
+            "value": "This is a button to disable advertising. Paid option"
+        },
+        {
+            "key": "_t_tut3_1",
+            "value": "You can play with your profile pictures"
+        },
+        {
+            "key": "_t_tut3_2",
+            "value": "You can find photos by hashtag"
+        },
+        {
+            "key": "_t_tut3_3",
+            "value": "You can find the account"
+        },
+        {
+            "key": "_t_tut3_4",
+            "value": "You can view your search history"
+        }
+    ]
+}

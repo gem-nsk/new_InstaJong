@@ -52,16 +52,16 @@ public class GameModeSelect_ui : ui_basement
         {
             case 0:
                 PlayAuthorized();
-                AnalyticsEventsController.LogEvent("GameMode", "mode", "Self");
+                AnalyticsEventsController.LogEvent("GameMode_Self");
                 break;
                 //find account
             case 1:
                 FindAcc();
-                AnalyticsEventsController.LogEvent("GameMode", "mode",  "Account");
+                AnalyticsEventsController.LogEvent("GameMode_Account");
                 break;
             case 2:
                 FindHash();
-                AnalyticsEventsController.LogEvent("GameMode", "mode", "Hashtag");
+                AnalyticsEventsController.LogEvent("GameMode_Hashtag");
                 break;
             case 3:
                 ShowHistory();

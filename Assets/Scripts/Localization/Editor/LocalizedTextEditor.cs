@@ -67,7 +67,7 @@ public class LocalizedTextEditor : EditorWindow
 
         if (!string.IsNullOrEmpty(filePath))
         {
-            string dataAsJson = JsonUtility.ToJson(localizationData);
+            string dataAsJson = JsonUtility.ToJson(localizationData, true);
             File.WriteAllText(filePath, dataAsJson);
         }
     }

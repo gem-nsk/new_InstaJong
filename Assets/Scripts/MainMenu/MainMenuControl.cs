@@ -164,7 +164,7 @@ public class MainMenuControl : MonoBehaviour
                 musicImg.sprite = Musicicons[1];
                 break;
         }
-        AnalyticsEventsController.LogEvent("Music", "state", b.ToString());
+        AnalyticsEventsController.LogEvent("Music_" + b.ToString());
     }
     public void OpenRules()
     {

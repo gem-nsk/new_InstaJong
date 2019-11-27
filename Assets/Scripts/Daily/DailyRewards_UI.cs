@@ -61,7 +61,6 @@ public class DailyRewards_UI : ui_basement
         _rewardText.text = "X" + PackEarn();
 
         PlayerStats.instance.AddPack(_current.data._TipsCount, _current.data._AddTimeCount, _current.data._RefreshCount);
-
         AcceptButton.SetActive(true);
     }
 

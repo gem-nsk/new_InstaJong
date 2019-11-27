@@ -1,1 +1,364 @@
-{"items":[{"key":"_newgame","value":"Новая игра"},{"key":"_continue","value":"Продолжить"},{"key":"_leaders","value":"Лидеры"},{"key":"_buycoins","value":"Магазин"},{"key":"_signin_instagramm","value":"Войти в аккаунт Instagram"},{"key":"_selection_of_photos_from","value":"Подбор фото из:"},{"key":"_login","value":"instajong_game"},{"key":"_accounts","value":"аккаунты"},{"key":"_interesting","value":"интересное"},{"key":"_recommend","value":"рекомендуем"},{"key":"_gotoinst","value":"Перейти в Instagram"},{"key":"_ui_instacoins","value":"Магазин"},{"key":"_ui_instacoins_user","value":"в карту входит:\n• 5 подсказок\n• 1 время\n• 3 перемешиваний"},{"key":"_ui_instacoins_pro","value":"в карту входит:\n• 10 подсказок\n• 3 время\n• 6 перемешиваний"},{"key":"_ui_instacoins_celebrity","value":"в карту входит:\n• 15 подсказок\n• 5 время\n• 10 перемешиваний"},{"key":"_ui_instacoins_light_pack","value":"<color=#3FCFFF>Лайт</color> набор"},{"key":"_ui_instacoins_medium_pack","value":"<color=#E5E633>Средний</color> набор"},{"key":"_ui_instacoins_mega_pack","value":"<color=#F25516>Мега</color> набор"},{"key":"_ui_refresh_header","value":"Перемешивание недоступно"},{"key":"_ui_refresh_show_ads","value":"Просмотреть рекламу"},{"key":"_ui_refresh_show_ads_button","value":"Получить 1 "},{"key":"_ui_refresh_shop","value":"Купить Instacoins"},{"key":"_ui_refresh_shop_button","value":"Открыть магазин"},{"key":"_ui_refresh_or","value":"ИЛИ"},{"key":"_main_help","value":"Помощь"},{"key":"_main_help_time","value":"Доб. время (50)"},{"key":"_main_help_highlight","value":"Подсказка (20)"},{"key":"_endgame_score","value":"Счет: "},{"key":"_endgame_hs","value":"Рекорд: "},{"key":"_endgame_timesup","value":"Время вышло"},{"key":"_endgame_tomenu_button","value":"Выйти в меню"},{"key":"_endgame_restart_button","value":"заново"},{"key":"_endgame_nextlevel_button","value":"Следующий уровень"},{"key":"_endgame_levelparsed","value":"Уровень пройден"},{"key":"_endgame_doublecoins","value":"Удвоить награду Х2"},{"key":"_ui_rules","value":"Правила"},{"key":"_ui_daily","value":"Аккаунт дня:"},{"key":"_ui_instacoins_buy","value":"Купить"},{"key":"_ui_gamemode","value":"выберете режим"},{"key":"_ui_gamemode_your","value":"ваши фото"},{"key":"_ui_gamemode_hashtag","value":"хештег"},{"key":"_ui_gamemode_user","value":"Найти аккаунт"},{"key":"_ui_gamemode_history","value":"Недавнее"},{"key":"_ui_rules_refresh","value":"перемешать"},{"key":"_ui_rules_addtime","value":"Добавить время"},{"key":"_ui_rules_showpare","value":"подсказка"},{"key":"_ui_findaccount","value":"найти аккаунт"},{"key":"_ui_findaccount_findit","value":"найти!"},{"key":"_ui_findhashtag","value":"найти хештег"},{"key":"_ui_searching","value":"поиск"},{"key":"_ui_history","value":"история"},{"key":"_ui_history_clear","value":"очистить историю"},{"key":"_endgame_instacoins","value":"Добыто InstaCoins: "},{"key":"_error_less20","value":"Найдено недостаточно фото"},{"key":"_error_notfound","value":"Не найдено"},{"key":"_daily","value":"Ежедневная награда"},{"key":"_daily_description","value":"рулетка содержит случайную награду"},{"key":"_daily_roll","value":"крутить"},{"key":"_daily_take","value":"взять"},{"key":"_daily_youget","value":"Вы получили: "},{"key":"_t_game_1","value":"Нажмите на 2 подсвеченные фотографии"},{"key":"_t_game_2","value":"Между двумя картинками рисуется линия. У этой линии не должно быть более двух поворотов"},{"key":"_t_game_3","value":"При долгом нажатии на картинку откроется ее описание, попробуйте"},{"key":"_t_game_4","value":"Приятной игры!\n"},{"key":"_t_game_different","value":"Элементы отличаются"},{"key":"_t_game_more","value":"Путь содержит больше двух поворотов или нет возможного пути"},{"key":"_t_game_refreshing","value":"Нет доступных ходов, перемешиваем поле"},{"key":"_t_tut2_1","value":"Вы можете нажать на кнопку, чтобы перемешать поле"},{"key":"_t_tut2_2","value":"Поле перемешается автоматически и бесплатно, если не будет хода"},{"key":"_t_tut2_3","value":"Если не видите ход, можете воспользовать подсказкой"},{"key":"_t_tut2_4","value":"Если время кончается, можете добавить время"},{"key":"_t_tut2_5","value":"У вас есть 4 минуты чтобы пройти уровень"},{"key":"_t_tut2_6","value":"За каждую удаленную пару, будет прибавляться время"},{"key":"_t_tut2_7","value":"За найденную пару вам будут начисляться очки"},{"key":"_t_tut2_8","value":"Нажатием на эту кнопку вы поставите игру на паузу и вернетесь в меню"},{"key":"_t_tut1_1","value":"Добро пожаловать в игру InstaJong!"},{"key":"_t_tut1_2","value":"Сейчас для вас проведем небольшой инструктаж как играть в эту игру"},{"key":"_t_tut1_3","value":"Вы можете войти в свой аккаунт, чтобы играть фотографиями вашего профиля"},{"key":"_t_tut1_4","value":"Потом вы сможете поделиться своим аккаунтом, чтобы ваши друзья могли в него поиграть"},{"key":"_t_tut1_5","value":"Здесь вы можете купить монетки, подсказки, бонусы или отключить рекламу"},{"key":"_t_tut1_6","value":"Здесь вы можете начать игру"},{"key":"_t_tut1_7","value":"А сейчас мы сыграем в аккаунт дня. Нажмите на него прямо сейчас!"},{"key":"_t_tut4_1","value":"Справа вы можете купить InstaCoin-ы. На ваш выбор представлены несколько наборов всегда по выгодным ценам!"},{"key":"_t_tut4_2","value":"На InstaCoin-ы вы можете купить карты, которые в себе содержат определенный набор подсказок."},{"key":"_t_tut4_3","value":"Вверху показан ваш текущий баланс InstaCoin-ов"},{"key":"_t_tut4_4","value":"Рядом с вашим балансом есть кнопка отключения рекламы, чтобы она не мешала вам играть. Опция платная"},{"key":"_t_tut3_1","value":"Вы можете играть фотографиями вашего профиля"},{"key":"_t_tut3_2","value":"Вы можете найти фотографии по хэштегу"},{"key":"_t_tut3_3","value":"Вы можете найти конкретный аккаунт"},{"key":"_t_tut3_4","value":"Вы можете просмотреть историю вашего поиска"}]}
+{
+    "items": [
+        {
+            "key": "_newgame",
+            "value": "Новая игра"
+        },
+        {
+            "key": "_continue",
+            "value": "Продолжить"
+        },
+        {
+            "key": "_leaders",
+            "value": "Лидеры"
+        },
+        {
+            "key": "_buycoins",
+            "value": "Магазин"
+        },
+        {
+            "key": "_signin_instagramm",
+            "value": "Войти в аккаунт Instagram"
+        },
+        {
+            "key": "_selection_of_photos_from",
+            "value": "Подбор фото из:"
+        },
+        {
+            "key": "_login",
+            "value": "instajong_game"
+        },
+        {
+            "key": "_accounts",
+            "value": "аккаунты"
+        },
+        {
+            "key": "_interesting",
+            "value": "интересное"
+        },
+        {
+            "key": "_recommend",
+            "value": "рекомендуем"
+        },
+        {
+            "key": "_gotoinst",
+            "value": "Перейти в Instagram"
+        },
+        {
+            "key": "_ui_instacoins",
+            "value": "Магазин"
+        },
+        {
+            "key": "_ui_instacoins_user",
+            "value": "в карту входит:\n• 5 подсказок\n• 1 время\n• 3 перемешиваний"
+        },
+        {
+            "key": "_ui_instacoins_pro",
+            "value": "в карту входит:\n• 10 подсказок\n• 3 время\n• 6 перемешиваний"
+        },
+        {
+            "key": "_ui_instacoins_celebrity",
+            "value": "в карту входит:\n• 15 подсказок\n• 5 время\n• 10 перемешиваний"
+        },
+        {
+            "key": "_ui_instacoins_light_pack",
+            "value": "<color=#3FCFFF>Лайт</color> набор"
+        },
+        {
+            "key": "_ui_instacoins_medium_pack",
+            "value": "<color=#E5E633>Средний</color> набор"
+        },
+        {
+            "key": "_ui_instacoins_mega_pack",
+            "value": "<color=#F25516>Мега</color> набор"
+        },
+        {
+            "key": "_ui_refresh_header",
+            "value": "Перемешивание недоступно"
+        },
+        {
+            "key": "_ui_refresh_show_ads",
+            "value": "Просмотреть рекламу"
+        },
+        {
+            "key": "_ui_refresh_show_ads_button",
+            "value": "Получить 1 "
+        },
+        {
+            "key": "_ui_refresh_shop",
+            "value": "Купить Instacoins"
+        },
+        {
+            "key": "_ui_refresh_shop_button",
+            "value": "Открыть магазин"
+        },
+        {
+            "key": "_ui_refresh_or",
+            "value": "ИЛИ"
+        },
+        {
+            "key": "_main_help",
+            "value": "Помощь"
+        },
+        {
+            "key": "_main_help_time",
+            "value": "Доб. время (50)"
+        },
+        {
+            "key": "_main_help_highlight",
+            "value": "Подсказка (20)"
+        },
+        {
+            "key": "_endgame_score",
+            "value": "Счет: "
+        },
+        {
+            "key": "_endgame_hs",
+            "value": "Рекорд: "
+        },
+        {
+            "key": "_endgame_timesup",
+            "value": "Время вышло"
+        },
+        {
+            "key": "_endgame_tomenu_button",
+            "value": "Выйти в меню"
+        },
+        {
+            "key": "_endgame_restart_button",
+            "value": "заново"
+        },
+        {
+            "key": "_endgame_nextlevel_button",
+            "value": "Следующий уровень"
+        },
+        {
+            "key": "_endgame_levelparsed",
+            "value": "Уровень пройден"
+        },
+        {
+            "key": "_endgame_doublecoins",
+            "value": "Удвоить награду Х2"
+        },
+        {
+            "key": "_ui_rules",
+            "value": "Правила"
+        },
+        {
+            "key": "_ui_daily",
+            "value": "Аккаунт дня:"
+        },
+        {
+            "key": "_ui_instacoins_buy",
+            "value": "Купить"
+        },
+        {
+            "key": "_ui_gamemode",
+            "value": "выберете режим"
+        },
+        {
+            "key": "_ui_gamemode_your",
+            "value": "ваши фото"
+        },
+        {
+            "key": "_ui_gamemode_hashtag",
+            "value": "хештег"
+        },
+        {
+            "key": "_ui_gamemode_user",
+            "value": "Найти аккаунт"
+        },
+        {
+            "key": "_ui_gamemode_history",
+            "value": "Недавнее"
+        },
+        {
+            "key": "_ui_rules_refresh",
+            "value": "перемешать"
+        },
+        {
+            "key": "_ui_rules_addtime",
+            "value": "Добавить время"
+        },
+        {
+            "key": "_ui_rules_showpare",
+            "value": "подсказка"
+        },
+        {
+            "key": "_ui_findaccount",
+            "value": "найти аккаунт"
+        },
+        {
+            "key": "_ui_findaccount_findit",
+            "value": "найти!"
+        },
+        {
+            "key": "_ui_findhashtag",
+            "value": "найти хештег"
+        },
+        {
+            "key": "_ui_searching",
+            "value": "поиск"
+        },
+        {
+            "key": "_ui_history",
+            "value": "история"
+        },
+        {
+            "key": "_ui_history_clear",
+            "value": "очистить историю"
+        },
+        {
+            "key": "_endgame_instacoins",
+            "value": "Добыто InstaCoins: "
+        },
+        {
+            "key": "_error_less20",
+            "value": "Найдено недостаточно фото"
+        },
+        {
+            "key": "_error_notfound",
+            "value": "Не найдено"
+        },
+        {
+            "key": "_daily",
+            "value": "Ежедневная награда"
+        },
+        {
+            "key": "_daily_description",
+            "value": "рулетка содержит случайную награду"
+        },
+        {
+            "key": "_daily_roll",
+            "value": "крутить"
+        },
+        {
+            "key": "_daily_take",
+            "value": "взять"
+        },
+        {
+            "key": "_daily_youget",
+            "value": "Вы получили: "
+        },
+        {
+            "key": "_t_game_1",
+            "value": "Нажмите на 2 подсвеченные фотографии"
+        },
+        {
+            "key": "_t_game_2",
+            "value": "Между двумя картинками рисуется линия. У этой линии не должно быть более двух поворотов"
+        },
+        {
+            "key": "_t_game_3",
+            "value": "При долгом нажатии на картинку откроется ее описание, попробуйте"
+        },
+        {
+            "key": "_t_game_4",
+            "value": "Приятной игры!\n"
+        },
+        {
+            "key": "_t_game_different",
+            "value": "Элементы отличаются"
+        },
+        {
+            "key": "_t_game_more",
+            "value": "Путь содержит больше двух поворотов или нет возможного пути"
+        },
+        {
+            "key": "_t_game_refreshing",
+            "value": "Нет доступных ходов, перемешиваем поле"
+        },
+        {
+            "key": "_t_tut2_1",
+            "value": "Вы можете нажать на кнопку, чтобы перемешать поле"
+        },
+        {
+            "key": "_t_tut2_2",
+            "value": "Поле перемешается автоматически и бесплатно, если не будет хода"
+        },
+        {
+            "key": "_t_tut2_3",
+            "value": "Если не видите ход, можете воспользовать подсказкой"
+        },
+        {
+            "key": "_t_tut2_4",
+            "value": "Если время кончается, можете добавить время"
+        },
+        {
+            "key": "_t_tut2_5",
+            "value": "У вас есть 4 минуты чтобы пройти уровень"
+        },
+        {
+            "key": "_t_tut2_6",
+            "value": "За каждую удаленную пару, будет прибавляться время"
+        },
+        {
+            "key": "_t_tut2_7",
+            "value": "За найденную пару вам будут начисляться очки"
+        },
+        {
+            "key": "_t_tut2_8",
+            "value": "Нажатием на эту кнопку вы поставите игру на паузу и вернетесь в меню"
+        },
+        {
+            "key": "_t_tut1_1",
+            "value": "Добро пожаловать в игру InstaJong!"
+        },
+        {
+            "key": "_t_tut1_2",
+            "value": "Сейчас для вас проведем небольшой инструктаж как играть в эту игру"
+        },
+        {
+            "key": "_t_tut1_3",
+            "value": "Вы можете войти в свой аккаунт, чтобы играть фотографиями вашего профиля"
+        },
+        {
+            "key": "_t_tut1_4",
+            "value": "Потом вы сможете поделиться своим аккаунтом, чтобы ваши друзья могли в него поиграть"
+        },
+        {
+            "key": "_t_tut1_5",
+            "value": "Здесь вы можете купить монетки, подсказки, бонусы или отключить рекламу"
+        },
+        {
+            "key": "_t_tut1_6",
+            "value": "Здесь вы можете начать игру"
+        },
+        {
+            "key": "_t_tut1_7",
+            "value": "А сейчас мы сыграем в аккаунт дня. Нажмите на него прямо сейчас!"
+        },
+        {
+            "key": "_t_tut4_1",
+            "value": "Справа вы можете купить InstaCoin-ы. На ваш выбор представлены несколько наборов всегда по выгодным ценам!"
+        },
+        {
+            "key": "_t_tut4_2",
+            "value": "На InstaCoin-ы вы можете купить карты, которые в себе содержат определенный набор подсказок."
+        },
+        {
+            "key": "_t_tut4_3",
+            "value": "Вверху показан ваш текущий баланс InstaCoin-ов"
+        },
+        {
+            "key": "_t_tut4_4",
+            "value": "Рядом с вашим балансом есть кнопка отключения рекламы, чтобы она не мешала вам играть. Опция платная"
+        },
+        {
+            "key": "_t_tut3_1",
+            "value": "Вы можете играть фотографиями вашего профиля"
+        },
+        {
+            "key": "_t_tut3_2",
+            "value": "Вы можете найти фотографии по хэштегу"
+        },
+        {
+            "key": "_t_tut3_3",
+            "value": "Вы можете найти конкретный аккаунт"
+        },
+        {
+            "key": "_t_tut3_4",
+            "value": "Вы можете просмотреть историю вашего поиска"
+        }
+    ]
+}
