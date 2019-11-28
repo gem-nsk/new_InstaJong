@@ -22,7 +22,7 @@ public class Download_hashtagImages : Iloading
         yield return IdRequest.SendWebRequest();
         //get account id
 
-        if (IdRequest.downloadHandler.data.Length != 20713)
+        if (IdRequest.downloadHandler.data.Length != 20713 || IdRequest.downloadHandler.data.Length != 20832)
         {
             var _accId = JsonConvert.DeserializeObject<Assets.Accounts.Hashtag.RootObject>(IdRequest.downloadHandler.text);
 

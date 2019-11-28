@@ -221,6 +221,10 @@
             "value": "photos less than 20"
         },
         {
+            "key": "_error_notfound",
+            "value": "not found\n"
+        },
+        {
             "key": "_daily",
             "value": "Daily reward"
         },

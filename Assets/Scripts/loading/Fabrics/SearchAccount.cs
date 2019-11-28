@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json;
 
 public class SearchAccount : Iloading
@@ -22,9 +23,16 @@ public class SearchAccount : Iloading
         yield return IdRequest.SendWebRequest();
 
         Debug.Log("trying get account: " + key);
+        Debug.Log(IdRequest.downloadHandler.data.Length);
 
+#if UNITY_EDITOR || UNITY_ANDROID
         if (IdRequest.downloadHandler.data.Length != 20713)
         {
+#elif UNITY_IOS
+            if (IdRequest.downloadHandler.data.Length != 20832)
+        {
+#endif
+            Debug.Log("Started account deserialization");
             var _accId = JsonConvert.DeserializeObject<Assets.Accounts.RootObject>(IdRequest.downloadHandler.text);
             UnityWebRequest request = UnityWebRequest.Get("https://www.instagram.com/graphql/query/?query_id=17888483320059182&id=" + _accId.graphql.user.id + "&first=36");
             yield return request.SendWebRequest();
@@ -42,6 +50,7 @@ public class SearchAccount : Iloading
         }
         else
         {
+            Debug.Log("Account not found");
             posts.AccountKey = DownloadManager.notFoundError;
         }
     }
