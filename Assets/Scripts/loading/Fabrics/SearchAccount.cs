@@ -42,6 +42,7 @@ public class SearchAccount : Iloading
             if (dyn.data.user.edge_owner_to_timeline_media.edges.Count >= 36)
             {
                 posts.AccountKey = _accId.graphql.user.username;
+                History.SaveToHistory(posts.AccountKey, 0, 0);
             }
             else
             {

@@ -29,13 +29,16 @@ public class Download_selfAccountFromAPI : Iloading
 
         UnityWebRequest request = UnityWebRequest.Get("https://api.instagram.com/v1/users/self/media/recent/?access_token=" + key);
         yield return request.SendWebRequest();
+        Debug.Log("first ");
 
         var dyn = JsonConvert.DeserializeObject<RootObject>(request.downloadHandler.text);
         int i = 1;
-
-        _tempPosts.AccountKey = dyn.data[0].caption.from.username;
+        Debug.Log("after deserialize");
+        _tempPosts.AccountKey = dyn.data[0].user.username;
 
         DownloadManager.instance.CreateLoadingBar();
+
+        Debug.Log("Creating posts");
 
         foreach (var data in dyn.data)
         {
@@ -88,6 +91,8 @@ public class Download_selfAccountFromAPI : Iloading
             DownloadManager.ProgressHandler?.Invoke(i, dyn.data.Count);
 
         }
+
+        Debug.Log("after creating posts ");
         //DownloadManager.instance.DeleteLoadingBar();
         yield return null;
     }

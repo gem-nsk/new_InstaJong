@@ -91,6 +91,9 @@ public class Music : MonoBehaviour
 
     float PlayMusicClip(int id)
     {
+        source.Stop();
+        source.clip = null;
+
         source.PlayOneShot(MusicClips[id]);
 
         Debug.Log("Now playing: " + MusicClips[id].name);

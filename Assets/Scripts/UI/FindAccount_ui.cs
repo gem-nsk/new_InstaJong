@@ -21,14 +21,11 @@ public class FindAccount_ui : ui_basement
 
         if (acc)
         {
-            
             PreloadingManager.instance._PreloadAccountImages(InputField.text);
-            History.SaveToHistory(InputField.text, 0, 0);
         }
         else
         {
             PreloadingManager.instance._PreloadHashtagImages(InputField.text);
-            History.SaveToHistory(InputField.text, 1, 0);
         }
             
 
@@ -52,6 +49,7 @@ public class FindAccount_ui : ui_basement
     void success(string msg)
     {
         Debug.Log("Finded");
+
         DownloadManager.ErrorHandler -= Failed;
         DownloadManager.SuccessfullHandler -= success;
     }

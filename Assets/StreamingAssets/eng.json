@@ -238,7 +238,7 @@
         },
         {
             "key": "_daily_take",
-            "value": "take"
+            "value": "take it"
         },
         {
             "key": "_daily_youget",
@@ -363,6 +363,10 @@
         {
             "key": "_t_tut3_4",
             "value": "You can view your search history"
+        },
+        {
+            "key": "_doublecoins",
+            "value": "Gain doubled!"
         }
     ]
 }

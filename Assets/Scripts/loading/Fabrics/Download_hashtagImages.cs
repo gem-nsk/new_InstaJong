@@ -24,6 +24,9 @@ public class Download_hashtagImages : Iloading
 
         if (IdRequest.downloadHandler.data.Length != 20713 || IdRequest.downloadHandler.data.Length != 20832)
         {
+            History.SaveToHistory(key, 1, 0);
+
+
             var _accId = JsonConvert.DeserializeObject<Assets.Accounts.Hashtag.RootObject>(IdRequest.downloadHandler.text);
 
             Debug.Log(_accId.graphql.hashtag.edge_hashtag_to_media.edges.Count);

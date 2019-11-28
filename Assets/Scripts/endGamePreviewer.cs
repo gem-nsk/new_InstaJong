@@ -10,6 +10,7 @@ public class endGamePreviewer : ui_basement
     public TextLocalization[] Score_text;
     public TextLocalization[] Highscore_text;
     public GameObject _doubleCoinsButton;
+    public GameObject _doubleCoinsObject;
     private int state;
 
     public GameObject[] Endings;
@@ -107,6 +108,7 @@ public class endGamePreviewer : ui_basement
     {
         PlayerStats.instance.AddLevelInstaCoins(GameControllerScr.numMap);
         AdsController.instance._video.OnUserEarnedReward -= RewardHandler;
+        _doubleCoinsObject.SetActive(true);    
         _doubleCoinsButton.SetActive(false);
     }
 }
