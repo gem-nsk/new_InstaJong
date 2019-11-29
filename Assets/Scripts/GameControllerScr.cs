@@ -389,8 +389,8 @@ public class GameControllerScr : MonoBehaviour
             if (helpers[0].GetComponent<CellScr>().GetRandomNum() > 0 &&
            helpers[1].GetComponent<CellScr>().GetRandomNum() > 0)
             {
-                helpers[0].GetComponent<Image>().color = Color.yellow;
-                helpers[1].GetComponent<Image>().color = Color.yellow;
+                helpers[0].GetComponent<Image>().color = new Color(1, 0, 1, 1); ;
+                helpers[1].GetComponent<Image>().color = new Color(1, 0, 1, 1); ;
                 yield break;
             }
         }
@@ -403,8 +403,8 @@ public class GameControllerScr : MonoBehaviour
     {
         yield return StartCoroutine(SearchPath());
 
-        helpers[0].GetComponent<Image>().color = Color.yellow;
-        helpers[1].GetComponent<Image>().color = Color.yellow;
+        helpers[0].GetComponent<Image>().color = new Color(1, 0, 1, 1);
+        helpers[1].GetComponent<Image>().color = new Color(1, 0, 1, 1);
 
         float _time = 0;
         float _elapsedTime = 1;

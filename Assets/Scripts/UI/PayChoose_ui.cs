@@ -13,11 +13,10 @@ public class PayChoose_ui : ui_basement
     public void OpenAds()
     {
         //ads here...
-#if UNITY_ANDROID
+#if UNITY_ANDROID || UNITY_IOS
         AdsController.instance._video.OnUserEarnedReward += SuccessfulWatchedvideo;
         AdsController.instance.ShowVideo();
-#endif
-#if UNITY_EDITOR
+#elif UNITY_EDITOR
         SuccessfulWatchedvideo(this, null);
 #endif
     }

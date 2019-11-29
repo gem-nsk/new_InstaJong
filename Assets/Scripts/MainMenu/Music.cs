@@ -64,6 +64,22 @@ public class Music : MonoBehaviour
         StartCoroutine(RepeatMusic());
     }
 
+    public void TurnOn()
+    {
+        if (isPlaying)
+        {
+            source.UnPause();
+        }
+    }
+
+    public void TurnOff()
+    {
+        if (isPlaying)
+        {
+            source.Pause();
+        }
+    }
+
     public bool SwitchMusic()
     {
         isPlaying = !isPlaying;

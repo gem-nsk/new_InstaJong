@@ -93,6 +93,7 @@ public class AdsController : MonoBehaviour
     private void Video_failed(object sender, AdErrorEventArgs e)
     {
         Debug.Log("Failed to load video, trying to load new...");
+        Music.instance.TurnOn();
         LoadVideo();
     }
 
@@ -105,12 +106,14 @@ public class AdsController : MonoBehaviour
     private void InterstitialWatched(object sender, System.EventArgs e)
     {
         Debug.Log("Interstitial watched");
+        Music.instance.TurnOn();
         LoadInterstital();
     }
 
     private void VideoWatched(object sender, System.EventArgs e)
     {
         Debug.Log("Video watched");
+        Music.instance.TurnOn();
         LoadVideo();
     }
 
@@ -136,6 +139,7 @@ public class AdsController : MonoBehaviour
     {
         if(_video.IsLoaded())
         {
+            Music.instance.TurnOff();
             _video.Show();
             return true;
         }
@@ -151,7 +155,16 @@ public class AdsController : MonoBehaviour
         if (!DisabledAd)
             if (_authorized)
             {
+                if (_interstital.IsLoaded())
+                {
+                Music.instance.TurnOff();
                 _interstital.Show();
+
+                }
+                else
+                {
+                    LoadInterstital();
+                }
             }
     }
 }

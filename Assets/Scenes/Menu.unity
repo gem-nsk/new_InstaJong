@@ -2523,7 +2523,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.048444454}
   m_AnchorMax: {x: 0.19700001, y: 0.12448149}
-  m_AnchoredPosition: {x: -11.000122, y: 2}
+  m_AnchoredPosition: {x: -11.000244, y: 2}
   m_SizeDelta: {x: -0.49994004, y: -0.32999992}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1017178484
@@ -4206,8 +4206,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MusicClips:
   - {fileID: 8300000, guid: f17df6b239be77449bfb174a49afafa3, type: 3}
-  - {fileID: 8300000, guid: d7c0c7b4dcdc03247915913b7e8d3901, type: 3}
-  - {fileID: 8300000, guid: 73f2ee08aa3e80542b0df5b9e2602616, type: 3}
   source: {fileID: 1635263456}
 --- !u!1 &1686580906
 GameObject:
