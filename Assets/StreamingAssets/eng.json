@@ -365,6 +365,14 @@
             "value": "You can view your search history"
         },
         {
+            "key": "_succbuy",
+            "value": "Product buyed!"
+        },
+        {
+            "key": "_thanks",
+            "value": "Thanks!"
+        },
+        {
             "key": "_doublecoins",
             "value": "Gain doubled!"
         }

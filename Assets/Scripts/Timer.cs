@@ -14,8 +14,6 @@ public class Timer : MonoBehaviour
     public float _time;
     private bool _isPaused;
 
-    public Animator TimeAddObject;
-
     public void StartTimer()
     {
 
@@ -62,12 +60,8 @@ public class Timer : MonoBehaviour
                 case false:
                     TotalTime = Mathf.Clamp(_MaximumTime - (GameControllerScr.numMap * 30), _MinimumTIme, _MaximumTime);
 
+                    timerSlider.maxValue = TotalTime;
                     timerSlider.value = _time;
-
-                    if ((timerSlider.value / timerSlider.maxValue) < 0.3f)
-                        TimeAddObject.SetBool("Active", true);
-                    else
-                        TimeAddObject.SetBool("Active", false);
 
                     _time -= Time.deltaTime;
                     yield return null;

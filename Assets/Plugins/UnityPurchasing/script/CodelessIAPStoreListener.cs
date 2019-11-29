@@ -20,6 +20,9 @@ namespace UnityEngine.Purchasing
         protected IExtensionProvider extensions;
         protected ProductCatalog catalog;
 
+        public delegate void OnInit(IStoreController controller);
+        public static OnInit OnStoreInitHandler;
+
         // Allows outside sources to know whether the full initialization has taken place.
         public static bool initializationComplete;
 
@@ -157,6 +160,8 @@ namespace UnityEngine.Purchasing
             {
                 button.UpdateText();
             }
+
+            OnStoreInitHandler(controller);
         }
 
         public void OnInitializeFailed(InitializationFailureReason error)

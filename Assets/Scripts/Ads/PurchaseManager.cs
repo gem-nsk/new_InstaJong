@@ -145,16 +145,22 @@ public class PurchaseManager : MonoBehaviour, IStoreListener
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args)
     {
         if (C_PRODUCTS.Length > 0 && String.Equals(args.purchasedProduct.definition.id, C_PRODUCTS[currentProductIndex].id, StringComparison.Ordinal))
+        {
             OnSuccessC(args);
+            return PurchaseProcessingResult.Complete;
+        }
         else if (NC_PRODUCTS.Length > 0 && String.Equals(args.purchasedProduct.definition.id, NC_PRODUCTS[currentProductIndex], StringComparison.Ordinal))
+        {
             OnSuccessNC(args);
+            return PurchaseProcessingResult.Complete;
+        }
         else
         {
             Debug.Log("Origin product: " + C_PRODUCTS[currentProductIndex].id);
             Debug.Log(string.Format("ProcessPurchase: FAIL. Unrecognized product: '{0}'", args.purchasedProduct.definition.id));
+            return  PurchaseProcessingResult.Pending;
         }
 
-        return PurchaseProcessingResult.Complete;
     }
 
     public delegate void OnSuccessConsumable(PurchaseEventArgs args);

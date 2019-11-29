@@ -41,7 +41,6 @@ public class InstaCoinsShopUI : ui_basement
     public GameObject SuccessfulBuy;
     public GameObject ErrorBuy;
     public Text _InstaCoins;
-    private bool _authorized;
 
     public GameObject MainShop;
     public GameObject ShopLoading;
@@ -72,8 +71,6 @@ public class InstaCoinsShopUI : ui_basement
         ShopLoading.SetActive(false);
 
         StartTutourial();
-
-        
 
         PlayerStats.instance._addInstaCoins += UpdateInstaCoins;
 
@@ -135,20 +132,20 @@ public class InstaCoinsShopUI : ui_basement
 
     public IEnumerator WaitForAuth()
     {
-        while(!_authorized)
+        while(StoreStateChecker.isStoreAuthed)
         {
-            if (PurchaseManager.instance.IsInitialized())
-            {
                 auth();
-                _authorized = true;
-            }
-            yield return null;
+            yield break;
         }
+        
+        yield return null;
+
     }
 
     public void BuyNoAds()
     {
-        PurchaseManager.instance.BuyNonConsumable(0);
+        AnalyticsEventsController.LogEvent("No_ads_buyed");
+        Debug.Log("No ads buyed!");
     }
 
     private void BuyAnimation(UnityEngine.Purchasing.PurchaseEventArgs args)
@@ -173,23 +170,12 @@ public class InstaCoinsShopUI : ui_basement
                 AddPack(Units[id]._pack);
 
                 break;
-            case _ShopUnit.type.real:
-
-                PurchaseManager.OnPurchaseConsumable += BuyAnimation;
-                PurchaseManager.PurchaseFailed += FailedPurchase;
-                PurchaseManager.instance.BuyConsumable(id);
-
-
-
-                break;
         }
-        
-        //Adding to Player stats
-        //_ShopUnit _unit = Units[id].GetUnit();
+    }
 
-        //PlayerStats.instance.AddInstaCoins(_unit.CoinsCount);
-
-        //IAP
+    public void BuyInstaCoins(int count)
+    {
+        PlayerStats.instance.AddInstaCoins(count);
     }
 
     private void FailedPurchase(UnityEngine.Purchasing.Product product, UnityEngine.Purchasing.PurchaseFailureReason failureReason)

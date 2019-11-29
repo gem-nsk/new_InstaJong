@@ -41,7 +41,7 @@ public class AdsController : MonoBehaviour
             VideoId = "ca-app-pub-3940256099942544/5224354917";
 #endif
 
-            Init(false);
+            //Init(false);
             DontDestroyOnLoad(gameObject);
         }
         else

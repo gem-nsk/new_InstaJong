@@ -111,7 +111,7 @@ public class GameUI : MonoBehaviour
 
     public void _refresh(bool i)
     {
-        StartCoroutine(GameControllerScr.instance.Refresh(i));
+        StartCoroutine(GameControllerScr.instance.Refresh());
     }
 
     public void ShowHelp()

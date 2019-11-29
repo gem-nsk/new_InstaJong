@@ -452,7 +452,7 @@ public class GameControllerScr : MonoBehaviour
         currentPairCellIds = PikachuPathfinder.GetAvailablePair(matrix,field);
         if (currentPairCellIds.Count == 0)
         {
-            StartCoroutine(Refresh(false));
+            StartCoroutine(Refresh());
             StartCoroutine(MakeHint("_t_game_refreshing", 1f));
         }
             
@@ -645,16 +645,13 @@ public class GameControllerScr : MonoBehaviour
         }
     }
     
-    public IEnumerator Refresh(bool UseInstaCoins)
+    public IEnumerator Refresh()
     {
         Debug.Log("#Refresh");
         if (isRefreshing)
             yield break;
 
-        if (UseInstaCoins)
-        {
-            stats.AddInstaCoins(-stats.RefreshPrice);
-        }
+        
 
         isRefreshing = true;
         int _step = 3;

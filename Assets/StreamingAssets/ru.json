@@ -363,6 +363,14 @@
         {
             "key": "_doublecoins",
             "value": "Выигрыш удвоен!"
+        },
+        {
+            "key": "_succbuy",
+            "value": "Товар приобретен!"
+        },
+        {
+            "key": "_thanks",
+            "value": "Спасибо!"
         }
     ]
 }

@@ -19,7 +19,7 @@ public class Music : MonoBehaviour
         set
         {
             _isPlaying = value;
-            Debug.Log(_isPlaying);
+            //Debug.Log(_isPlaying);
         }
     }
 
@@ -96,8 +96,8 @@ public class Music : MonoBehaviour
 
         source.PlayOneShot(MusicClips[id]);
 
-        Debug.Log("Now playing: " + MusicClips[id].name);
-        Debug.Log("Next clip after " + MusicClips[id].length + " seconds");
+        //Debug.Log("Now playing: " + MusicClips[id].name);
+        //Debug.Log("Next clip after " + MusicClips[id].length + " seconds");
 
         return MusicClips[id].length;
     }

@@ -6,7 +6,7 @@ public class Screenshot : MonoBehaviour
 {
     public void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F12))
+        if(Input.GetKeyDown(KeyCode.Space))
         {
             string date = System.DateTime.Now.ToString();
             date = date.Replace("/", "-");
