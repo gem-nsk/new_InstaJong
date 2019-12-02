@@ -1152,6 +1152,7 @@ MonoBehaviour:
   _InstaCoins: {fileID: 871723191374064988}
   MainShop: {fileID: 798926292434651071}
   ShopLoading: {fileID: 3402368876876281202}
+  NoAdsButton: {fileID: 991681540261809163}
   SPAWN: {fileID: 4221896944500398266}
   SPAWN1: {fileID: 7024404575982050557}
   SPAWN2: {fileID: 8598731863521334054}
@@ -1706,8 +1707,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 684.08997, y: -125.16}
-  m_SizeDelta: {x: 159.90002, y: 124.29999}
+  m_AnchoredPosition: {x: 720.9, y: -124.47}
+  m_SizeDelta: {x: 280.1, y: 142.93}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7196999988763641720
 MonoBehaviour:
@@ -1748,6 +1749,17 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 991681540261809163}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
   onPurchaseFailed:
     m_PersistentCalls:
@@ -1792,7 +1804,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e5e1b6f6299046f4ebae44f8c401f685, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b0b2c4399dc6e485bb995fb918773bd4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2645,8 +2657,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -135.9, y: -0.000037193}
-  m_SizeDelta: {x: 66.9, y: 66.9}
+  m_AnchoredPosition: {x: -153, y: 0.0000052452}
+  m_SizeDelta: {x: 71.915, y: 71.915}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3491851201445170364
 CanvasRenderer:
@@ -5231,7 +5243,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 147, y: -55}
+  m_AnchoredPosition: {x: 218, y: -55}
   m_SizeDelta: {x: 402, y: 620}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &505245564863456397
@@ -5535,8 +5547,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 235.85, y: -68.16}
-  m_SizeDelta: {x: 253.38, y: 58}
+  m_AnchoredPosition: {x: 269.5, y: -74.8}
+  m_SizeDelta: {x: 299.4, y: 89.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9131783208838868902
 CanvasRenderer:
@@ -5570,7 +5582,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 68
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -6319,7 +6331,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -298, y: -55}
+  m_AnchoredPosition: {x: -227, y: -55}
   m_SizeDelta: {x: 402, y: 620}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5661783507211677953
@@ -6471,7 +6483,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -729, y: -55}
+  m_AnchoredPosition: {x: -658, y: -55}
   m_SizeDelta: {x: 402, y: 620}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1948736478606370554
@@ -7717,8 +7729,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 376.6, y: -122.82}
-  m_SizeDelta: {x: 395.8, y: 127.42}
+  m_AnchoredPosition: {x: 336.89, y: -124.55}
+  m_SizeDelta: {x: 444.45, y: 143.08}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5490007092534467166
 CanvasRenderer:

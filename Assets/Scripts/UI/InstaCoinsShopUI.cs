@@ -44,6 +44,7 @@ public class InstaCoinsShopUI : ui_basement
 
     public GameObject MainShop;
     public GameObject ShopLoading;
+    public GameObject NoAdsButton;
 
     //TUTORIAL
     public GameObject SPAWN;
@@ -76,6 +77,15 @@ public class InstaCoinsShopUI : ui_basement
 
         PlayerStats.instance.AddInstaCoins(0);
 
+        var ads = (UnityEngine.Purchasing.CodelessIAPStoreListener.Instance.StoreController.products.WithID("no_ads"));
+        if (ads.hasReceipt)
+        {
+            NoAdsButton.SetActive(false);
+        }
+        else
+        {
+            NoAdsButton.SetActive(true);
+        }
 
         for (int i = 0; i < Units.Length; i++)
         {

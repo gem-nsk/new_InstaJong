@@ -1485,6 +1485,7 @@ GameObject:
   - component: {fileID: 5506994287218585797}
   - component: {fileID: 7431412939452392878}
   - component: {fileID: 6429627483819221275}
+  - component: {fileID: 9126515345729422979}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1557,6 +1558,19 @@ MonoBehaviour:
     \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u044B, \u0443 \u043F\u0443\u0442\u0438
     \u043D\u0435 \u0434\u043E\u043B\u0436\u043D\u043E \u0431\u044B\u0442\u044C \u0431\u043E\u043B\u044C\u0448\u0435
     2 \u043F\u043E\u0432\u043E\u0440\u043E\u0442\u043E\u0432."
+--- !u!114 &9126515345729422979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6595590795036741396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fc151ff9ab428047bf323cf85c043f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: _ui_rules_1
 --- !u!1 &7746299028435697146
 GameObject:
   m_ObjectHideFlags: 0
@@ -2118,6 +2132,7 @@ GameObject:
   - component: {fileID: 5026801814098387035}
   - component: {fileID: 663461387925485352}
   - component: {fileID: 3324157057109862364}
+  - component: {fileID: 1530162750014942250}
   m_Layer: 5
   m_Name: Text (1)
   m_TagString: Untagged
@@ -2186,3 +2201,16 @@ MonoBehaviour:
   m_Text: "\u043F\u0440\u0438 \u0443\u0434\u0435\u0440\u0436\u0430\u043D\u0438\u0438
     \u043D\u0430 \u0444\u043E\u0442\u043E \u043E\u0442\u043A\u0440\u044B\u0432\u0430\u0435\u0442\u0441\u044F
     \u043F\u043E\u043B\u043D\u0430\u044F \u0432\u0435\u0440\u0441\u0438\u044F"
+--- !u!114 &1530162750014942250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9034824043246103886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fc151ff9ab428047bf323cf85c043f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: _ui_rules_2

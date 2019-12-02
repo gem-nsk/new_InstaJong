@@ -185,6 +185,14 @@
             "value": "show pare\n\ninstacoins:\n(210)"
         },
         {
+            "key": "_ui_rules_2",
+            "value": "when you hold on the photo the full version opens"
+        },
+        {
+            "key": "_ui_rules_1",
+            "value": "in this game you need to combine photos.\nImportant: in order to connect the elements, the path must not have more than 2 turns."
+        },
+        {
             "key": "_ui_findaccount",
             "value": "find account"
         },

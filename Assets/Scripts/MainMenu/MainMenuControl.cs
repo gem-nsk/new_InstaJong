@@ -18,6 +18,7 @@ public class MainMenuControl : MonoBehaviour
     public Button ContinueButton;
 
     public GameObject ScreenCanvas;
+    public GameObject AddICBuyShare;
 
     [Header("Tutorial")]
     public GameObject DAILY_ACC;
@@ -36,7 +37,7 @@ public class MainMenuControl : MonoBehaviour
 
     public static bool ended;
 
-
+    public const string _shareKey = "_share";
 
     public Image musicImg;
     public Sprite[] Musicicons;
@@ -50,6 +51,11 @@ public class MainMenuControl : MonoBehaviour
         bool b = DataSave.IsSaveExists();
         //ContinueButton.interactable = b;
         ContinueButton.GetComponentInChildren<Text>().color = b ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0.7f);
+
+        if (PlayerPrefs.HasKey(_shareKey))
+        {
+            AddICBuyShare.SetActive(false);
+        }
     }
 
     public void StartTutourial()
@@ -249,6 +255,13 @@ public class MainMenuControl : MonoBehaviour
         {
             AnalyticsEventsController.LogEvent("Share", "share_type", "Not_authorized");
             new NativeShare().SetTitle("lets play InstaJong!").SetText("Hey, lets go play InstaJong! \n https://play.google.com/apps/testing/com.GeM.InstaJong \n\n\n #InstaJong").AddFile(path).Share();
+        }
+        if (!PlayerPrefs.HasKey(_shareKey))
+        {
+            PlayerStats.instance.AddInstaCoins(500);
+            AddICBuyShare.SetActive(false);
+
+            PlayerPrefs.SetInt(_shareKey, 1);
         }
     }
 }
