@@ -2900,7 +2900,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.048444454}
   m_AnchorMax: {x: 0.19700001, y: 0.12448149}
-  m_AnchoredPosition: {x: -11.000244, y: 2}
+  m_AnchoredPosition: {x: -11.000366, y: 2}
   m_SizeDelta: {x: -0.49994004, y: -0.32999992}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1017178484
@@ -4870,7 +4870,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ContinueButton: {fileID: 2085201628}
   ScreenCanvas: {fileID: 1511196540}
-  AddICBuyShare: {fileID: 0}
+  AddICBuyShare: {fileID: 662261688}
   DAILY_ACC: {fileID: 860683520}
   SIGN_IN: {fileID: 1625710005}
   SHARE_ACC: {fileID: 839857441}
