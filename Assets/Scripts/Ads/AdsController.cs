@@ -25,11 +25,11 @@ public class AdsController : MonoBehaviour
     private bool DisabledAd;
     private bool _authorized;
 
-#region Singleton
+    #region Singleton
     public static AdsController instance;
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
 
@@ -49,7 +49,7 @@ public class AdsController : MonoBehaviour
             Destroy(gameObject);
         }
     }
-#endregion
+    #endregion
 
     public void Init(bool _disabledAd)
     {
@@ -57,20 +57,15 @@ public class AdsController : MonoBehaviour
 
         PurchaseManager.OnPurchaseNonConsumable += PurchaseManager_OnPurchaseNonConsumable;
 
-        MobileAds.Initialize( initStatus => { _authorized = true; });
+        MobileAds.Initialize(initStatus => { _authorized = true; });
         LoadVideo();
 
-        if(!_disabledAd)
-        LoadInterstital();
+        if (!_disabledAd)
+            LoadInterstital();
 
-        _video.OnAdClosed += VideoWatched;
-        _video.OnAdFailedToLoad += Video_failed;
-        _video.OnAdFailedToShow += Video_failed;
 
-        _interstital.OnAdClosed += InterstitialWatched;
-        _interstital.OnAdOpening += _interstital_OnAdOpening;
-        _interstital.OnAdFailedToLoad += Interstitial_failedtoLoad;
-        _interstital.OnAdLoaded += Debug_InterstitialLoaded;
+
+
     }
 
     private void PurchaseManager_OnPurchaseNonConsumable(UnityEngine.Purchasing.PurchaseEventArgs args)
@@ -78,11 +73,10 @@ public class AdsController : MonoBehaviour
         DisabledAd = true;
     }
 
-  
+
 
     private void _interstital_OnAdOpening(object sender, System.EventArgs e)
     {
-        LoadInterstital();
     }
 
     private void Debug_InterstitialLoaded(object sender, System.EventArgs e)
@@ -106,7 +100,6 @@ public class AdsController : MonoBehaviour
     private void InterstitialWatched(object sender, System.EventArgs e)
     {
         Debug.Log("Interstitial watched");
-        Music.instance.TurnOn();
         LoadInterstital();
     }
 
@@ -119,15 +112,29 @@ public class AdsController : MonoBehaviour
 
     void LoadInterstital()
     {
+        Music.instance.TurnOn();
+        if (_interstital != null)
+        {
+            _interstital.Destroy();
+        }
         this._interstital = new InterstitialAd(InterstitialId);
 
+        this._interstital.OnAdClosed += InterstitialWatched;
+        this._interstital.OnAdOpening += _interstital_OnAdOpening;
+        this._interstital.OnAdFailedToLoad += Interstitial_failedtoLoad;
+        this._interstital.OnAdLoaded += Debug_InterstitialLoaded;
+
         AdRequest request = new AdRequest.Builder().Build();
-        _interstital.LoadAd(request);
+        this._interstital.LoadAd(request);
     }
 
     void LoadVideo()
     {
         this._video = new RewardedAd(VideoId);
+
+        _video.OnAdClosed += VideoWatched;
+        _video.OnAdFailedToLoad += Video_failed;
+        _video.OnAdFailedToShow += Video_failed;
 
         AdRequest request = new AdRequest.Builder().Build();
 
@@ -137,7 +144,7 @@ public class AdsController : MonoBehaviour
 
     public bool ShowVideo()
     {
-        if(_video.IsLoaded())
+        if (_video.IsLoaded())
         {
             Music.instance.TurnOff();
             _video.Show();
@@ -157,13 +164,13 @@ public class AdsController : MonoBehaviour
             {
                 if (_interstital.IsLoaded())
                 {
-                Music.instance.TurnOff();
-                _interstital.Show();
+                    Music.instance.TurnOff();
+                    _interstital.Show();
 
                 }
                 else
                 {
-                    LoadInterstital();
+                    Debug.Log("Interstitial is not ready");
                 }
             }
     }

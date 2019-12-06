@@ -231,7 +231,7 @@ public class GameControllerScr : MonoBehaviour
 
     public void NextLevel()
     {
-        if (gameStrategy < GameStrategy.YCenter)
+        if (gameStrategy < GameStrategy.Right)
             gameStrategy++;
         else
             gameStrategy = GameStrategy.Normal;
