@@ -27,7 +27,7 @@ using UnityEngine.UI;
 public class SampleWebView : MonoBehaviour
 {
     public string Url;
-    public GUIText status;
+    //public GUIText status;
     WebViewObject webViewObject;
 
     public GameObject BG;
