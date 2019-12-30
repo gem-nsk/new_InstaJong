@@ -96,6 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -391,8 +392,6 @@ MonoBehaviour:
   _MaximumTime: 270
   _MinimumTIme: 120
   _time: 0
-  _isPaused: 0
-  TimeAddObject: {fileID: 1503867052}
 --- !u!114 &84232290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -548,8 +547,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -10, y: 6.200001}
-  m_SizeDelta: {x: 57.84, y: 54.36}
+  m_AnchoredPosition: {x: -10, y: 15}
+  m_SizeDelta: {x: 60.65, y: 54.36}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &271199021
 GameObject:
@@ -602,6 +601,7 @@ LineRenderer:
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1111,7 +1111,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -10.900002, y: 5.799965}
+  m_AnchoredPosition: {x: -10.900002, y: 15}
   m_SizeDelta: {x: 57.84, y: 54.36}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &606035308
@@ -1204,7 +1204,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -7.5, y: 4.6999855}
+  m_AnchoredPosition: {x: -7.5, y: 15}
   m_SizeDelta: {x: 57.84, y: 54.36}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &674668179
@@ -2396,6 +2396,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
