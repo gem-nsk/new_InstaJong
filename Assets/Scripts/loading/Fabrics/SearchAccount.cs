@@ -34,6 +34,7 @@ public class SearchAccount : Iloading
 #endif
             Debug.Log("Started account deserialization");
             var _accId = JsonConvert.DeserializeObject<Assets.Accounts.RootObject>(IdRequest.downloadHandler.text);
+            Debug.Log(key);
             UnityWebRequest request = UnityWebRequest.Get("https://www.instagram.com/graphql/query/?query_id=17888483320059182&id=" + _accId.graphql.user.id + "&first=36");
             yield return request.SendWebRequest();
 

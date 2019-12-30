@@ -19,6 +19,12 @@ public class MainMenuControl : MonoBehaviour
 
     public GameObject ScreenCanvas;
     public GameObject AddICBuyShare;
+    
+    public GameObject BuyInstaCoins_ui;
+    public GameObject Tutorialmenu_ui;
+    public GameObject Rules_ui;
+    public GameObject PrivatePolicy_ui;
+    public GameObject PreferAccountSelection_ui;
 
     [Header("Tutorial")]
     public GameObject DAILY_ACC;
@@ -30,10 +36,6 @@ public class MainMenuControl : MonoBehaviour
     public Canvas canvas;
     //-----------------------
 
-    public GameObject BuyInstaCoins_ui;
-    public GameObject Tutorialmenu_ui;
-    public GameObject Rules_ui;
-    public GameObject PrivatePolicy_ui;
 
     public static bool ended;
 
@@ -101,7 +103,8 @@ public class MainMenuControl : MonoBehaviour
         //if (ended == false)
         //{
         var obj = GameObject.Find("DailyAcc");
-        obj.GetComponent<PreferAccountLoading>().StartPlay();
+        OpenPreferAccountSelection_button();
+        //obj.GetComponent<PreferAccountLoading>().StartPlay();
         ended = true;
         PlayerPrefs.SetInt("_tut1", 1);
         //}
@@ -111,6 +114,11 @@ public class MainMenuControl : MonoBehaviour
     {
 
         CanvasController.instance.OpenCanvas(BuyInstaCoins_ui);
+    }
+
+    public void OpenPreferAccountSelection_button()
+    {
+        CanvasController.instance.OpenCanvas(PreferAccountSelection_ui);
     }
 
     public void ContinuePressed()

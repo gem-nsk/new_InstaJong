@@ -27,7 +27,6 @@ using UnityEngine.UI;
 public class SampleWebView : MonoBehaviour
 {
     public string Url;
-    public GUIText status;
     WebViewObject webViewObject;
 
     public GameObject BG;
@@ -110,7 +109,7 @@ public class SampleWebView : MonoBehaviour
     {
         string url1 = myUrl;
         string accessToken = "#access_token";
-        string error = "? error";
+        //string error = "? error";
 
         if (url1.Contains(accessToken))
         {
@@ -267,9 +266,13 @@ public class SampleWebView : MonoBehaviour
                 var dst = System.IO.Path.Combine(Application.persistentDataPath, url);
                 byte[] result = null;
                 if (src.Contains("://")) {  // for Android
-                    var www = new WWW(src);
-                    yield return www;
-                    result = www.bytes;
+                    var www = new UnityWebRequest(src);
+                    yield return www.SendWebRequest();
+                    result = www.downloadHandler.data;
+
+                    //var www = new WWW(src);
+                    //yield return www;
+                    //result = www.bytes;
                 } else {
                     result = System.IO.File.ReadAllBytes(src);
                 }
