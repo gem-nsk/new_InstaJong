@@ -56,6 +56,7 @@ public class PreloadingManager : MonoBehaviour
         else
         {
             Debug.Log("Account not found");
+             GameObject.FindGameObjectWithTag("Loading")?.GetComponent<ui_basement>().CanvasControllerClose();
         }
     }
     public void _PreloadFromSelfImages(string key)

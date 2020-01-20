@@ -31,7 +31,7 @@ public class StoreStateChecker : MonoBehaviour
 
     public bool CheckBuyState(IStoreController controller)
     {
-        Product product = controller.products.WithID("no_ads");
+        Product product = controller.products.WithID("no_ads1");
         if (product.hasReceipt) { return true; }
         else { return false; }
     }

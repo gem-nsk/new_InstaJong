@@ -1722,7 +1722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a5f511b0d8142cba0aeb92d0b264c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productId: no_ads
+  productId: no_ads1
   buttonType: 0
   consumePurchase: 1
   onPurchaseComplete:
@@ -4411,7 +4411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a5f511b0d8142cba0aeb92d0b264c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productId: coins_2
+  productId: coins_22
   buttonType: 0
   consumePurchase: 1
   onPurchaseComplete:
@@ -4819,7 +4819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a5f511b0d8142cba0aeb92d0b264c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productId: coins_3
+  productId: coins_33
   buttonType: 0
   consumePurchase: 1
   onPurchaseComplete:
@@ -5863,7 +5863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a5f511b0d8142cba0aeb92d0b264c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productId: coins_1
+  productId: coins_11
   buttonType: 0
   consumePurchase: 1
   onPurchaseComplete:

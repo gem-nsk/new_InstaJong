@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json;
+using System;
 
 public class SearchAccount : Iloading
 {
     root_posts posts;
-    
+
 
     public root_posts GetPosts()
     {
@@ -25,15 +26,10 @@ public class SearchAccount : Iloading
         Debug.Log("trying get account: " + key);
         Debug.Log(IdRequest.downloadHandler.data.Length);
 
-#if UNITY_EDITOR || UNITY_ANDROID
-        if (IdRequest.downloadHandler.data.Length != 20713)
-        {
-#elif UNITY_IOS
-            if (IdRequest.downloadHandler.data.Length != 20832)
-        {
-#endif
+        var _accId = CatchErrors(IdRequest.downloadHandler.text);
             Debug.Log("Started account deserialization");
-            var _accId = JsonConvert.DeserializeObject<Assets.Accounts.RootObject>(IdRequest.downloadHandler.text);
+        if (_accId != null)
+        {
             Debug.Log(key);
             UnityWebRequest request = UnityWebRequest.Get("https://www.instagram.com/graphql/query/?query_id=17888483320059182&id=" + _accId.graphql.user.id + "&first=36");
             yield return request.SendWebRequest();
@@ -49,13 +45,30 @@ public class SearchAccount : Iloading
             {
                 posts.AccountKey = DownloadManager.less20Error;
             }
+
         }
+       
         else
         {
             Debug.Log("Account not found");
             posts.AccountKey = DownloadManager.notFoundError;
         }
+}
+
+    Assets.Accounts.RootObject CatchErrors(string _data)
+    {
+        try{
+            var _accId = JsonConvert.DeserializeObject<Assets.Accounts.RootObject>(_data);
+            return _accId;
+        }
+        catch(Exception ex)
+        {
+            return null;
+        }
+       
     }
+        
+
     public bool isContainErrors()
     {
         if (posts.AccountKey.Contains(DownloadManager.less20Error) || posts.AccountKey.Contains(DownloadManager.notFoundError))

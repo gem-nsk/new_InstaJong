@@ -11,6 +11,7 @@ TagManager:
   - Data
   - LoadingBar
   - Login
+  - Loading
   layers:
   - Default
   - TransparentFX

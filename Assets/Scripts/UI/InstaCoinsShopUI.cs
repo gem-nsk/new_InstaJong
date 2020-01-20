@@ -77,7 +77,7 @@ public class InstaCoinsShopUI : ui_basement
 
         PlayerStats.instance.AddInstaCoins(0);
 
-        var ads = (UnityEngine.Purchasing.CodelessIAPStoreListener.Instance.StoreController.products.WithID("no_ads"));
+        var ads = (UnityEngine.Purchasing.CodelessIAPStoreListener.Instance.StoreController.products.WithID("no_ads1"));
         if (ads.hasReceipt)
         {
             NoAdsButton.SetActive(false);

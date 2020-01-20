@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
+using System;
 
 public class Download_hashtagImages : Iloading
 {
@@ -21,15 +22,14 @@ public class Download_hashtagImages : Iloading
         UnityWebRequest IdRequest = UnityWebRequest.Get("https://www.instagram.com/explore/tags/" + key + "/?__a=1");
         yield return IdRequest.SendWebRequest();
         //get account id
+        Debug.Log(IdRequest.downloadHandler.data.Length);
 
-        if (IdRequest.downloadHandler.data.Length != 20713 || IdRequest.downloadHandler.data.Length != 20832)
+        var _accId = CatchError(IdRequest.downloadHandler.text);
+
+        //check if can deserialize
+        if (_accId !=  null)
         {
             History.SaveToHistory(key, 1, 0);
-
-
-            var _accId = JsonConvert.DeserializeObject<Assets.Accounts.Hashtag.RootObject>(IdRequest.downloadHandler.text);
-
-            Debug.Log(_accId.graphql.hashtag.edge_hashtag_to_media.edges.Count);
 
             if (_accId.graphql.hashtag.edge_hashtag_to_media.edges.Count < 36)
             {
@@ -100,9 +100,42 @@ public class Download_hashtagImages : Iloading
         else
         {
             posts.AccountKey = DownloadManager.notFoundError;
-            yield break;
+        }
+
+
+        //if (id != 20713 && id != 20832)
+        //{
+           
+        //}
+        //else
+        //{
+            
+        //}
+    }
+
+    Assets.Accounts.Hashtag.RootObject CatchError(string _data)
+    {
+        try
+        {   
+            JsonSerializerSettings set = new JsonSerializerSettings()
+            {
+                MissingMemberHandling = MissingMemberHandling.Ignore
+            };
+
+            var _accId = JsonConvert.DeserializeObject<Assets.Accounts.Hashtag.RootObject>(_data, set);
+
+            Debug.Log(_accId.graphql.hashtag.edge_hashtag_to_media.edges.Count);
+
+            return _accId;
+
+        }
+        catch (Exception ex)
+        {
+           
+            return null;
         }
     }
+
     public bool isContainErrors()
     {
         if (posts.AccountKey.Contains(DownloadManager.less20Error) || posts.AccountKey.Contains(DownloadManager.notFoundError))
