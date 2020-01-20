@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>589696554525-ifisvp6gn8ckjp0e75jsult5vbsv9e51.apps.googleusercontent.com</string>
+	<string>589696554525-0nnfmbpinerl62kgujfrrj0l38reov2p.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.589696554525-ifisvp6gn8ckjp0e75jsult5vbsv9e51</string>
+	<string>com.googleusercontent.apps.589696554525-0nnfmbpinerl62kgujfrrj0l38reov2p</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>589696554525-hc3ramotudegeegdope84ip3pi1bfe13.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.GeM.InstaJong</string>
+	<string>com.GeM.Find-Like</string>
 	<key>PROJECT_ID</key>
 	<string>instajong-84110432</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:589696554525:ios:a456c564626feee76258f4</string>
+	<string>1:589696554525:ios:2cd173bcd6c3fa7f6258f4</string>
 	<key>DATABASE_URL</key>
 	<string>https://instajong-84110432.firebaseio.com</string>
 </dict>
