@@ -34,11 +34,11 @@ public class AdsController : MonoBehaviour
             instance = this;
 
 #if UNITY_IOS
-            InterstitialId = "ca-app-pub-3940256099942544/4411468910";
-            VideoId = "ca-app-pub-3940256099942544/1712485313";
+            InterstitialId = "ca-app-pub-6218488866205337/5406669266";
+            VideoId = "ca-app-pub-6218488866205337/3953986799";
 #elif UNITY_ANDROID
-             InterstitialId = "ca-app-pub-3940256099942544/1033173712";
-            VideoId = "ca-app-pub-3940256099942544/5224354917";
+            InterstitialId = "ca-app-pub-6218488866205337/5406669266";
+            VideoId = "ca-app-pub-6218488866205337/3953986799";
 #endif
 
             //Init(false);

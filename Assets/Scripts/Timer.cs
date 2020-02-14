@@ -9,7 +9,7 @@ public class Timer : MonoBehaviour
     public Slider timerSlider;
 
     public float TotalTime;
-    public float _MaximumTime = 270;
+    public float _MaximumTime = 240;
     public float _MinimumTIme = 120;
     public float _time;
     private bool _isPaused;

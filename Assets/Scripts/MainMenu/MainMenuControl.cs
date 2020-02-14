@@ -223,7 +223,7 @@ public class MainMenuControl : MonoBehaviour
         else
         {
             GameObject.Find("Share_account_name").GetComponent<Text>().text = "";
-            t = "Lets play InstaJong!";
+            t = "Lets play Find&Like!";
         }
       
 
@@ -257,12 +257,12 @@ public class MainMenuControl : MonoBehaviour
         if (authorized)
         {
             AnalyticsEventsController.LogEvent("Share", "share_type", "authorized");
-            new NativeShare().SetTitle("lets play InstaJong!").SetText("Find my account and play! @" + PlayerStats.instance.playerSettings.name + "\n https://play.google.com/apps/testing/com.GeM.InstaJong \n\n\n #InstaJong").AddFile(path).Share();
+            new NativeShare().SetTitle("lets play Find&Like!").SetText("Find my account and play! @" + PlayerStats.instance.playerSettings.name + "\n https://play.google.com/store/apps/details?id=com.GeM.InstaJong \n\n\n #Find&Like").AddFile(path).Share();
         }
         else
         {
             AnalyticsEventsController.LogEvent("Share", "share_type", "Not_authorized");
-            new NativeShare().SetTitle("lets play InstaJong!").SetText("Hey, lets go play InstaJong! \n https://play.google.com/apps/testing/com.GeM.InstaJong \n\n\n #InstaJong").AddFile(path).Share();
+            new NativeShare().SetTitle("lets play Find&Like!").SetText("Hey, lets go play Find&Like! \n https://play.google.com/store/apps/details?id=com.GeM.InstaJong \n\n\n #Find&Like").AddFile(path).Share();
         }
         if (!PlayerPrefs.HasKey(_shareKey))
         {

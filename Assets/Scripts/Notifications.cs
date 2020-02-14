@@ -38,8 +38,8 @@ public class Notifications : MonoBehaviour
     {
         var channel = new AndroidNotificationChannel()
         {
-            Id = "instajong",
-            Name = "Default Instajong Channel",
+            Id = "Find&Like",
+            Name = "Default Find&Like Channel",
             Importance = Importance.Default,
             Description = "Generic notifications"
         };
@@ -112,7 +112,7 @@ public class Notifications : MonoBehaviour
             ShowInForeground = true,
             ForegroundPresentationOption = (PresentationOption.Alert | PresentationOption.Sound),
             CategoryIdentifier = "simple_category",
-            ThreadIdentifier = "instajong_thread",
+            ThreadIdentifier = "find&like_thread",
             Trigger = _time
         };
         iOSNotificationCenter.ScheduleNotification(_notification);

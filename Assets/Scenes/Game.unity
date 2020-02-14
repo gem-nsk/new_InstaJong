@@ -389,7 +389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerSlider: {fileID: 773875619}
   TotalTime: 120
-  _MaximumTime: 270
+  _MaximumTime: 240
   _MinimumTIme: 120
   _time: 0
 --- !u!114 &84232290

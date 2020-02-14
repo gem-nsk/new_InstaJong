@@ -47,7 +47,7 @@ namespace GoogleMobileAds.Editor
             if (GoogleMobileAdsSettings.Instance.IsAdMobEnabled)
             {
                 EditorGUILayout.HelpBox(
-                        "AdMob App ID will look similar to this sample ID: ca-app-pub-3940256099942544~3347511713",
+                        "AdMob App ID will look similar to this sample ID: ca-app-pub-6218488866205337~2349261086",
                         MessageType.Info);
             }
 

@@ -287,7 +287,7 @@ public class GameControllerScr : MonoBehaviour
         //grid.enabled = true;
         if(countPhotos == 36)
         {
-            field = new Field(14, 8, 36, 2);
+            field = new Field(14, 8, 18, 4);
         }
         else
         {

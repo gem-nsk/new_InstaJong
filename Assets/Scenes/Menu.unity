@@ -526,7 +526,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &193301916
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2477,8 +2477,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6a5f2e1f92eb1b4fbe4d0dbbc25ea1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InterstitialId: ca-app-pub-3940256099942544/1033173712
-  VideoId: ca-app-pub-3940256099942544/5224354917
+  InterstitialId: ca-app-pub-6218488866205337/5406669266
+  VideoId: ca-app-pub-6218488866205337/3953986799
 --- !u!1 &903273714
 GameObject:
   m_ObjectHideFlags: 0
@@ -3703,7 +3703,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 649e2d85054dd47e4aea2997b0a61cad, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9ffe8089d113446389d7089e6b0abe8e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5049,7 +5049,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 343bf83ec6a594b45b29f7f84f50a246, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7576ce319b1cd4c3bb954727520e428f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 0
@@ -7120,7 +7120,7 @@ MonoBehaviour:
   link: https://play.google.com/store/apps/details?id=com.GeM.InstaJong
   mailFrom: Appsbygem.info@gmail.com
   mailFromPassword: gemInfo1
-  mailTo: instajong-report@appsbygem.com
+  mailTo: info@appsbygem.com
   remindRating: 3
   Star: {fileID: 405289325}
   starButton:
